@@ -1,0 +1,32 @@
+name: Synchroniser les articles Substack
+
+on:
+  schedule:
+    # 4 fois par jour (heures UTC)
+    - cron: "23 5,11,17,23 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le site
+        uses: actions/checkout@v4
+
+      - name: Mettre à jour data/articles.json depuis le flux RSS
+        run: python3 scripts/sync_substack.py
+
+      - name: Publier si quelque chose a changé
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/articles.json
+          if git diff --cached --quiet; then
+            echo "Rien de nouveau côté Substack."
+          else
+            git commit -m "maj automatique des articles depuis Substack"
+            git push
+          fi
