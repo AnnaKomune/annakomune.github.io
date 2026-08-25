@@ -10,6 +10,7 @@ import html
 import re
 import sys
 import time
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
@@ -26,20 +27,47 @@ HEADERS = {
 }
 
 
+def _fetch_curl_cffi():
+    # Imite l'empreinte réseau complète de Chrome (TLS/JA3), ce que Cloudflare vérifie.
+    from curl_cffi import requests as cffi_requests
+
+    resp = cffi_requests.get(FEED_URL, impersonate="chrome", timeout=30)
+    if resp.status_code != 200 or not resp.content:
+        raise RuntimeError(f"HTTP {resp.status_code}")
+    return resp.content
+
+
+def _fetch_urllib():
+    req = urllib.request.Request(FEED_URL, headers=HEADERS)
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return resp.read()
+
+
+def _fetch_proxy():
+    # Dernier recours : un proxy public qui va chercher le flux depuis ses propres serveurs.
+    proxy_url = "https://api.allorigins.win/raw?url=" + urllib.parse.quote(FEED_URL, safe="")
+    req = urllib.request.Request(proxy_url, headers=HEADERS)
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        return resp.read()
+
+
 def fetch_feed():
-    # Un fichier déjà téléchargé (par curl dans le workflow) peut être passé en argument.
+    # Un fichier déjà téléchargé peut être passé en argument (pratique pour tester).
     if len(sys.argv) > 1 and Path(sys.argv[1]).exists() and Path(sys.argv[1]).stat().st_size > 0:
         return Path(sys.argv[1]).read_bytes()
     last_error = None
-    for attempt in range(3):
+    for name, fetcher in (("curl_cffi", _fetch_curl_cffi), ("urllib", _fetch_urllib), ("proxy", _fetch_proxy)):
         try:
-            req = urllib.request.Request(FEED_URL, headers=HEADERS)
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                return resp.read()
-        except Exception as exc:  # noqa: BLE001 - on réessaie puis on abandonne proprement
+            data = fetcher()
+            if data and b"<item" in data:
+                print(f"Flux récupéré via {name} ({len(data)} octets).")
+                return data
+            print(f"{name} : réponse sans articles, on essaie autre chose.")
+        except Exception as exc:  # noqa: BLE001 - on tente la méthode suivante
+            print(f"{name} : {exc}")
             last_error = exc
-            time.sleep(5 * (attempt + 1))
-    raise last_error
+        time.sleep(3)
+    raise SystemExit(f"Impossible de récupérer le flux RSS ({last_error}).")
 
 
 def parse_items(xml_bytes):
