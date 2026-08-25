@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Découvrez l’équipe et le fonctionnement de Komune, média indépendant qui décrypte la société avec un regard antiraciste.">
+  <title>Komune — L’équipe et le fonctionnement</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #0000ff;
+      --purple: #5423df;
+      --pink: #f099f9;
+      --sky: #9abdff;
+      --gold: #fee075;
+      --yellow: #ffff92;
+      --green: #b0fda4;
+      --cream: #fcf7e8;
+      --ink: #332e32;
+      --white: #ffffff;
+      --muted: rgba(51, 46, 50, .72);
+      --line: rgba(51, 46, 50, .14);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --shadow: 0 18px 48px rgba(51, 46, 50, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: "Bricolage Grotesque", Inter, ui-sans-serif, system-ui, sans-serif;
+      line-height: 1.45;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+    h1, h2, h3, p { margin: 0; }
+
+    .page {
+      width: min(1220px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 80px;
+    }
+
+    .canvas {
+      padding: clamp(14px, 2.2vw, 28px);
+      border: 1px solid rgba(51, 46, 50, .08);
+      border-radius: 38px;
+      background: rgba(255, 255, 255, .22);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow,
+    h3 {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: .085em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      font-family: "Oswald", Impact, sans-serif;
+      font-weight: 400;
+      letter-spacing: -.045em;
+      line-height: .89;
+    }
+
+    h1 { font-size: clamp(68px, 8vw, 118px); }
+    h2 { font-size: clamp(48px, 5.8vw, 84px); }
+
+    p {
+      color: var(--muted);
+      font-size: clamp(16px, 1.44vw, 20px);
+      line-height: 1.5;
+    }
+
+    .section { margin-top: 18px; }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 14px 20px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--cream);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1;
+      transition: transform .18s ease, background .18s ease, color .18s ease;
+    }
+
+    .button:hover {
+      background: var(--pink);
+      color: var(--ink);
+      transform: translateY(-2px) rotate(-1deg);
+    }
+
+    .mark {
+      display: inline;
+      padding: .02em .13em .07em;
+      border-radius: .10em;
+      background: var(--pink);
+      color: var(--ink);
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    /* En-tête */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, .35fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .hero-main {
+      min-width: 0;
+      padding: clamp(34px, 5vw, 62px);
+      background: var(--white);
+    }
+
+    .hero-kicker {
+      display: inline-block;
+      width: fit-content;
+      margin-bottom: 28px;
+      padding-bottom: 7px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      min-height: 100%;
+      padding: clamp(26px, 3vw, 42px);
+      background: var(--yellow);
+      transform: rotate(1deg);
+    }
+
+    .hero-actions .button { transform: rotate(-2deg); }
+    .hero-actions .button:hover { transform: translateY(-2px) rotate(-3deg); }
+
+    /* Fonctionnement */
+    .section-heading { margin: 74px 0 18px; }
+
+    .functioning-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+      gap: clamp(24px, 4vw, 58px);
+      align-items: center;
+      padding: clamp(30px, 4.4vw, 54px);
+      background: var(--ink);
+      border: 1px solid var(--ink);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .functioning-copy { min-width: 0; }
+
+    .functioning-copy p {
+      max-width: 44ch;
+      color: rgba(252, 247, 232, .92);
+      font-weight: 600;
+    }
+
+    .functioning-copy p + p { margin-top: 20px; }
+
+    .functioning-photo {
+      width: min(100%, 440px);
+      justify-self: center;
+      transform: rotate(2.1deg);
+    }
+
+    .functioning-photo img {
+      height: auto;
+      object-fit: contain;
+    }
+
+    .functioning-followup {
+      padding: clamp(30px, 4.4vw, 54px);
+      background: var(--white);
+    }
+
+    .functioning-followup p {
+      max-width: 56ch;
+      color: var(--ink);
+      font-size: clamp(19px, 2vw, 27px);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -.03em;
+    }
+
+    .functioning-followup p + p { margin-top: 22px; }
+
+    /* Équipe */
+    .team-title {
+      padding: clamp(30px, 4.5vw, 52px);
+      background: var(--pink);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+      align-items: start;
+    }
+
+    .person {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .person:nth-child(2) { transform: rotate(.6deg); }
+    .person:nth-child(3) { transform: rotate(-.45deg); }
+    .person:nth-child(4) { transform: rotate(.5deg); }
+
+    .person-photo {
+      height: clamp(340px, 38vw, 510px);
+      overflow: hidden;
+      background: var(--sky);
+    }
+
+    .person:nth-child(2) .person-photo { background: var(--pink); }
+    .person:nth-child(3) .person-photo { background: var(--yellow); }
+    .person:nth-child(4) .person-photo { background: var(--green); }
+
+    .person-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .person-body { padding: clamp(26px, 3.2vw, 38px); }
+
+    .person-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .person-name {
+      font-family: "Oswald", Impact, sans-serif;
+      font-size: clamp(46px, 5.1vw, 68px);
+      font-weight: 700;
+      line-height: .85;
+      letter-spacing: -.05em;
+    }
+
+    .person-role {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .person-copy {
+      display: grid;
+      gap: 15px;
+      margin-top: 22px;
+    }
+
+    .person-copy p {
+      color: var(--muted);
+      font-size: clamp(16px, 1.38vw, 19px);
+      line-height: 1.5;
+    }
+
+    /* Contacts */
+    .contact-heading { margin-top: 74px; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .contact-card {
+      min-width: 0;
+      padding: clamp(28px, 4vw, 46px);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .contact-card.dark {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--cream);
+    }
+
+    .contact-card h3 { margin-bottom: 18px; }
+    .contact-card.dark h3 { color: rgba(252, 247, 232, .7); }
+
+    .contact-card a {
+      display: block;
+      color: var(--ink);
+      font-size: clamp(22px, 2.6vw, 34px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-card.dark a { color: var(--cream); }
+
+    @media (max-width: 920px) {
+      .hero,
+      .functioning-top { grid-template-columns: 1fr; }
+      .hero-actions {
+        min-height: 130px;
+        justify-content: flex-start;
+      }
+      .functioning-photo {
+        width: min(78%, 460px);
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page { width: min(100% - 18px, 1220px); padding: 10px 0 48px; }
+      .canvas { padding: 10px; border-radius: 24px; }
+      .panel,
+      .functioning-top,
+      .person,
+      .contact-card { border-radius: 24px; }
+      h1 { font-size: clamp(64px, 20vw, 96px); }
+      h2 { font-size: clamp(46px, 14vw, 74px); }
+      .hero-main { padding: 30px 24px; }
+      .hero-actions { transform: none; }
+      .section-heading,
+      .contact-heading { margin-top: 54px; }
+      .functioning-top { padding: 30px 24px; }
+      .functioning-photo { width: min(86%, 420px); transform: rotate(1.5deg); }
+      .functioning-followup { padding: 30px 24px; }
+      .team-grid,
+      .contact-grid { grid-template-columns: 1fr; }
+      .person:nth-child(2),
+      .person:nth-child(3),
+      .person:nth-child(4) { transform: none; }
+      .person-photo { height: min(124vw, 500px); }
+      .person-name { font-size: clamp(50px, 17vw, 70px); }
+    }
+  </style>
+  <!-- ===== Navigation commune du site (ajout : supprimable / modifiable librement) ===== -->
+  <style>
+    .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 4px 4px 16px; }
+    .site-nav .site-brand { margin-right: auto; font-family: "Oswald", Impact, sans-serif; font-size: 27px; font-weight: 700; letter-spacing: -.04em; color: var(--ink); text-decoration: none; }
+    .site-nav a.site-link {
+      display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
+      font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 3px 3px 0 rgba(51,46,50,.12);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .site-nav a.site-link:hover { transform: translateY(-1px); background: var(--yellow); }
+    .site-nav a.site-link.is-current { background: var(--ink); color: var(--cream); }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <!-- ===== Navigation commune du site ===== -->
+    <nav class="site-nav" aria-label="Navigation du site">
+      <a class="site-brand" href="../">KOMUNE</a>
+      <a class="site-link" href="../">Accueil</a>
+      <a class="site-link" href="../articles/">Articles</a>
+      <a class="site-link" href="../comparateur-2027/">Comparateur 2027</a>
+      <a class="site-link is-current" href="./" aria-current="page">L'équipe</a>
+      <a class="site-link" href="../soutenir/">Nous soutenir</a>
+    </nav>
+    <div class="canvas">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-main panel">
+          <div class="eyebrow hero-kicker">Komune média</div>
+          <h1 id="page-title">L’équipe,<br>comment ça fonctionne</h1>
+        </div>
+        <div class="hero-actions panel">
+          <a class="button" href="../soutenir/">Nous soutenir ↗</a>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="fonctionnement-title">
+        <div class="section-heading">
+          <h2 id="fonctionnement-title">Le fonctionnement</h2>
+        </div>
+
+        <div class="functioning-top">
+          <div class="functioning-copy">
+            <p>Dans l’espace public, la blanchité fonctionne comme un rapport de pouvoir : elle structure ce qui est plus facilement visible, audible et jugé crédible.</p>
+            <p>Komune a été fondé par Jeannette, aujourd’hui rédactrice en chef. Le média est dirigé avec Anna, présidente, qui en assure le développement économique. Toutes deux sont blanches et conscientes de la position que cela implique.</p>
+          </div>
+
+          <figure class="functioning-photo">
+            <img src="https://drive.google.com/thumbnail?id=1QBB7v1INup-YsxklhdpBwd7OMRzR8iyf&amp;sz=w1600" alt="Coulisses de l’équipe Komune" loading="lazy" referrerpolicy="no-referrer">
+          </figure>
+        </div>
+
+        <article class="functioning-followup panel section">
+          <p>Komune fonctionne avec une <span class="mark">équipe éditoriale diversifiée</span> qui propose des sujets, contribue aux choix éditoriaux et veille collectivement à la justesse des récits et des représentations.</p>
+          <p>Nous échangeons également avec un réseau informel de personnes concernées qui nous aide à repérer nos angles morts et à affiner notre regard.</p>
+          <p>C’est un travail que nous considérons comme une responsabilité éditoriale continue.</p>
+        </article>
+      </section>
+
+      <section class="section" aria-labelledby="team-title">
+        <div class="team-title panel section-heading">
+          <h2 id="team-title">L’équipe</h2>
+        </div>
+
+        <div class="team-grid">
+          <article class="person">
+            <div class="person-photo">
+              <img src="https://drive.google.com/thumbnail?id=1BLXyo43tVcX_-yBfEuXBo7yOVbRHFc2D&amp;sz=w1200" alt="Portrait de Badra, membre de l’équipe Komune" loading="lazy" referrerpolicy="no-referrer">
+            </div>
+            <div class="person-body">
+              <div class="person-meta">
+                <div class="person-name">Badra</div>
+                <div class="person-role">Journaliste - Équipe éditoriale</div>
+              </div>
+              <div class="person-copy">
+                <p>Depuis toute petite, je vis au rythme des histoires : celles qu’on me racontait en arabe, puis celles que j’ai apprises à raconter moi-même.</p>
+                <p>En grandissant, j’ai compris que lorsqu’on ne ressemble pas à Blanche-Neige, la vie en Occident est loin d’être un conte de fées. Après un master spécialisé sur le Moyen-Orient, j’ai appris à nommer les discriminations et à inscrire dans la grande Histoire les vies trop souvent ignorées.</p>
+                <p>J’ai ensuite poussé les portes d’une école de journalisme pour continuer à apprendre, expliquer et contribuer à construire un monde plus juste.</p>
+                <p>J’ai rejoint Komune parce que nous partageons la conviction que le racisme ne se limite pas aux actes de haine : c’est aussi un héritage collectif qui nous traverse toutes et tous, et dont il est possible de se défaire.</p>
+                <p>Et si vous me cherchez, vous me trouverez probablement en train de sautiller dans une librairie.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="person">
+            <div class="person-photo">
+              <img src="https://drive.google.com/thumbnail?id=1QmSs7SikKAygRXsEWG8GNQnNyI7pOZ4h&amp;sz=w1200" alt="Portrait de Sandra, membre de l’équipe Komune" loading="lazy" referrerpolicy="no-referrer">
+            </div>
+            <div class="person-body">
+              <div class="person-meta">
+                <div class="person-name">Sandra</div>
+                <div class="person-role">Journaliste - Équipe éditoriale</div>
+              </div>
+              <div class="person-copy">
+                <p>Avant de me tourner vers le journalisme, j’ai suivi une licence puis un master de recherche en histoire. Au cours de ce master, je me suis spécialisée en histoire contemporaine. Mes travaux ont notamment porté sur le contrôle politique et l’encadrement des intimités des soldats coloniaux, de la Grande Guerre jusqu’aux processus d’indépendance.</p>
+                <p>Parallèlement à ce parcours académique, je porte un fort intérêt pour la mode et le style. J’ai ainsi prêté ma plume à Modzik et Kodd, deux médias indépendants : le premier avec une ligne éditoriale axée sur la mode et la musique, et le second davantage tourné vers le lifestyle, la beauté, la culture et la mode. J’aime également écrire sur des enjeux sociétaux plus larges.</p>
+                <p>Je viens de rejoindre Komune, où je travaille actuellement sur l’orientalisme et son impact dans l’espace public français. À travers mes futurs sujets, j’aimerais continuer à explorer ces thématiques en y apportant une approche historique, puisqu’il s’agit de mon domaine de spécialisation.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="person">
+            <div class="person-photo">
+              <img src="https://drive.google.com/thumbnail?id=1hzzP1EMuBgEveb2gpeIjaf6dvEKpn1yc&amp;sz=w1200" alt="Portrait de Jeannette, fondatrice et rédactrice en chef de Komune" loading="lazy" referrerpolicy="no-referrer">
+            </div>
+            <div class="person-body">
+              <div class="person-meta">
+                <div class="person-name">Jeannette</div>
+                <div class="person-role">Fondatrice &amp; rédactrice en chef</div>
+              </div>
+              <div class="person-copy">
+                <p>Je suis journaliste, rédactrice en chef de Komune Média et vidéaste. Diplômée d’un master en droits humains, je débute mon parcours professionnel dans l’action sociale avant de fonder Komune en 2022 et de me consacrer au journalisme.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="person">
+            <div class="person-photo">
+              <img src="https://drive.google.com/thumbnail?id=1TMU2EKRHOreZtRAd-P38coq250Dfa5lw&amp;sz=w1200" alt="Portrait d’Anna, présidente de Komune" loading="lazy" referrerpolicy="no-referrer">
+            </div>
+            <div class="person-body">
+              <div class="person-meta">
+                <div class="person-name">Anna</div>
+                <div class="person-role">Présidente &amp; développement</div>
+              </div>
+              <div class="person-copy">
+                <p>Ancienne ingénieure en data et intelligence artificielle, formée sur le terrain, j’ai occupé plusieurs postes de management dans la tech avant de rejoindre Komune Média fin 2023, pour contribuer à son développement. J’en reprends la présidence en 2026. Également pilote de drone et journaliste, j’écris régulièrement pour la newsletter de Komune.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Nous contacter">
+        <div class="contact-heading">
+          <h2>Nous contacter</h2>
+        </div>
+        <div class="contact-grid">
+          <article class="contact-card">
+            <h3>Éditorial &amp; partenariats</h3>
+            <a href="mailto:anna@komunemedia.fr">anna@komunemedia.fr</a>
+          </article>
+          <article class="contact-card dark">
+            <h3>Contact général</h3>
+            <a href="mailto:komune.contact@gmail.com">komune.contact@gmail.com</a>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
