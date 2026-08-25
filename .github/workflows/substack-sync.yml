@@ -16,16 +16,11 @@ jobs:
       - name: Récupérer le site
         uses: actions/checkout@v4
 
-      - name: Télécharger le flux RSS (comme un navigateur)
-        run: |
-          curl -fsSL --retry 3 --retry-delay 5 \
-            -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" \
-            -H "Accept: application/rss+xml,application/xml;q=0.9,*/*;q=0.8" \
-            -H "Accept-Language: fr-FR,fr;q=0.9,en;q=0.8" \
-            "https://komunemedia.substack.com/feed" -o /tmp/feed.xml || true
+      - name: Installer curl_cffi (empreinte navigateur pour passer Cloudflare)
+        run: pip install --quiet curl_cffi
 
       - name: Mettre à jour data/articles.json depuis le flux RSS
-        run: python3 scripts/sync_substack.py /tmp/feed.xml
+        run: python3 scripts/sync_substack.py
 
       - name: Publier si quelque chose a changé
         run: |
