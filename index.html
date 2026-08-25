@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Komune est un média indépendant qui décrypte la société avec un regard antiraciste.">
+  <title>Komune — Accueil</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #0000ff;
+      --purple: #5423df;
+      --pink: #f099f9;
+      --sky: #9abdff;
+      --gold: #fee075;
+      --yellow: #ffff92;
+      --green: #b0fda4;
+      --cream: #fcf7e8;
+      --ink: #332e32;
+      --forest: #35674b;
+      --white: #ffffff;
+      --muted: rgba(51, 46, 50, .70);
+      --line: rgba(51, 46, 50, .14);
+      --radius-xl: 34px;
+      --radius-lg: 26px;
+      --shadow: 0 18px 48px rgba(51, 46, 50, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: "Bricolage Grotesque", Inter, ui-sans-serif, system-ui, sans-serif;
+      line-height: 1.42;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    .page {
+      width: min(1220px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 80px;
+    }
+
+    .canvas {
+      padding: clamp(14px, 2.2vw, 28px);
+      border: 1px solid rgba(51, 46, 50, .08);
+      border-radius: 38px;
+      background: rgba(255,255,255,.22);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    h1 {
+      max-width: 7.6ch;
+      margin: 0;
+      font-family: "Oswald", Impact, sans-serif;
+      font-size: clamp(64px, 6.5vw, 100px);
+      font-weight: 700;
+      line-height: .84;
+      letter-spacing: -.045em;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: "Oswald", Impact, sans-serif;
+      font-size: clamp(46px, 5.7vw, 82px);
+      font-weight: 400;
+      line-height: .91;
+      letter-spacing: -.035em;
+    }
+
+    h3,
+    .eyebrow {
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: .085em;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: clamp(16px, 1.45vw, 20px);
+      line-height: 1.52;
+    }
+
+    .mark {
+      padding: 0 .06em;
+      color: var(--ink);
+      font-weight: 800;
+      background: linear-gradient(transparent 38%, var(--yellow) 38%);
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    .mark.pink { background: linear-gradient(transparent 38%, var(--pink) 38%); }
+    .mark.sky { background: linear-gradient(transparent 38%, var(--sky) 38%); }
+    .mark.green { background: linear-gradient(transparent 38%, var(--green) 38%); }
+
+    /* Sur fond sombre : fond coloré + texte foncé, jamais jaune sous du texte blanc. */
+    .mark-dark {
+      display: inline;
+      padding: .02em .14em .06em;
+      border-radius: .08em;
+      color: var(--ink);
+      font-weight: 800;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    .mark-dark.pink { background: var(--pink); }
+    .mark-dark.sky { background: var(--sky); }
+    .mark-dark.green { background: var(--green); }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(330px, .92fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .hero-main,
+    .stat,
+    .manifest-card,
+    .support-poster,
+    .support-card,
+    .article,
+    .videos,
+    .contact-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      min-width: 0;
+      padding: clamp(34px, 5vw, 60px);
+      background: var(--white);
+    }
+
+    .hero-kicker {
+      display: inline-block;
+      width: fit-content;
+      margin-bottom: 28px;
+      padding-bottom: 7px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .baseline {
+      max-width: 15ch;
+      margin-top: 26px;
+      color: var(--ink);
+      font-size: clamp(26px, 3.1vw, 44px);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -.035em;
+    }
+
+    /* Retours de ligne contrôlés uniquement dans le bloc d'ouverture. */
+    .hero-copy-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .hero-side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      min-width: 0;
+      align-items: start;
+    }
+
+    .stat {
+      min-width: 0;
+      padding: clamp(24px, 3vw, 38px);
+      background: var(--white);
+    }
+
+    .stat.wide {
+      grid-column: 1 / -1;
+      background: var(--yellow);
+    }
+
+    .stat.dark {
+      color: var(--cream);
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .stat.sky { background: var(--sky); }
+
+    .stat-number {
+      font-family: "Oswald", Impact, sans-serif;
+      font-size: clamp(50px, 5.6vw, 80px);
+      font-weight: 700;
+      line-height: .83;
+      letter-spacing: -.055em;
+    }
+
+    .stat-label {
+      margin-top: 9px;
+      font-size: clamp(18px, 2vw, 27px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.025em;
+    }
+
+    .stat-note {
+      max-width: 34ch;
+      margin-top: 25px;
+      font-size: 15px;
+      line-height: 1.42;
+    }
+
+    .stat.dark .stat-note { color: rgba(252,247,232,.78); }
+
+    .support-cta {
+      display: flex;
+      grid-column: 1 / -1;
+      align-items: center;
+      justify-content: center;
+      min-height: clamp(132px, 14vw, 220px);
+      padding: clamp(28px, 4vw, 52px);
+      background: var(--pink);
+      color: var(--ink);
+      font-family: "Oswald", Impact, sans-serif;
+      font-size: clamp(58px, 7.2vw, 106px);
+      font-weight: 700;
+      line-height: .83;
+      letter-spacing: -.055em;
+      text-align: center;
+      text-decoration: underline;
+      transform: rotate(-3deg);
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .support-cta:hover {
+      background: var(--yellow);
+      transform: rotate(-3deg) translateY(-4px);
+    }
+
+    /* RESEAUX */
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 16px;
+      padding: 20px;
+      border-radius: var(--radius-xl);
+      background: var(--ink);
+      box-shadow: var(--shadow);
+    }
+
+    .bubble {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 43px;
+      padding: 11px 16px;
+      border: 1px solid rgba(252,247,232,.24);
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 800;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .bubble:hover { transform: translateY(-2px); background: var(--pink); }
+    .bubble:nth-child(2n):hover { background: var(--sky); }
+    .bubble:nth-child(3n):hover { background: var(--green); }
+
+    /* TEXTE EDITORIAL */
+    .manifest {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+      margin-top: 16px;
+    }
+
+    .manifest-card {
+      min-width: 0;
+      padding: clamp(28px, 4vw, 46px);
+      background: var(--white);
+    }
+
+    .manifest-card p { color: var(--muted); }
+    .manifest-card.pink { background: var(--pink); }
+    .manifest-card.sky { background: var(--sky); }
+    .manifest-card.dark {
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .manifest-card.dark p {
+      color: var(--cream);
+      font-weight: 700;
+    }
+
+    /* SOUTIEN */
+    .support {
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(330px, .96fr);
+      gap: 16px;
+      align-items: start;
+      margin-top: 48px;
+    }
+
+    .support-poster {
+      min-width: 0;
+      padding: clamp(34px, 5vw, 58px);
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--cream);
+    }
+
+    .support-poster .eyebrow,
+    .support-poster h2,
+    .support-poster p { color: var(--cream); }
+
+    .support-poster h2 { margin-top: 17px; }
+    .support-poster p { margin-top: 20px; font-weight: 700; }
+
+    .support-points {
+      display: grid;
+      gap: 0;
+      margin-top: 28px;
+      border-top: 1px solid rgba(252,247,232,.2);
+    }
+
+    .support-points div {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(252,247,232,.2);
+      color: rgba(252,247,232,.92);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .support-side {
+      display: grid;
+      gap: 16px;
+    }
+
+    .support-card {
+      min-width: 0;
+      padding: clamp(28px, 4vw, 44px);
+      background: var(--white);
+    }
+
+    .support-card.yellow { background: var(--yellow); }
+    .support-card.sky { background: var(--sky); }
+    .support-card p { margin-top: 18px; color: rgba(51,46,50,.82); font-size: 18px; font-weight: 700; }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      margin-top: 23px;
+      padding: 15px 21px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--cream);
+      font-size: 16px;
+      font-weight: 800;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .button:hover { transform: translateY(-2px); background: var(--purple); }
+
+
+    /* COMPARATEUR 2027 */
+    .comparator-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 48px;
+    }
+
+    .comparator-copy,
+    .comparator-video-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .comparator-copy {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(34px, 5vw, 58px);
+      background:
+        radial-gradient(circle at 88% 12%, rgba(240,153,249,.50), transparent 24%),
+        radial-gradient(circle at 8% 92%, rgba(176,253,164,.55), transparent 28%),
+        var(--white);
+    }
+
+    .comparator-copy::after {
+      content: "2027";
+      position: absolute;
+      right: 18px;
+      bottom: -12px;
+      z-index: 0;
+      font-family: "Oswald", Impact, sans-serif;
+      font-size: clamp(118px, 17vw, 232px);
+      font-weight: 700;
+      line-height: .75;
+      letter-spacing: -.08em;
+      color: rgba(0,0,255,.08);
+      pointer-events: none;
+    }
+
+    .comparator-copy > * { position: relative; z-index: 1; }
+
+    .comparator-copy h2 {
+      max-width: 11ch;
+      margin-top: 16px;
+    }
+
+    .comparator-copy p {
+      max-width: 72ch;
+      margin-top: 18px;
+      font-weight: 700;
+      color: rgba(51,46,50,.78);
+    }
+
+    .comparator-copy h2 .mark {
+      padding: .01em .08em .05em;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    .comparator-preview {
+      display: block;
+      width: min(100%, 980px);
+      margin-top: 26px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--cream);
+      box-shadow: 0 16px 38px rgba(51,46,50,.14);
+      transform: rotate(-1deg);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .comparator-preview:hover {
+      transform: rotate(0deg) translateY(-3px);
+      box-shadow: 0 20px 44px rgba(51,46,50,.18);
+    }
+
+    .comparator-preview img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .comparator-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 22px;
+    }
+
+    .comparator-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 8px 11px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 3px 3px 0 rgba(51,46,50,.12);
+    }
+
+    .comparator-pill:nth-child(2n) { background: var(--yellow); }
+    .comparator-pill:nth-child(3n) { background: var(--sky); }
+    .comparator-pill:nth-child(4n) { background: var(--pink); }
+
+    .comparator-video-card {
+      display: grid;
+      align-content: start;
+      gap: 14px;
+      padding: clamp(24px, 3.4vw, 38px);
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
+
+    .comparator-video-card .eyebrow,
+    .comparator-video-card h3 {
+      color: var(--cream);
+    }
+
+    .comparator-video-card p {
+      color: rgba(252,247,232,.76);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .comparator-video {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid rgba(252,247,232,.20);
+      border-radius: 24px;
+      background: var(--cream);
+      box-shadow: 0 14px 34px rgba(0,0,0,.22);
+    }
+
+    .comparator-video iframe {
+      display: block;
+      width: 100%;
+      height: min(680px, 74vw);
+      min-height: 520px;
+      border: 0;
+      background: var(--cream);
+    }
+
+    .comparator-open {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 0;
+      padding: 10px 13px;
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .comparator-open:hover {
+      background: var(--pink);
+      transform: translateY(-2px);
+    }
+
+
+    /* ARTICLES */
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 22px;
+      margin: 72px 0 18px;
+    }
+
+    .section-head h2 { margin: 0; }
+
+    .articles-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      padding: 13px 18px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--pink);
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+      transform: rotate(2deg);
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .articles-link:hover {
+      background: var(--yellow);
+      transform: rotate(-3deg) translateY(-4px) scale(1.04);
+    }
+
+    .carousel {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(318px, 420px);
+      gap: 16px;
+      overflow-x: auto;
+      padding: 4px 4px 20px;
+      scroll-snap-type: x mandatory;
+      scrollbar-color: rgba(51,46,50,.28) transparent;
+    }
+
+    .carousel::-webkit-scrollbar,
+    .video-row::-webkit-scrollbar { height: 10px; }
+
+    .carousel::-webkit-scrollbar-thumb,
+    .video-row::-webkit-scrollbar-thumb { background: rgba(51,46,50,.24); border-radius: 999px; }
+
+    .article {
+      display: flex;
+      flex-direction: column;
+      min-height: 495px;
+      overflow: hidden;
+      border-radius: 22px;
+      background: var(--white);
+      scroll-snap-align: start;
+    }
+
+    .article-image {
+      height: 232px;
+      overflow: hidden;
+      background: var(--sky);
+    }
+
+    .article-image img { height: 100%; object-fit: cover; }
+
+    .article-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 20px 22px 22px;
+    }
+
+    .article-title {
+      color: var(--ink);
+      font-size: 23px;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.025em;
+    }
+
+    .article-desc {
+      margin-top: 12px;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: auto;
+      padding-top: 18px;
+      color: rgba(51,46,50,.68);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .article-read {
+      flex: 0 0 auto;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+
+
+    .article-image.article-placeholder {
+      display: flex;
+      align-items: flex-end;
+      min-height: 232px;
+      padding: 18px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(240,153,249,.9), transparent 30%),
+        radial-gradient(circle at 88% 78%, rgba(255,255,146,.95), transparent 34%),
+        linear-gradient(135deg, var(--blue), var(--purple));
+      color: var(--cream);
+    }
+
+    .article-image.article-placeholder span {
+      display: block;
+      max-width: 12ch;
+      font-family: "Oswald", Impact, sans-serif;
+      font-size: clamp(36px, 3.9vw, 58px);
+      font-weight: 700;
+      line-height: .88;
+      letter-spacing: -.055em;
+      text-shadow: 3px 3px 0 var(--ink);
+    }
+
+    .article.latest .article-image.article-placeholder.pink {
+      background:
+        radial-gradient(circle at 14% 18%, rgba(255,255,146,.95), transparent 28%),
+        linear-gradient(135deg, var(--pink), var(--blue));
+    }
+
+    .article.latest .article-image.article-placeholder.green {
+      background:
+        radial-gradient(circle at 86% 20%, rgba(240,153,249,.78), transparent 28%),
+        linear-gradient(135deg, var(--green), var(--sky));
+      color: var(--ink);
+    }
+
+    .article.latest .article-image.article-placeholder.green span {
+      text-shadow: 3px 3px 0 var(--pink);
+    }
+
+    /* VIDEOS INSTAGRAM */
+    .videos {
+      margin-top: 20px;
+      padding: clamp(28px, 4vw, 48px);
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--cream);
+    }
+
+    .videos h2 { color: var(--cream); }
+
+    .video-row {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 272px;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 16px 2px 14px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .video-card {
+      position: relative;
+      min-width: 0;
+      height: 420px;
+      overflow: hidden;
+      border: 1px solid rgba(252,247,232,.19);
+      border-radius: 24px;
+      background: var(--cream);
+      box-shadow: 0 14px 34px rgba(0,0,0,.2);
+      scroll-snap-align: start;
+    }
+
+    .video-card iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: var(--cream);
+    }
+
+    .video-open {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      z-index: 2;
+      padding: 9px 11px;
+      border-radius: 999px;
+      background: rgba(51,46,50,.90);
+      color: var(--cream);
+      font-size: 12px;
+      font-weight: 800;
+      backdrop-filter: blur(6px);
+    }
+
+    .video-open:hover { background: var(--pink); color: var(--ink); }
+
+    .comparator-instagram-card {
+      width: 100%;
+      height: clamp(460px, 58vw, 640px);
+      margin-top: 4px;
+      scroll-snap-align: initial;
+    }
+
+    .comparator-instagram-card iframe {
+      height: 100%;
+    }
+
+
+    .comparator-feature-video {
+      width: min(100%, 330px);
+      height: 520px;
+      margin-top: 4px;
+      background: var(--cream);
+      border-color: rgba(252,247,232,.19);
+    }
+
+    .comparator-feature-video iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: var(--cream);
+    }
+
+
+    .instagram-official-embed {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(100%, 540px);
+      min-height: 540px;
+      height: auto;
+      padding: 0;
+      overflow: visible;
+      border: 1px solid rgba(252,247,232,.19);
+      border-radius: 24px;
+      background: var(--cream);
+      box-shadow: 0 14px 34px rgba(0,0,0,.22);
+    }
+
+    .instagram-official-embed .instagram-media {
+      min-width: 0 !important;
+      width: 100% !important;
+      max-width: 540px !important;
+      margin: 0 auto !important;
+      border-radius: 24px !important;
+      background: var(--cream) !important;
+    }
+
+    .instagram-official-embed .video-open {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      z-index: 3;
+    }
+
+    @media (max-width: 980px) {
+      .comparator-feature-video { width: min(100%, 360px); }
+    }
+
+    @media (max-width: 640px) {
+      .comparator-feature-video { width: 100%; height: 500px; }
+    }
+
+    /* CONTACT */
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .contact-card {
+      min-width: 0;
+      padding: clamp(28px, 4vw, 46px);
+      background: var(--white);
+    }
+
+    .contact-card.dark {
+      color: var(--cream);
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .contact-card.dark h3,
+    .contact-card.dark a { color: var(--cream); }
+
+    .contact-card h3 { margin-bottom: 18px; }
+
+    .contact-card a {
+      display: block;
+      color: var(--ink);
+      font-size: clamp(22px, 2.6vw, 34px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .support,
+      .comparator-section,
+      .contact { grid-template-columns: 1fr; }
+      .hero-side { max-width: none; }
+      .manifest { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(100% - 18px, 1220px); padding-top: 12px; }
+      .canvas { padding: 10px; border-radius: 24px; }
+      .hero-main,
+      .stat,
+      .manifest-card,
+      .support-poster,
+      .support-card,
+      .comparator-copy,
+      .comparator-video-card,
+      .videos,
+      .contact-card { border-radius: 24px; }
+      h1 { font-size: clamp(62px, 20vw, 96px); }
+      h2 { font-size: clamp(44px, 14vw, 72px); }
+      .hero-main { padding: 30px 24px; }
+      .hero-side { grid-template-columns: 1fr 1fr; }
+      .stat { padding: 23px; }
+      .stat-number { font-size: clamp(52px, 15vw, 76px); }
+      .stat-label { font-size: 18px; }
+      .stat-note { font-size: 14px; }
+      .socials { padding: 18px; }
+      .bubble { flex: 1 1 auto; }
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-top: 54px;
+      }
+      .articles-link { margin-top: 4px; }
+      .carousel { grid-auto-columns: minmax(286px, 84vw); }
+      .article { min-height: 485px; }
+      .video-row { grid-auto-columns: 250px; }
+      .video-card { height: 400px; }
+      .comparator-instagram-card { height: 520px; }
+      .article-meta { align-items: start; flex-direction: column; }
+    }
+
+    @media (max-width: 420px) {
+      .hero-side { grid-template-columns: 1fr; }
+      .stat.wide { grid-column: auto; }
+      .contact-card a { font-size: 23px; }
+    }
+  </style>
+  <!-- ===== Navigation commune du site (ajout : supprimable / modifiable librement) ===== -->
+  <style>
+    .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 4px 4px 16px; }
+    .site-nav .site-brand { margin-right: auto; font-family: "Oswald", Impact, sans-serif; font-size: 27px; font-weight: 700; letter-spacing: -.04em; color: var(--ink); text-decoration: none; }
+    .site-nav a.site-link {
+      display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
+      font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 3px 3px 0 rgba(51,46,50,.12);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .site-nav a.site-link:hover { transform: translateY(-1px); background: var(--yellow); }
+    .site-nav a.site-link.is-current { background: var(--ink); color: var(--cream); }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <!-- ===== Navigation commune du site ===== -->
+    <nav class="site-nav" aria-label="Navigation du site">
+      <a class="site-brand" href="./">KOMUNE</a>
+      <a class="site-link is-current" href="./" aria-current="page">Accueil</a>
+      <a class="site-link" href="articles/">Articles</a>
+      <a class="site-link" href="comparateur-2027/">Comparateur 2027</a>
+      <a class="site-link" href="equipe/">L'équipe</a>
+      <a class="site-link" href="soutenir/">Nous soutenir</a>
+    </nav>
+    <div class="canvas">
+
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-main">
+          <div class="eyebrow hero-kicker">Komune média</div>
+          <h1 id="page-title">Bienvenue<br>sur<br>Komune</h1>
+          <p class="baseline">
+            <span class="hero-copy-line">Komune est</span>
+            <span class="hero-copy-line">un média indépendant</span>
+            <span class="hero-copy-line">qui décrypte la société</span>
+            <span class="hero-copy-line">avec un <span class="mark pink">regard antiraciste</span>.</span>
+          </p>
+        </div>
+
+        <aside class="hero-side" aria-label="Quelques chiffres sur Komune">
+          <div class="stat wide">
+            <div class="stat-number">200K+</div>
+            <div class="stat-label"><span class="hero-copy-line">abonnés sur</span><span class="hero-copy-line">nos réseaux</span></div>
+          </div>
+          <div class="stat dark">
+            <div class="stat-number">2M</div>
+            <div class="stat-label"><span class="hero-copy-line">de vues</span><span class="hero-copy-line">par mois</span></div>
+          </div>
+          <div class="stat sky">
+            <div class="stat-number">4 ans</div>
+            <div class="stat-label">de décryptages</div>
+          </div>
+          <a class="stat support-cta" href="soutenir/" aria-label="Nous soutenir">Nous soutenir</a>
+        </aside>
+      </section>
+
+      <nav class="socials" aria-label="Liens vers les réseaux Komune">
+        <a class="bubble" href="https://www.instagram.com/komune.media/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+        <a class="bubble" href="https://www.tiktok.com/@komune.media" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
+        <a class="bubble" href="https://www.youtube.com/@komune4882" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+        <a class="bubble" href="https://open.spotify.com/show/6PRIhaKZNhTfmutTcKahdt" target="_blank" rel="noopener noreferrer">Spotify ↗</a>
+        <a class="bubble" href="https://podcasts.apple.com/fr/podcast/komune-podcast/id1676428751" target="_blank" rel="noopener noreferrer">Apple podcast ↗</a>
+        <a class="bubble" href="https://komunemedia.substack.com/?utm_campaign=profile_chips" target="_blank" rel="noopener noreferrer">Articles ↗</a>
+      </nav>
+
+      <section class="manifest" aria-label="Bienvenue sur Komune">
+        <article class="manifest-card">
+          <p>Nous analysons l’actualité et les récits dominants pour comprendre comment les rapports de pouvoir, notamment raciaux, structurent notre société et influencent son fonctionnement.</p>
+        </article>
+
+        <article class="manifest-card pink">
+          <p>À travers des décryptages, des analyses et des récits de personnes concernées, nous documentons des réalités souvent invisibilisées et éclairons des sujets instrumentalisés dans le débat politico-médiatique, comme <span class="mark">l’immigration</span>.</p>
+        </article>
+
+        <article class="manifest-card dark" style="transform: rotate(-3deg);">
+          <p>Parce qu’aujourd’hui, ces questions sont partout : dans les médias, dans les discours politiques, dans les conversations du quotidien.</p>
+        </article>
+
+        <article class="manifest-card sky">
+          <p>Et parce que dans un monde où les inégalités se creusent et où le racisme progresse, il devient essentiel de pouvoir s’informer avec <span class="mark sky">rigueur</span> et comprendre les mécanismes qui façonnent notre société.</p>
+        </article>
+      </section>
+
+      <section class="support" id="soutenir" aria-labelledby="support-title">
+        <div class="support-poster">
+          <div class="eyebrow">Soutenir Komune</div>
+          <h2 id="support-title">Soutenir Komune</h2>
+          <p>Dans moins d'un an, il y aura l'élection présidentielle. Immigration, islam, identité nationale : les sujets que nous traitons au quotidien vont être encore plus présents dans les médias, les discours politiques et les discussions du quotidien.</p>
+          <p>Et plus ces sujets occupent l'espace public, plus il y a besoin de <span class="mark-dark sky">faits</span>, de <span class="mark-dark pink">contexte</span> et d'<span class="mark-dark green">informations vérifiées</span>.</p>
+          <a class="button" href="soutenir/">Nous soutenir ↗</a>
+        </div>
+
+        <div class="support-side">
+          <article class="support-card yellow">
+            <p>Nous voulons passer à la vitesse supérieure : produire davantage de décryptages et de témoignages, réaliser plus de reportages de terrain partout en France, donner davantage la parole aux expert·es et rendre leur savoir accessible au plus grand nombre.</p>
+          </article>
+          <article class="support-card sky">
+            <p>Pour y parvenir, il n'y a pas de solution miracle : nous devons pouvoir consacrer plus de temps au média, moins aux prestations extérieures qui nous font vivre actuellement, et surtout recruter pour renforcer l'équipe.</p>
+          </article>
+        </div>
+      </section>
+
+
+      <section class="comparator-section" id="comparateur-2027" aria-labelledby="comparateur-title">
+        <article class="comparator-copy">
+          <div class="eyebrow">Présidentielle 2027</div>
+          <h2 id="comparateur-title">On construit un comparateur politique <span class="mark pink">pour enfin choisir sur du concret</span></h2>
+          <a class="comparator-preview" href="https://drive.google.com/file/d/12lk0fBV-4_-Fk7Ea3tv1kk4W-gp4NUGU/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Voir l’image du comparateur politique en grand">
+            <img src="https://drive.google.com/thumbnail?id=12lk0fBV-4_-Fk7Ea3tv1kk4W-gp4NUGU&sz=w1600" alt="Aperçu du comparateur politique pour l’élection présidentielle de 2027" loading="lazy">
+          </a>
+          <p>Pour la présidentielle de 2027, on développe une plateforme gratuite pour comparer les candidat·es autrement : pas seulement à partir des promesses, mais aussi des votes, des actes, des contradictions, des sources et de ce que leurs propositions changent concrètement dans nos vies.</p>
+          <p>L’objectif : sortir des clashs, des sondages et des petites phrases pour donner un outil clair, sourcé et accessible à celles et ceux qui veulent comprendre avant de voter.</p>
+          <div class="comparator-points" aria-label="Ce que la plateforme comparera">
+            <span class="comparator-pill">programmes</span>
+            <span class="comparator-pill">votes réels</span>
+            <span class="comparator-pill">actes au pouvoir</span>
+            <span class="comparator-pill">contradictions</span>
+            <span class="comparator-pill">impacts concrets</span>
+            <span class="comparator-pill">sources</span>
+          </div>
+          <a class="button" href="comparateur-2027/">Découvrir le comparateur ↗</a>
+        </article>
+      </section>
+
+      <div class="section-head">
+        <h2>Nos derniers articles</h2>
+        <a class="articles-link" href="articles/">Explorer tous les articles ↗</a>
+      </div>
+
+      <section class="carousel" aria-label="Derniers articles Komune">
+        <a class="article latest" href="https://komunemedia.substack.com/p/le-pays-quil-fallait-apprendre-a" target="_blank" rel="noopener noreferrer">
+          <div class="article-image article-placeholder green"><span>Le pays qu’il fallait apprendre à aimer</span></div>
+          <div class="article-body">
+            <div class="article-title">Le pays qu’il fallait apprendre à aimer</div>
+            <p class="article-desc">[PORTRAIT] Né entre deux rives, Sinan part au Maroc pour comprendre ses origines. Il y découvre surtout une nouvelle façon d’habiter son identité.</p>
+            <div class="article-meta"><span>Komune Média</span><span class="article-read">Lire sur Substack →</span></div>
+          </div>
+        </a>
+
+        <a class="article latest" href="https://komunemedia.substack.com/p/intersectionnalite-pourquoi-ce-concept" target="_blank" rel="noopener noreferrer">
+          <div class="article-image"><img src="https://substackcdn.com/image/fetch/%24s_%21-0kr%21%2Cw_1456%2Cc_limit%2Cf_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19144e5c-8842-47c4-a6ad-cf6a9887b912_4608x3072.heic" alt="Couverture de l'article Intersectionnalité : pourquoi ce concept dérange en France ?"></div>
+          <div class="article-body">
+            <div class="article-title">Intersectionnalité : pourquoi ce concept dérange en France ?</div>
+            <p class="article-desc">Alors que la gauche française se divise sur la question raciale, l’intersectionnalité s’impose comme un outil pour penser les inégalités autrement.</p>
+            <div class="article-meta"><span>Komune Média</span><span class="article-read">Lire sur Substack →</span></div>
+          </div>
+        </a>
+
+        <a class="article latest" href="https://komunemedia.substack.com/p/racise-le-mot-qui-derange-la-republique" target="_blank" rel="noopener noreferrer">
+          <div class="article-image"><img src="https://substackcdn.com/image/fetch/%24s_%21mXSa%21%2Cw_1456%2Cc_limit%2Cf_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0d2495f2-b60d-418c-b66c-a49183349a54_1144x565.png" alt="Couverture de l'article Racisé, le mot qui dérange la République"></div>
+          <div class="article-body">
+            <div class="article-title">“Racisé”, le mot qui dérange la République</div>
+            <p class="article-desc">Apparu dans les universités en 1972, le terme “racisé” cristallise les tensions françaises entre universalisme républicain et reconnaissance des discriminations raciales.</p>
+            <div class="article-meta"><span>Komune Média</span><span class="article-read">Lire sur Substack →</span></div>
+          </div>
+        </a>
+
+        <a class="article" href="https://komunemedia.substack.com/p/qui-suis-je-grandir-et-construire" target="_blank" rel="noopener noreferrer">
+          <div class="article-image"><img src="https://substackcdn.com/image/fetch/%24s_%21FHdS%21%2Cw_1456%2Cc_limit%2Cf_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F24e0cba5-7ba8-4c6a-887b-791fade2b089_828x563.jpeg" alt="Couverture de l'article Qui suis-je ?"></div>
+          <div class="article-body">
+            <div class="article-title">"Qui suis-je ?" : grandir et construire son identité dans l’adoption transraciale</div>
+            <p class="article-desc">Comment se construire quand on ne ressemble ni à sa famille ni à son entourage ? Cinq adoptés racontent leur quête identitaire.</p>
+            <div class="article-meta"><span>Komune Média</span><span class="article-read">Lire sur Substack →</span></div>
+          </div>
+        </a>
+
+        <a class="article" href="https://komunemedia.substack.com/p/pedro-sanchez-ou-lart-du-grand-ecart" target="_blank" rel="noopener noreferrer">
+          <div class="article-image"><img src="https://substackcdn.com/image/fetch/%24s_%21K1Yo%21%2Cw_1456%2Cc_limit%2Cf_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F21a0077e-d192-4679-a1a6-ac15ef5b6d31_2048x1366.heic" alt="Couverture de l'article Pedro Sánchez ou l'art du grand écart migratoire"></div>
+          <div class="article-body">
+            <div class="article-title">Pedro Sánchez ou l'art du grand écart migratoire</div>
+            <p class="article-desc">Présentée comme un modèle d'ouverture, l'Espagne conjugue pourtant régularisations massives, logique économique et contrôle renforcé des frontières.</p>
+            <div class="article-meta"><span>Komune Média</span><span class="article-read">Lire sur Substack →</span></div>
+          </div>
+        </a>
+
+        <a class="article" href="https://komunemedia.substack.com/p/de-la-honte-noire-au-femonationalisme" target="_blank" rel="noopener noreferrer">
+          <div class="article-image"><img src="https://substackcdn.com/image/fetch/%24s_%21UCzi%21%2Cw_1456%2Cc_limit%2Cf_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F726e38cc-7292-4d30-a81d-8f04c3ba0877_461x532.png" alt="Couverture de l'article De la Honte noire au fémonationalisme"></div>
+          <div class="article-body">
+            <div class="article-title">De la “Honte noire” au fémonationalisme</div>
+            <p class="article-desc">Comment les discours de l’extrême droite sur la protection des femmes réactivent-ils des imaginaires coloniaux hérités de la campagne raciste allemande de la « Honte noire » ?</p>
+            <div class="article-meta"><span>Komune Média</span><span class="article-read">Lire sur Substack →</span></div>
+          </div>
+        </a>
+
+        <a class="article" href="https://komunemedia.substack.com/p/syndrome-du-sauveur-blanc-naufrage" target="_blank" rel="noopener noreferrer">
+          <div class="article-image"><img src="https://substackcdn.com/image/fetch/%24s_%21RcEa%21%2Cw_1456%2Cc_limit%2Cf_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F63963e27-0450-4927-a178-4f131ea600aa_988x664.png" alt="Couverture de l'article Syndrome du sauveur blanc, naufrage de la gauche et malaise raciste"></div>
+          <div class="article-body">
+            <div class="article-title">Syndrome du sauveur blanc, naufrage de la gauche et malaise raciste</div>
+            <p class="article-desc">La bande dessinée du député François Ruffin révèlent le malaise d'une gauche qui peine à assumer ses contradictions sur le racisme. On vous annonce une grande nouvelle en fin d'article ! 👀</p>
+            <div class="article-meta"><span>Komune Média</span><span class="article-read">Lire sur Substack →</span></div>
+          </div>
+        </a>
+
+        <a class="article" href="https://komunemedia.substack.com/p/berbere-moyen-orient-judeo-chretien" target="_blank" rel="noopener noreferrer">
+          <div class="article-image"><img src="https://substackcdn.com/image/fetch/%24s_%21ZW9U%21%2Cw_1456%2Cc_limit%2Cf_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcd843110-e503-491b-ba70-314c3a33ded4_1040x696.heic" alt="Couverture de l'article sur la décolonisation du langage"></div>
+          <div class="article-body">
+            <div class="article-title">“Berbère”, “Moyen-Orient”, “judéo-chrétien” : décolonisons notre langage</div>
+            <p class="article-desc">Les mots ne décrivent pas seulement le monde : ils racontent aussi les rapports de domination, les héritages historiques et les imaginaires collectifs.</p>
+            <div class="article-meta"><span>Komune Média</span><span class="article-read">Lire sur Substack →</span></div>
+          </div>
+        </a>
+      </section>
+
+      <section class="videos" aria-labelledby="videos-title">
+        <h2 id="videos-title">Vidéos</h2>
+        <div class="video-row" aria-label="Formats Instagram Komune">
+          <article class="video-card"><iframe title="Publication Instagram Komune" loading="lazy" src="https://www.instagram.com/p/DZcOU3KtyHY/embed/"></iframe><a class="video-open" href="https://www.instagram.com/p/DZcOU3KtyHY/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
+          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DXeyQEVjYzm/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DXeyQEVjYzm/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
+          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DY2TNEitttX/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DY2TNEitttX/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
+          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DWn1lHyDZLj/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DWn1lHyDZLj/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
+          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DVnhfW3DcaU/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DVnhfW3DcaU/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
+          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DXMlQI4DXh4/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DXMlQI4DXh4/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
+          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DZDSTJktI6g/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DZDSTJktI6g/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
+        </div>
+      </section>
+
+      <section class="contact" aria-label="Nous contacter">
+        <div class="contact-card">
+          <h3>Nous contacter</h3>
+          <a href="mailto:anna@komunemedia.fr">anna@komunemedia.fr</a>
+        </div>
+        <div class="contact-card dark">
+          <h3>Nous contacter</h3>
+          <a href="mailto:komune.contact@gmail.com">komune.contact@gmail.com</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
