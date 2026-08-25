@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Les derniers articles de Komune, média indépendant qui décrypte la société avec un regard antiraciste.">
+  <title>Komune — Articles</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #0000ff;
+      --purple: #5423df;
+      --pink: #f099f9;
+      --sky: #9abdff;
+      --gold: #fee075;
+      --yellow: #ffff92;
+      --green: #b0fda4;
+      --cream: #fcf7e8;
+      --ink: #332e32;
+      --white: #ffffff;
+      --line: rgba(51, 46, 50, .15);
+      --muted: rgba(51, 46, 50, .72);
+      --shadow: 0 16px 40px rgba(51, 46, 50, .08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: "Bricolage Grotesque", Inter, ui-sans-serif, system-ui, sans-serif;
+      line-height: 1.48;
+    }
+
+    a { color: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
+    p { margin-bottom: 0; }
+
+    .page {
+      width: min(1220px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 72px;
+    }
+
+    .page-frame {
+      padding: clamp(12px, 2vw, 24px);
+      border: 1px solid rgba(51, 46, 50, .10);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, .28);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    h1, h2 {
+      font-family: "Oswald", Impact, sans-serif;
+      letter-spacing: -.045em;
+      line-height: .88;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(72px, 10vw, 138px);
+      font-weight: 700;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(42px, 5vw, 70px);
+      font-weight: 400;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 13px 18px;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--cream);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1;
+      text-decoration: none;
+      transition: transform .18s ease, background .18s ease, color .18s ease;
+    }
+
+    .button:hover { transform: translateY(-2px); background: var(--yellow); color: var(--ink); }
+    .button.light { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+    .button.secondary { background: transparent; color: var(--ink); }
+    .button.secondary:hover { background: var(--ink); color: var(--cream); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .hero-main,
+    .hero-side,
+    .article-card,
+    .newsletter,
+    .contact-card,
+    .search-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      min-width: 0;
+      padding: clamp(34px, 5vw, 62px);
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 34px;
+    }
+
+    .hero-kicker {
+      display: inline-block;
+      width: fit-content;
+      padding-bottom: 7px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .hero-copy {
+      max-width: 30ch;
+      margin-top: 24px;
+      color: var(--ink);
+      font-size: clamp(20px, 2.1vw, 28px);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      line-height: 1.13;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .hero-side {
+      min-width: 0;
+      padding: clamp(30px, 4vw, 48px);
+      background: var(--ink);
+      color: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 34px;
+      transform: rotate(1.1deg);
+    }
+
+    .hero-side .eyebrow { color: rgba(252, 247, 232, .72); }
+    .hero-side h2 { color: var(--cream); max-width: 8ch; }
+    .hero-side p {
+      color: rgba(252, 247, 232, .90);
+      font-size: clamp(17px, 1.55vw, 21px);
+      font-weight: 600;
+      line-height: 1.38;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin: 52px 0 18px;
+    }
+
+    .section-head p {
+      max-width: 38ch;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.38;
+    }
+
+    .search-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 18px;
+      padding: clamp(22px, 3vw, 32px);
+      background: var(--sky);
+      transform: rotate(-.45deg);
+    }
+
+    .search-label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .035em;
+    }
+
+    .search-wrap { position: relative; }
+
+    .search-input {
+      width: 100%;
+      min-height: 56px;
+      padding: 14px 48px 14px 18px;
+      border: 1px solid var(--ink);
+      border-radius: 9px;
+      outline: none;
+      background: var(--cream);
+      color: var(--ink);
+      font: inherit;
+      font-size: 17px;
+      font-weight: 650;
+      line-height: 1.2;
+    }
+
+    .search-input::placeholder { color: rgba(51, 46, 50, .62); }
+    .search-input:focus { box-shadow: 0 0 0 3px rgba(0, 0, 255, .20); }
+
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      right: 17px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      transform: translateY(-60%);
+      pointer-events: none;
+    }
+
+    .search-icon::after {
+      position: absolute;
+      right: -6px;
+      bottom: -5px;
+      width: 8px;
+      height: 2px;
+      content: "";
+      background: var(--ink);
+      transform: rotate(45deg);
+      transform-origin: left center;
+    }
+
+    .search-status {
+      min-width: 14ch;
+      margin: 0;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.25;
+      text-align: right;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .article-card {
+      position: relative;
+      display: flex;
+      min-width: 0;
+      overflow: hidden;
+      background: var(--white);
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .article-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 44px rgba(51, 46, 50, .16);
+    }
+
+    .article-card.featured {
+      grid-column: span 2;
+      min-height: 394px;
+    }
+
+    .article-card:nth-child(4n + 3) { transform: rotate(-.7deg); }
+    .article-card:nth-child(5n + 4) { transform: rotate(.7deg); }
+    .article-card:nth-child(4n + 3):hover { transform: rotate(-.7deg) translateY(-5px); }
+    .article-card:nth-child(5n + 4):hover { transform: rotate(.7deg) translateY(-5px); }
+
+    .article-card[hidden] { display: none; }
+
+    .article-card-inner {
+      display: grid;
+      grid-template-rows: minmax(156px, 1fr) auto;
+      width: 100%;
+      min-height: 100%;
+    }
+
+    .article-card.featured .article-card-inner {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+      grid-template-rows: 1fr;
+    }
+
+    .article-cover {
+      position: relative;
+      display: flex;
+      min-height: 170px;
+      padding: 22px;
+      overflow: hidden;
+      color: var(--ink);
+      background: var(--yellow);
+      isolation: isolate;
+    }
+
+    .article-cover::before,
+    .article-cover::after {
+      position: absolute;
+      z-index: -1;
+      content: "";
+      border: 2px solid currentColor;
+      opacity: .78;
+    }
+
+    .article-cover::before {
+      width: 58%;
+      aspect-ratio: 1;
+      right: -13%;
+      bottom: -40%;
+      border-radius: 50%;
+    }
+
+    .article-cover::after {
+      width: 88%;
+      height: 68%;
+      left: -24%;
+      top: -34%;
+      transform: rotate(-17deg);
+    }
+
+    .cover-pink { background: var(--pink); }
+    .cover-sky { background: var(--sky); }
+    .cover-gold { background: var(--gold); }
+    .cover-green { background: var(--green); }
+    .cover-purple { background: var(--purple); color: var(--cream); }
+    .cover-blue { background: var(--blue); color: var(--cream); }
+    .cover-dark { background: var(--ink); color: var(--cream); }
+
+    .cover-meta {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      gap: 22px;
+    }
+
+    .cover-number {
+      font-family: "Oswald", Impact, sans-serif;
+      font-size: clamp(56px, 6vw, 88px);
+      font-weight: 700;
+      letter-spacing: -.07em;
+      line-height: .78;
+    }
+
+    .cover-label {
+      max-width: 12ch;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .085em;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .cover-word {
+      margin-left: auto;
+      font-family: "Oswald", Impact, sans-serif;
+      font-size: clamp(34px, 3.5vw, 56px);
+      font-weight: 700;
+      letter-spacing: -.07em;
+      line-height: .8;
+      transform: rotate(-8deg);
+      transform-origin: right bottom;
+    }
+
+    .article-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 24px;
+      background: var(--white);
+    }
+
+    .article-card.featured .article-body { padding: clamp(28px, 4vw, 44px); }
+
+    .article-date {
+      margin-bottom: 14px;
+      color: rgba(51, 46, 50, .65);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .07em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .article-title {
+      color: var(--ink);
+      font-size: clamp(22px, 2vw, 29px);
+      font-weight: 800;
+      letter-spacing: -.035em;
+      line-height: 1.04;
+    }
+
+    .featured .article-title { font-size: clamp(28px, 3.2vw, 48px); }
+
+    .article-excerpt {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.42;
+    }
+
+    .article-read {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: auto;
+      padding-top: 20px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .loading-card,
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: clamp(32px, 4vw, 48px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .loading-card p,
+    .empty-state p {
+      max-width: 52ch;
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .loading-dots::after {
+      content: "…";
+      display: inline-block;
+      width: 1.2em;
+      overflow: hidden;
+      vertical-align: bottom;
+      animation: dots 1.2s steps(4, end) infinite;
+    }
+
+    @keyframes dots { to { width: 0; } }
+
+    .newsletter {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 22px;
+      align-items: center;
+      margin-top: 18px;
+      padding: clamp(28px, 4vw, 46px);
+      background: var(--pink);
+      transform: rotate(-.8deg);
+    }
+
+    .newsletter h2 { max-width: 12ch; }
+    .newsletter p {
+      max-width: 53ch;
+      margin-top: 16px;
+      color: var(--ink);
+      font-size: clamp(18px, 1.75vw, 23px);
+      font-weight: 700;
+      line-height: 1.28;
+    }
+
+    .newsletter .button { white-space: nowrap; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .contact-card {
+      min-width: 0;
+      padding: clamp(28px, 4vw, 46px);
+      background: var(--white);
+    }
+
+    .contact-card.dark { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+    .contact-card h3 { margin: 0 0 16px; color: var(--muted); font-size: 13px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+    .contact-card.dark h3 { color: rgba(252, 247, 232, .68); }
+    .contact-card a {
+      display: block;
+      font-size: clamp(23px, 2.6vw, 34px);
+      font-weight: 800;
+      letter-spacing: -.035em;
+      line-height: 1.05;
+      overflow-wrap: anywhere;
+      text-decoration: none;
+    }
+
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-side { transform: none; }
+      .search-panel { transform: none; }
+      .articles-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .newsletter { transform: none; }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(100% - 18px, 1220px); padding: 10px 0 48px; }
+      .page-frame { padding: 10px; border-radius: 22px; }
+      .hero-main, .hero-side, .article-card, .newsletter, .contact-card, .search-panel { border-radius: 18px; }
+      .hero-main { padding: 30px 24px; }
+      .hero-actions, .section-head { align-items: stretch; flex-direction: column; }
+      .hero-actions .button { width: 100%; }
+      .section-head { margin-top: 44px; }
+      .search-panel { grid-template-columns: 1fr; gap: 13px; }
+      .search-status { text-align: left; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card.featured { grid-column: auto; min-height: auto; }
+      .article-card.featured .article-card-inner { grid-template-columns: 1fr; grid-template-rows: auto auto; }
+      .article-card:nth-child(4n + 3), .article-card:nth-child(5n + 4) { transform: none; }
+      .article-card:nth-child(4n + 3):hover, .article-card:nth-child(5n + 4):hover { transform: translateY(-4px); }
+      .article-cover { min-height: 145px; }
+      .article-card.featured .article-cover { min-height: 184px; }
+      .newsletter { grid-template-columns: 1fr; }
+      .newsletter .button { width: 100%; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <!-- ===== Navigation commune du site (ajout : supprimable / modifiable librement) ===== -->
+  <style>
+    .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 4px 4px 16px; }
+    .site-nav .site-brand { margin-right: auto; font-family: "Oswald", Impact, sans-serif; font-size: 27px; font-weight: 700; letter-spacing: -.04em; color: var(--ink); text-decoration: none; }
+    .site-nav a.site-link {
+      display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
+      font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 3px 3px 0 rgba(51,46,50,.12);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .site-nav a.site-link:hover { transform: translateY(-1px); background: var(--yellow); }
+    .site-nav a.site-link.is-current { background: var(--ink); color: var(--cream); }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <!-- ===== Navigation commune du site ===== -->
+    <nav class="site-nav" aria-label="Navigation du site">
+      <a class="site-brand" href="../">KOMUNE</a>
+      <a class="site-link" href="../">Accueil</a>
+      <a class="site-link is-current" href="./" aria-current="page">Articles</a>
+      <a class="site-link" href="../comparateur-2027/">Comparateur 2027</a>
+      <a class="site-link" href="../equipe/">L'équipe</a>
+      <a class="site-link" href="../soutenir/">Nous soutenir</a>
+    </nav>
+    <article class="page-frame">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-main">
+          <div>
+            <div class="eyebrow hero-kicker">Komune média</div>
+            <h1 id="page-title">Nos<br>articles</h1>
+            <p class="hero-copy">Des histoires, des enquêtes et des décryptages pour regarder la société autrement.</p>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="https://komunemedia.substack.com/" target="_blank" rel="noopener noreferrer">S'abonner à la newsletter ↗</a>
+            <a class="button secondary" href="../">Retour à l'accueil</a>
+          </div>
+        </div>
+
+        <aside class="hero-side" aria-label="Présentation de la newsletter Komune">
+          <div>
+            <div class="eyebrow">La newsletter de Komune</div>
+            <h2>Lire pour mieux comprendre.</h2>
+          </div>
+          <p>Chaque semaine, nous décortiquons l’actualité, les récits dominants et les mécanismes qui façonnent les débats sur l’immigration, le racisme, les discriminations et la société.</p>
+        </aside>
+      </section>
+
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Les derniers articles</div>
+          <h2>À lire en ce moment</h2>
+        </div>
+        <p>Les articles complets sont publiés sur la newsletter Substack de Komune. Utilisez la recherche par titre ou cliquez sur une carte pour les lire.</p>
+      </div>
+
+      <section class="search-panel" aria-label="Rechercher parmi les articles">
+        <div>
+          <label class="search-label" for="article-search">Rechercher par mot-clé dans les titres</label>
+          <div class="search-wrap">
+            <input class="search-input" id="article-search" type="search" placeholder="Ex. immigration, racisme, identité…" autocomplete="off">
+            <span class="search-icon" aria-hidden="true"></span>
+          </div>
+        </div>
+        <p class="search-status" id="search-status" aria-live="polite">27 articles à lire</p>
+      </section>
+
+      <section class="articles-grid" id="articles-grid" aria-label="Les derniers articles de Komune">
+        <div class="loading-card">
+          <div class="eyebrow">Les derniers articles</div>
+          <h2>Chargement de la sélection</h2>
+          <p>Les articles de Komune arrivent.</p>
+        </div>
+      </section>
+
+      <section class="newsletter" aria-labelledby="newsletter-title">
+        <div>
+          <div class="eyebrow">La newsletter de Komune</div>
+          <h2 id="newsletter-title">Recevez Komune dans votre boîte mail.</h2>
+          <p>La newsletter est gratuite. Elle permet de ne rien rater de nos décryptages, analyses de l'actualité, recommandations et nouveaux formats.</p>
+        </div>
+        <a class="button" href="https://komunemedia.substack.com/" target="_blank" rel="noopener noreferrer">S'abonner gratuitement ↗</a>
+      </section>
+
+      <section class="contact-grid" aria-label="Nous contacter">
+        <article class="contact-card">
+          <h3>Nous contacter</h3>
+          <a href="mailto:anna@komunemedia.fr">anna@komunemedia.fr</a>
+        </article>
+        <article class="contact-card dark">
+          <h3>Nous contacter</h3>
+          <a href="mailto:komune.contact@gmail.com">komune.contact@gmail.com</a>
+        </article>
+      </section>
+    </article>
+  </main>
+
+  <script>
+    (() => {
+      const grid = document.getElementById('articles-grid');
+      const searchInput = document.getElementById('article-search');
+      const status = document.getElementById('search-status');
+      const coverClasses = ['cover-pink', 'cover-sky', 'cover-gold', 'cover-green', 'cover-purple', 'cover-blue', 'cover-dark'];
+      const coverWords = ['Komune', 'Lire', 'Focus', 'Récit', 'Décryptage', 'Regards', 'À voir'];
+
+      // Liste fournie par Komune : réordonnée ici du plus récent au plus ancien.
+      const articles = [{"title": "\"Racisé\", le mot qui dérange la République", "excerpt": "Apparu dans les universités en 1972, le terme “racisé” cristallise les tensions françaises entre universalisme républicain et reconnaissance des discriminations raciales.", "url": "https://komunemedia.substack.com/p/racise-le-mot-qui-derange-la-republique"}, {"title": "\"Qui suis-je ?\" : grandir et construire son identité dans l’adoption transraciale", "excerpt": "Comment se construire quand on ne ressemble ni à sa famille ni à son entourage ? Cinq adoptés racontent leur quête identitaire.", "url": "https://komunemedia.substack.com/p/qui-suis-je-grandir-et-construire"}, {"title": "Pedro Sánchez ou l'art du grand écart migratoire", "excerpt": "Présentée comme un modèle d'ouverture, l'Espagne conjugue pourtant régularisations massives, logique économique et contrôle renforcé des frontières.", "url": "https://komunemedia.substack.com/p/pedro-sanchez-ou-lart-du-grand-ecart"}, {"title": "De la “Honte noire” au fémonationalisme", "excerpt": "Comment les discours de l’extrême droite sur la protection des femmes réactivent-ils des imaginaires coloniaux hérités de la campagne raciste allemande de la « Honte noire » ?", "url": "https://komunemedia.substack.com/p/de-la-honte-noire-au-femonationalisme"}, {"title": "Syndrome du sauveur blanc, naufrage de la gauche et malaise raciste", "excerpt": "La bande dessinée du député François Ruffin révèlent le malaise d'une gauche qui peine à assumer ses contradictions sur le racisme. On vous annonce une grande nouvelle en fin d'article ! 👀", "url": "https://komunemedia.substack.com/p/syndrome-du-sauveur-blanc-naufrage"}, {"title": "Poussés vers la sortie : les étudiants étrangers devront payer l’université plus cher", "excerpt": "À partir de 2026, le gouvernement veut généraliser l’augmentation des frais universitaires pour les étudiants étrangers hors Union européenne.", "url": "https://komunemedia.substack.com/p/pousses-vers-la-sortie-les-etudiants"}, {"title": "“Berbère”, “Moyen-Orient”, “judéo-chrétien” : décolonisons notre langage", "excerpt": "Les mots ne décrivent pas seulement le monde : ils racontent aussi les rapports de domination, les héritages historiques et les imaginaires collectifs.", "url": "https://komunemedia.substack.com/p/berbere-moyen-orient-judeo-chretien"}, {"title": "Films, livres, musiques : nos recommandations du mois d’avril", "excerpt": "Cette semaine, notre rédaction propose une sélection d’œuvres mêlant histoire, mémoire et luttes, pour mieux comprendre le monde contemporain.", "url": "https://komunemedia.substack.com/p/films-livres-musiques-nos-recommandations"}, {"title": "Aya Nakamura, “vulgaire” ? Déconstruction d’un jugement construit", "excerpt": "Derrière les critiques visant Aya Nakamura, se révèlent des normes esthétiques héritées de l’histoire, où s’entremêlent encore aujourd’hui racisme, sexisme et hiérarchisation des corps.", "url": "https://komunemedia.substack.com/p/aya-nakamura-vulgaire-deconstruction"}, {"title": "Plus de 60 000 euros récoltés pour les familles de victimes de violences policières", "excerpt": "Une cagnotte solidaire, lancée pour soutenir des familles victimes de violences policières, dépasse 60 000 euros et se prolonge pour aider encore plus de proches.", "url": "https://komunemedia.substack.com/p/plus-de-60-000-euros-recoltes-pour"}, {"title": "Régularisation par le travail : quand l’illégalité devient une condition… puis un motif de refus", "excerpt": "Pour espérer être régularisés, les travailleurs \"sans papiers\" doivent prouver qu’ils ont travaillé, quitte à frauder, avant d’être sanctionnés. Reportage.", "url": "https://komunemedia.substack.com/p/regularisation-par-le-travail-quand"}, {"title": "« 9 000 euros d’amendes à 16 ans » : Les dessous des contrôles au faciès", "excerpt": "En Île-de-France, les contrôles d’identité répétés touchent particulièrement les jeunes perçus comme Noirs et Arabes. Les amendes qui s’accumulent deviennent ingérables.", "url": "https://komunemedia.substack.com/p/9-000-euros-damendes-a-16-ans-les"}, {"title": "Le mythe des “success stories”: quand la réussite individuelle masque des obstacles persistants", "excerpt": "Les récits de réussite de personnes immigrées inspirent, mais occultent souvent les obstacles structurels persistants qui rendent ces parcours bien plus exceptionnels que représentatifs.", "url": "https://komunemedia.substack.com/p/le-mythe-des-success-stories-quand"}, {"title": "Comment l’orientalisme a façonné les clichés sur les Maghrébins en France ?", "excerpt": "Des peintures orientalistes aux discours médiatiques contemporains, les clichés sur les Maghrébins en France s’enracinent dans une longue histoire coloniale.", "url": "https://komunemedia.substack.com/p/comment-lorientalisme-a-faconne-les"}, {"title": "Quand des entreprises françaises aident l’ICE à traquer les personnes migrantes", "excerpt": "Des entreprises françaises collaborent avec l’ICE et profitent des politiques migratoires sécuritaires, aux États-Unis comme en Europe.", "url": "https://komunemedia.substack.com/p/quand-des-entreprises-francaises"}, {"title": "Fantasmes, clichés et héritage colonial : le poids continue de peser sur les femmes métisses afro‑descendantes", "excerpt": "Restez bien jusqu’au bout : on vous réserve une annonce à la fin de cet article !", "url": "https://komunemedia.substack.com/p/fantasmes-cliches-et-heritage-colonial"}, {"title": "Pourquoi parler de racisme en famille est devenu si difficile ?", "excerpt": "Pourquoi parler de racisme en famille fait-il si vite dérailler la discussion ? Qu’est-ce que ces tensions disent vraiment de nous ?", "url": "https://komunemedia.substack.com/p/pourquoi-parler-de-racisme-en-famille"}, {"title": "Le marketing des luttes : la stratégie électorale de l’extrême droite (Partie 2/2)", "excerpt": "Derrière son discours d’inclusion, l’extrême droite déploie une stratégie électorale visant à séduire de nouveaux publics tout en poursuivant un projet excluant.", "url": "https://komunemedia.substack.com/p/le-marketing-des-luttes-la-strategie"}, {"title": "Comment le football européen méprise la CAN ?", "excerpt": "Derrière le spectacle offert par la CAN 2025, une autre réalité se joue : droits TV inéquitables, mépris et hiérarchie du football mondial.", "url": "https://komunemedia.substack.com/p/comment-le-football-europeen-meprise"}, {"title": "Le droit international, un ordre façonné par les puissants", "excerpt": "Donald Trump impose sa vision du monde, révélant une fois de plus un droit international inégal. On revient sur ses origines.", "url": "https://komunemedia.substack.com/p/le-droit-international-un-ordre-faconne"}, {"title": "Le Venezuela, symptôme d’un droit international instrumentalisé", "excerpt": "Bombardements à Caracas, capture de Maduro : Washington invoque le narcotrafic, révélant un droit international instrumentalisé, héritier du colonialisme.", "url": "https://komunemedia.substack.com/p/le-venezuela-symptome-dun-droit-international"}, {"title": "Syriens en exil : peut-on vraiment rentrer après la chute d’Assad ?", "excerpt": "Un an après la chute du régime de Bachar al-Assad, l’exil syrien perdure. Instabilité, incertitudes juridiques et violences persistantes rendent le retour au pays toujours incertain.", "url": "https://komunemedia.substack.com/p/syriens-en-exil-peut-on-vraiment"}, {"title": "Mémoires effacées : le combat du Collectif du 1er janvier pour la reconnaissance des travailleurs immigrés", "excerpt": "Le Collectif du 1er janvier réclame une journée de reconnaissance pour les travailleurs immigrés de l’après-guerre. On vous en dit plus.", "url": "https://komunemedia.substack.com/p/memoires-effacees-le-combat-du-collectif"}, {"title": "Détention prolongée, expulsions accélérées : l’UE franchit un nouveau seuil répressif", "excerpt": "Le Parlement européen et le Conseil de l'UE ont adopté récemment de nouvelles mesures ultra répressives qui s'ajoutent à d'autres mesures provisoires soumises au vote en 2026.", "url": "https://komunemedia.substack.com/p/detention-prolongee-expulsions-accelerees"}, {"title": "Le 18 décembre, une journée « sans nous » pour défendre l’égalité des droits", "excerpt": "Pourquoi une « Journée sans nous » le 18 décembre ? À l’occasion de la Journée internationale des personnes migrantes, une mobilisation nationale appelle à la grève et aux manifestations.", "url": "https://komunemedia.substack.com/p/le-18-decembre-une-journee-sans-nous"}, {"title": "Une loi qui pourrait enfin protéger les mineurs non accompagnés qui (sur)vivent à la rue ?", "excerpt": "L’Assemblée nationale examine ce mercredi 11 décembre un texte visant à instaurer la présomption de minorité et à renforcer la protection des mineurs non accompagnés.", "url": "https://komunemedia.substack.com/p/une-loi-qui-pourrait-enfin-proteger"}, {"title": "Réformes en Angleterre : un durcissement alarmant de la politique d’asile", "excerpt": "Le Royaume-Uni engage un virage radical dans sa politique d’asile, marqué par un durcissement sans précédent des droits des personnes réfugiées et demandeuses d’asile. On débunk ça ensemble.", "url": "https://komunemedia.substack.com/p/reformes-en-angleterre-un-durcissement"}];
+
+      const normalize = (value = '') => value
+        .toString()
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g, '')
+        .toLowerCase()
+        .trim();
+
+      const escapeHtml = (value = '') => value
+        .toString()
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+
+      const shortExcerpt = (value = '') => {
+        const text = value.toString().replace(/\s+/g, ' ').trim();
+        return text.length > 190 ? `${text.slice(0, 187).trim()}…` : text;
+      };
+
+      function renderCards(list) {
+        if (!list.length) {
+          grid.innerHTML = `
+            <div class="empty-state">
+              <div class="eyebrow">Aucun résultat</div>
+              <h2>Pas d’article trouvé.</h2>
+              <p>Essaie un autre mot-clé : la recherche porte uniquement sur les titres des articles.</p>
+            </div>`;
+          return;
+        }
+
+        grid.innerHTML = list.map((article) => {
+          const articleNumber = String(article.originalIndex + 1).padStart(2, '0');
+          const coverClass = coverClasses[article.originalIndex % coverClasses.length];
+          const coverWord = coverWords[article.originalIndex % coverWords.length];
+          const isFeatured = article.originalIndex === 0 && !searchInput.value.trim();
+          const label = isFeatured ? 'Dernière publication' : 'Komune Média';
+
+          return `
+            <a class="article-card${isFeatured ? ' featured' : ''}" href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer">
+              <div class="article-card-inner">
+                <div class="article-cover ${coverClass}">
+                  <div class="cover-meta">
+                    <span class="cover-number">${articleNumber}</span>
+                    <span class="cover-label">${label}</span>
+                    <span class="cover-word">${coverWord}</span>
+                  </div>
+                </div>
+                <div class="article-body">
+                  <div class="article-date">${label}</div>
+                  <div class="article-title">${escapeHtml(article.title)}</div>
+                  <p class="article-excerpt">${escapeHtml(shortExcerpt(article.excerpt))}</p>
+                  <span class="article-read">Lire l'article sur Substack ↗</span>
+                </div>
+              </div>
+            </a>`;
+        }).join('');
+      }
+
+      function updateSearch() {
+        const term = normalize(searchInput.value);
+        const matching = articles
+          .map((article, originalIndex) => ({ ...article, originalIndex }))
+          .filter((article) => normalize(article.title).includes(term));
+
+        renderCards(matching);
+
+        if (!term) {
+          status.textContent = `${articles.length} articles à lire`;
+        } else {
+          status.textContent = `${matching.length} résultat${matching.length > 1 ? 's' : ''} pour « ${searchInput.value.trim()} »`;
+        }
+      }
+
+      searchInput.addEventListener('input', updateSearch);
+      updateSearch();
+    })();
+  </script>
+</body>
+</html>
