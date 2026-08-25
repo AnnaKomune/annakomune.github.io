@@ -439,6 +439,17 @@
       text-underline-offset: 3px;
     }
 
+    .article-cover.cover-photo { padding: 0; background: var(--sky); }
+    .article-cover.cover-photo::before,
+    .article-cover.cover-photo::after { display: none; }
+    .article-cover.cover-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     .loading-card,
     .empty-state {
       grid-column: 1 / -1;
@@ -614,7 +625,7 @@
             <span class="search-icon" aria-hidden="true"></span>
           </div>
         </div>
-        <p class="search-status" id="search-status" aria-live="polite">27 articles à lire</p>
+        <p class="search-status" id="search-status" aria-live="polite">Chargement des articles…</p>
       </section>
 
       <section class="articles-grid" id="articles-grid" aria-label="Les derniers articles de Komune">
@@ -656,7 +667,7 @@
       const coverWords = ['Komune', 'Lire', 'Focus', 'Récit', 'Décryptage', 'Regards', 'À voir'];
 
       // Liste fournie par Komune : réordonnée ici du plus récent au plus ancien.
-      const articles = [{"title": "\"Racisé\", le mot qui dérange la République", "excerpt": "Apparu dans les universités en 1972, le terme “racisé” cristallise les tensions françaises entre universalisme républicain et reconnaissance des discriminations raciales.", "url": "https://komunemedia.substack.com/p/racise-le-mot-qui-derange-la-republique"}, {"title": "\"Qui suis-je ?\" : grandir et construire son identité dans l’adoption transraciale", "excerpt": "Comment se construire quand on ne ressemble ni à sa famille ni à son entourage ? Cinq adoptés racontent leur quête identitaire.", "url": "https://komunemedia.substack.com/p/qui-suis-je-grandir-et-construire"}, {"title": "Pedro Sánchez ou l'art du grand écart migratoire", "excerpt": "Présentée comme un modèle d'ouverture, l'Espagne conjugue pourtant régularisations massives, logique économique et contrôle renforcé des frontières.", "url": "https://komunemedia.substack.com/p/pedro-sanchez-ou-lart-du-grand-ecart"}, {"title": "De la “Honte noire” au fémonationalisme", "excerpt": "Comment les discours de l’extrême droite sur la protection des femmes réactivent-ils des imaginaires coloniaux hérités de la campagne raciste allemande de la « Honte noire » ?", "url": "https://komunemedia.substack.com/p/de-la-honte-noire-au-femonationalisme"}, {"title": "Syndrome du sauveur blanc, naufrage de la gauche et malaise raciste", "excerpt": "La bande dessinée du député François Ruffin révèlent le malaise d'une gauche qui peine à assumer ses contradictions sur le racisme. On vous annonce une grande nouvelle en fin d'article ! 👀", "url": "https://komunemedia.substack.com/p/syndrome-du-sauveur-blanc-naufrage"}, {"title": "Poussés vers la sortie : les étudiants étrangers devront payer l’université plus cher", "excerpt": "À partir de 2026, le gouvernement veut généraliser l’augmentation des frais universitaires pour les étudiants étrangers hors Union européenne.", "url": "https://komunemedia.substack.com/p/pousses-vers-la-sortie-les-etudiants"}, {"title": "“Berbère”, “Moyen-Orient”, “judéo-chrétien” : décolonisons notre langage", "excerpt": "Les mots ne décrivent pas seulement le monde : ils racontent aussi les rapports de domination, les héritages historiques et les imaginaires collectifs.", "url": "https://komunemedia.substack.com/p/berbere-moyen-orient-judeo-chretien"}, {"title": "Films, livres, musiques : nos recommandations du mois d’avril", "excerpt": "Cette semaine, notre rédaction propose une sélection d’œuvres mêlant histoire, mémoire et luttes, pour mieux comprendre le monde contemporain.", "url": "https://komunemedia.substack.com/p/films-livres-musiques-nos-recommandations"}, {"title": "Aya Nakamura, “vulgaire” ? Déconstruction d’un jugement construit", "excerpt": "Derrière les critiques visant Aya Nakamura, se révèlent des normes esthétiques héritées de l’histoire, où s’entremêlent encore aujourd’hui racisme, sexisme et hiérarchisation des corps.", "url": "https://komunemedia.substack.com/p/aya-nakamura-vulgaire-deconstruction"}, {"title": "Plus de 60 000 euros récoltés pour les familles de victimes de violences policières", "excerpt": "Une cagnotte solidaire, lancée pour soutenir des familles victimes de violences policières, dépasse 60 000 euros et se prolonge pour aider encore plus de proches.", "url": "https://komunemedia.substack.com/p/plus-de-60-000-euros-recoltes-pour"}, {"title": "Régularisation par le travail : quand l’illégalité devient une condition… puis un motif de refus", "excerpt": "Pour espérer être régularisés, les travailleurs \"sans papiers\" doivent prouver qu’ils ont travaillé, quitte à frauder, avant d’être sanctionnés. Reportage.", "url": "https://komunemedia.substack.com/p/regularisation-par-le-travail-quand"}, {"title": "« 9 000 euros d’amendes à 16 ans » : Les dessous des contrôles au faciès", "excerpt": "En Île-de-France, les contrôles d’identité répétés touchent particulièrement les jeunes perçus comme Noirs et Arabes. Les amendes qui s’accumulent deviennent ingérables.", "url": "https://komunemedia.substack.com/p/9-000-euros-damendes-a-16-ans-les"}, {"title": "Le mythe des “success stories”: quand la réussite individuelle masque des obstacles persistants", "excerpt": "Les récits de réussite de personnes immigrées inspirent, mais occultent souvent les obstacles structurels persistants qui rendent ces parcours bien plus exceptionnels que représentatifs.", "url": "https://komunemedia.substack.com/p/le-mythe-des-success-stories-quand"}, {"title": "Comment l’orientalisme a façonné les clichés sur les Maghrébins en France ?", "excerpt": "Des peintures orientalistes aux discours médiatiques contemporains, les clichés sur les Maghrébins en France s’enracinent dans une longue histoire coloniale.", "url": "https://komunemedia.substack.com/p/comment-lorientalisme-a-faconne-les"}, {"title": "Quand des entreprises françaises aident l’ICE à traquer les personnes migrantes", "excerpt": "Des entreprises françaises collaborent avec l’ICE et profitent des politiques migratoires sécuritaires, aux États-Unis comme en Europe.", "url": "https://komunemedia.substack.com/p/quand-des-entreprises-francaises"}, {"title": "Fantasmes, clichés et héritage colonial : le poids continue de peser sur les femmes métisses afro‑descendantes", "excerpt": "Restez bien jusqu’au bout : on vous réserve une annonce à la fin de cet article !", "url": "https://komunemedia.substack.com/p/fantasmes-cliches-et-heritage-colonial"}, {"title": "Pourquoi parler de racisme en famille est devenu si difficile ?", "excerpt": "Pourquoi parler de racisme en famille fait-il si vite dérailler la discussion ? Qu’est-ce que ces tensions disent vraiment de nous ?", "url": "https://komunemedia.substack.com/p/pourquoi-parler-de-racisme-en-famille"}, {"title": "Le marketing des luttes : la stratégie électorale de l’extrême droite (Partie 2/2)", "excerpt": "Derrière son discours d’inclusion, l’extrême droite déploie une stratégie électorale visant à séduire de nouveaux publics tout en poursuivant un projet excluant.", "url": "https://komunemedia.substack.com/p/le-marketing-des-luttes-la-strategie"}, {"title": "Comment le football européen méprise la CAN ?", "excerpt": "Derrière le spectacle offert par la CAN 2025, une autre réalité se joue : droits TV inéquitables, mépris et hiérarchie du football mondial.", "url": "https://komunemedia.substack.com/p/comment-le-football-europeen-meprise"}, {"title": "Le droit international, un ordre façonné par les puissants", "excerpt": "Donald Trump impose sa vision du monde, révélant une fois de plus un droit international inégal. On revient sur ses origines.", "url": "https://komunemedia.substack.com/p/le-droit-international-un-ordre-faconne"}, {"title": "Le Venezuela, symptôme d’un droit international instrumentalisé", "excerpt": "Bombardements à Caracas, capture de Maduro : Washington invoque le narcotrafic, révélant un droit international instrumentalisé, héritier du colonialisme.", "url": "https://komunemedia.substack.com/p/le-venezuela-symptome-dun-droit-international"}, {"title": "Syriens en exil : peut-on vraiment rentrer après la chute d’Assad ?", "excerpt": "Un an après la chute du régime de Bachar al-Assad, l’exil syrien perdure. Instabilité, incertitudes juridiques et violences persistantes rendent le retour au pays toujours incertain.", "url": "https://komunemedia.substack.com/p/syriens-en-exil-peut-on-vraiment"}, {"title": "Mémoires effacées : le combat du Collectif du 1er janvier pour la reconnaissance des travailleurs immigrés", "excerpt": "Le Collectif du 1er janvier réclame une journée de reconnaissance pour les travailleurs immigrés de l’après-guerre. On vous en dit plus.", "url": "https://komunemedia.substack.com/p/memoires-effacees-le-combat-du-collectif"}, {"title": "Détention prolongée, expulsions accélérées : l’UE franchit un nouveau seuil répressif", "excerpt": "Le Parlement européen et le Conseil de l'UE ont adopté récemment de nouvelles mesures ultra répressives qui s'ajoutent à d'autres mesures provisoires soumises au vote en 2026.", "url": "https://komunemedia.substack.com/p/detention-prolongee-expulsions-accelerees"}, {"title": "Le 18 décembre, une journée « sans nous » pour défendre l’égalité des droits", "excerpt": "Pourquoi une « Journée sans nous » le 18 décembre ? À l’occasion de la Journée internationale des personnes migrantes, une mobilisation nationale appelle à la grève et aux manifestations.", "url": "https://komunemedia.substack.com/p/le-18-decembre-une-journee-sans-nous"}, {"title": "Une loi qui pourrait enfin protéger les mineurs non accompagnés qui (sur)vivent à la rue ?", "excerpt": "L’Assemblée nationale examine ce mercredi 11 décembre un texte visant à instaurer la présomption de minorité et à renforcer la protection des mineurs non accompagnés.", "url": "https://komunemedia.substack.com/p/une-loi-qui-pourrait-enfin-proteger"}, {"title": "Réformes en Angleterre : un durcissement alarmant de la politique d’asile", "excerpt": "Le Royaume-Uni engage un virage radical dans sa politique d’asile, marqué par un durcissement sans précédent des droits des personnes réfugiées et demandeuses d’asile. On débunk ça ensemble.", "url": "https://komunemedia.substack.com/p/reformes-en-angleterre-un-durcissement"}];
+      let articles = []; // chargé depuis ../data/articles.json (synchro Substack automatique)
 
       const normalize = (value = '') => value
         .toString()
@@ -695,19 +706,16 @@
           const coverWord = coverWords[article.originalIndex % coverWords.length];
           const isFeatured = article.originalIndex === 0 && !searchInput.value.trim();
           const label = isFeatured ? 'Dernière publication' : 'Komune Média';
+          const coverHtml = article.image
+            ? `<div class="article-cover cover-photo"><img src="${escapeHtml(article.image)}" alt="" loading="lazy"></div>`
+            : `<div class="article-cover ${coverClass}"><div class="cover-meta"><span class="cover-number">${articleNumber}</span><span class="cover-label">${label}</span><span class="cover-word">${coverWord}</span></div></div>`;
 
           return `
             <a class="article-card${isFeatured ? ' featured' : ''}" href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer">
               <div class="article-card-inner">
-                <div class="article-cover ${coverClass}">
-                  <div class="cover-meta">
-                    <span class="cover-number">${articleNumber}</span>
-                    <span class="cover-label">${label}</span>
-                    <span class="cover-word">${coverWord}</span>
-                  </div>
-                </div>
+${coverHtml}
                 <div class="article-body">
-                  <div class="article-date">${label}</div>
+                  <div class="article-date">${article.date ? new Date(article.date + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : label}</div>
                   <div class="article-title">${escapeHtml(article.title)}</div>
                   <p class="article-excerpt">${escapeHtml(shortExcerpt(article.excerpt))}</p>
                   <span class="article-read">Lire l'article sur Substack ↗</span>
@@ -733,7 +741,11 @@
       }
 
       searchInput.addEventListener('input', updateSearch);
-      updateSearch();
+
+      fetch('../data/articles.json', { cache: 'no-store' })
+        .then((r) => r.json())
+        .then((list) => { articles = list; updateSearch(); })
+        .catch(() => { status.textContent = 'Impossible de charger les articles — recharge la page.'; });
     })();
   </script>
 </body>
