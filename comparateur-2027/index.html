@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Komune - Ce que vous demandez au comparateur 2027</title>
+  <meta name="description" content="Synthèse mise à jour des retours citoyens et des propositions d’aide pour la plateforme Komune de comparaison des candidat·es à la présidentielle 2027.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue:#0000ff; --purple:#5423df; --pink:#f099f9; --sky:#9abdff; --gold:#fee075;
+      --yellow:#ffff92; --green:#b0fda4; --cream:#fcf7e8; --ink:#332e32; --forest:#35674b; --white:#fff;
+      --line:rgba(51,46,50,.16); --muted:rgba(51,46,50,.68); --soft:rgba(252,247,232,.72);
+      --shadow:10px 12px 0 rgba(51,46,50,.10); --hard:6px 6px 0 var(--ink); --radius:28px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; color:var(--ink); font-family:"Bricolage Grotesque", Inter, system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(240,153,249,.42), transparent 28%),
+        radial-gradient(circle at 92% 6%, rgba(154,189,255,.45), transparent 30%),
+        radial-gradient(circle at 72% 92%, rgba(176,253,164,.38), transparent 28%),
+        var(--cream);
+      line-height:1.42;
+    }
+    a{color:inherit}
+    h1,h2,h3,p{margin-top:0}
+    p{margin-bottom:0}
+    .page{width:min(1240px, calc(100% - 30px)); margin:0 auto; padding:18px 0 80px}
+    .frame{overflow:hidden; border:1px solid rgba(51,46,50,.12); border-radius:34px; background:rgba(255,255,255,.38); box-shadow:0 20px 60px rgba(51,46,50,.10)}
+    .ticker{overflow:hidden; background:var(--blue); color:var(--cream); border-bottom:2px solid var(--ink); white-space:nowrap}
+    .ticker-track{display:inline-flex; width:max-content; animation:ticker 38s linear infinite}
+    .ticker span{padding:13px 28px; font-size:clamp(14px,1.3vw,19px); font-weight:900}
+    @keyframes ticker{to{transform:translateX(-50%)}}
+    .section{padding:0 clamp(14px,2.3vw,30px); margin-top:20px}
+    .card{border:2px solid var(--ink); border-radius:var(--radius); background:var(--white); box-shadow:var(--shadow)}
+    .eyebrow{margin:0 0 14px; font-size:12px; font-weight:950; letter-spacing:.09em; text-transform:uppercase; color:var(--blue)}
+    h1,h2{font-family:"Oswald", Impact, sans-serif; letter-spacing:-.055em; line-height:.9}
+    h1{font-size:clamp(48px,7.4vw,104px); max-width:11ch; margin:0; font-weight:700}
+    h2{font-size:clamp(36px,5vw,72px); margin:0 0 16px; font-weight:700}
+    h3{font-size:clamp(22px,2vw,30px); line-height:1; margin:0 0 10px; font-weight:900; letter-spacing:-.04em}
+    .lead{font-size:clamp(18px,1.5vw,22px); font-weight:720; color:var(--muted)}
+    .button{display:inline-flex; min-height:50px; align-items:center; justify-content:center; padding:12px 17px; border:2px solid var(--ink); border-radius:14px; background:var(--ink); color:var(--cream); text-decoration:none; font-weight:950; box-shadow:5px 5px 0 var(--pink); transition:.18s ease}
+    .button:hover{transform:translateY(-2px) rotate(-.5deg); background:var(--yellow); color:var(--ink); box-shadow:6px 6px 0 var(--blue)}
+    .button.alt{background:var(--pink); color:var(--ink); box-shadow:5px 5px 0 var(--blue)}
+    .button.light{background:var(--cream); color:var(--ink); box-shadow:5px 5px 0 var(--blue)}
+    .hero{display:grid; grid-template-columns:1.04fr .96fr; gap:18px; padding-top:24px}
+    .hero-main{position:relative; overflow:hidden; min-height:690px; padding:clamp(34px,5vw,62px); background:
+      radial-gradient(circle at 88% 14%, rgba(254,224,117,.86), transparent 22%),
+      radial-gradient(circle at 14% 94%, rgba(240,153,249,.52), transparent 28%), var(--white)}
+    .hero-main::after{content:"2027"; position:absolute; right:26px; bottom:-8px; font-family:"Oswald"; font-size:clamp(120px,18vw,250px); line-height:.7; color:rgba(0,0,255,.08); letter-spacing:-.08em; pointer-events:none}
+    .hero-copy{position:relative; z-index:2; margin-top:24px; max-width:62ch; font-size:clamp(19px,1.75vw,25px); font-weight:760}
+    .hero-copy strong{background:linear-gradient(transparent 58%, var(--yellow) 58%)}
+    .hero-small{position:relative; z-index:2; margin-top:18px; max-width:64ch; font-size:clamp(17px,1.25vw,20px); font-weight:680; color:var(--muted)}
+    .hero-actions{position:relative; z-index:2; display:flex; flex-wrap:wrap; gap:10px; margin-top:26px}
+    .hero-lab{position:relative; min-height:690px; padding:clamp(26px,3vw,38px); background:linear-gradient(135deg, var(--pink), var(--yellow)); overflow:hidden}
+    .hero-lab h2{position:relative; z-index:3; max-width:12ch; margin-bottom:14px}
+    .lab-stack{position:relative; z-index:4; display:grid; gap:13px; margin-top:18px}
+    .float-note{width:100%; padding:16px; border:2px solid var(--ink); border-radius:20px; background:var(--white); box-shadow:var(--hard); font-weight:850; transform:rotate(var(--r))}
+    .float-note small{display:block; margin-bottom:5px; font-weight:950; color:var(--blue); text-transform:uppercase; letter-spacing:.06em}
+    .float-note:nth-child(1){--r:1.3deg; background:var(--green)}
+    .float-note:nth-child(2){--r:-1deg; background:var(--sky)}
+    .float-note:nth-child(3){--r:.8deg; background:var(--white)}
+    .float-note:nth-child(4){--r:-.7deg; background:var(--yellow)}
+    .float-note:nth-child(5){--r:1.1deg; background:var(--cream)}
+    .float-note:nth-child(6){--r:-1.2deg; background:var(--pink)}
+    .bubble-person{position:absolute; z-index:1; width:132px; aspect-ratio:1; border:2px solid var(--ink); border-radius:999px; display:grid; place-items:center; background:var(--blue); color:var(--cream); font-size:52px; box-shadow:7px 7px 0 var(--ink); animation:wiggle 4s ease-in-out infinite; opacity:.72}
+    .bubble-person.one{left:24px; bottom:24px; background:var(--purple); animation-delay:.2s}
+    .bubble-person.two{right:34px; bottom:74px; background:var(--forest); animation-delay:.9s}
+    .bubble-person.three{left:46%; bottom:10px; background:var(--blue); animation-delay:1.4s}
+    @keyframes wiggle{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(5deg)}}
+    .big-numbers{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+    .big-number{position:relative; min-height:260px; padding:22px; overflow:hidden}
+    .big-number:nth-child(1){background:var(--pink)} .big-number:nth-child(2){background:var(--yellow)} .big-number:nth-child(3){background:var(--green)} .big-number:nth-child(4){background:var(--sky)}
+    .big-number .big-value{font-family:"Oswald"; font-size:clamp(72px,8vw,126px); line-height:.78; letter-spacing:-.08em; color:var(--blue); text-shadow:4px 4px 0 rgba(255,255,255,.62)}
+    .big-number p{font-weight:760; color:rgba(51,46,50,.75)}
+    .intro-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+    .intro-card{padding:clamp(22px,3vw,34px)}
+    .intro-card p{font-size:18px; font-weight:650; color:var(--muted)}
+    .intro-card strong{color:var(--ink)}
+    .mini-list{display:grid; gap:10px; margin-top:18px}
+    .mini-list div{display:flex; gap:10px; align-items:flex-start; padding:12px; border:1px solid var(--line); border-radius:16px; background:rgba(252,247,232,.62); font-weight:750}
+    .story-grid{display:grid; grid-template-columns:.95fr 1.05fr; gap:16px}
+    .story-card{padding:clamp(24px,3.5vw,44px)}
+    .story-card.green{background:var(--green)} .story-card.yellow{background:var(--yellow)} .story-card.dark{background:var(--ink); color:var(--cream)} .story-card.dark .eyebrow{color:var(--pink)} .story-card.dark .lead{color:rgba(252,247,232,.82)}
+    .callout{margin-top:18px; padding:18px; border:2px dashed var(--blue); border-radius:22px; background:var(--cream); font-weight:840; font-size:18px}
+    .big-kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+    .kpi{position:relative; overflow:hidden; min-height:238px; padding:22px; background:var(--white)}
+    .kpi:nth-child(2){background:var(--yellow)} .kpi:nth-child(3){background:var(--green)} .kpi:nth-child(4){background:var(--sky)}
+    .kpi .num{font-family:"Oswald"; font-size:clamp(70px,7.5vw,118px); line-height:.78; letter-spacing:-.08em; color:var(--blue)}
+    .kpi h3{margin-top:18px}
+    .kpi p{font-weight:750; color:rgba(51,46,50,.76)}
+    .data-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px}
+    .panel{padding:clamp(22px,3vw,34px); background:var(--white)}
+    .panel.dark{background:var(--ink); color:var(--cream)}
+    .panel.dark .eyebrow{color:var(--pink)}
+    .panel.dark .lead{color:rgba(252,247,232,.78)}
+    .bar-list{display:grid; gap:12px; margin-top:18px}
+    .bar-row{display:grid; grid-template-columns:minmax(180px,1fr) minmax(110px,1.15fr) 64px; gap:12px; align-items:center; font-weight:850}
+    .bar-track{height:16px; border:1px solid var(--ink); border-radius:999px; background:rgba(252,247,232,.7); overflow:hidden}
+    .bar-fill{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--pink),var(--blue)); border-right:1px solid var(--ink); transition:width .65s cubic-bezier(.2,1,.3,1)}
+    .panel.dark .bar-track{background:rgba(252,247,232,.16); border-color:rgba(252,247,232,.44)}
+    .panel.dark .bar-fill{background:linear-gradient(90deg,var(--green),var(--yellow))}
+    .bar-value{font-family:"Oswald"; font-size:26px; line-height:1; letter-spacing:-.04em}
+    .tag-cloud{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
+    .tag{display:inline-flex; align-items:center; gap:7px; padding:10px 12px; border:1.5px solid var(--ink); border-radius:999px; background:var(--cream); font-weight:850; box-shadow:3px 3px 0 rgba(51,46,50,.14)}
+    .tag b{font-family:"Oswald"; font-size:24px; line-height:.8; color:var(--blue)}
+    .signal-card{margin-top:16px; padding:16px; border:2px dashed var(--blue); border-radius:20px; background:var(--yellow)}
+    .signal-card h3{font-size:22px}
+    .signal-card p{font-size:16px; font-weight:750; color:rgba(51,46,50,.74)}
+    .signal-tags{display:flex; flex-wrap:wrap; gap:9px; margin-top:13px}
+    .signal-tags span{padding:8px 11px; border:1.5px solid var(--ink); border-radius:999px; background:var(--white); font-weight:850}
+    .fear-grid{display:grid; grid-template-columns:1.25fr .75fr; gap:16px}
+    .fear-card{padding:clamp(24px,3vw,38px); background:linear-gradient(135deg,var(--blue),var(--purple)); color:var(--cream)}
+    .fear-card .eyebrow{color:var(--yellow)}
+    .agenda{display:grid; gap:12px; margin-top:18px}
+    .agenda-item{display:flex; justify-content:space-between; gap:16px; align-items:center; padding:15px; border:1px solid rgba(51,46,50,.16); border-radius:18px; background:linear-gradient(135deg,rgba(240,153,249,.32),rgba(154,189,255,.32)); font-weight:900}
+    .agenda-item strong{font-family:"Oswald"; font-size:42px; color:var(--blue); letter-spacing:-.06em; text-shadow:2px 2px 0 var(--pink)}
+    .question-wall{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px}
+    .question{padding:18px; min-height:158px; background:var(--white); font-size:20px; line-height:1.1; font-weight:900; transform:rotate(var(--r)); box-shadow:var(--shadow)}
+    .question:nth-child(3n+1){background:var(--yellow)} .question:nth-child(3n+2){background:var(--green)} .question:nth-child(3n+3){background:var(--sky)}
+    .question small{display:block; margin-bottom:12px; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--blue); font-weight:950}
+    .comments-grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px}
+    .comment-card{padding:20px; min-height:220px; background:var(--white)}
+    .comment-card:nth-child(2n){background:var(--cream)} .comment-card:nth-child(3n){background:var(--yellow)}
+    .comment-card h3{font-size:24px}
+    .comment-card p{font-weight:710; color:rgba(51,46,50,.74)}
+    .quotes-wrap{background:var(--pink); overflow:hidden; padding:0}
+    .quotes-track{display:flex; gap:14px; width:max-content; animation:ticker 82s linear infinite; padding:22px}
+    .quote{width:380px; min-height:154px; padding:18px; border:2px solid var(--ink); border-radius:20px; background:var(--white); box-shadow:6px 6px 0 var(--ink); font-size:18px; font-weight:850; transform:rotate(var(--r))}
+    .quote:nth-child(odd){--r:-2deg} .quote:nth-child(even){--r:2deg}
+    .quote-wall{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px}
+    .quote-static{padding:20px; min-height:172px; background:var(--white); font-size:18px; font-weight:850; line-height:1.16}
+    .quote-static:nth-child(4n+1){background:var(--yellow)} .quote-static:nth-child(4n+2){background:var(--green)} .quote-static:nth-child(4n+3){background:var(--sky)} .quote-static:nth-child(4n+4){background:var(--pink)}
+    .help-card{position:relative; overflow:hidden; padding:clamp(24px,3.5vw,44px); background:linear-gradient(135deg,var(--blue),var(--purple)); color:var(--cream)}
+    .help-card::after{content:"✊"; position:absolute; right:clamp(18px,4vw,54px); bottom:-8px; font-size:clamp(92px,12vw,170px); opacity:.16; transform:rotate(-8deg); pointer-events:none}
+    .help-card .eyebrow{color:var(--yellow)}
+    .help-card h2{max-width:12ch}
+    .help-card p{position:relative; z-index:2; max-width:82ch; font-size:clamp(18px,1.5vw,22px); font-weight:740; color:rgba(252,247,232,.84)}
+    .help-card .hero-actions{margin-top:22px}
+    .help-card .button{background:var(--yellow); color:var(--ink); box-shadow:5px 5px 0 var(--pink)}
+    .pill-cloud{position:relative; z-index:2; display:flex; flex-wrap:wrap; gap:10px; margin-top:22px}
+    .pill{display:inline-flex; align-items:center; gap:7px; padding:9px 12px; border:1.5px solid var(--ink); border-radius:999px; background:var(--cream); color:var(--ink); font-weight:900; box-shadow:3px 3px 0 rgba(51,46,50,.18)}
+    .help-card .pill{background:rgba(252,247,232,.95)}
+    .principles{display:grid; grid-template-columns:.75fr 1.25fr; gap:16px}
+    .principles-head{padding:clamp(26px,4vw,46px); background:var(--ink); color:var(--cream)}
+    .principles-head .eyebrow{color:var(--pink)}
+    .principles-head h2{max-width:10ch}
+    .principles-head p{font-size:clamp(18px,1.55vw,22px); font-weight:760; color:rgba(252,247,232,.78)}
+    .principles-list{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px}
+    .principle{padding:18px; background:var(--white)}
+    .principle:nth-child(3n+1){background:var(--yellow)} .principle:nth-child(3n+2){background:var(--green)} .principle:nth-child(3n+3){background:var(--sky)}
+    .principle h3{font-size:24px}
+    .principle p{font-weight:720; color:rgba(51,46,50,.76)}
+    .roadmap-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:15px}
+    .road-card{position:relative; min-height:316px; padding:22px; background:var(--white); overflow:hidden}
+    .road-card::after{content:attr(data-percent); position:absolute; right:12px; bottom:4px; font-family:"Oswald"; font-size:76px; line-height:.8; color:rgba(0,0,255,.10); letter-spacing:-.08em}
+    .road-tag{display:inline-flex; margin-bottom:14px; padding:7px 10px; border:1.5px solid var(--ink); border-radius:999px; background:var(--yellow); font-size:12px; font-weight:950; text-transform:uppercase; letter-spacing:.06em}
+    .road-card p{position:relative; z-index:2; font-weight:680; color:var(--muted)}
+    .method{display:grid; grid-template-columns:.95fr 1.05fr; gap:16px}
+    .method .card{padding:clamp(24px,3vw,38px)}
+    .steps{display:grid; gap:12px}
+    .step{display:grid; grid-template-columns:52px 1fr; gap:12px; align-items:start; padding:14px; border:1px solid var(--line); border-radius:18px; background:var(--cream)}
+    .step span{display:grid; place-items:center; width:52px; aspect-ratio:1; border:2px solid var(--ink); border-radius:16px; background:var(--green); font-family:"Oswald"; font-size:34px; box-shadow:4px 4px 0 var(--pink)}
+    .step strong{display:block; font-size:18px}
+    .step p{color:var(--muted); font-weight:650}
+    .cta{padding:clamp(28px,4vw,54px); text-align:center; background:var(--ink); color:var(--cream)}
+    .cta .eyebrow{color:var(--pink)}
+    .cta h2{max-width:12ch; margin:0 auto 14px}
+    .cta p{max-width:850px; margin:0 auto 24px; font-size:19px; font-weight:700; color:rgba(252,247,232,.78)}
+    .cta .button{background:var(--yellow); color:var(--ink); box-shadow:5px 5px 0 var(--pink)}
+    .cta .button.alt{background:var(--cream); color:var(--ink); box-shadow:5px 5px 0 var(--blue)}
+    .footer-note{padding:18px 30px 24px; color:var(--muted); font-size:13px; font-weight:700; text-align:center}
+    .reveal{opacity:0; transform:translateY(18px); transition:opacity .55s ease, transform .55s ease}
+    .reveal.is-visible{opacity:1; transform:none}
+    @media(max-width:1080px){
+      .hero,.intro-grid,.story-grid,.fear-grid,.method,.principles{grid-template-columns:1fr}
+      .hero-main,.hero-lab{min-height:auto}
+      .hero-lab{min-height:0; padding-bottom:170px}
+      .big-numbers,.big-kpis{grid-template-columns:repeat(2,1fr)}
+      .roadmap-grid,.comments-grid,.question-wall,.quote-wall{grid-template-columns:repeat(2,1fr)}
+      .principles-list{grid-template-columns:1fr}
+    }
+    @media(max-width:760px){
+      .page{width:min(100% - 18px, 1240px); padding-top:9px}
+      .frame{border-radius:24px}
+      .section{padding:0 10px; margin-top:10px}
+      .hero{padding-top:10px}
+      .hero-main,.hero-lab,.card{border-radius:22px}
+      h1{font-size:clamp(44px,13vw,74px); max-width:100%}
+      .hero-copy{font-size:18px}
+      .hero-lab{padding-bottom:120px}
+      .float-note{font-size:14px; padding:12px; transform:none!important}
+      .bubble-person{width:92px; font-size:38px; opacity:.55}
+      .bubble-person.three{left:40%}
+      .big-numbers,.big-kpis,.data-grid,.roadmap-grid,.comments-grid,.question-wall,.quote-wall{grid-template-columns:1fr}
+      .bar-row{grid-template-columns:1fr 1fr 50px; gap:7px; font-size:14px}
+      .quote{width:285px}
+      .hero-actions{flex-direction:column}
+      .button{width:100%}
+      .question{transform:none!important}
+    }
+    @media(prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important} html{scroll-behavior:auto} .reveal{opacity:1; transform:none}}
+  </style>
+  <!-- ===== Navigation commune du site (ajout : supprimable / modifiable librement) ===== -->
+  <style>
+    .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 4px 4px 16px; }
+    .site-nav .site-brand { margin-right: auto; font-family: "Oswald", Impact, sans-serif; font-size: 27px; font-weight: 700; letter-spacing: -.04em; color: var(--ink); text-decoration: none; }
+    .site-nav a.site-link {
+      display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
+      font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 3px 3px 0 rgba(51,46,50,.12);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .site-nav a.site-link:hover { transform: translateY(-1px); background: var(--yellow); }
+    .site-nav a.site-link.is-current { background: var(--ink); color: var(--cream); }
+    @media (max-width: 760px) { .site-nav a.site-link { width: auto; } }
+  </style>
+</head>
+<body>
+  <main class="page" id="top">
+    <!-- ===== Navigation commune du site ===== -->
+    <nav class="site-nav" aria-label="Navigation du site">
+      <a class="site-brand" href="../">KOMUNE</a>
+      <a class="site-link" href="../">Accueil</a>
+      <a class="site-link" href="../articles/">Articles</a>
+      <a class="site-link is-current" href="./" aria-current="page">Comparateur 2027</a>
+      <a class="site-link" href="../equipe/">L'équipe</a>
+      <a class="site-link" href="../soutenir/">Nous soutenir</a>
+    </nav>
+    <article class="frame">
+      <div class="ticker" aria-label="Retours citoyens sur le comparateur 2027">
+        <div class="ticker-track">
+          <span>💥 +2 millions de vues - le projet dépasse Komune</span>
+          <span>🗳️ 664 réponses citoyennes - la plateforme évolue avec vos besoins</span>
+          <span>🤝 206 propositions d’aide - journalistes, devs, designers, juristes, data, expert·es</span>
+          <span>🔎 Factuel, sourcé, transparent - c’est la ligne que vous nous demandez</span>
+          <span>💛 +500 soutiens mensuels - prochain cap : 800</span>
+          <span>💥 +2 millions de vues - le projet dépasse Komune</span>
+          <span>🗳️ 664 réponses citoyennes - la plateforme évolue avec vos besoins</span>
+          <span>🤝 206 propositions d’aide - journalistes, devs, designers, juristes, data, expert·es</span>
+          <span>🔎 Factuel, sourcé, transparent - c’est la ligne que vous nous demandez</span>
+          <span>💛 +500 soutiens mensuels - prochain cap : 800</span>
+        </div>
+      </div>
+
+      <section class="section hero">
+        <article class="card hero-main reveal">
+          <p class="eyebrow">Comparateur politique Komune</p>
+          <h1>Ce n’est plus une idée. C’est un projet citoyen qui s’organise.</h1>
+          <p class="hero-copy">Pour celles et ceux qui débarquent : on développe une <strong>plateforme gratuite, open source, sourcée et accessible</strong> pour comparer les candidat·es à la présidentielle 2027 à partir de faits, de votes réels, d’actes au pouvoir, de contradictions et de conséquences concrètes dans nos vies.</p>
+          <p class="hero-small">Depuis l’annonce, l’engouement est massif : plus de 2 millions de vues sur nos publications, 664 réponses au formulaire citoyen, 206 propositions d’aide, plus de 500 soutiens mensuels. Ce projet existe parce que vous vous en êtes emparé·es.</p>
+          <div class="hero-actions">
+            <a class="button" href="#priorites">Voir les priorités</a>
+            <a class="button alt" href="#temoignages">Lire vos retours</a>
+            <a class="button light" href="#participer">Contribuer</a>
+          </div>
+        </article>
+        <aside class="card hero-lab reveal" aria-label="La plateforme évolue avec vos réponses">
+          <p class="eyebrow">Laboratoire citoyen</p>
+          <h2>Ce n’est pas notre agenda. C’est le vôtre.</h2>
+          <div class="lab-stack">
+            <div class="float-note"><small>Besoin central</small>“Je veux comparer par sujet, pas tout lire d’un bloc.”</div>
+            <div class="float-note"><small>Confiance</small>“Restez factuelles, sourcées et irréprochables.”</div>
+            <div class="float-note"><small>Contradictions</small>“Montrez l’écart entre discours, votes et actes.”</div>
+            <div class="float-note"><small>Angles morts</small>Outre-mer, santé mentale, handicap, ruralité, probité, financements.</div>
+            <div class="float-note"><small>Élan collectif</small>206 personnes proposent déjà d’aider à construire, relire, coder, tester, sourcer.</div>
+            <div class="float-note"><small>Objectif</small>Atteindre 800 soutiens mensuels pour dégager un vrai temps plein sur le projet.</div>
+          </div>
+          <div class="bubble-person one">🗳️</div>
+          <div class="bubble-person two">🔎</div>
+          <div class="bubble-person three">💥</div>
+        </aside>
+      </section>
+
+      <section class="section">
+        <div class="big-numbers" id="big-numbers"></div>
+      </section>
+
+      <section class="section story-grid">
+        <article class="card story-card green reveal">
+          <p class="eyebrow">Le point de départ</p>
+          <h2>Pourquoi on construit ça.</h2>
+          <p class="lead">En 2027, on sait déjà que la campagne sera saturée de sondages, de petites phrases, de clashs et de récits de stratégie. Mais quand on veut comprendre ce que les candidat·es proposent vraiment, tout est éparpillé : programmes, votes, bilans, déclarations, rapports, sources, financements.</p>
+          <div class="callout">On veut rassembler ces informations dans un même endroit, les rendre lisibles, et permettre à chacun·e de comparer sans devoir devenir enquêteur·ice à plein temps.</div>
+        </article>
+        <article class="card story-card yellow reveal">
+          <p class="eyebrow">Ce que l’engouement change</p>
+          <h2>Le projet change d’échelle.</h2>
+          <p class="lead">Vos réponses ne servent pas seulement à faire une synthèse. Elles deviennent une feuille de route. Elles disent les sujets à prioriser, les fonctionnalités à construire, les angles morts à ne pas oublier, et la méthode de confiance à tenir.</p>
+          <div class="callout">Ce n’est pas une page “retours” décorative. C’est une base de travail pour construire le comparateur.</div>
+        </article>
+      </section>
+
+      <section class="section intro-grid">
+        <article class="card intro-card reveal">
+          <p class="eyebrow">Le projet, simplement</p>
+          <h2>Un comparateur pour voter sur des faits.</h2>
+          <p>La plateforme permettra de comparer les candidat·es par sujet de vie : santé, logement, climat, droits, école, Outre-mer, médias, services publics. Pour chaque sujet, on veut distinguer <strong>ce qui est promis</strong>, <strong>ce qui a été voté</strong>, <strong>ce qui a été fait</strong>, <strong>ce qui est flou</strong> et <strong>ce qui contredit le discours</strong>.</p>
+        </article>
+        <article class="card intro-card reveal">
+          <p class="eyebrow">Ce que ça change</p>
+          <h2>On part de vos questions.</h2>
+          <div class="mini-list">
+            <div>🧍 Qu’est-ce que ça change si je suis locataire, jeune, queer, racisé·e, rural·e, précaire, en situation de handicap ?</div>
+            <div>🧾 Qui finance la campagne ? Quelles sources ? Quels votes ? Quelles contradictions ?</div>
+            <div>🧭 Quels sujets sont invisibilisés par les médias, mais essentiels dans nos vies ?</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="priorites">
+        <div class="big-kpis" id="key-kpis"></div>
+      </section>
+
+      <section class="section data-grid">
+        <article class="card panel reveal">
+          <p class="eyebrow">Qui a répondu ?</p>
+          <h2>Un public jeune, mais pas seulement.</h2>
+          <p class="lead">La majorité des réponses vient des moins de 35 ans, mais le formulaire a aussi circulé au-delà. C’est important : l’outil doit parler aux jeunes sans être réservé aux jeunes.</p>
+          <div class="bar-list" id="age-bars"></div>
+        </article>
+        <article class="card panel reveal">
+          <p class="eyebrow">Vos sujets de vie</p>
+          <h2>Ce qui doit guider le développement.</h2>
+          <div class="tag-cloud" id="subject-tags"></div>
+          <div class="signal-card">
+            <h3>Et aussi : les angles morts qui ressortent dans les réponses libres.</h3>
+            <p>Certains sujets ne ressortent pas toujours dans les cases à cocher, mais reviennent comme des demandes fortes ou des vigilances à ne pas oublier.</p>
+            <div class="signal-tags" id="signal-tags"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section fear-grid">
+        <article class="card fear-card reveal">
+          <p class="eyebrow">Ce qui vous inquiète</p>
+          <h2>Vous refusez une présidentielle confisquée par le bruit.</h2>
+          <p style="font-size:20px; font-weight:760; max-width:70ch; color:rgba(252,247,232,.82);">Ce qui ressort, ce n’est pas une envie de “consommer” de la politique. C’est une lassitude : trop de personnalités, trop de clashs, trop d’angoisse, pas assez de conséquences concrètes. Le comparateur doit donc ralentir le débat, vérifier, sourcer, expliquer.</p>
+          <div class="bar-list" id="perception-bars"></div>
+        </article>
+        <article class="card panel reveal">
+          <p class="eyebrow">Agenda médiatique</p>
+          <h2>Les sujets que vous jugez trop imposés.</h2>
+          <div class="agenda" id="media-agenda"></div>
+        </article>
+      </section>
+
+      <section class="section data-grid">
+        <article class="card panel dark reveal">
+          <p class="eyebrow">À vérifier vraiment</p>
+          <h2>Promettre ne suffit plus.</h2>
+          <p class="lead">Les réponses demandent d’aller au-delà du programme officiel. Il faut vérifier les votes, les actes, les sources, les financements et les effets concrets.</p>
+          <div class="bar-list" id="verify-bars"></div>
+        </article>
+        <article class="card panel reveal">
+          <p class="eyebrow">Fonctionnalités attendues</p>
+          <h2>Le produit doit répondre à ces usages.</h2>
+          <div class="bar-list" id="feature-bars"></div>
+        </article>
+      </section>
+
+      <section class="section data-grid">
+        <article class="card panel reveal">
+          <p class="eyebrow">Formats</p>
+          <h2>Pas un tunnel. Plusieurs niveaux de lecture.</h2>
+          <p class="lead">Les réponses ne demandent pas seulement du “court”. Elles demandent surtout de la clarté, des nuances, et la possibilité d’aller plus loin quand on en a besoin.</p>
+          <div class="bar-list" id="explain-bars"></div>
+        </article>
+        <article class="card panel reveal" style="background:var(--yellow)">
+          <p class="eyebrow">En une phrase</p>
+          <h2>Ce que l’outil doit promettre.</h2>
+          <p style="font-size:24px; font-weight:850; line-height:1.18;">Comparer les candidat·es, mais surtout comprendre <span style="background:linear-gradient(transparent 58%, var(--green) 58%)">qui gagne, qui perd, qui est protégé, qui est fragilisé</span>, et quelles conséquences collectives produisent les programmes.</p>
+        </article>
+      </section>
+
+      <section class="section" id="questions">
+        <article class="card panel reveal" style="background:var(--green)">
+          <p class="eyebrow">Questions concrètes</p>
+          <h2>Ce que vous voulez pouvoir taper dans l’outil.</h2>
+          <p class="lead">Les réponses libres sont très précieuses parce qu’elles montrent comment les gens posent vraiment les questions politiques : avec des situations, des inquiétudes, des droits, des lieux, des vies.</p>
+        </article>
+      </section>
+      <section class="section">
+        <div class="question-wall" id="question-wall"></div>
+      </section>
+
+      <section class="section" id="temoignages">
+        <article class="card panel reveal">
+          <p class="eyebrow">Vos mots</p>
+          <h2>Ce que le projet réveille.</h2>
+          <p class="lead">On a ajouté plus de témoignages et de commentaires, parce qu’ils racontent mieux que n’importe quelle statistique ce que cette plateforme doit permettre : comprendre, vérifier, transmettre, discuter, reprendre confiance.</p>
+        </article>
+      </section>
+      <section class="section">
+        <article class="card quotes-wrap reveal" aria-label="Retours reçus">
+          <div class="quotes-track" id="quote-track"></div>
+        </article>
+      </section>
+      <section class="section">
+        <div class="quote-wall" id="quote-wall"></div>
+      </section>
+
+      <section class="section">
+        <article class="card panel reveal" style="background:var(--sky)">
+          <p class="eyebrow">Commentaires qui guident l’outil</p>
+          <h2>Les points de vigilance remontés.</h2>
+          <p class="lead">Derrière les pourcentages, il y a des demandes très concrètes. Elles obligent à penser la plateforme comme un outil journalistique, pédagogique, technique et politique à la fois.</p>
+        </article>
+      </section>
+      <section class="section">
+        <div class="comments-grid" id="media-comments"></div>
+      </section>
+
+      <section class="section" id="participer">
+        <article class="card help-card reveal">
+          <p class="eyebrow">Vous voulez aider ?</p>
+          <h2>206 personnes ont proposé leur aide.</h2>
+          <p>On a reçu des propositions très différentes : coder, chercher des sources, analyser des votes, relire les contenus, tester l’interface, apporter une expertise de terrain, structurer les données, faire du design, sécuriser la plateforme, coordonner, diffuser. Maintenant, l’enjeu est de transformer cette énergie en groupes de travail clairs.</p>
+          <div class="pill-cloud" id="help-profile-tags"></div>
+          <div class="hero-actions">
+            <a class="button" href="https://forms.gle/EJ2VZca7kmeHJL676" target="_blank" rel="noreferrer">Proposer mon aide</a>
+          </div>
+        </article>
+      </section>
+
+      <section class="section data-grid">
+        <article class="card panel reveal">
+          <p class="eyebrow">Profils volontaires</p>
+          <h2>Des compétences utiles tout de suite.</h2>
+          <div class="bar-list" id="help-profile-bars"></div>
+          <div class="tag-cloud" id="help-more-tags"></div>
+        </article>
+        <article class="card panel reveal" style="background:var(--yellow)">
+          <p class="eyebrow">Disponibilité</p>
+          <h2>Une énergie à organiser.</h2>
+          <p class="lead">Certaines personnes proposent une aide ponctuelle, d’autres quelques heures par mois ou par semaine. Le projet collectif doit donc être pensé avec des tâches claires, autonomes, bien documentées.</p>
+          <div class="bar-list" id="availability-bars"></div>
+        </article>
+      </section>
+
+      <section class="section data-grid">
+        <article class="card panel reveal">
+          <p class="eyebrow">Chantiers proposés</p>
+          <h2>Ce que les volontaires peuvent faire.</h2>
+          <div class="tag-cloud" id="help-task-tags"></div>
+        </article>
+        <article class="card panel reveal">
+          <p class="eyebrow">Ce que les gens proposent vraiment</p>
+          <h2>Des contributions très concrètes.</h2>
+          <div class="tag-cloud" id="help-quote-tags"></div>
+        </article>
+      </section>
+
+      <section class="section principles" id="ligne">
+        <article class="card principles-head reveal">
+          <p class="eyebrow">Notre ligne de conduite</p>
+          <h2>Ce que vous nous demandez de tenir.</h2>
+          <p>Dans les réponses, une exigence revient très fort : l’outil doit être utile parce qu’il est rigoureux. Pas un test d’opinion, pas un classement magique, pas une consigne de vote. Une méthode transparente.</p>
+        </article>
+        <div class="principles-list" id="principles-list"></div>
+      </section>
+
+      <section class="section" id="roadmap">
+        <article class="card panel reveal" style="background:var(--green)">
+          <p class="eyebrow">Roadmap citoyenne</p>
+          <h2>Ce que vos réponses changent concrètement dans le développement.</h2>
+          <p class="lead">Les résultats deviennent des choix produit, éditoriaux et pédagogiques. Voilà les priorités qui remontent.</p>
+        </article>
+      </section>
+      <section class="section">
+        <div class="roadmap-grid" id="roadmap-grid"></div>
+      </section>
+
+      <section class="section method">
+        <article class="card reveal">
+          <p class="eyebrow">Notre méthode</p>
+          <h2>Un outil collaboratif, pas un classement magique.</h2>
+          <p style="font-size:18px; font-weight:700; color:var(--muted);">On ne veut pas dire “vote pour X”. On veut construire une méthode : poser les bonnes questions, montrer les sources, distinguer les promesses des preuves, et rendre visibles les conséquences concrètes.</p>
+        </article>
+        <article class="card reveal">
+          <div class="steps">
+            <div class="step"><span>1</span><div><strong>Vos retours définissent les priorités.</strong><p>Les sujets les plus demandés et les angles morts remontés passent en haut de la roadmap.</p></div></div>
+            <div class="step"><span>2</span><div><strong>Chaque fiche sépare discours, votes, actes.</strong><p>On évite de mélanger promesse de campagne, posture médiatique et preuve vérifiable.</p></div></div>
+            <div class="step"><span>3</span><div><strong>Les contributions sont organisées.</strong><p>On centralise les profils volontaires pour former des groupes de travail utiles, pas un grand bazar ingérable.</p></div></div>
+            <div class="step"><span>4</span><div><strong>La méthode sera publiée.</strong><p>Sources, critères, limites, corrections et relectures doivent être compréhensibles par le public.</p></div></div>
+            <div class="step"><span>5</span><div><strong>L’outil reste évolutif.</strong><p>Vos nouvelles questions, vos critiques et les évolutions de campagne continueront à modifier la plateforme.</p></div></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section">
+        <article class="card cta reveal">
+          <p class="eyebrow">La suite</p>
+          <h2>Il faut maintenant les moyens d’aller au bout.</h2>
+          <p>Plus de 500 personnes soutiennent déjà Komune chaque mois. C’est énorme, et ça permet de croire à la première version. Mais pour transformer cet élan en plateforme solide, il faut atteindre le cap des 800 soutiens mensuels : financer le temps de recherche, de vérification, de développement, de design, de coordination, de maintenance et de mise à jour pendant toute la campagne.</p>
+          <p style="margin-top:14px;">On a besoin de soutiens mensuels, et aussi de personnes prêtes à contribuer au projet. C’est ce qui permettra de construire un outil gratuit, indépendant, sourcé, factuel et vraiment utile jusqu’à la présidentielle.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a class="button alt" href="../soutenir/">Soutenir Komune</a>
+            <a class="button" href="https://forms.gle/2ZPR2JtWFCAJfpAN8" target="_blank" rel="noreferrer">Donner mon avis</a>
+            <a class="button light" href="https://forms.gle/EJ2VZca7kmeHJL676" target="_blank" rel="noreferrer">Aider à construire l’outil</a>
+          </div>
+        </article>
+      </section>
+      <p class="footer-note">Synthèse mise à jour à partir des formulaires Komune sur le comparateur politique 2027 : 664 réponses citoyennes et 206 propositions d’aide. Les résultats citoyens sont affichés en pourcentages et anonymisés. Les témoignages sont présentés sans nom ni email.</p>
+    </article>
+  </main>
+  <script>
+    const DATA = {"n_feedback":664,"n_help":206,"key_cards":[{"value":80,"title":"veulent comparer par sujet","text":"partir du logement, de la santé, du climat, des droits, de l’école ou des services publics avant de partir des ego."},{"value":70,"title":"demandent les contradictions","text":"les promesses ne suffisent plus : il faut voir les écarts entre discours, votes et actes."},{"value":85,"title":"citent l’écologie / climat","text":"le sujet arrive en tête des préoccupations de vie quotidienne dans les réponses."},{"value":71,"title":"jugent la politique trop personnalisée","text":"la plateforme doit déplacer le regard : moins de casting, plus de conséquences concrètes."}],"big_numbers":[{"value":"+2M","title":"vues sur les publications","text":"le projet a quitté le simple cercle de Komune et parle déjà à un public très large."},{"value":"664","title":"réponses citoyennes","text":"des attentes très précises sur les sujets, les formats, la méthode, les sources et les fonctionnalités."},{"value":"206","title":"propositions d’aide","text":"des personnes prêtes à coder, sourcer, relire, vérifier, tester, designer, expertiser ou diffuser."},{"value":"+500","title":"soutiens mensuels","text":"un premier cap dépassé, mais il faut atteindre 800 pour financer un vrai temps de travail."}],"age":[{"label":"25-35 ans","count":225,"value":34},{"label":"moins de 25 ans","count":172,"value":26},{"label":"35-45 ans","count":114,"value":17},{"label":"plus de 55 ans","count":77,"value":12},{"label":"45-54 ans","count":76,"value":11}],"subjects":[{"label":"Écologie / climat","count":565,"value":85},{"label":"Santé","count":453,"value":68},{"label":"Droits des femmes","count":384,"value":58},{"label":"Racisme / discriminations","count":340,"value":51},{"label":"École","count":330,"value":50},{"label":"Services publics","count":298,"value":45},{"label":"Démocratie / institutions","count":269,"value":41},{"label":"Travail / salaires","count":224,"value":34},{"label":"Pouvoir d’achat","count":218,"value":33},{"label":"Droits LGBT+","count":211,"value":32},{"label":"Culture","count":190,"value":29},{"label":"Médias / information","count":190,"value":29},{"label":"Police / justice / sécurité","count":190,"value":29},{"label":"Liberté de la presse","count":177,"value":27},{"label":"Guerre / relations internationales","count":168,"value":25},{"label":"Logement","count":153,"value":23},{"label":"Handicap","count":141,"value":21},{"label":"Retraites","count":113,"value":17},{"label":"Immigration","count":83,"value":12},{"label":"Ruralité","count":80,"value":12},{"label":"Annabelle Piery","count":2,"value":0},{"label":"Protection de l’enfance","count":2,"value":0}],"perception":[{"label":"Trop centrée sur les personnalités","count":471,"value":71},{"label":"Trop centrée sur les clashs","count":382,"value":58},{"label":"Pas assez concrète","count":271,"value":41},{"label":"Trop anxiogène","count":247,"value":37},{"label":"Trop éloignée de ma vie","count":133,"value":20},{"label":"Trop compliquée","count":99,"value":15},{"label":"Trop technique","count":52,"value":8},{"label":"Pas faite pour les gens comme moi","count":18,"value":3},{"label":"Trop manipulée par les médias","count":2,"value":0}],"media":[{"label":"L’insécurité","count":525,"value":79},{"label":"L’immigration","count":520,"value":78},{"label":"Les polémiques sur l’islam","count":454,"value":68},{"label":"Les histoires de partis et les clashs","count":218,"value":33},{"label":"Les sondages","count":124,"value":19},{"label":"Les stratégies de campagne","count":59,"value":9}],"verify":[{"label":"Ce qu’il ou elle a déjà voté","count":413,"value":62},{"label":"Les contradictions entre discours et votes","count":407,"value":61},{"label":"Les conséquences concrètes de son programme","count":380,"value":57},{"label":"Ce qu’il ou elle a fait quand il/elle était au pouvoir","count":258,"value":39},{"label":"Qui finance / soutient sa campagne","count":250,"value":38},{"label":"Les sources utilisées pour justifier ses propositions","count":231,"value":35},{"label":"Les effets sur différents groupes sociaux","count":135,"value":20},{"label":"Ce qu’il ou elle promet","count":128,"value":19}],"features":[{"label":"Comparer les candidat·es par sujet","count":530,"value":80},{"label":"Voir les contradictions entre discours et votes","count":463,"value":70},{"label":"Voir les mesures les plus dangereuses / importantes","count":390,"value":59},{"label":"Pouvoir chercher un sujet dans une barre de recherche","count":266,"value":40},{"label":"Avoir des exemples de vie réelle","count":149,"value":22},{"label":"Comparer les candidat·es selon mon profil de vie","count":131,"value":20},{"label":"Avoir un glossaire des mots politiques compliqués","count":103,"value":16},{"label":"Quiz, jeux","count":45,"value":7},{"label":"Proposer un sujet à l’équipe Komune","count":30,"value":5}],"explain":[{"label":"Détaillée : avec arguments, nuances et sources","count":319,"value":48},{"label":"Moyenne : quelques cartes claires","count":267,"value":40},{"label":"Très courte : “en gros, ça change quoi ?”","count":73,"value":11}],"signals":["Outre-mer / DROM-COM","santé mentale et soins psy","protection de l’enfance","probité, casier judiciaire, condamnations","conflits d’intérêts","financement des campagnes","coût réel des mesures","votes européens","transports et ruralité","déserts médicaux","handicap / validisme","droits des personnes trans","violences policières","IA et discriminations algorithmiques","indépendance des médias","liberté de la presse","précarité étudiante","services publics locaux"],"quotes":["“J’espère trouver chez vous un outil objectif qui passe outre les débats et les altercations théâtrales.”","“J’ai besoin de concret et de fiabilité.”","“La façon dont les sujets sont traités me semble mal adaptée. On ne se base plus sur des faits mais sur des ressentis ou des on dit.”","“L’idée d’un tableau comparatif avec source me semble excellente.”","“J’aimerais que les infos soient autant fournies d’un côté que d’un autre.”","“Restez factuel·les, claires, équilibrées : chacun pourra se faire son propre avis.”","“Écrire en gros la source.”","“Il faut vraiment qu’on apprenne à voter par rapport au programme politique !”","“J’aimerais comprendre le fonctionnement de toute cette machine sans en finir dégoûtée au bout de 5 minutes.”","“Pleine d’espoir d’un outil qui pourra ouvrir les yeux à mes proches.”","“Je voudrais vous dire merci pour la démocratie.”","“J’aimerais qu’on vote en connaissant les votes antérieurs, les vraies idées des candidats et non les promesses.”","“Ce projet est exactement ce qu’il manque pour voter en toute confiance et conscience.”","“La transparence est un sujet fondamental sur les années à venir.”","“Une personne bien intentionnée, qui souhaite réellement comprendre les enjeux, se retrouve bien trop souvent perdue dans la masse d’informations.”","“On oublie les promesses de campagne pompeuses et on apporte des sources.”","“Merci pour ce projet essentiel à l’hygiène démocratique.”","“Qu’on réussisse à réaliser une plateforme avec le plus de précision pour faire en sorte que tout le monde puisse se positionner en pleine conscience.”"],"question_examples":["Qu’est-ce que votre programme change si j’habite à la campagne et que j’ai pas de voiture ?","Qui propose quelque chose contre les déserts médicaux ?","Qui parle d’écologie mais vote contre les mesures climatiques ?","Quel programme est le plus dangereux pour les droits LGBT ?","Qui met en danger nos droits en tant que femmes, personnes racisées, précaires ou LGBT ?","Quel programme garantit le plus la liberté et l’indépendance des médias ?","Qui finance ou soutient la campagne ?","Quel programme s’intéresse à l’accès à l’eau en Guadeloupe, Mayotte et autres DROM-TOM ?","Quel candidat a un casier judiciaire ?","Qui défend le mieux le droit des enfants ?","Qui veut investir dans les petites lignes de train, les bus, les services publics locaux ?","Quelle est la vraie influence des décisions de la Commission européenne sur les politiques françaises ?","Qui propose des actions concrètes contre le réchauffement climatique ?","Qui protège les droits sociaux des travailleur·ses précaires ?","Qu’est-ce qui change pour les soins psy, l’hôpital, les salaires des soignant·es ?"],"media_comments":[{"title":"L’Outre-mer ne doit pas être une note de bas de page","text":"Plusieurs réponses parlent des DROM-COM comme d’un angle mort majeur : eau, santé, infrastructures, coût de la vie, chlordécone, climat, discriminations."},{"title":"Les médias saturent certains sujets","text":"Immigration, insécurité, polémiques sur l’islam : beaucoup disent ne plus vouloir d’un débat gouverné par la panique et les mêmes cadrages."},{"title":"Les promesses doivent être confrontées aux votes","text":"La demande revient partout : ne pas comparer seulement les programmes, mais les votes passés, les actes au pouvoir, les revirements et les contradictions."},{"title":"Les sujets de vie doivent reprendre le centre","text":"Santé, école, services publics, climat, logement, discriminations, droits, ruralité, travail : c’est là que les personnes veulent comparer les propositions."},{"title":"La question de la probité remonte fortement","text":"Casier judiciaire, condamnations, plaintes, conflits d’intérêts, patrimoine, financements : beaucoup veulent que ces infos soient rassemblées et lisibles."},{"title":"Il faut aider à discuter autour de soi","text":"Plusieurs retours parlent des proches, de la famille, des ami·es peu politisé·es : l’outil doit pouvoir servir de base de discussion fiable et partageable."}],"help_profiles":[{"label":"Développeur·ses","count":34,"value":17},{"label":"Relecteur·ices / vérificateur·ices","count":30,"value":15},{"label":"Étudiant·es / doctorant·es","count":27,"value":13},{"label":"Designers / UX / UI","count":16,"value":8},{"label":"Personnes concernées par un sujet traité","count":16,"value":8},{"label":"Data analysts / data scientists","count":13,"value":6},{"label":"Expert·es d’un sujet","count":13,"value":6},{"label":"Chercheur·ses","count":7,"value":3},{"label":"Journalistes","count":7,"value":3}],"help_profile_tags":["DevOps / infra / sécurité","juristes","product managers","bibliothécaires","communication","réalisation / vidéo","gestion de projet","associations et collectifs","experts climat / énergie","santé / handicap / social","éducation","Europe et géopolitique"],"help_tasks":["chercher et classer les sources","vérifier les votes et les contradictions","analyser les programmes","structurer les bases de données","coder front/back","déployer et sécuriser la plateforme","améliorer l’UX et l’accessibilité","relire les fiches","faire du fact-checking","tester la V1","vulgariser des sujets complexes","apporter une expertise vécue","travailler sur la data visualisation","organiser les groupes de contribution","diffuser l’outil sur le terrain"],"help_quotes":["“Je peux aider dans la recherche et comparaison des programmes/votes sur les questions écologiques.”","“Nettoyage, compilation, vérification, analyse et visualisation de données.”","“Je peux faire de la recette fonctionnelle, de l’UI après implémentation, et des tests utilisateurs.”","“Je peux contribuer au développement de la plateforme, aussi bien sur le back-end que sur le front-end.”","“Je peux aider sur l’expérience utilisateur et la simplification de données complexes.”","“La recherche des votes à l’Assemblée nationale ou au Parlement européen.”","“Je peux participer à toutes les tâches, de l’analyse de données au croisement des sources.”","“J’ai envie de m’engager davantage et le projet me semble top.”","“Je suis très à l’aise sur la vérification des données, trouver, organiser et vulgariser.”","“Je peux apporter un point de vue concret sur la protection de l’enfance et la réalité de la vie d’enfants placés.”","“Transformer des données complexes en infographies, cartes, graphiques ou contenus interactifs est un excellent moyen de rendre les sujets accessibles.”","“Ce projet devrait aider les gens à voter en connaissance de cause.”"],"availability":[{"label":"Quelques heures par mois","count":75,"value":36},{"label":"Quelques heures par semaine","count":65,"value":32},{"label":"Une aide ponctuelle","count":30,"value":15},{"label":"Une journée ou plus par semaine","count":11,"value":5}],"principles":[{"title":"Rester factuel·les, sourcé·es, irréprochables","text":"Chaque affirmation doit pouvoir être reliée à une source, une date, un contexte et une limite claire."},{"title":"Ne pas donner de consigne de vote","text":"L’objectif n’est pas de dire pour qui voter, mais de permettre à chacun·e de comparer, vérifier et comprendre."},{"title":"Séparer promesses, votes, actes et analyses","text":"Une promesse de campagne, un vote, un bilan ministériel et une interprétation ne doivent jamais être mélangés."},{"title":"Rendre les sources visibles","text":"Les retours demandent de pouvoir retrouver rapidement les preuves : documents officiels, votes, rapports, programmes, dates, citations et limites."},{"title":"Montrer les nuances et les zones floues","text":"Quand une mesure est imprécise, contestée ou difficile à appliquer, on doit l’écrire au lieu de trancher artificiellement."},{"title":"Croiser les relectures","text":"Journalistes, chercheur·ses, expert·es, personnes concernées et profils techniques doivent aider à limiter les angles morts."},{"title":"Rendre accessible sans simplifier à l’extrême","text":"Des cartes courtes pour comprendre vite, des fiches détaillées pour aller plus loin, et des sources visibles pour vérifier."},{"title":"Mettre à jour pendant toute la campagne","text":"La plateforme doit évoluer avec les annonces, les votes, les candidatures, les critiques et les nouvelles informations."},{"title":"Publier une méthode transparente","text":"Sources utilisées, critères de comparaison, choix éditoriaux et limites de l’outil doivent être compréhensibles par le public."},{"title":"Ouvrir un droit de retour","text":"Les utilisateur·ices doivent pouvoir signaler une erreur, une source manquante, un angle mort ou un déséquilibre."}],"roadmap":[{"tag":"Priorité produit","title":"Comparer par sujet avant de comparer les personnalités","percent":80,"body":"Le site doit d’abord répondre à une question de vie : logement, santé, climat, droits, école, travail, médias. Les candidat·es arrivent ensuite."},{"tag":"Méthode","title":"Mettre les contradictions au centre","percent":70,"body":"Chaque fiche doit distinguer clairement : ce qui est promis, ce qui a été voté, ce qui a été fait au pouvoir, ce qui est flou ou contradictoire."},{"tag":"Hiérarchie","title":"Montrer les mesures importantes ou dangereuses","percent":59,"body":"Les personnes ne veulent pas un mur de programme. Elles veulent savoir ce qui peut changer beaucoup de choses, pour qui, et avec quelles conséquences."},{"tag":"Navigation","title":"Rendre la recherche ultra simple","percent":40,"body":"La barre de recherche doit accepter les mots du quotidien : loyer, soins psy, train, PMA, racisme, facture, école, eau, handicap."},{"tag":"Confiance","title":"Documenter financements, soutiens et sources","percent":38,"body":"La demande de transparence porte aussi sur les intérêts, les soutiens, les réseaux, et sur la manière dont les mesures seraient financées."},{"tag":"Angle mort","title":"Traiter l’Outre-mer comme un sujet central","percent":"signal fort","body":"Les retours pointent l’Outre-mer comme une réalité politique majeure : eau, santé, infrastructures, chlordécone, coût de la vie, climat."},{"tag":"Probité","title":"Rassembler les informations judiciaires et conflits d’intérêts","percent":"signal fort","body":"Casier judiciaire, plaintes, condamnations, patrimoine, intérêts privés : la confiance demande aussi ces informations-là."},{"tag":"Pédagogie","title":"Garder plusieurs niveaux de lecture","percent":48,"body":"La majorité veut du détail, mais beaucoup veulent aussi des cartes claires. L’interface doit proposer résumé, explication, source, limite."},{"tag":"Accessibilité","title":"Ne pas réserver l’outil aux gens déjà politisés","percent":41,"body":"La politique est jugée trop abstraite ou pas assez concrète. Le comparateur doit rester lisible, mobile, partageable et utilisable par des proches."},{"tag":"Collectif","title":"Organiser les 206 propositions d’aide","percent":206,"body":"Le sujet n’est plus seulement d’avoir des volontaires, mais de structurer des groupes de contribution utiles : recherche, code, data, design, relecture, test."}]};
+    const qs = (sel, ctx=document) => ctx.querySelector(sel);
+    const qsa = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+    const esc = value => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    function countUp(el, target) {
+      const duration = 850;
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + '%';
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    function renderBigNumbers() {
+      qs('#big-numbers').innerHTML = DATA.big_numbers.map(item => `
+        <article class="card big-number reveal">
+          <div class="big-value">${esc(item.value)}</div>
+          <h3>${esc(item.title)}</h3>
+          <p>${esc(item.text)}</p>
+        </article>`).join('');
+    }
+    function renderKpis() {
+      qs('#key-kpis').innerHTML = DATA.key_cards.map(k => `
+        <article class="card kpi reveal">
+          <div class="num" data-num="${k.value}">0%</div>
+          <h3>${esc(k.title)}</h3>
+          <p>${esc(k.text)}</p>
+        </article>`).join('');
+    }
+    function renderBars(id, items, limit=8, showCount=false) {
+      qs(id).innerHTML = items.slice(0, limit).map(item => `
+        <div class="bar-row">
+          <span>${esc(item.label)}</span>
+          <span class="bar-track"><span class="bar-fill" style="width:${Math.max(0, Math.min(100, item.value))}%"></span></span>
+          <span class="bar-value">${showCount ? esc(item.count) : item.value + '%'}</span>
+        </div>`).join('');
+    }
+    function renderTags(id, items, withPercent=true, limit=999) {
+      qs(id).innerHTML = items.slice(0, limit).map((item, idx) => `
+        <span class="tag" style="transform:rotate(${(idx%5)-2}deg)">${withPercent && item.value !== undefined ? `<b>${item.value}%</b>` : ''}${esc(item.label || item)}</span>
+      `).join('');
+    }
+    function renderSignalTags() {
+      qs('#signal-tags').innerHTML = DATA.signals.map(s => `<span>${esc(s)}</span>`).join('');
+    }
+    function renderAgenda() {
+      qs('#media-agenda').innerHTML = DATA.media.slice(0, 6).map(item => `
+        <div class="agenda-item"><span>${esc(item.label)}</span><strong>${item.value}%</strong></div>
+      `).join('');
+    }
+    function renderQuestions() {
+      qs('#question-wall').innerHTML = DATA.question_examples.map((q,idx) => `
+        <article class="card question reveal" style="--r:${(idx%5)-2}deg"><small>Question reçue</small>${esc(q)}</article>
+      `).join('');
+    }
+    function renderQuotes() {
+      const all = [...DATA.quotes, ...DATA.quotes];
+      qs('#quote-track').innerHTML = all.map(q => `<div class="quote">${esc(q)}</div>`).join('');
+      qs('#quote-wall').innerHTML = DATA.quotes.slice(0, 12).map(q => `<article class="card quote-static reveal">${esc(q)}</article>`).join('');
+    }
+    function renderComments() {
+      qs('#media-comments').innerHTML = DATA.media_comments.map(item => `
+        <article class="card comment-card reveal"><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p></article>
+      `).join('');
+    }
+    function renderHelp() {
+      qs('#help-profile-tags').innerHTML = DATA.help_profile_tags.map(s => `<span class="pill">${esc(s)}</span>`).join('');
+      renderBars('#help-profile-bars', DATA.help_profiles, 10, true);
+      renderTags('#help-more-tags', DATA.help_profile_tags, false, 20);
+      renderBars('#availability-bars', DATA.availability, 6, true);
+      renderTags('#help-task-tags', DATA.help_tasks, false, 30);
+      qs('#help-quote-tags').innerHTML = DATA.help_quotes.map((q,idx) => `<span class="tag" style="transform:rotate(${(idx%5)-2}deg)">${esc(q)}</span>`).join('');
+    }
+    function renderPrinciples() {
+      qs('#principles-list').innerHTML = DATA.principles.map(item => `
+        <article class="card principle reveal">
+          <h3>${esc(item.title)}</h3>
+          <p>${esc(item.text)}</p>
+        </article>`).join('');
+    }
+    function renderRoadmap() {
+      qs('#roadmap-grid').innerHTML = DATA.roadmap.map(r => `
+        <article class="card road-card reveal" data-percent="${typeof r.percent === 'number' ? r.percent + '%' : esc(r.percent)}">
+          <span class="road-tag">${esc(r.tag)} · ${typeof r.percent === 'number' ? r.percent + '%' : esc(r.percent)}</span>
+          <h3>${esc(r.title)}</h3>
+          <p>${esc(r.body)}</p>
+        </article>`).join('');
+    }
+    function initReveal() {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            if(entry.target.classList.contains('kpi')) {
+              const num = qs('.num', entry.target);
+              if(num && !num.dataset.done) { num.dataset.done = '1'; countUp(num, Number(num.dataset.num)); }
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {threshold:.12});
+      qsa('.reveal').forEach(el => observer.observe(el));
+    }
+    renderBigNumbers();
+    renderKpis();
+    renderBars('#age-bars', DATA.age, 5);
+    renderTags('#subject-tags', DATA.subjects, true, 20);
+    renderSignalTags();
+    renderBars('#perception-bars', DATA.perception, 8);
+    renderAgenda();
+    renderBars('#verify-bars', DATA.verify, 8);
+    renderBars('#feature-bars', DATA.features, 9);
+    renderBars('#explain-bars', DATA.explain, 3);
+    renderQuestions();
+    renderQuotes();
+    renderComments();
+    renderHelp();
+    renderPrinciples();
+    renderRoadmap();
+    initReveal();
+  </script>
+</body>
+</html>
