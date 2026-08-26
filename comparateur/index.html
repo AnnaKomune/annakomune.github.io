@@ -4,11 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>Présidentielle 2027 - Comparateur Komune (v2 : sujets, sous-sujets & votes)</title>
-  <meta name="description" content="Comparateur Komune v2 : cartes par gros sujet (axe, impact, engagements, votes) et cartes sous-sujets avec tableaux de votes loi par loi, sources visibles.">
+  <meta name="description" content="Le comparateur politique citoyen de Komune pour 2027 : un jeu pour tester votre flair, des fiches par candidat·e et les votes réels, loi par loi, avec toutes les sources.">
+  <title>Komune — Le Comparateur politique citoyen 2027</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --blue: #0000ff;
@@ -18,2230 +20,842 @@
       --gold: #fee075;
       --yellow: #ffff92;
       --green: #b0fda4;
-      --red: #ff8f8f;
       --cream: #fcf7e8;
       --ink: #332e32;
-      --forest: #35674b;
       --white: #ffffff;
-      --line: rgba(51, 46, 50, .17);
-      --muted: rgba(51, 46, 50, .68);
-      --shadow: 0 18px 46px rgba(51, 46, 50, .11);
-      --radius: 28px;
+      --line: rgba(51, 46, 50, .15);
+      --muted: rgba(51, 46, 50, .72);
+      --shadow: 0 16px 40px rgba(51, 46, 50, .08);
+      --radius: 22px;
+      --ko: rgba(51, 46, 50, .10);
     }
+
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(240,153,249,.45), transparent 30%),
-        radial-gradient(circle at 92% 9%, rgba(154,189,255,.44), transparent 26%),
-        radial-gradient(circle at 52% 100%, rgba(176,253,164,.35), transparent 36%),
-        var(--cream);
+      background: var(--cream);
       color: var(--ink);
-      font-family: "Bricolage Grotesque", Inter, system-ui, sans-serif;
-      line-height: 1.45;
+      font-family: "Bricolage Grotesque", Inter, ui-sans-serif, system-ui, sans-serif;
+      line-height: 1.5;
+      font-size: 16.5px;
     }
     a { color: inherit; }
     h1, h2, h3, h4, p { margin-top: 0; }
-    p { margin-bottom: 0; }
-    button, input { font: inherit; }
-    img { max-width: 100%; }
-    .page { width: min(1280px, calc(100% - 28px)); margin: 0 auto; padding: 16px 0 80px; }
-    .frame {
-      overflow: clip;
-      border: 1px solid rgba(51,46,50,.12);
-      border-radius: 36px;
-      background: rgba(255,255,255,.40);
-      box-shadow: var(--shadow);
+    h1, h2 { font-family: "Oswald", Impact, sans-serif; letter-spacing: .01em; text-transform: none; }
+    h1, h2, h3, h4, h5, p, dd, summary, blockquote { overflow-wrap: break-word; }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 6px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+    .page { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: 18px 0 80px; }
+
+    /* ---------- entête commune ---------- */
+    .site-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 6px 2px 16px; flex-wrap: wrap; }
+    .brand { font-weight: 800; font-size: 24px; letter-spacing: .04em; text-decoration: none; }
+    .site-nav { display: flex; gap: 8px; flex-wrap: wrap; }
+    .site-nav a {
+      text-decoration: none; font-weight: 700; font-size: 14px;
+      padding: 8px 14px; border: 1px solid var(--ink); border-radius: 999px; background: var(--white);
     }
-    .ticker { overflow: hidden; border-bottom: 2px solid var(--ink); background: var(--blue); color: var(--cream); white-space: nowrap; }
-    .ticker-track { display: inline-flex; width: max-content; animation: ticker 30s linear infinite; }
-    .ticker span { padding: 13px 26px; font-size: clamp(14px, 1.3vw, 19px); font-weight: 950; }
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .section { padding: 0 clamp(12px, 2vw, 26px); margin-top: clamp(12px, 2.1vw, 26px); }
-    .card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); }
-    .eyebrow { margin: 0 0 14px; font-size: 12px; font-weight: 950; letter-spacing: .09em; line-height: 1.2; text-transform: uppercase; }
-    h1, h2, .display { font-family: "Oswald", Impact, sans-serif; letter-spacing: -.055em; }
-    h1 { margin: 0; max-width: 10.5ch; font-size: clamp(48px, 8vw, 104px); font-weight: 700; line-height: .86; }
-    h2 { margin: 0; font-size: clamp(38px, 5vw, 72px); font-weight: 700; line-height: .92; }
-    h3 { margin: 0; font-size: 18px; font-weight: 950; line-height: 1.06; letter-spacing: -.02em; }
-    h4 { margin: 0; font-size: 14px; font-weight: 950; text-transform: uppercase; letter-spacing: .06em; }
-    /* ---------- HERO ---------- */
-    .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr); gap: 18px; align-items: stretch; padding-top: clamp(12px, 2vw, 26px); }
-    .hero-main {
-      position: relative; overflow: hidden; padding: clamp(30px, 5vw, 66px);
-      background:
-        radial-gradient(circle at 92% 10%, rgba(254,224,117,.80), transparent 25%),
-        radial-gradient(circle at 8% 98%, rgba(240,153,249,.58), transparent 33%),
-        var(--white);
+    .site-nav a:hover { background: var(--yellow); }
+
+    /* ---------- sommaire collant ---------- */
+    .toc {
+      position: sticky; top: 10px; z-index: 40;
+      display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+      padding: 8px; margin: 4px 0 22px;
+      background: rgba(252, 247, 232, .92); backdrop-filter: blur(6px);
+      border: 1px solid var(--ink); border-radius: 999px; box-shadow: var(--shadow);
+      scrollbar-width: none;
     }
-    .hero-main::after {
-      content: "des faits, des sources";
-      position: absolute; right: -12px; bottom: 18px; transform: rotate(-6deg);
-      padding: 10px 18px 13px; border: 2px solid var(--ink); border-radius: 999px;
-      background: var(--yellow); color: var(--ink); box-shadow: 7px 7px 0 var(--pink);
-      font-size: clamp(20px, 2vw, 34px); font-weight: 950; z-index: 0;
+    .toc::-webkit-scrollbar { display: none; }
+    .toc a {
+      flex: 0 0 auto; text-decoration: none; font-weight: 700; font-size: 14px;
+      padding: 9px 15px; border-radius: 999px; border: 1px solid transparent; white-space: nowrap;
     }
-    .hero-copy { position: relative; z-index: 1; max-width: 64ch; margin-top: 24px; font-size: clamp(18px, 1.6vw, 25px); font-weight: 760; line-height: 1.34; }
-    .hero-note { position: relative; z-index: 1; max-width: 72ch; margin-top: 18px; color: var(--muted); font-size: 15px; font-weight: 720; line-height: 1.35; }
-    .hero-actions { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-    .button {
-      display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 16px;
-      border: 2px solid var(--ink); border-radius: 14px; background: var(--ink); color: var(--cream);
-      cursor: pointer; font-size: 15px; font-weight: 950; line-height: 1; text-decoration: none;
-      box-shadow: 5px 5px 0 var(--blue);
-      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+    .toc a:hover, .toc a.active { background: var(--ink); color: var(--cream); }
+
+    /* ---------- héros ---------- */
+    .hero {
+      display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; margin-bottom: 18px;
     }
-    .button:hover { transform: translateY(-2px) rotate(-.5deg); background: var(--yellow); color: var(--ink); box-shadow: 5px 5px 0 var(--pink); }
-    .button.light { background: var(--cream); color: var(--ink); }
-    .button.pink { background: var(--pink); color: var(--ink); }
-    .button.green { background: var(--green); color: var(--ink); }
-    .button.small { min-height: 38px; padding: 9px 12px; font-size: 13px; border-radius: 11px; box-shadow: 3px 3px 0 var(--blue); }
-    .hero-side { position: relative; min-height: 540px; overflow: hidden; padding: clamp(26px, 3.2vw, 44px); background: linear-gradient(135deg, var(--pink), var(--yellow)); }
-    .hero-side h2 { position: relative; z-index: 2; max-width: 10ch; }
-    .orbit { position: absolute; inset: 0; pointer-events: auto; }
-    .orbit-person {
-      --repel-x: 0px; --repel-y: 0px; --spin: 0deg; --scale: 1;
-      position: absolute; display: grid; place-items: center;
-      width: clamp(108px, 13vw, 178px); aspect-ratio: 1;
-      transform: translate3d(var(--repel-x), var(--repel-y), 0) rotate(calc(var(--tilt) + var(--spin))) scale(var(--scale));
-      transition: transform .26s cubic-bezier(.18, 1.35, .22, 1), filter .18s ease;
-      animation: idleFloat 4.5s ease-in-out infinite; animation-delay: var(--delay); will-change: transform;
+    .hero-card {
+      background: var(--white); border: 1px solid var(--ko); border-radius: 30px;
+      box-shadow: var(--shadow); padding: clamp(22px, 4vw, 44px);
+      position: relative; overflow: hidden;
     }
-    .hero-side.is-chasing .orbit-person { transition: transform .09s ease-out, filter .12s ease; }
-    .orbit-person.is-spooked { z-index: 8; filter: saturate(1.2) drop-shadow(0 0 18px rgba(255,255,146,.55)); }
-    .orbit-person::before {
-      content: ""; position: absolute; inset: 17%;
-      border: 2px solid var(--ink); border-radius: 999px; background: var(--bubble);
-      box-shadow: 6px 6px 0 var(--ink); transform: rotate(7deg);
+    .hero-card.left { background: linear-gradient(135deg, #fff 55%, var(--yellow)); }
+    .hero-card.right {
+      background: linear-gradient(160deg, var(--pink), var(--gold));
+      display: flex; flex-direction: column; justify-content: center; gap: 14px;
     }
-    .orbit-person img, .orbit-person .emoji-head {
-      position: relative; z-index: 1; width: 115%; height: 115%; object-fit: contain;
-      filter: drop-shadow(7px 10px 0 rgba(51,46,50,.13));
+    .eyebrow { margin: 0 0 10px; font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+    .hero h1 { font-size: clamp(38px, 6vw, 64px); line-height: 1.02; margin-bottom: 14px; }
+    .hero .pitch { font-weight: 600; max-width: 46ch; }
+    .hero .beta {
+      font-size: 14px; color: var(--muted); margin-top: 12px; max-width: 52ch;
     }
-    .orbit-person .emoji-head { display: grid; place-items: center; font-size: clamp(54px, 8vw, 96px); }
-    .orbit-person:hover { z-index: 9; filter: saturate(1.22) drop-shadow(0 0 18px rgba(255,255,146,.65)); }
-    .orbit-person:nth-child(1) { left: 4%; top: 36%; --tilt: -7deg; --delay: 0s; --bubble: var(--purple); }
-    .orbit-person:nth-child(2) { right: 7%; top: 19%; --tilt: 6deg; --delay: .2s; --bubble: var(--sky); }
-    .orbit-person:nth-child(3) { left: 16%; bottom: 7%; --tilt: 5deg; --delay: .4s; --bubble: var(--green); }
-    .orbit-person:nth-child(4) { right: 0%; bottom: 7%; --tilt: -5deg; --delay: .6s; --bubble: var(--gold); }
-    .orbit-person:nth-child(5) { left: 38%; top: 44%; --tilt: 4deg; --delay: .8s; --bubble: var(--pink); }
-    .orbit-person:nth-child(6) { right: 31%; bottom: 0%; --tilt: -4deg; --delay: 1s; --bubble: var(--white); }
-    @keyframes idleFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
-    /* ---------- PANELS / STATS ---------- */
-    .stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
-    .stat { position: relative; min-height: 132px; overflow: hidden; padding: 18px; border: 2px solid var(--ink); border-radius: 22px; background: var(--white); box-shadow: 6px 6px 0 var(--blue); }
-    .stat:nth-child(2) { background: var(--yellow); }
-    .stat:nth-child(3) { background: var(--green); }
-    .stat:nth-child(4) { background: var(--sky); }
-    .stat-number { font-family: "Oswald", Impact, sans-serif; font-size: clamp(44px, 6vw, 76px); line-height: .82; letter-spacing: -.06em; }
-    .stat-label { margin-top: 10px; font-weight: 900; line-height: 1.12; }
-    .panel { padding: clamp(20px, 3vw, 34px); border: 2px solid var(--ink); border-radius: 26px; background: var(--white); box-shadow: 8px 8px 0 rgba(51,46,50,.14); }
-    .how-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
-    .how-card { padding: 22px; border: 2px solid var(--ink); border-radius: 24px; background: var(--white); box-shadow: 7px 7px 0 var(--pink); }
-    .how-card:nth-child(2) { background: var(--green); }
-    .how-card:nth-child(3) { background: var(--sky); }
-    .how-icon { font-size: 38px; margin-bottom: 12px; }
-    .how-card p { margin-top: 10px; font-weight: 740; color: rgba(51,46,50,.76); }
-    /* ---------- FILTERS ---------- */
-    .filters { position: sticky; top: 0; z-index: 40; padding-top: 8px; }
-    .filter-card {
-      display: grid; gap: 14px; padding: 14px; border: 2px solid var(--ink); border-radius: 24px;
-      background: rgba(252,247,232,.94); box-shadow: 8px 8px 0 var(--blue); backdrop-filter: blur(10px);
+    .cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--ink); border-radius: 999px; padding: 12px 20px;
+      font-weight: 800; font-size: 15px; text-decoration: none; background: var(--white);
+      box-shadow: 3px 3px 0 var(--blue); transition: transform .12s ease, box-shadow .12s ease;
     }
-    .search-wrap { position: relative; }
-    .search-input {
-      width: 100%; min-height: 56px; padding: 13px 18px 13px 50px;
-      border: 2px solid var(--ink); border-radius: 17px; background: var(--white); color: var(--ink);
-      font-size: 17px; font-weight: 850; outline: none;
+    .btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--blue); }
+    .btn:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--blue); }
+    .btn.primary { background: var(--ink); color: var(--cream); }
+    .btn.play { background: var(--green); }
+    .hero-card.right h2 { font-size: clamp(26px, 3.4vw, 40px); line-height: 1.05; margin: 0; }
+    .hero-steps { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+    .hero-steps li {
+      background: rgba(255, 255, 255, .8); border: 1px solid var(--ko);
+      border-radius: 14px; padding: 10px 14px; font-weight: 600; font-size: 15px;
     }
-    .search-input:focus { box-shadow: 0 0 0 4px rgba(240,153,249,.55); }
-    .search-icon { position: absolute; left: 17px; top: 50%; transform: translateY(-50%); font-size: 22px; pointer-events: none; }
-    .selector-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
-    .candidate-selector { display: flex; gap: 9px; overflow-x: auto; padding: 4px 2px 8px; scrollbar-width: thin; }
-    .cand-toggle {
-      flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px 8px 8px;
-      border: 2px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
-      cursor: pointer; font-size: 13px; font-weight: 950; box-shadow: 4px 4px 0 rgba(51,46,50,.12); user-select: none;
+    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 34px; }
+    .stat {
+      background: var(--white); border: 1px solid var(--ko); border-radius: 18px;
+      box-shadow: var(--shadow); padding: 14px 16px; text-align: center;
     }
-    .cand-toggle input { accent-color: var(--blue); }
-    .cand-mini-img, .cand-mini-emoji {
-      width: 32px; height: 32px; display: grid; place-items: center;
-      border: 1px solid var(--ink); border-radius: 999px; background: var(--bg); overflow: hidden; font-size: 20px;
+    .stat b { display: block; font-family: "Oswald", sans-serif; font-size: 32px; line-height: 1.1; }
+    .stat span { font-size: 13.5px; color: var(--muted); font-weight: 600; }
+
+    /* ---------- sections ---------- */
+    section.bloc { margin-bottom: 46px; scroll-margin-top: 84px; }
+    .bloc-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+    .bloc-head h2 { font-size: clamp(30px, 4.4vw, 46px); margin: 0; }
+    .bloc-head .tag {
+      font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      background: var(--ink); color: var(--cream); border-radius: 999px; padding: 6px 12px;
     }
-    .cand-mini-img img { width: 118%; height: 118%; object-fit: contain; }
-    .nav-shell { overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
-    .topic-nav { display: flex; width: max-content; gap: 9px; padding: 4px 2px; }
-    .topic-chip {
-      display: inline-flex; align-items: center; gap: 7px; min-height: 39px; padding: 8px 12px;
-      border: 1px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
-      font-size: 13px; font-weight: 900; text-decoration: none; white-space: nowrap; box-shadow: 3px 3px 0 rgba(51,46,50,.10);
+    .bloc-intro { color: var(--muted); font-weight: 600; max-width: 72ch; margin-bottom: 18px; }
+
+    /* ---------- chips génériques ---------- */
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      border-radius: 999px; padding: 4px 12px; font-size: 13.5px; font-weight: 700;
+      border: 1px solid var(--ko); background: var(--white);
     }
-    .topic-chip.is-priority { background: var(--green); }
-    .topic-chip.is-sub { background: var(--yellow); }
-    .topic-chip:hover { background: var(--pink); box-shadow: 4px 4px 0 var(--blue); }
-    .result-count { color: var(--muted); font-size: 13px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
-    /* ---------- GROS SUJETS ---------- */
-    .topics { display: grid; gap: 22px; margin-top: 18px; }
-    .topic-card {
-      position: relative; overflow: hidden; padding: clamp(20px, 3vw, 34px); scroll-margin-top: 190px;
-      background: radial-gradient(circle at 100% 2%, rgba(240,153,249,.25), transparent 24%), var(--white);
+    .chip.vote-pour { background: var(--green); }
+    .chip.vote-contre { background: var(--pink); }
+    .chip.vote-abstention { background: var(--gold); }
+    .chip.vote-absent { background: #eee9dc; color: var(--muted); }
+    .chip.vote-na { background: transparent; color: var(--muted); border-style: dashed; }
+    .chip.vote-divise { background: var(--sky); }
+    .chip.vote-encours { background: repeating-linear-gradient(45deg, var(--white), var(--white) 6px, var(--cream) 6px, var(--cream) 12px); color: var(--muted); }
+    .chip.vote-vide { background: transparent; border-style: dotted; color: var(--muted); }
+    .chip.vote-autre { background: var(--white); }
+    .badge-align {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--ink); border-radius: 999px; padding: 7px 14px;
+      font-weight: 800; font-size: 14.5px; background: var(--white); box-shadow: 2px 2px 0 var(--ko);
     }
-    .topic-head { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 16px; align-items: center; margin-bottom: 6px; }
-    .topic-emoji {
-      display: grid; place-items: center; width: clamp(58px, 7vw, 84px); aspect-ratio: 1;
-      border: 2px solid var(--ink); border-radius: 20px; background: var(--yellow);
-      font-size: clamp(30px, 4vw, 44px); box-shadow: 7px 7px 0 var(--pink); transform: rotate(-4deg);
+
+    /* ---------- le jeu ---------- */
+    #jeu .jeu-shell {
+      background: linear-gradient(150deg, var(--purple), var(--blue));
+      border-radius: 30px; padding: clamp(14px, 2.6vw, 26px); box-shadow: var(--shadow);
     }
-    .topic-title { font-family: "Oswald", Impact, sans-serif; font-size: clamp(36px, 4.5vw, 70px); line-height: .92; letter-spacing: -.055em; }
-    .topic-question { margin-top: 8px; max-width: 90ch; color: var(--muted); font-size: 15px; font-weight: 780; }
-    .topic-meta { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
-    .tag-bank {
-      margin-top: 11px; border: 1px solid var(--line); border-radius: 14px;
-      background: rgba(252,247,232,.64); overflow: hidden;
+    .jeu-card {
+      background: var(--cream); border-radius: 22px; padding: clamp(18px, 3.4vw, 34px);
+      min-height: 300px;
     }
-    .tag-bank summary {
-      cursor: pointer; padding: 10px 12px; font-size: 12px; font-weight: 950;
-      list-style: none; text-transform: uppercase; letter-spacing: .05em;
+    .jeu-intro { text-align: center; padding: clamp(20px, 5vw, 50px) 10px; }
+    .jeu-intro .mega { font-family: "Oswald", sans-serif; font-size: clamp(34px, 6vw, 58px); line-height: 1.02; margin-bottom: 12px; }
+    .jeu-intro p { max-width: 56ch; margin: 0 auto 8px; font-weight: 600; }
+    .jeu-intro .note { color: var(--muted); font-size: 14.5px; font-weight: 500; }
+    .jeu-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .jeu-progress .score { margin-left: auto; font-weight: 800; }
+    .pbar { flex: 1 1 140px; height: 10px; background: var(--white); border: 1px solid var(--ko); border-radius: 999px; overflow: hidden; min-width: 120px; }
+    .pbar i { display: block; height: 100%; background: var(--purple); border-radius: 999px; transition: width .3s ease; }
+    .quote-box {
+      position: relative; background: var(--white); border: 1px solid var(--ko);
+      border-radius: 18px; box-shadow: var(--shadow);
+      padding: clamp(22px, 4vw, 40px) clamp(18px, 4vw, 46px); margin-bottom: 20px;
     }
-    .tag-bank summary::-webkit-details-marker { display: none; }
-    .tag-bank summary::after { content: "+"; float: right; font-size: 16px; }
-    .tag-bank[open] summary::after { content: "−"; }
-    .tag-bank-list {
-      display: flex; flex-wrap: wrap; gap: 7px; padding: 0 12px 12px;
+    .quote-box::before {
+      content: "«"; position: absolute; top: -18px; left: 14px;
+      font-family: "Oswald", sans-serif; font-size: 74px; color: var(--purple); line-height: 1;
     }
-    .tag {
-      display: inline-flex; align-items: center; gap: 5px; min-height: 30px; padding: 6px 9px;
-      border: 1px solid var(--line); border-radius: 999px; background: rgba(252,247,232,.70);
-      color: var(--muted); font-size: 12px; font-weight: 900;
+    .quote-box blockquote {
+      margin: 0; font-family: "Oswald", sans-serif; font-weight: 500;
+      font-size: clamp(21px, 3.2vw, 32px); line-height: 1.25;
     }
-    a.tag { text-decoration: none; }
-    a.tag:hover { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
-    a.tag-link { cursor: pointer; transition: transform .15s ease, background .15s ease, box-shadow .15s ease; }
-    a.tag-link:hover { transform: translateY(-1px); background: var(--yellow); color: var(--ink); border-color: var(--ink); box-shadow: 3px 3px 0 var(--pink); }
-    .tag-target-flash { animation: tagTargetFlash 1.15s ease; }
-    @keyframes tagTargetFlash {
-      0%, 100% { box-shadow: var(--shadow); }
-      35% { box-shadow: 0 0 0 5px var(--yellow), 10px 10px 0 var(--pink); }
+    .jeu-q-label { font-weight: 800; margin: 0 0 10px; font-size: 17px; }
+    .answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+    .answer-btn {
+      display: flex; align-items: center; gap: 10px; text-align: left;
+      background: var(--white); border: 1px solid var(--ink); border-radius: 16px;
+      padding: 12px 14px; font-weight: 700; font-size: 15.5px; min-height: 58px;
+      transition: transform .1s ease, background .15s ease;
     }
-    .compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 14px; align-items: start; margin-top: 16px; }
-    .candidate-card {
-      position: relative; min-width: 0; padding: 14px; overflow: visible;
-      border: 2px solid var(--ink); border-radius: 24px; background: var(--card-bg);
-      box-shadow: 7px 7px 0 var(--card-shadow); word-break: normal; overflow-wrap: anywhere;
+    .answer-btn small { display: block; font-weight: 600; color: var(--muted); font-size: 12.5px; }
+    .answer-btn:hover:not(:disabled) { background: var(--yellow); transform: translateY(-2px); }
+    .answer-btn:disabled { cursor: default; opacity: .55; }
+    .answer-btn.good { background: var(--green); opacity: 1; box-shadow: 3px 3px 0 var(--ink); }
+    .answer-btn.bad { background: var(--pink); opacity: 1; }
+    .avatar {
+      flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid var(--ink); display: grid; place-items: center;
+      font-weight: 800; font-size: 13px; background: var(--cream);
     }
-    .candidate-top { display: grid; grid-template-columns: 82px minmax(0,1fr); gap: 12px; align-items: center; margin-bottom: 12px; }
-    .candidate-avatar {
-      position: relative; display: grid; place-items: center; width: 82px; height: 82px;
-      border: 2px solid var(--ink); border-radius: 22px; background: rgba(255,255,255,.65);
-      overflow: hidden; box-shadow: 5px 5px 0 rgba(51,46,50,.15); transform: rotate(var(--tilt));
+    .av-pink { background: var(--pink); } .av-sky { background: var(--sky); }
+    .av-green { background: var(--green); } .av-gold { background: var(--gold); }
+    .av-yellow { background: var(--yellow); } .av-purple { background: #ded1ff; }
+
+    .verdict { border-radius: 16px; padding: 14px 18px; margin: 18px 0 14px; font-weight: 800; font-size: 18px; border: 1px solid var(--ink); }
+    .verdict.ok { background: var(--green); }
+    .verdict.ko { background: var(--pink); }
+    .reveal { display: grid; gap: 14px; }
+    .reveal-card { background: var(--white); border: 1px solid var(--ko); border-radius: 16px; padding: 16px 18px; }
+    .reveal-card h4 { margin: 0 0 8px; font-size: 13px; letter-spacing: .07em; text-transform: uppercase; }
+    .reveal-card p { margin: 0 0 6px; }
+    .src-list { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+    .src-list a { font-weight: 700; text-decoration-color: var(--blue); }
+    .src-list li::before { content: "↗ "; color: var(--blue); font-weight: 800; }
+    .align-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .align-cell { background: var(--white); border: 1px solid var(--ko); border-radius: 16px; padding: 14px 16px; }
+    .align-cell .who { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
+    .align-cell p { margin: 10px 0 0; font-size: 15px; }
+    .nuancier {
+      background: linear-gradient(120deg, var(--yellow), var(--white));
+      border: 1px solid var(--ko); border-radius: 16px; padding: 16px 18px;
     }
-    .candidate-avatar img { width: 115%; height: 115%; object-fit: contain; object-position: center bottom; filter: drop-shadow(4px 6px 0 rgba(51,46,50,.12)); }
-    .candidate-avatar .avatar-emoji { font-size: 42px; }
-    .candidate-party {
-      display: inline-flex; margin-top: 6px; padding: 5px 8px; border: 1px solid var(--ink); border-radius: 999px;
-      background: rgba(255,255,255,.72); font-size: 11px; font-weight: 950; text-transform: uppercase; letter-spacing: .06em;
-    }
-    .proof {
-      display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; min-height: 29px; padding: 6px 9px;
-      border-radius: 999px; border: 1px solid var(--ink); background: var(--white); font-size: 12px; font-weight: 950;
-    }
-    .proof.fort { background: var(--green); }
-    .proof.moyen { background: var(--yellow); }
-    .proof.acompleter { background: var(--pink); }
-    .doc-method { display: grid; gap: 14px; }
-    .doc-method-intro { max-width: 92ch; font-size: 15px; font-weight: 740; color: rgba(51,46,50,.80); }
-    .doc-criteria-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-top: 4px; }
-    .doc-criterion { padding: 14px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); }
-    .doc-criterion strong { display: block; margin-bottom: 5px; font-size: 13px; }
-    .doc-criterion p { color: var(--muted); font-size: 12px; font-weight: 700; line-height: 1.35; }
-    .doc-scale { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
-    .doc-scale .proof { margin-top: 0; }
-    .doc-warning { padding: 11px 13px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.66); font-size: 12.5px; font-weight: 780; }
-    details.doc-why { margin-top: 8px; }
-    details.doc-why summary { cursor: pointer; font-size: 12px; font-weight: 900; color: var(--muted); list-style: none; }
-    details.doc-why summary::-webkit-details-marker { display:none; }
-    .doc-checks { display: grid; gap: 5px; margin-top: 7px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.72); }
-    .doc-check { font-size: 11.5px; font-weight: 800; line-height: 1.3; }
-    .doc-check.yes::before { content:"✓ "; }
-    .doc-check.no::before { content:"✕ "; }
-    .fact-box { padding: 11px 12px; border: 1px solid rgba(51,46,50,.18); border-radius: 15px; background: rgba(255,255,255,.70); }
-    .fact-label { display: block; margin-bottom: 4px; color: rgba(51,46,50,.72); font-size: 11px; font-weight: 950; text-transform: uppercase; letter-spacing: .08em; }
-    .fact-box p { font-size: 14px; font-weight: 720; line-height: 1.34; }
-    .fact-box.axe { border: 2px solid var(--ink); background: var(--white); }
-    .fact-box.impact { border: 2px solid var(--ink); background: rgba(255,255,146,.55); }
-    .card-summary { display: grid; gap: 10px; margin-top: 10px; }
-    details.more { margin-top: 11px; border: 1px solid rgba(51,46,50,.22); border-radius: 15px; background: rgba(255,255,255,.72); overflow: hidden; }
-    details.more summary { cursor: pointer; padding: 12px 13px; font-weight: 950; list-style: none; }
-    details.more summary::-webkit-details-marker { display: none; }
-    details.more summary::after { content: "+"; float: right; font-weight: 950; }
-    details.more[open] summary::after { content: "−"; }
-    .more-content { display: grid; gap: 10px; padding: 0 13px 13px; }
-    .engagement-item { padding: 10px 11px; border: 1px solid rgba(51,46,50,.18); border-radius: 13px; background: var(--white); }
-    .engagement-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 6px; }
-    .engagement-type {
-      display: inline-flex; padding: 4px 8px; border: 1px solid var(--ink); border-radius: 999px;
-      font-size: 11px; font-weight: 950; text-transform: uppercase; letter-spacing: .05em; background: var(--sky);
-    }
-    .engagement-type.declaration { background: var(--pink); }
-    .engagement-type.promesse { background: var(--gold); }
-    .engagement-date { font-size: 11px; font-weight: 900; color: var(--muted); }
-    .engagement-item p { font-size: 13.5px; font-weight: 720; line-height: 1.35; }
-    .engagement-warn { margin-top: 6px; font-size: 12px; font-weight: 850; color: #8a4a00; }
+    .nuancier h4 { margin: 0 0 8px; font-size: 13px; letter-spacing: .07em; text-transform: uppercase; }
+    .nuancier p { margin: 0; font-size: 15.5px; }
+    .vote-lines { display: grid; gap: 8px; margin-top: 10px; }
     .vote-line {
-      display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: 8px; align-items: center;
-      padding: 9px 10px; border: 1px solid rgba(51,46,50,.18); border-radius: 13px; background: var(--white);
-      text-decoration: none; font-size: 13px; font-weight: 850;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      background: var(--cream); border: 1px solid var(--ko); border-radius: 12px; padding: 10px 12px;
     }
-    .vote-line:hover { background: var(--yellow); border-color: var(--ink); }
-    button.vote-line { width: 100%; color: inherit; text-align: left; cursor: pointer; }
-    button.topic-chip, button.tag-link { font: inherit; color: inherit; cursor: pointer; }
-    button.topic-chip { appearance: none; }
-    button.tag-link { appearance: none; }
-    .vote-line .vote-law { min-width: 0; }
-    .vote-line small { display: block; font-size: 11px; font-weight: 800; color: var(--muted); }
-    .source-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-    .source-pill {
-      display: inline-flex; max-width: 100%; padding: 7px 9px; border: 1px solid var(--ink); border-radius: 999px;
-      background: var(--ink); color: var(--cream); font-size: 12px; font-weight: 900; text-decoration: none; overflow-wrap: anywhere;
+    .vote-line .loi-nom { font-weight: 700; flex: 1 1 220px; font-size: 15px; }
+    .vote-line a.loi-src { font-size: 13px; font-weight: 700; color: var(--blue); white-space: nowrap; }
+    details.autres { background: var(--white); border: 1px solid var(--ko); border-radius: 16px; padding: 0; overflow: hidden; }
+    details.autres > summary {
+      cursor: pointer; list-style: none; font-weight: 800; padding: 14px 18px;
+      display: flex; align-items: center; gap: 10px;
     }
-    .source-pill.secondary { background: var(--white); color: var(--ink); }
-    /* ---------- VOTE CHIPS ---------- */
-    .vote-chip {
-      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-      min-width: 34px; min-height: 30px; padding: 4px 9px; border: 2px solid var(--ink); border-radius: 999px;
-      font-size: 12.5px; font-weight: 950; background: var(--white); white-space: nowrap;
+    details.autres > summary::-webkit-details-marker { display: none; }
+    details.autres > summary::after { content: "+"; margin-left: auto; font-family: "Oswald", sans-serif; font-size: 22px; }
+    details.autres[open] > summary::after { content: "–"; }
+    details.autres .autres-body { padding: 0 18px 16px; display: grid; gap: 14px; }
+    .autres-loi h5 { margin: 0 0 8px; font-size: 15px; }
+    .autres-rows { display: grid; gap: 6px; }
+    .autres-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 14.5px; }
+    .autres-row .nom { font-weight: 700; flex: 0 0 110px; }
+    .jeu-next-row { display: flex; justify-content: space-between; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+    .jeu-fin { text-align: center; padding: clamp(18px, 4vw, 40px) 8px; }
+    .jeu-fin .score-big { font-family: "Oswald", sans-serif; font-size: clamp(52px, 9vw, 92px); line-height: 1; }
+    .jeu-fin p { max-width: 52ch; margin: 10px auto; font-weight: 600; }
+    .confetti { pointer-events: none; position: absolute; inset: 0; overflow: hidden; border-radius: 18px; }
+    .confetti i {
+      position: absolute; top: -12px; width: 9px; height: 14px; border-radius: 3px; opacity: .95;
+      animation: fall 1.15s ease-in forwards;
     }
-    .vote-chip.pour { background: var(--green); }
-    .vote-chip.contre { background: var(--red); }
-    .vote-chip.abstention { background: var(--gold); }
-    .vote-chip.divise { background: repeating-linear-gradient(45deg, var(--green) 0 8px, var(--red) 8px 16px); }
-    .vote-chip.na { background: rgba(51,46,50,.08); border-style: dashed; color: var(--muted); }
-    .vote-chip.inconnu { background: var(--white); border-style: dashed; color: var(--muted); }
-    .vote-chip.is-groupe { border-style: dotted; }
-    .vote-scope { font-size: 10px; font-weight: 950; text-transform: uppercase; letter-spacing: .05em; opacity: .75; }
-    /* ---------- SOUS-SUJETS ---------- */
-    .sub-card {
-      position: relative; overflow: hidden; padding: clamp(20px, 3vw, 34px); scroll-margin-top: 190px;
-      background: radial-gradient(circle at 0% 0%, rgba(154,189,255,.25), transparent 26%), var(--white);
+    @keyframes fall { to { transform: translateY(120px) rotate(240deg); opacity: 0; } }
+
+    /* ---------- fiches ---------- */
+    .switch { display: inline-flex; border: 1px solid var(--ink); border-radius: 999px; background: var(--white); padding: 4px; gap: 4px; margin-bottom: 18px; }
+    .switch button { border: 0; background: transparent; border-radius: 999px; padding: 9px 18px; font-weight: 800; font-size: 15px; }
+    .switch button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+    .fiches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+    .fiche {
+      background: var(--white); border: 1px solid var(--ko); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 12px;
     }
-    .sub-kicker {
-      display: inline-flex; align-items: center; gap: 7px; padding: 7px 11px; margin-bottom: 12px;
-      border: 2px solid var(--ink); border-radius: 999px; font-size: 12px; font-weight: 950;
-      text-transform: uppercase; letter-spacing: .06em;
+    .fiche-head { display: flex; align-items: center; gap: 12px; }
+    .fiche-head .avatar { width: 48px; height: 48px; font-size: 15px; }
+    .fiche-head h3 { margin: 0; font-size: 21px; }
+    .fiche-head .parti { font-size: 13px; color: var(--muted); font-weight: 700; }
+    .preuve { margin-left: auto; }
+    .preuve .chip { font-size: 12px; }
+    .preuve-fort { background: var(--green); }
+    .preuve-moyen { background: var(--gold); }
+    .preuve-flou, .preuve-a-documenter { background: #eee9dc; color: var(--muted); }
+    .fiche .engros { font-weight: 600; }
+    .fiche dl { margin: 0; display: grid; gap: 10px; }
+    .fiche dt { font-size: 12px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+    .fiche dd { margin: 0; font-size: 15px; }
+    .fiche details > summary { cursor: pointer; font-weight: 800; font-size: 14.5px; padding: 6px 0; }
+    .fiche .contradiction { background: var(--pink); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; }
+    .fiche .flou { background: var(--cream); border: 1px dashed var(--ko); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; }
+    .fiche-src { font-size: 13.5px; }
+
+    /* ---------- votes ---------- */
+    .filtres { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .filtres .chip { cursor: pointer; border: 1px solid var(--ink); }
+    .filtres .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+    .lois-grid { display: grid; gap: 16px; }
+    .loi-card {
+      background: var(--white); border: 1px solid var(--ko); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 20px;
     }
-    .sub-kicker.loi { background: var(--sky); }
-    .sub-kicker.theme { background: var(--pink); }
-    .sub-title { font-family: "Oswald", Impact, sans-serif; font-size: clamp(30px, 3.8vw, 54px); line-height: .94; letter-spacing: -.05em; }
-    .sub-desc { margin-top: 12px; max-width: 90ch; }
-    .sub-meta { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
-    .verif-flag {
-      display: inline-flex; gap: 7px; align-items: flex-start; margin-top: 12px; padding: 10px 12px;
-      border: 2px solid var(--ink); border-radius: 14px; background: var(--yellow);
-      font-size: 13px; font-weight: 850; max-width: 90ch;
+    .loi-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+    .loi-top h3 { margin: 0; font-size: 21px; flex: 1 1 300px; }
+    .loi-meta { font-size: 13.5px; color: var(--muted); font-weight: 700; }
+    .statut { font-size: 12px; }
+    .statut.adopte { background: var(--green); }
+    .statut.rejete { background: var(--pink); }
+    .statut.attente { background: var(--gold); }
+    .loi-resume { font-size: 15px; margin: 8px 0 4px; }
+    .loi-resume-details summary { cursor: pointer; font-weight: 800; font-size: 14px; padding: 4px 0; color: var(--muted); }
+    .loi-resume-details p { white-space: pre-line; font-size: 14.5px; }
+    .grille { margin-top: 12px; border-top: 1px solid var(--line); }
+    .grille-head { display: none; }
+    .cand-row { border-bottom: 1px solid var(--line); }
+    .cand-row > summary {
+      cursor: pointer; list-style: none; display: grid;
+      grid-template-columns: minmax(120px, 1.1fr) 1fr 1fr 26px; gap: 8px; align-items: center;
+      padding: 10px 2px;
     }
-    .table-scroll { margin-top: 16px; overflow-x: auto; border: 2px solid var(--ink); border-radius: 18px; background: var(--white); }
-    table.votes { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 13.5px; }
-    table.votes th, table.votes td { padding: 11px 12px; border-bottom: 1px solid rgba(51,46,50,.16); text-align: left; vertical-align: top; }
-    table.votes th {
-      position: sticky; top: 0; background: var(--ink); color: var(--cream);
-      font-size: 12px; font-weight: 950; text-transform: uppercase; letter-spacing: .06em; z-index: 2;
-    }
-    table.votes tr:last-child td { border-bottom: none; }
-    table.votes tbody tr:nth-child(even) { background: rgba(252,247,232,.55); }
-    td.cand-cell { display: flex; align-items: center; gap: 9px; min-width: 150px; font-weight: 950; border-bottom: none; }
-    .mini-avatar {
-      flex: 0 0 auto; width: 38px; height: 38px; display: grid; place-items: center;
-      border: 2px solid var(--ink); border-radius: 12px; background: var(--bg); overflow: hidden; font-size: 22px;
-    }
-    .mini-avatar img { width: 118%; height: 118%; object-fit: contain; object-position: center bottom; }
-    td.ctx-cell { min-width: 240px; max-width: 420px; font-weight: 700; font-size: 13px; color: rgba(51,46,50,.85); }
-    td.ctx-cell .source-buttons { margin-top: 6px; }
-    .law-cell { min-width: 200px; font-weight: 850; }
-    .law-cell small { display: block; margin-top: 3px; font-size: 11px; font-weight: 800; color: var(--muted); }
-    .law-cell a.tag { margin-top: 6px; }
-    .legend { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; font-size: 12px; font-weight: 850; color: var(--muted); }
-    .subs { display: grid; gap: 22px; margin-top: 18px; }
-    .empty-state { display: none; padding: 38px; text-align: center; background: var(--yellow); }
-    .empty-state.is-visible { display: block; }
-    /* ---------- SOURCES / METHODE ---------- */
-    .sources-card { padding: clamp(24px, 4vw, 46px); background: var(--ink); color: var(--cream); }
-    .sources-card h2 { margin-bottom: 18px; }
-    .sources-list { columns: 2; column-gap: 28px; margin: 18px 0 0; padding-left: 18px; color: rgba(252,247,232,.82); font-size: 13px; font-weight: 680; line-height: 1.36; }
-    .sources-list li { break-inside: avoid; margin-bottom: 7px; }
-    .sources-list a { color: var(--cream); }
-    .to-top {
-      position: fixed; right: 18px; bottom: 18px; z-index: 80; width: 54px; height: 54px;
-      border: 2px solid var(--ink); border-radius: 999px; background: var(--pink); color: var(--ink);
-      box-shadow: 5px 5px 0 var(--blue); cursor: pointer; font-size: 24px; font-weight: 950;
-      opacity: 0; transform: translateY(12px); pointer-events: none;
-      transition: opacity .18s ease, transform .18s ease;
-    }
-    .to-top.is-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    @media (max-width: 1080px) {
+    .cand-row > summary::-webkit-details-marker { display: none; }
+    .cand-row > summary > span { min-width: 0; }
+    .cand-row > summary .nom { font-weight: 800; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+    .cand-row > summary .plus { font-family: "Oswald", sans-serif; font-size: 20px; text-align: center; }
+    .cand-row[open] > summary .plus::after { content: "–"; }
+    .cand-row:not([open]) > summary .plus::after { content: "+"; }
+    .cell-label { display: block; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 800; margin-bottom: 3px; }
+    .cand-detail { padding: 6px 2px 16px; display: grid; gap: 10px; }
+    .cand-detail .mini { background: var(--cream); border: 1px solid var(--ko); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; white-space: pre-line; }
+    .cand-detail .mini b.mini-titre { display: block; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+    .loi-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; font-size: 14px; }
+    .loi-links a { font-weight: 700; text-decoration-color: var(--blue); }
+    .loi-links a::before { content: "↗ "; color: var(--blue); }
+
+    /* ---------- méthode & sources ---------- */
+    .methode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+    .meth-card { background: var(--white); border: 1px solid var(--ko); border-radius: 18px; box-shadow: var(--shadow); padding: 18px; }
+    .meth-card h3 { margin: 0 0 8px; font-size: 17px; }
+    .meth-card p { margin: 0; font-size: 14.5px; color: var(--muted); font-weight: 600; }
+    .legende { display: grid; gap: 10px; margin-top: 18px; }
+    .legende .row { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; background: var(--white); border: 1px solid var(--ko); border-radius: 14px; padding: 12px 16px; }
+    .legende .row p { margin: 0; font-size: 14.5px; color: var(--muted); font-weight: 600; flex: 1 1 300px; }
+    .sources-list { display: grid; gap: 10px; }
+    .source-item { background: var(--white); border: 1px solid var(--ko); border-radius: 14px; padding: 12px 16px; }
+    .source-item a { font-weight: 800; text-decoration-color: var(--blue); }
+    .source-item .src-meta { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .note-bas { color: var(--muted); font-size: 14px; margin-top: 14px; max-width: 76ch; }
+
+    footer.site-foot { border-top: 1px solid var(--line); margin-top: 30px; padding-top: 22px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between; color: var(--muted); font-size: 14px; }
+    footer.site-foot .foot-links { display: flex; gap: 14px; flex-wrap: wrap; }
+    footer.site-foot a { font-weight: 700; }
+
+    @media (max-width: 860px) {
       .hero { grid-template-columns: 1fr; }
-      .hero-side { min-height: 420px; }
-      .stat-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .how-grid { grid-template-columns: 1fr; }
-      .doc-criteria-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .sources-list { columns: 1; }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .align-grid { grid-template-columns: 1fr; }
+      .cand-row > summary { display: flex; flex-wrap: wrap; align-items: center; }
+      .cand-row > summary .nom { flex: 1 1 auto; }
+      .cand-row > summary .plus { flex: 0 0 26px; margin-left: auto; }
+      .cand-row > summary .col-perso, .cand-row > summary .col-groupe { flex: 1 1 46%; min-width: 140px; }
+      .vote-line .loi-nom { flex-basis: 100%; }
+      body { font-size: 16px; }
     }
-    @media (max-width: 720px) {
-      .page { width: min(100% - 16px, 1280px); padding-top: 8px; }
-      .frame { border-radius: 24px; }
-      .section { padding: 0 10px; margin-top: 12px; }
-      .hero-main, .hero-side, .panel, .topic-card, .sub-card, .sources-card { border-radius: 22px; }
-      h1 { max-width: 100%; font-size: clamp(42px, 13vw, 68px); line-height: .9; }
-      .hero-main { padding: 30px 24px; }
-      .hero-main::after { position: relative; display: inline-flex; right: auto; bottom: auto; margin-top: 24px; }
-      .hero-side { min-height: 360px; }
-      .orbit-person { width: 126px; }
-      .stat-grid { grid-template-columns: 1fr; }
-      .candidate-top { grid-template-columns: 70px minmax(0,1fr); }
-      .candidate-avatar { width: 70px; height: 70px; }
-      .doc-criteria-grid { grid-template-columns: 1fr; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .ticker-track, .orbit-person { animation: none !important; }
-      * { transition: none !important; }
-    }
-  </style>
-  <!-- ===== Navigation commune du site (ajout : supprimable / modifiable librement) ===== -->
-  <style>
-    .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 4px 14px; }
-    .site-nav .site-brand { margin-right: auto; font-family: "Oswald", Impact, sans-serif; font-size: 27px; font-weight: 700; letter-spacing: -.04em; color: var(--ink); text-decoration: none; }
-    .site-nav a.site-link {
-      display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px;
-      border: 2px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
-      font-size: 14px; font-weight: 950; text-decoration: none; box-shadow: 3px 3px 0 rgba(51,46,50,.12);
-      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
-    }
-    .site-nav a.site-link:hover { transform: translateY(-1px); background: var(--yellow); box-shadow: 4px 4px 0 var(--pink); }
-    .site-nav a.site-link.is-current { background: var(--ink); color: var(--cream); }
   </style>
 </head>
 <body>
-  <main class="page" id="top">
+  <div class="page">
+
     <!-- ===== Navigation commune du site ===== -->
-    <nav class="site-nav" aria-label="Navigation du site">
-      <a class="site-brand" href="../">KOMUNE</a>
-      <a class="site-link" href="../">Accueil</a>
-      <a class="site-link" href="../articles/">Articles</a>
-      <a class="site-link" href="../comparateur-2027/">Comparateur 2027</a>
-      <a class="site-link" href="../equipe/">L'équipe</a>
-      <a class="site-link" href="../soutenir/">Nous soutenir</a>
+    <header class="site-top">
+      <a class="brand" href="../">KOMUNE</a>
+      <nav class="site-nav" aria-label="Navigation du site">
+        <a href="../">Accueil</a>
+        <a href="../articles/">Articles</a>
+        <a href="../comparateur-2027/">Comparateur 2027</a>
+        <a href="../equipe/">L'équipe</a>
+        <a href="../soutenir/">Nous soutenir</a>
+      </nav>
+    </header>
+
+    <!-- ===== Sommaire de la page ===== -->
+    <nav class="toc" aria-label="Sommaire du comparateur">
+      <a href="#jeu">🎮 Le jeu</a>
+      <a href="#fiches">🗂️ Les fiches</a>
+      <a href="#votes">🗳️ Les votes, loi par loi</a>
+      <a href="#methode">🧭 La méthode</a>
+      <a href="#sources">📚 Les sources</a>
     </nav>
-    <article class="frame">
-      <div class="ticker" aria-label="Comparateur présidentielle 2027">
-        <div class="ticker-track">
-          <span>🗂️ NOUVELLE ARCHITECTURE - gros sujets + sous-sujets</span>
-          <span>🗳️ Tableaux de votes loi par loi : candidat·e ET parti</span>
-          <span>🧾 Chaque case a son contexte et ses sources</span>
-          <span>🗂️ NOUVELLE ARCHITECTURE - gros sujets + sous-sujets</span>
-          <span>🗳️ Tableaux de votes loi par loi : candidat·e ET parti</span>
-          <span>🧾 Chaque case a son contexte et ses sources</span>
+
+    <!-- ===== Héros ===== -->
+    <div class="hero">
+      <div class="hero-card left">
+        <p class="eyebrow">Le comparateur politique citoyen · Komune</p>
+        <h1>2027&nbsp;: comparez sur du concret.</h1>
+        <p class="pitch">Pas de clash, pas de sondage, pas de petite phrase&nbsp;: ce qu'ils et elles <strong>promettent</strong>, ce qu'ils <strong>votent</strong>, ce qu'ils <strong>font au pouvoir</strong> — et l'écart entre les trois.</p>
+        <div class="cta-row">
+          <a class="btn play" href="#jeu">🎮 Jouer au «&nbsp;Qui a dit quoi&nbsp;?&nbsp;»</a>
+          <a class="btn" href="#fiches">Voir les fiches</a>
+          <a class="btn" href="#votes">Explorer les votes</a>
         </div>
+        <p class="beta">Version bêta&nbsp;: on commence par la <strong>santé</strong> et l'<strong>écologie</strong>, avec 5 candidat·es documenté·es. La gauche issue de la primaire (11 octobre 2026) sera ajoutée dès sa désignation. Les cases «&nbsp;en cours de vérification&nbsp;» montrent où notre recherche continue — on ne maquille pas les trous.</p>
       </div>
-      <section class="section hero" aria-labelledby="page-title">
-        <article class="card hero-main">
-          <div class="eyebrow">Comparateur Komune - v2 · architecture sujets / sous-sujets</div>
-          <h1 id="page-title">Présidentielle 2027</h1>
-          <p class="hero-copy">Deux niveaux de lecture. <strong>Les gros sujets</strong> : une carte par candidat·e avec l'axe principal, ce que ça changerait, ses engagements et ses principaux votes. <strong>Les sous-sujets</strong> : une loi ou un thème, expliqué simplement, avec un tableau qui montre qui a voté pour ou contre - la personne <em>et</em> son parti.</p>
-          <p class="hero-note"><strong>Version de travail au 17 août 2026 :</strong> bêta limitée à Santé et Écologie / climat, 5 candidat·es documenté·es + une entrée « primaire de la gauche hors LFI » à compléter après le 11/10/2026. Les cases « à relever » ne signifient pas qu'une position n'existe pas : elles montrent où la recherche doit continuer. Aucune case marquée « à vérifier » ne doit être publiée sans retour à la source primaire.</p>
-          <div class="hero-actions">
-            <button class="button pink" type="button" data-nav-target="compare" data-nav-mode="section">Voir les gros sujets</button>
-            <button class="button green" type="button" data-nav-target="sous-sujets" data-nav-mode="section">Voir les sous-sujets &amp; votes</button>
-            <button class="button light" type="button" data-nav-target="sources" data-nav-mode="scroll">Sources</button>
-          </div>
-        </article>
-        <aside class="card hero-side" aria-label="Candidat·es comparé·es">
-          <div class="eyebrow">Un axe. Des votes. Des sources.</div>
-          <h2>On cherche. On source. On compare.</h2>
-          <div class="orbit" id="hero-orbit" aria-hidden="true"></div>
-        </aside>
-      </section>
-      <section class="section">
-        <div class="stat-grid" id="stat-grid"></div>
-      </section>
-      <section class="section">
-        <div class="how-grid">
-          <article class="how-card">
-            <div class="how-icon">🗂️</div>
-            <h3>1. Cartes « gros sujet »</h3>
-            <p>Une carte par candidat·e : l'axe principal en deux phrases, ce que ça changerait, puis deux volets dépliables - ses engagements (programme, déclarations, promesses) et ses principaux votes.</p>
-          </article>
-          <article class="how-card">
-            <div class="how-icon">🗳️</div>
-            <h3>2. Cartes « sous-sujet »</h3>
-            <p>Une loi précise (« c'est quoi cette loi ? ») ou un thème regroupant les lois des 5 dernières années. Un tableau croix / rond montre le vote de la personne ET celui de son parti, avec contexte et sources.</p>
-          </article>
-          <article class="how-card">
-            <div class="how-icon">🧾</div>
-            <h3>3. Quatre niveaux, jamais mélangés</h3>
-            <p>Vote personnel ≠ position du groupe ≠ ligne du parti ≠ action au pouvoir. Un rond en pointillés = position du groupe, pas de la personne. Les trous ne sont pas maquillés.</p>
-          </article>
-        </div>
-      </section>
-      <section class="section" id="niveau-documentation">
-        <article class="panel doc-method">
-          <div>
-            <div class="eyebrow">Méthode</div>
-            <h2>Que signifie le niveau de documentation ?</h2>
-          </div>
-          <p class="doc-method-intro">Ce niveau mesure uniquement <strong>la solidité de notre documentation sur cette fiche</strong>. Il ne note ni la qualité d'un programme, ni sa faisabilité, ni la crédibilité d'un candidat. Chaque fiche est évaluée avec la même grille de quatre critères.</p>
-          <div class="doc-criteria-grid">
-            <div class="doc-criterion"><strong>1. Source primaire</strong><p>Au moins une source officielle ou directe soutient la position : programme, discours intégral, scrutin, texte public ou décision.</p></div>
-            <div class="doc-criterion"><strong>2. Mesures précises</strong><p>La fiche contient des propositions ou positions suffisamment concrètes et attribuables pour être résumées sans extrapoler.</p></div>
-            <div class="doc-criterion"><strong>3. Couverture suffisante</strong><p>Nous avons assez de matière pour décrire le sujet dans son ensemble, pas seulement une mesure isolée ou un angle très partiel.</p></div>
-            <div class="doc-criterion"><strong>4. Recoupement</strong><p>Plusieurs éléments indépendants - programme, déclarations, votes ou actions - se confirment ou permettent de vérifier la cohérence de la position.</p></div>
-          </div>
-          <div class="doc-scale">
-            <span class="proof fort">🧾 Fort · 4/4</span>
-            <span class="proof moyen">🧾 Moyen · 2 ou 3/4</span>
-            <span class="proof acompleter">🧾 À compléter · 0 ou 1/4</span>
-          </div>
-          <p class="doc-warning"><strong>Important :</strong> un niveau « À compléter » ne veut pas dire que la personne n'a pas de position. Cela signifie que nous n'avons pas encore assez d'éléments vérifiés pour la présenter avec le même degré de solidité que les autres.</p>
-        </article>
-      </section>
-      <section class="section filters" id="compare" aria-label="Recherche et choix des candidats">
-        <div class="filter-card">
-          <label class="search-wrap">
-            <span class="search-icon" aria-hidden="true">⌕</span>
-            <input class="search-input" id="search" type="search" placeholder="Cherche : fin de vie, PMA, déserts médicaux, nucléaire, éolien, Duplomb..." autocomplete="off">
-          </label>
-          <div class="selector-head">
-            <p class="result-count" id="result-count">Chargement...</p>
-            <div>
-              <button class="button small light" type="button" id="show-all-cards" hidden>← Toutes les fiches</button>
-              <button class="button small light" type="button" id="select-all">Tout afficher</button>
-              <button class="button small pink" type="button" id="select-main">5 candidat·es documenté·es</button>
-            </div>
-          </div>
-          <div class="candidate-selector" id="candidate-selector" aria-label="Sélection des candidats"></div>
-          <div class="nav-shell" aria-label="Sommaire">
-            <nav class="topic-nav" id="topic-nav"></nav>
-          </div>
-        </div>
-      </section>
-      <section class="section topics" id="topics" aria-label="Cartes gros sujets"></section>
-      <section class="section" id="sous-sujets" style="scroll-margin-top:190px">
-        <article class="panel" style="background:var(--pink)">
-          <div class="eyebrow">Deuxième niveau</div>
-          <h2>Les sous-sujets, loi par loi.</h2>
-          <p class="hero-note" style="color:var(--ink); max-width:96ch;">Deux formats. <strong>Carte « loi »</strong> : une loi précise, expliquée, avec le tableau des votes (candidat·e + parti + contexte sourcé). <strong>Carte « thème »</strong> : un sujet comme « fin de vie » ou « énergie » qui rassemble toutes les lois des 5 dernières années - chaque loi renvoie vers sa carte détaillée quand elle existe.</p>
-        </article>
-      </section>
-      <section class="section subs" id="subs" aria-label="Cartes sous-sujets"></section>
-      <section class="section">
-        <article class="card empty-state" id="empty-state">
-          <h2>Aucun résultat</h2>
-          <p>Essaie avec fin de vie, PMA, déserts médicaux, nucléaire, éolien, Duplomb ou renouvelables.</p>
-        </article>
-      </section>
-      <section class="section" id="sources">
-        <article class="card sources-card">
-          <div class="eyebrow">Sources</div>
-          <h2>Les documents utilisés dans cette base.</h2>
-          <p class="hero-note" style="color: rgba(252,247,232,.76)">Hiérarchie des preuves : programme officiel → scrutin officiel → texte / décision publique → action au pouvoir → déclaration intégrale → donnée publique → presse et fact-checking. Le niveau « Documentation » affiché sur chaque carte suit la grille expliquée plus haut. Une source secondaire (Datan, presse) sert à trouver vite ; elle ne remplace jamais la source primaire (scrutin officiel de l'Assemblée ou du Sénat).</p>
-          <ul class="sources-list" id="sources-list"></ul>
-        </article>
-      </section>
-    </article>
-  </main>
-  <button class="to-top" type="button" id="to-top" aria-label="Retour en haut">↑</button>
+      <div class="hero-card right">
+        <p class="eyebrow">Comment ça marche&nbsp;?</p>
+        <h2>3 façons d'entrer.</h2>
+        <ol class="hero-steps">
+          <li><strong>1 · Jouez.</strong> Devinez qui a dit quoi, découvrez si les actes suivent.</li>
+          <li><strong>2 · Comparez.</strong> Une fiche par candidat·e et par sujet, en langage clair.</li>
+          <li><strong>3 · Vérifiez.</strong> Chaque affirmation renvoie à un scrutin ou un document officiel.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="stat-row" id="stats" aria-label="Le comparateur en chiffres">
+      <div class="stat"><b id="stat-cand">5</b><span>candidat·es suivi·es</span></div>
+      <div class="stat"><b>2</b><span>sujets pour commencer</span></div>
+      <div class="stat"><b id="stat-lois">25</b><span>textes &amp; scrutins décortiqués</span></div>
+      <div class="stat"><b id="stat-src">60+</b><span>sources, toutes en lien</span></div>
+    </div>
+
+    <!-- ===== LE JEU ===== -->
+    <section class="bloc" id="jeu" aria-labelledby="jeu-titre">
+      <div class="bloc-head">
+        <h2 id="jeu-titre">Qui a dit quoi&nbsp;?</h2>
+        <span class="tag">Le jeu</span>
+      </div>
+      <p class="bloc-intro">10 déclarations bien réelles, prononcées ces cinq dernières années. À vous de deviner qui parle — puis on regarde ensemble si les votes suivent les paroles.</p>
+      <div class="jeu-shell">
+        <div class="jeu-card" id="jeu-card" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ===== LES FICHES ===== -->
+    <section class="bloc" id="fiches" aria-labelledby="fiches-titre">
+      <div class="bloc-head">
+        <h2 id="fiches-titre">Les fiches, candidat·e par candidat·e</h2>
+        <span class="tag">Comparer</span>
+      </div>
+      <p class="bloc-intro">Pour chaque candidat·e et chaque sujet&nbsp;: la promesse retrouvée, les votes passés, les actes au pouvoir, ce qui reste flou — et le niveau de preuve de notre documentation.</p>
+      <div class="switch" role="group" aria-label="Choisir un sujet">
+        <button type="button" data-sujet="sante" aria-pressed="true">🩺 Santé</button>
+        <button type="button" data-sujet="ecologie" aria-pressed="false">🌱 Écologie &amp; climat</button>
+      </div>
+      <div class="fiches-grid" id="fiches-grid"></div>
+      <p class="note-bas">Le «&nbsp;niveau de preuve&nbsp;» mesure la solidité de <em>notre documentation</em>, jamais la qualité d'un programme. «&nbsp;Flou&nbsp;» veut dire&nbsp;: pas assez d'éléments vérifiés pour affirmer — pas «&nbsp;pas de position&nbsp;».</p>
+    </section>
+
+    <!-- ===== LES VOTES ===== -->
+    <section class="bloc" id="votes" aria-labelledby="votes-titre">
+      <div class="bloc-head">
+        <h2 id="votes-titre">Les votes, loi par loi</h2>
+        <span class="tag">Vérifier</span>
+      </div>
+      <p class="bloc-intro">Chaque texte des 5 dernières années, expliqué en une phrase, avec le vote <strong>personnel</strong> du candidat ou de la candidate et le vote de son <strong>groupe</strong> — deux choses qu'on ne mélange jamais. Touchez une ligne pour le détail complet.</p>
+      <div class="filtres" id="filtres" role="group" aria-label="Filtrer les textes"></div>
+      <div class="lois-grid" id="lois-grid"></div>
+    </section>
+
+    <!-- ===== LA MÉTHODE ===== -->
+    <section class="bloc" id="methode" aria-labelledby="methode-titre">
+      <div class="bloc-head">
+        <h2 id="methode-titre">La méthode</h2>
+        <span class="tag">Transparence</span>
+      </div>
+      <p class="bloc-intro">Quatre niveaux d'information, jamais mélangés — et des badges d'alignement qui mesurent une seule chose&nbsp;: la cohérence entre la parole et les actes.</p>
+      <div class="methode-grid">
+        <div class="meth-card"><h3>1 · Vote personnel</h3><p>La personne siégeait et a voté, nommément. Le seul cas où l'on écrit «&nbsp;il ou elle a voté&nbsp;».</p></div>
+        <div class="meth-card"><h3>2 · Position du groupe</h3><p>Son groupe parlementaire a voté majoritairement dans un sens. Ce n'est pas son vote à elle ou à lui.</p></div>
+        <div class="meth-card"><h3>3 · Ligne du parti</h3><p>Programme, communiqué ou consigne de vote. Utile, mais ça reste du discours.</p></div>
+        <div class="meth-card"><h3>4 · Action au pouvoir</h3><p>Décision prise comme ministre, Premier ministre ou élu·e locale. Des actes, pas des mots.</p></div>
+      </div>
+      <div class="legende" id="legende-badges">
+        <div class="row"><span class="badge-align">✅ Aligné</span><p>Les votes et les actes suivent la promesse. Ça ne dit pas que la promesse est bonne — juste qu'elle est tenue.</p></div>
+        <div class="row"><span class="badge-align">⚠️ Partiellement aligné</span><p>Une partie des actes suit, une partie s'en écarte (abstention ambiguë, vote absent, discours à géométrie variable).</p></div>
+        <div class="row"><span class="badge-align">❌ Contradictoire</span><p>Les actes vont à l'encontre de la promesse, de façon documentée.</p></div>
+        <div class="row"><span class="badge-align">➖ Non testable</span><p>Pas de vote ni d'acte possible (pas de mandat, ministre qui ne vote pas, texte sans scrutin). Ce n'est pas une mauvaise note.</p></div>
+        <div class="row"><span class="badge-align">🔀 Position collective hétérogène</span><p>Le parti ou le groupe se divise&nbsp;: à partir de 20&nbsp;% de voix divergentes dans un vote, on ne parle plus d'une «&nbsp;ligne&nbsp;» mais d'une position hétérogène.</p></div>
+      </div>
+      <p class="note-bas">Ce comparateur est un travail journalistique citoyen, en cours et daté. Une case «&nbsp;en cours de vérification&nbsp;» signifie que la recherche continue, pas qu'une position n'existe pas. Vous repérez une erreur&nbsp;? Écrivez-nous, on corrige et on le dit&nbsp;: <a href="mailto:contact@komunemedia.fr">contact@komunemedia.fr</a>.</p>
+    </section>
+
+    <!-- ===== LES SOURCES ===== -->
+    <section class="bloc" id="sources" aria-labelledby="sources-titre">
+      <div class="bloc-head">
+        <h2 id="sources-titre">Les sources</h2>
+        <span class="tag">Tout vérifier</span>
+      </div>
+      <p class="bloc-intro">Deux sources minimum par fiche, dont une primaire (scrutin officiel, programme, texte de loi). En plus des liens présents dans chaque carte, voici la bibliothèque complète.</p>
+      <div class="sources-list" id="sources-list"></div>
+    </section>
+
+    <footer class="site-foot">
+      <span>© Komune Média — comparateur citoyen, indépendant et sourcé.</span>
+      <div class="foot-links">
+        <a href="../">Accueil</a>
+        <a href="../soutenir/">Nous soutenir</a>
+        <a href="mailto:contact@komunemedia.fr">Signaler une erreur</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="data.js"></script>
   <script>
-  /* =====================================================================
-     DONNÉES - à mettre à jour depuis le classeur « Grille de recherche »
-     Structure :
-     - candidates : identité, photo, couleurs
-     - laws       : une entrée par loi / scrutin, avec les votes par candidat·e
-                    (cand = vote personnel, parti = position du groupe)
-     - subjects   : gros sujets → une carte par candidat·e (axe, impact,
-                    engagements, principaux votes = renvois vers laws)
-     - subs       : sous-sujets → type "loi" (1 scrutin) ou "theme" (liste de lois)
-     Valeurs de vote : "pour" | "contre" | "abstention" | "divise" | "na" | "?"
-     ===================================================================== */
-  const TAG_TAXONOMY = {
-    "pouvoir-achat": {
-      "title": "Pouvoir d’achat & niveau de vie",
-      "sousThemes": [
-        "Prix & inflation",
-        "Salaires & revenus",
-        "Impôts & taxes des ménages",
-        "Énergie & factures",
-        "Consommation",
-        "Précarité"
-      ],
-      "tags": [
-        "Inflation",
-        "Blocage & encadrement des prix",
-        "Produits de première nécessité",
-        "Prix de l’énergie",
-        "Carburants",
-        "TVA",
-        "Fiscalité des ménages",
-        "SMIC & salaires",
-        "Indexation des revenus",
-        "Aides & prestations",
-        "Frais bancaires",
-        "Précarité énergétique",
-        "Pauvreté & précarité",
-        "Réduction des inégalités",
-        "Redistribution",
-        "Classes populaires",
-        "Classes moyennes",
-        "Hauts revenus",
-        "Familles monoparentales",
-        "Retraités",
-        "Personnes en situation de handicap",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer"
-      ]
-    },
-    "travail-emploi": {
-      "title": "Travail & emploi",
-      "sousThemes": [
-        "Emploi & chômage",
-        "Salaires",
-        "Temps de travail",
-        "Conditions de travail",
-        "Droit du travail",
-        "Santé au travail",
-        "Formation professionnelle",
-        "Travailleurs indépendants",
-        "Emploi des jeunes",
-        "Emploi des seniors",
-        "Discriminations au travail"
-      ],
-      "tags": [
-        "SMIC",
-        "Salaires",
-        "Temps de travail",
-        "Heures supplémentaires",
-        "Emploi & plein emploi",
-        "Chômage",
-        "Licenciements",
-        "Pénibilité",
-        "Conditions de travail",
-        "Santé au travail",
-        "Télétravail",
-        "Droit du travail",
-        "Dialogue social",
-        "Syndicats",
-        "Formation professionnelle",
-        "Apprentissage",
-        "Emploi des jeunes",
-        "Emploi des seniors",
-        "Travailleurs indépendants",
-        "Travailleurs précaires",
-        "Égalité professionnelle",
-        "Égalité salariale",
-        "Discrimination à l’embauche",
-        "Racisme",
-        "Sexisme",
-        "LGBTphobies",
-        "Transphobie",
-        "Validisme",
-        "Discriminations religieuses",
-        "Discrimination liée à l’âge",
-        "Discrimination territoriale",
-        "Transition écologique des emplois",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer"
-      ]
-    },
-    "protection-sociale-retraites": {
-      "title": "Protection sociale & retraites",
-      "sousThemes": [
-        "Retraites",
-        "Assurance chômage",
-        "Minima sociaux & lutte contre la pauvreté",
-        "Prestations familiales",
-        "Autonomie & dépendance",
-        "Organisation & financement de la protection sociale"
-      ],
-      "tags": [
-        "Âge de départ",
-        "Durée de cotisation",
-        "Pensions",
-        "Minimum vieillesse",
-        "Carrières longues",
-        "Pénibilité",
-        "Financement des retraites",
-        "RSA",
-        "AAH",
-        "Minima sociaux",
-        "Prestations familiales",
-        "Assurance chômage",
-        "Accès aux prestations",
-        "Conditionnement des aides",
-        "Non-recours",
-        "Automatisation des aides",
-        "Grand âge",
-        "EHPAD",
-        "Maintien à domicile",
-        "Aidants",
-        "Handicap & autonomie",
-        "Pauvreté",
-        "Redistribution",
-        "Réduction des inégalités",
-        "Femmes",
-        "Familles monoparentales",
-        "Personnes précaires",
-        "Personnes étrangères",
-        "Ruralités",
-        "Outre-mer"
-      ]
-    },
-    "sante": {
-      "title": "Santé",
-      "sousThemes": [
-        "Accès aux soins & déserts médicaux",
-        "Fin de vie & soins palliatifs",
-        "Hôpital public",
-        "Médecine de ville",
-        "Professionnels de santé",
-        "Santé mentale",
-        "Médicaments & industrie pharmaceutique",
-        "Prévention & santé publique",
-        "Santé sexuelle & reproductive",
-        "Santé environnementale",
-        "Alimentation & nutrition",
-        "Addictions",
-        "Pandémies & crises sanitaires",
-        "Financement du système de santé"
-      ],
-      "tags": [
-        "Déserts médicaux",
-        "Accès financier aux soins",
-        "Reste à charge",
-        "Hôpital public",
-        "Urgences",
-        "Maternités",
-        "Médecine de ville",
-        "Professionnels de santé",
-        "Recrutement",
-        "Conditions de travail des soignants",
-        "Santé mentale",
-        "Médicaments",
-        "Pénuries",
-        "Industrie pharmaceutique",
-        "Prévention",
-        "Vaccination",
-        "IVG",
-        "Contraception",
-        "PMA",
-        "Santé des femmes",
-        "Santé LGBTQIA+",
-        "Santé des personnes trans",
-        "Addictions",
-        "Alimentation & nutrition",
-        "Santé environnementale",
-        "Pollution",
-        "Pesticides",
-        "PFAS",
-        "Pandémies",
-        "Assurance maladie",
-        "Inégalités de santé",
-        "Racisme & discriminations dans les soins",
-        "Sexisme",
-        "LGBTphobies",
-        "Transphobie",
-        "Validisme",
-        "Grossophobie",
-        "Handicap & accessibilité",
-        "Droit des patients",
-        "Autonomie du patient",
-        "Précarité",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer"
-      ]
-    },
-    "ecologie": {
-      "title": "Écologie & climat",
-      "sousThemes": [
-        "Climat & réduction des émissions",
-        "Adaptation au changement climatique",
-        "Énergie",
-        "Transports & mobilités",
-        "Bâtiments & rénovation énergétique",
-        "Biodiversité & espaces naturels",
-        "Eau",
-        "Pollution",
-        "Déchets & économie circulaire"
-      ],
-      "tags": [
-        "Réduction des émissions",
-        "Neutralité carbone",
-        "Planification écologique",
-        "Adaptation climatique",
-        "Nucléaire",
-        "Énergies renouvelables",
-        "Énergies fossiles",
-        "Sobriété énergétique",
-        "Prix de l’énergie",
-        "Transports collectifs",
-        "Train",
-        "Vélo",
-        "Automobile",
-        "Véhicule électrique",
-        "Aviation",
-        "Rénovation énergétique",
-        "Passoires thermiques",
-        "Biodiversité",
-        "Artificialisation des sols",
-        "Pesticides",
-        "PFAS",
-        "Pollution de l’air",
-        "Pollution de l’eau",
-        "Gestion de l’eau",
-        "Sécheresse",
-        "Déchets",
-        "Recyclage",
-        "Agriculture",
-        "Justice climatique",
-        "Précarité énergétique",
-        "Inégalités environnementales",
-        "Santé environnementale",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer"
-      ]
-    },
-    "education-jeunesse": {
-      "title": "Éducation & jeunesse",
-      "sousThemes": [
-        "École maternelle & primaire",
-        "Collège & lycée",
-        "Enseignants & personnels",
-        "Inégalités scolaires",
-        "Orientation & Parcoursup",
-        "Enseignement supérieur",
-        "Recherche",
-        "Vie étudiante",
-        "Petite enfance",
-        "Formation & apprentissage",
-        "Éducation inclusive",
-        "Jeunesse"
-      ],
-      "tags": [
-        "Effectifs par classe",
-        "Programmes scolaires",
-        "Baccalauréat",
-        "Carte scolaire",
-        "Mixité sociale",
-        "Éducation prioritaire",
-        "Enseignement privé",
-        "Enseignants",
-        "Rémunération",
-        "Recrutement",
-        "Parcoursup",
-        "Sélection universitaire",
-        "Frais d’inscription",
-        "Bourses",
-        "CROUS",
-        "Précarité étudiante",
-        "Apprentissage",
-        "École inclusive",
-        "AESH",
-        "Handicap",
-        "Harcèlement scolaire",
-        "Recherche publique",
-        "Inégalités scolaires",
-        "Égalité des chances",
-        "Racisme",
-        "Sexisme",
-        "LGBTphobies",
-        "Transphobie",
-        "Discriminations religieuses",
-        "Laïcité",
-        "Accessibilité",
-        "Éducation à l’écologie",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer"
-      ]
-    },
-    "logement": {
-      "title": "Logement",
-      "sousThemes": [
-        "Loyers & marché locatif",
-        "Logement social",
-        "Construction & offre de logements",
-        "Accès à la propriété",
-        "Aides au logement",
-        "Mal-logement & hébergement d’urgence",
-        "Rénovation & performance énergétique",
-        "Locations touristiques"
-      ],
-      "tags": [
-        "Encadrement des loyers",
-        "Expulsions locatives",
-        "Garantie des loyers",
-        "Construction",
-        "Logement social / HLM",
-        "Loi SRU",
-        "Accès à la propriété",
-        "Prêt à taux zéro",
-        "APL",
-        "Sans-abrisme",
-        "Hébergement d’urgence",
-        "Logement indigne",
-        "Foncier",
-        "Airbnb / locations touristiques",
-        "Rénovation énergétique",
-        "Passoires thermiques",
-        "DPE",
-        "Précarité énergétique",
-        "Réduction des inégalités",
-        "Droit au logement",
-        "Racisme",
-        "LGBTphobies",
-        "Validisme",
-        "Discrimination liée à l’adresse",
-        "Accessibilité",
-        "Personnes précaires",
-        "Familles monoparentales",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer",
-        "Transition écologique"
-      ]
-    },
-    "services-publics-territoires": {
-      "title": "Services publics & territoires",
-      "sousThemes": [
-        "Services publics & accès aux services essentiels",
-        "Fonction publique",
-        "Aménagement du territoire",
-        "Transports publics",
-        "Décentralisation & collectivités territoriales",
-        "Politique de la ville",
-        "Cohésion territoriale"
-      ],
-      "tags": [
-        "Accès aux services publics",
-        "Services publics de proximité",
-        "Effectifs",
-        "Fonctionnaires",
-        "Rémunération",
-        "Conditions de travail",
-        "Dématérialisation",
-        "Accueil physique",
-        "Décentralisation",
-        "Collectivités territoriales",
-        "Finances locales",
-        "Désenclavement",
-        "Transports de proximité",
-        "Égalité territoriale",
-        "Inégalités territoriales",
-        "Politique de la ville",
-        "Services publics écologiques",
-        "Accessibilité",
-        "Handicap",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer",
-        "Petites villes",
-        "Villes moyennes",
-        "Métropoles"
-      ]
-    },
-    "immigration-asile-nationalite": {
-      "title": "Immigration, asile & nationalité",
-      "sousThemes": [
-        "Entrée & séjour",
-        "Asile & protection internationale",
-        "Régularisation & personnes sans-papiers",
-        "Accueil & intégration",
-        "Expulsion & rétention",
-        "Nationalité"
-      ],
-      "tags": [
-        "Visas",
-        "Titres de séjour",
-        "Immigration professionnelle",
-        "Immigration étudiante",
-        "Immigration familiale",
-        "Regroupement familial",
-        "Régularisation",
-        "Sans-papiers",
-        "Droit d’asile",
-        "Demandeurs d’asile",
-        "Réfugiés",
-        "Mineurs non accompagnés",
-        "Conditions d’accueil",
-        "Hébergement",
-        "Intégration",
-        "Accès aux droits",
-        "Accès aux prestations sociales",
-        "Accès au travail",
-        "OQTF",
-        "Expulsions",
-        "Rétention administrative / CRA",
-        "Naturalisation",
-        "Droit du sol",
-        "Double nationalité",
-        "Déchéance de nationalité",
-        "Racisme",
-        "Discriminations liées à la nationalité",
-        "Discriminations religieuses",
-        "Droits fondamentaux",
-        "Familles",
-        "Enfants",
-        "Femmes",
-        "LGBTQIA+",
-        "Outre-mer"
-      ]
-    },
-    "securite-justice": {
-      "title": "Sécurité & justice",
-      "sousThemes": [
-        "Police, gendarmerie & maintien de l’ordre",
-        "Prévention & lutte contre la délinquance",
-        "Contrôle des forces de l’ordre / violences policières",
-        "Surveillance & renseignement",
-        "Terrorisme",
-        "Justice & politique pénale",
-        "Accès à la justice",
-        "Prisons & conditions carcérales",
-        "Libertés publiques & pouvoirs exceptionnels"
-      ],
-      "tags": [
-        "Effectifs de police & gendarmerie",
-        "Police de proximité",
-        "Police municipale",
-        "Maintien de l’ordre",
-        "Armes policières",
-        "Contrôles d’identité",
-        "Contrôles au faciès",
-        "Violences policières",
-        "Contrôle des forces de l’ordre",
-        "Vidéosurveillance",
-        "Reconnaissance faciale",
-        "Renseignement",
-        "Terrorisme",
-        "Narcotrafic",
-        "Criminalité organisée",
-        "Délinquance financière",
-        "Justice des mineurs",
-        "Peines",
-        "Peines planchers",
-        "Aménagement des peines",
-        "Magistrats",
-        "Aide juridictionnelle",
-        "Places de prison",
-        "Surpopulation carcérale",
-        "Réinsertion",
-        "Droits des détenus",
-        "Liberté de manifestation",
-        "Liberté d’expression",
-        "Racisme",
-        "Sexisme",
-        "LGBTphobies",
-        "Validisme",
-        "Discriminations religieuses",
-        "Violences sexistes & sexuelles",
-        "Accessibilité de la justice",
-        "Inégalités face à la justice",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer"
-      ]
-    },
-    "droits-egalite-discriminations": {
-      "title": "Droits, égalité & lutte contre les discriminations",
-      "sousThemes": [
-        "Racisme",
-        "Égalité femmes-hommes & sexisme",
-        "Droits LGBTQIA+",
-        "Handicap, validisme & accessibilité",
-        "Discriminations religieuses",
-        "Discriminations socio-économiques",
-        "Discriminations territoriales",
-        "Lutte contre les discriminations & égalité des droits"
-      ],
-      "tags": [
-        "Racisme",
-        "Discriminations raciales",
-        "Contrôles au faciès",
-        "Sexisme",
-        "Égalité femmes-hommes",
-        "Égalité salariale",
-        "Violences sexistes & sexuelles",
-        "Féminicides",
-        "Parité",
-        "Droits LGBTQIA+",
-        "LGBTphobies",
-        "Transphobie",
-        "Droits des personnes trans",
-        "PMA",
-        "Filiation",
-        "Handicap",
-        "Validisme",
-        "Accessibilité",
-        "Discriminations religieuses",
-        "Antisémitisme",
-        "Islamophobie",
-        "Laïcité",
-        "Discriminations socio-économiques",
-        "Discriminations territoriales",
-        "Discrimination liée à l’âge",
-        "Discrimination liée à la nationalité",
-        "Discrimination liée à l’adresse",
-        "Discrimination au travail",
-        "Discrimination au logement",
-        "Discrimination dans la santé",
-        "Égalité d’accès aux droits",
-        "Intersectionnalité",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer"
-      ]
-    },
-    "democratie-institutions": {
-      "title": "Démocratie & institutions",
-      "sousThemes": [
-        "Constitution & institutions",
-        "Élections & modes de scrutin",
-        "Référendums & participation citoyenne",
-        "Décentralisation & collectivités territoriales",
-        "Transparence, éthique & financement de la vie politique",
-        "Corruption & probité publique",
-        "Libertés démocratiques",
-        "État de droit & contre-pouvoirs"
-      ],
-      "tags": [
-        "Ve République",
-        "VIe République",
-        "Constituante",
-        "Pouvoirs présidentiels",
-        "Parlement",
-        "49.3",
-        "Proportionnelle",
-        "Droit de vote",
-        "Vote blanc",
-        "Référendum",
-        "RIC",
-        "Participation citoyenne",
-        "Décentralisation",
-        "Démocratie locale",
-        "Financement des partis",
-        "Financement des campagnes",
-        "Lobbying",
-        "Conflits d’intérêts",
-        "Corruption",
-        "Détournement de fonds publics",
-        "Liberté de manifestation",
-        "Liberté d’association",
-        "Liberté d’expression",
-        "Séparation des pouvoirs",
-        "Indépendance de la justice",
-        "Représentation politique",
-        "Parité",
-        "Représentation des minorités",
-        "Participation des jeunes",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer"
-      ]
-    },
-    "economie-entreprises-finances-publiques": {
-      "title": "Économie, entreprises & finances publiques",
-      "sousThemes": [
-        "Croissance & modèle économique",
-        "Entreprises & PME",
-        "Industrie & réindustrialisation",
-        "Fiscalité des entreprises",
-        "Fiscalité du patrimoine & du capital",
-        "Aides publiques aux entreprises",
-        "Commerce & concurrence",
-        "Banques & finance",
-        "Budget, dépenses & dette publiques",
-        "Lutte contre la fraude & l’évasion fiscales"
-      ],
-      "tags": [
-        "Croissance",
-        "Décroissance",
-        "Planification économique",
-        "Réindustrialisation",
-        "Relocalisation",
-        "Souveraineté économique",
-        "TPE",
-        "PME",
-        "ETI",
-        "Grandes entreprises",
-        "Multinationales",
-        "Impôt sur les sociétés",
-        "Impôts de production",
-        "ISF / IFI",
-        "Flat tax",
-        "Dividendes",
-        "Successions",
-        "Grandes fortunes",
-        "Aides aux entreprises",
-        "Conditionnement des aides",
-        "Commerce",
-        "Concurrence",
-        "Banques",
-        "BCE",
-        "Dette publique",
-        "Déficit",
-        "Dépenses publiques",
-        "Fraude fiscale",
-        "Évasion fiscale",
-        "Paradis fiscaux",
-        "Redistribution",
-        "Réduction des inégalités",
-        "Fiscalité écologique",
-        "Conditionnalité écologique",
-        "Transition écologique",
-        "Économie sociale & solidaire",
-        "Emploi",
-        "Ruralités",
-        "Outre-mer"
-      ]
-    },
-    "agriculture-alimentation": {
-      "title": "Agriculture & alimentation",
-      "sousThemes": [
-        "Revenus & rémunération des agriculteurs",
-        "Aides agricoles & PAC",
-        "Modèles & pratiques agricoles",
-        "Élevage & bien-être animal",
-        "Foncier, installation & transmission",
-        "Souveraineté & production alimentaires",
-        "Industrie agroalimentaire",
-        "Qualité & sécurité de l’alimentation",
-        "Restauration collective"
-      ],
-      "tags": [
-        "Revenus agricoles",
-        "Prix agricoles",
-        "Prix minimums",
-        "PAC",
-        "Aides agricoles",
-        "Agriculture biologique",
-        "Agroécologie",
-        "Agriculture intensive",
-        "Pesticides",
-        "Engrais",
-        "OGM",
-        "Irrigation",
-        "Eau",
-        "Élevage intensif",
-        "Élevage en cage",
-        "Bien-être animal",
-        "Abattage",
-        "Installation",
-        "Transmission",
-        "Foncier agricole",
-        "Souveraineté alimentaire",
-        "Circuits courts",
-        "Importations",
-        "Grande distribution",
-        "Industrie agroalimentaire",
-        "Nutri-Score",
-        "Alimentation saine",
-        "Cantines scolaires",
-        "Agriculture & climat",
-        "Biodiversité",
-        "Réduction des pesticides",
-        "Adaptation climatique",
-        "Conditions de travail",
-        "Précarité des agriculteurs",
-        "Ruralités",
-        "Outre-mer"
-      ]
-    },
-    "culture-medias-information": {
-      "title": "Culture, médias & information",
-      "sousThemes": [
-        "Financement & politiques culturelles",
-        "Accès à la culture",
-        "Patrimoine",
-        "Création artistique",
-        "Artistes & intermittents",
-        "Service public audiovisuel",
-        "Concentration & propriété des médias",
-        "Financement & aides aux médias",
-        "Liberté & protection de la presse",
-        "Désinformation",
-        "Éducation aux médias"
-      ],
-      "tags": [
-        "Budget de la culture",
-        "Subventions",
-        "Gratuité",
-        "Tarification",
-        "Patrimoine",
-        "Musées",
-        "Cinéma",
-        "Spectacle vivant",
-        "Intermittents",
-        "Artistes-auteurs",
-        "Droits d’auteur",
-        "Service public audiovisuel",
-        "Aides à la presse",
-        "Concentration des médias",
-        "Propriété des médias",
-        "Indépendance des rédactions",
-        "Pluralisme",
-        "Secret des sources",
-        "Protection des journalistes",
-        "Désinformation",
-        "Éducation aux médias",
-        "Diversité & représentation",
-        "Racisme",
-        "Sexisme",
-        "LGBTphobies",
-        "Accessibilité",
-        "Handicap",
-        "Égalité d’accès à la culture",
-        "Médias indépendants",
-        "Médias locaux",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer"
-      ]
-    },
-    "numerique-technologies": {
-      "title": "Numérique & technologies",
-      "sousThemes": [
-        "Intelligence artificielle",
-        "Données personnelles & vie privée",
-        "Plateformes & réseaux sociaux",
-        "Cybersécurité",
-        "Souveraineté numérique",
-        "Accès au numérique & fracture numérique",
-        "Numérique & services publics",
-        "Innovation & nouvelles technologies"
-      ],
-      "tags": [
-        "Intelligence artificielle",
-        "Algorithmes",
-        "Automatisation",
-        "Données personnelles",
-        "RGPD",
-        "Vie privée",
-        "Reconnaissance faciale",
-        "Réseaux sociaux",
-        "Modération",
-        "Protection des mineurs",
-        "Cyberharcèlement",
-        "Cybercriminalité",
-        "Cybersécurité",
-        "GAFAM",
-        "Cloud",
-        "Souveraineté numérique",
-        "Semi-conducteurs",
-        "Fibre",
-        "Couverture numérique",
-        "Illectronisme",
-        "Dématérialisation",
-        "Fracture numérique",
-        "Accessibilité numérique",
-        "Handicap",
-        "Biais algorithmiques",
-        "Discriminations algorithmiques",
-        "Impact environnemental du numérique",
-        "Sobriété numérique",
-        "Emploi & automatisation",
-        "Ruralités",
-        "Quartiers populaires / QPV",
-        "Outre-mer"
-      ]
-    },
-    "international-europe-defense": {
-      "title": "International, Europe & défense",
-      "sousThemes": [
-        "Union européenne & institutions européennes",
-        "Diplomatie & politique étrangère",
-        "Défense & armée",
-        "OTAN & alliances militaires",
-        "Guerres & conflits internationaux",
-        "Coopération & aide au développement",
-        "Commerce international",
-        "Relations postcoloniales"
-      ],
-      "tags": [
-        "Union européenne",
-        "Institutions européennes",
-        "Droit européen",
-        "Souveraineté nationale",
-        "Souveraineté européenne",
-        "BCE",
-        "Diplomatie",
-        "ONU",
-        "Droit international",
-        "Droits humains",
-        "Sanctions internationales",
-        "Reconnaissance d’États",
-        "Aide militaire",
-        "Exportations d’armes",
-        "Embargo sur les armes",
-        "Budget militaire",
-        "Armement",
-        "Dissuasion nucléaire",
-        "Service militaire",
-        "Industrie de défense",
-        "OTAN",
-        "Ukraine",
-        "Russie",
-        "Israël-Palestine",
-        "Aide humanitaire",
-        "Aide au développement",
-        "Libre-échange",
-        "Protectionnisme",
-        "Accords commerciaux",
-        "Climat & diplomatie environnementale",
-        "Migrations",
-        "Françafrique",
-        "Franc CFA",
-        "Bases militaires françaises",
-        "Restitutions",
-        "Réparations coloniales",
-        "Décolonisation",
-        "Outre-mer"
-      ]
+  /* ==================== moteur du comparateur & du jeu ==================== */
+  (function () {
+    'use strict';
+    var D = window.KOMUNE_DATA;
+    if (!D) { return; }
+
+    function esc(v) {
+      return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c];
+      });
     }
-  };
-  const PUBLIC_TAGS = {
-    "Âge / situation": [
-      "Enfants & jeunes",
-      "Étudiant",
-      "es",
-      "Familles & parents",
-      "Retraité",
-      "es & personnes âgées",
-      "Familles monoparentales"
-    ],
-    "Situation économique": [
-      "Actifs & salarié",
-      "es",
-      "Demandeurs d’emploi",
-      "Indépendants & petits entrepreneurs",
-      "Entreprises & employeurs",
-      "Grandes entreprises & multinationales",
-      "Agriculteur",
-      "rices",
-      "Personnes précaires & ménages modestes",
-      "Classes moyennes",
-      "Hauts revenus & gros patrimoines",
-      "Personnes en invalidité / incapacité de travail",
-      "Locataires & personnes mal-logées",
-      "Bénéficiaires de prestations sociales",
-      "Aidant",
-      "es",
-      "Professionnel",
-      "les de santé",
-      "Enseignant",
-      "es & personnels de l’éducation",
-      "Fonctionnaires & agents publics",
-      "Artistes/journalistes/professionnel",
-      "les de la culture",
-      "Personnes détenues ou concernées par la justice"
-    ],
-    "Égalité / discriminations": [
-      "Femmes",
-      "Personnes LGBTQIA+",
-      "Personnes non blanches",
-      "Personnes en situation de handicap",
-      "Minorités religieuses",
-      "Personnes étrangères, immigrées & exilées",
-      "Gens du voyage"
-    ],
-    "Territoires": [
-      "Habitants des ruralités",
-      "Habitants des quartiers populaires / QPV",
-      "Habitants des Outre-mer"
-    ]
-  };
-  const DATA = {
-    lastUpdate: "17 août 2026",
-    candidates: [
-      { id:"melenchon", name:"Jean-Luc Mélenchon", short:"Mélenchon", party:"La France Insoumise (LFI)", groupe:"LFI-NFP (Assemblée)",
-        statut:"Déclaré", parlementaire:"Ne siège plus (député 2017-2022) : pas de vote personnel possible depuis 2022.",
-        defaultChecked:true, emoji:"", photo:"https://drive.google.com/thumbnail?id=1tR5gMeoSB8h2IK7E_XO-oa9DbdygER2e&sz=w900",
-        bg:"#f3edff", shadow:"#5423df", tilt:"-5deg" },
-      { id:"le-pen", name:"Marine Le Pen", short:"Le Pen", party:"Rassemblement National (RN)", groupe:"RN (Assemblée)",
-        statut:"Déclarée (07/07/2026)", parlementaire:"Députée depuis 2017 : votes personnels disponibles (attention aux absences).",
-        defaultChecked:true, emoji:"", photo:"https://drive.google.com/thumbnail?id=145XxYSa0TByBpBQfonhG5U9w7aWwA9VH&sz=w900",
-        bg:"#eef4ff", shadow:"#0000ff", tilt:"5deg" },
-      { id:"philippe", name:"Édouard Philippe", short:"Philippe", party:"Horizons", groupe:"Horizons & Indépendants (Assemblée)",
-        statut:"Déclaré", parlementaire:"Maire du Havre, ne siège pas : seuls le groupe Horizons et son bilan 2017-2020 peuvent être cités.",
-        defaultChecked:true, emoji:"", photo:"https://drive.google.com/thumbnail?id=1dM8VoMySWJ6matYvzLwFiuj5HaVhTgC4&sz=w900",
-        bg:"#efffed", shadow:"#35674b", tilt:"-3deg" },
-      { id:"attal", name:"Gabriel Attal", short:"Attal", party:"Renaissance", groupe:"Ensemble pour la République (Assemblée)",
-        statut:"Déclaré (22/05/2026)", parlementaire:"Député depuis 2024 (et 2017-2018) : trou normal 2018-2024, un ministre ne vote pas.",
-        defaultChecked:true, emoji:"", photo:"https://drive.google.com/thumbnail?id=1r3ITMcxoFt9fxqqjWlJyM_f6HSj3e40J&sz=w900",
-        bg:"#fff7cf", shadow:"#fee075", tilt:"4deg" },
-      { id:"retailleau", name:"Bruno Retailleau", short:"Retailleau", party:"Les Républicains (LR)", groupe:"LR (Sénat) / Droite Républicaine (Assemblée)",
-        statut:"Investi LR (20/04/2026)", parlementaire:"PIÈGE : ses votes sont au SÉNAT, pas à l'Assemblée - et un ministre en exercice ne vote plus.",
-        defaultChecked:true, emoji:"", photo:"https://drive.google.com/thumbnail?id=19_TskxVgKGdLl9S4iEdyehkQ38ZU9J2S&sz=w900",
-        bg:"#fff0fb", shadow:"#f099f9", tilt:"-4deg" },
-      { id:"primaire-gauche", name:"Primaire de la gauche hors LFI (à désigner)", short:"Primaire gauche", party:"PS / Écologistes / Place Publique / L'Après",
-        groupe:"SOC, EcoS ou GDR selon la personne", statut:"Primaire le 11/10/2026", parlementaire:"À déterminer après la désignation.",
-        defaultChecked:false, emoji:"🌹", photo:"", bg:"#ffffff", shadow:"#332e32", tilt:"0deg" }
-    ],
-    laws: {
-      "L-AAM-FINAL": {
-        title:"Droit à l'aide à mourir - adoption définitive", date:"15/07/2026", chambre:"Assemblée nationale",
-        resultat:"Adopté", score:"Ventilation par groupe relevée (voir tableau)",
-        tags:["Fin de vie","Aide à mourir"],
-        description:"Crée un droit à l'aide à mourir pour les personnes majeures atteintes d'une affection grave et incurable, sous conditions strictes. Particularité rare : aucune consigne de groupe n'a été donnée - le vote personnel de chaque parlementaire compte donc plus que la position moyenne de son groupe.",
-        verif:"Numéro de scrutin cité en interne (n°8280) à confirmer avant publication : il ne correspond pas à la numérotation observée de la 17e législature.",
-        lien:{ label:"Assemblée nationale - scrutins de la 17e législature", url:"https://www.assemblee-nationale.fr/dyn/17/scrutins" },
-        votes:{
-          "melenchon": { cand:"na", candNote:"Ne siège plus à l'Assemblée depuis 2022 : aucun vote personnel possible.", parti:"pour", partiDetail:"LFI-NFP : 61 pour / 2 contre / 3 abst.", contexte:"Le groupe a voté massivement pour. M. Mélenchon ne siégeant plus, seule la position du groupe peut être citée - jamais « il a voté »." },
-          "le-pen": { cand:"contre", parti:"contre", partiDetail:"RN : 12 pour / 106 contre.", contexte:"Vote personnel contre, aligné sur la très grande majorité de son groupe (12 député·es RN ont toutefois voté pour)." },
-          "philippe": { cand:"na", candNote:"Maire du Havre : ne siège pas.", parti:"divise", partiDetail:"Horizons : 16 pour / 18 contre / 1 abst.", contexte:"Groupe divisé quasiment à parts égales : impossible d'en déduire une position personnelle d'Édouard Philippe." },
-          "attal": { cand:"pour", parti:"pour", partiDetail:"EPR : 64 pour / 18 contre / 9 abst.", contexte:"Vote personnel pour, comme la majorité de son groupe." },
-          "retailleau": { cand:"na", candNote:"Sénateur et ministre : ne vote pas à l'Assemblée.", parti:"contre", partiDetail:"Droite Républicaine (Assemblée) : 5 pour / 41 contre / 2 abst.", contexte:"À l'Assemblée, son camp a voté contre. Au Sénat, le texte avait été rejeté en 1re lecture (122 pour / 181 contre) - sa position personnelle est à chercher là-bas." },
-          "primaire-gauche": { cand:"?", candNote:"Candidat·e non désigné·e (primaire le 11/10/2026).", parti:"?", contexte:"À documenter après la désignation, selon le groupe de rattachement (SOC, EcoS ou GDR)." }
-        }
-      },
-      "L-AAM-1L": {
-        title:"Aide à mourir - 1re lecture (scrutin n°2107)",
-        date:"27/05/2025", chambre:"Assemblée nationale", resultat:"Adopté", score:"305 pour / 199 contre / 57 abst. (vérifié)",
-        tags:["Fin de vie"],
-        description:"Première adoption du texte par les députés.",
-        lien:{ label:"Scrutin n°2107 (Assemblée nationale)", url:"https://www.assemblee-nationale.fr/dyn/17/scrutins/2107" },
-        votes:{
-          "melenchon": { cand:"na", candNote:"Ne siège plus.", parti:"?", partiDetail:"Ventilation par groupe à relever.", contexte:"Score global vérifié ; ventilation par groupe à relever sur le scrutin n°2107." },
-          "le-pen": { cand:"?", candNote:"À relever sur la liste nominative.", parti:"?", contexte:"À relever." },
-          "philippe": { cand:"na", candNote:"Ne siège pas.", parti:"?", contexte:"À relever." },
-          "attal": { cand:"?", candNote:"À relever sur la liste nominative.", parti:"?", contexte:"À relever." },
-          "retailleau": { cand:"na", candNote:"Scrutin de l'Assemblée.", parti:"?", contexte:"À relever." },
-          "primaire-gauche": { cand:"?", parti:"?", contexte:"À documenter après la primaire." }
-        }
-      },
-      "L-PALLIATIFS": {
-        title:"Soins palliatifs et accompagnement - 1re lecture", date:"27/05/2025", chambre:"Assemblée nationale",
-        resultat:"Adopté", score:"560 pour / 0 contre / 3 abst. (vérifié)",
-        tags:["Soins palliatifs","Fin de vie"],
-        description:"Programme le développement des soins palliatifs et crée un droit opposable à en bénéficier. Utile en contrepoint : ce consensus quasi unanime montre que le sujet fin de vie ne se réduit pas à un affrontement.",
-        lien:{ label:"Assemblée nationale - scrutins", url:"https://www.assemblee-nationale.fr/dyn/17/scrutins" },
-        votes:{
-          "melenchon": { cand:"na", candNote:"Ne siège plus.", parti:"pour", contexte:"Adoption quasi unanime (560 pour, 0 contre) : tous les groupes ont voté pour." },
-          "le-pen": { cand:"?", candNote:"Vote personnel à confirmer sur la liste nominative.", parti:"pour", contexte:"Adoption quasi unanime." },
-          "philippe": { cand:"na", candNote:"Ne siège pas.", parti:"pour", contexte:"Adoption quasi unanime." },
-          "attal": { cand:"?", candNote:"Vote personnel à confirmer sur la liste nominative.", parti:"pour", contexte:"Adoption quasi unanime." },
-          "retailleau": { cand:"na", candNote:"Scrutin de l'Assemblée.", parti:"pour", contexte:"Adoption quasi unanime à l'Assemblée." },
-          "primaire-gauche": { cand:"?", parti:"pour", contexte:"Adoption quasi unanime." }
-        }
-      },
-      "L-AAM-SENAT": {
-        title:"Aide à mourir - 1re lecture au Sénat", date:"28/01/2026", chambre:"Sénat",
-        resultat:"Rejeté", score:"122 pour / 181 contre",
-        tags:["Fin de vie"],
-        description:"Le même texte, rejeté par le Sénat. C'est ici que se lit la position du camp de Bruno Retailleau.",
-        lien:{ label:"Sénat - scrutins publics", url:"https://www.senat.fr/les_senateurs_et_les_scrutins/scrutins_publics.html" },
-        votes:{
-          "melenchon": { cand:"na", candNote:"Scrutin du Sénat.", parti:"na", contexte:"Les groupes de l'Assemblée ne votent pas au Sénat." },
-          "le-pen": { cand:"na", candNote:"Scrutin du Sénat.", parti:"na", contexte:"Idem." },
-          "philippe": { cand:"na", candNote:"Scrutin du Sénat.", parti:"na", contexte:"Idem." },
-          "attal": { cand:"na", candNote:"Scrutin du Sénat.", parti:"na", contexte:"Idem." },
-          "retailleau": { cand:"?", candNote:"Sénateur, mais ministre en exercice : il ne prend en principe plus part aux votes - à vérifier sur le scrutin.", parti:"?", partiDetail:"Position du groupe LR au Sénat à relever.", contexte:"Le Sénat a rejeté le texte (122 / 181). Ventilation LR à relever sur le scrutin officiel." },
-          "primaire-gauche": { cand:"?", parti:"?", contexte:"À documenter selon la personne désignée (certaines siègent au Sénat)." }
-        }
-      },
-      "L-PMA": {
-        title:"Loi bioéthique - ouverture de la PMA à toutes les femmes", date:"06/2021 (loi promulguée le 02/08/2021)", chambre:"Assemblée nationale (lecture définitive)",
-        resultat:"Adopté", score:"À reporter depuis le scrutin n°3855 (15e législature)",
-        tags:["PMA","Santé sexuelle & reproductive","Droits LGBT+"],
-        description:"Ouvre la procréation médicalement assistée à toutes les femmes - couples de femmes et femmes seules - jusque-là réservée aux couples hétérosexuels sur critère médical.",
-        verif:"Relevé interne à confirmer cellule par cellule sur le scrutin n°3855 avant publication.",
-        lien:{ label:"Scrutin n°3855 (Assemblée nationale, 15e législature)", url:"https://www.assemblee-nationale.fr/dyn/15/scrutins/3855" },
-        votes:{
-          "melenchon": { cand:"pour", candNote:"Il siégeait comme député en 2021 : vote personnel.", parti:"pour", partiDetail:"LFI : 16 pour (relevé interne).", contexte:"Vote personnel pour, aligné sur son groupe." },
-          "le-pen": { cand:"contre", parti:"na", partiDetail:"Députée non-inscrite en 2021 : pas de groupe RN constitué à l'Assemblée.", contexte:"Vote personnel contre ; pas de position de groupe à citer pour cette période." },
-          "philippe": { cand:"na", candNote:"Ne siégeait pas (Premier ministre jusqu'en juillet 2020, puis hors Parlement).", parti:"na", partiDetail:"Horizons n'existait pas encore (parti créé fin 2021).", contexte:"Le projet de loi a été engagé par le gouvernement qu'il dirigeait jusqu'en juillet 2020 : action au pouvoir, pas un vote." },
-          "attal": { cand:"na", candNote:"Membre du gouvernement (porte-parole) : un ministre ne vote pas.", parti:"pour", partiDetail:"LaREM : 209 pour / 6 contre / 20 abst. / 1 NV.", contexte:"Son parti de l'époque a voté pour ; lui-même ne pouvait pas voter." },
-          "retailleau": { cand:"contre", candNote:"Vote au Sénat : il a voté contre.", parti:"contre", partiDetail:"LR (Assemblée) : 5 pour / 77 contre / 7 abst.", contexte:"Vote personnel contre au Sénat, aligné sur la position très majoritaire de LR dans les deux chambres." },
-          "primaire-gauche": { cand:"?", parti:"?", contexte:"À documenter après la primaire (plusieurs personnalités en lice siégeaient en 2021)." }
-        }
-      },
-      "L-GAROT": {
-        title:"Amendement n°55 Garot - régulation de l'installation des médecins", date:"02/04/2025", chambre:"Assemblée nationale",
-        resultat:"Adopté", score:"155 pour / 85 contre / 3 abst. (vérifié)",
-        tags:["Déserts médicaux","Accès aux soins"],
-        description:"Crée une autorisation d'installation délivrée par l'ARS : automatique en zone sous-dotée, conditionnée au départ d'un médecin ailleurs. C'est le vote le plus clivant du corpus santé : il traverse les groupes au lieu de les opposer en bloc - le vote personnel y compte beaucoup.",
-        lien:{ label:"Scrutin n°1214 (Assemblée nationale)", url:"https://www.assemblee-nationale.fr/dyn/17/scrutins/1214" },
-        lien2:{ label:"Datan - vote n°1214", url:"https://datan.fr/votes/legislature-17/vote_1214" },
-        votes:{
-          "melenchon": { cand:"na", candNote:"Ne siège plus.", parti:"?", partiDetail:"Ventilation LFI-NFP à relever.", contexte:"Scrutin vérifié (155/85/3) ; positions par groupe encore à relever sur la liste nominative." },
-          "le-pen": { cand:"?", candNote:"À relever sur la liste nominative (une absence n'est ni un contre ni une abstention).", parti:"?", contexte:"À relever." },
-          "philippe": { cand:"na", candNote:"Ne siège pas.", parti:"?", partiDetail:"Ventilation Horizons à relever.", contexte:"À relever." },
-          "attal": { cand:"?", candNote:"Député depuis 2024 : vote personnel disponible, à relever.", parti:"?", contexte:"À relever." },
-          "retailleau": { cand:"na", candNote:"Scrutin de l'Assemblée. Le pendant sénatorial (PPL du 14/05/2025, sans régulation générale) est à traiter séparément.", parti:"?", contexte:"À relever." },
-          "primaire-gauche": { cand:"?", parti:"?", contexte:"À documenter (l'amendement est porté par Guillaume Garot, PS)." }
-        }
-      },
-      "L-DUPLOMB": {
-        title:"Loi Duplomb - agriculture & réintroduction de l'acétamipride", date:"08/07/2025", chambre:"Assemblée nationale (CMP)",
-        resultat:"Adopté", score:"316 pour / 223 contre (vérifié)",
-        tags:["Pesticides","Agriculture","Biodiversité","Santé publique"],
-        description:"Lève des contraintes pesant sur les exploitations agricoles et rouvre la possibilité d'utiliser l'acétamipride, un néonicotinoïde interdit en France depuis 2018. Le texte croise écologie et santé publique.",
-        lien:{ label:"Assemblée nationale - scrutins", url:"https://www.assemblee-nationale.fr/dyn/17/scrutins" },
-        lien2:{ label:"Datan - vote loi Duplomb", url:"https://datan.fr/votes/legislature-17/vote_2957" },
-        votes:{
-          "melenchon": { cand:"na", candNote:"Ne siège plus.", parti:"contre", partiDetail:"LFI-NFP contre à l'unanimité (Datan).", contexte:"Position du groupe, pas de la personne." },
-          "le-pen": { cand:"?", candNote:"Vote personnel à confirmer sur la liste nominative.", parti:"pour", partiDetail:"Groupe RN pour (Datan).", contexte:"Groupe pour ; son vote personnel reste à confirmer à la source." },
-          "philippe": { cand:"na", candNote:"Ne siège pas.", parti:"divise", partiDetail:"Horizons majoritairement pour, quelques contre et abstentions (Datan).", contexte:"Groupe divisé : ne pas résumer par un seul mot sans le détail chiffré." },
-          "attal": { cand:"?", candNote:"À relever sur la liste nominative.", parti:"divise", partiDetail:"EPR majoritairement pour, plusieurs contre et abstentions (Datan).", contexte:"Groupe divisé ; son vote personnel est la vraie information à aller chercher." },
-          "retailleau": { cand:"na", candNote:"Scrutin de l'Assemblée : il siège au Sénat.", parti:"pour", partiDetail:"Groupe Droite Républicaine pour à l'Assemblée.", contexte:"Position LR au Sénat à relever séparément." },
-          "primaire-gauche": { cand:"?", parti:"?", contexte:"Gauche majoritairement opposée au texte - à détailler par groupe après la primaire." }
-        }
-      },
-      "L-MORATOIRE": {
-        title:"Moratoire sur les nouveaux projets éoliens et photovoltaïques (amendement, PPL Gremillet)", date:"19/06/2025", chambre:"Assemblée nationale",
-        resultat:"Adopté", score:"À relever",
-        tags:["Éolien","Solaire","Énergies renouvelables"],
-        description:"Amendement suspendant toute nouvelle installation éolienne terrestre et photovoltaïque. C'est le vote le plus discriminant du corpus écologie : il oppose frontalement RN et LR au bloc central et à la gauche.",
-        verif:"Scrutin précis à identifier sur le site de l'Assemblée : les positions ci-dessous reposent encore sur la presse.",
-        lien:{ label:"Assemblée nationale - scrutins", url:"https://www.assemblee-nationale.fr/dyn/17/scrutins" },
-        votes:{
-          "melenchon": { cand:"na", candNote:"Ne siège plus.", parti:"contre", partiDetail:"Gauche opposée à l'amendement (presse) - ventilation LFI à relever.", contexte:"Amendement adopté face à des bancs dégarnis du bloc central et de la gauche." },
-          "le-pen": { cand:"?", candNote:"Vote personnel à relever sur la liste nominative.", parti:"pour", partiDetail:"Adopté grâce aux voix RN + LR (presse).", contexte:"À confirmer sur le scrutin officiel." },
-          "philippe": { cand:"na", candNote:"Ne siège pas.", parti:"contre", partiDetail:"Groupes macronistes opposés mais peu présents en séance - ventilation Horizons à relever.", contexte:"Présence en séance = une information en soi." },
-          "attal": { cand:"?", candNote:"Présence et vote à relever.", parti:"contre", partiDetail:"EPR opposé (presse) - ventilation à relever.", contexte:"À confirmer sur le scrutin officiel." },
-          "retailleau": { cand:"na", candNote:"Scrutin de l'Assemblée. Il est cosignataire de la PPL Gremillet au Sénat : voir la 1re lecture du 16/10/2024.", parti:"pour", partiDetail:"Droite Républicaine pour (presse) - à confirmer.", contexte:"Sa trace la plus directe est la cosignature de la PPL au Sénat." },
-          "primaire-gauche": { cand:"?", parti:"contre", partiDetail:"Gauche opposée (presse).", contexte:"À détailler par groupe après la primaire." }
-        }
-      },
-      "L-GREMILLET": {
-        title:"PPL Gremillet - programmation énergie-climat 2025-2035 - vote solennel", date:"24/06/2025", chambre:"Assemblée nationale",
-        resultat:"Rejeté", score:"142 pour / 377 contre (vérifié presse - ventilation à relever)",
-        tags:["Énergie","Nucléaire","Renouvelables","Programmation"],
-        description:"Devait fixer la trajectoire énergétique de la France jusqu'en 2035 ; rejetée après l'ajout du moratoire sur l'éolien et le solaire, par une alliance inhabituelle gauche + bloc central contre RN/UDR. Utile pour montrer que le clivage écologie n'est pas simplement gauche-droite.",
-        lien:{ label:"Assemblée nationale - scrutins", url:"https://www.assemblee-nationale.fr/dyn/17/scrutins" },
-        lien2:{ label:"Sénat - communiqué sur la PPL Gremillet", url:"https://www.senat.fr/salle-de-presse/communiques-de-presse/presse/01-07-2025/propositiondeloi-gremillet-programmation-energetique-relance-filiere-nucleaire.html" },
-        votes:{
-          "melenchon": { cand:"na", candNote:"Ne siège plus.", parti:"contre", partiDetail:"Gauche contre le texte remanié (à confirmer par groupe).", contexte:"Rejet obtenu par gauche + bloc central contre RN/UDR." },
-          "le-pen": { cand:"?", candNote:"À relever.", parti:"pour", partiDetail:"RN et UDR pour (presse) - ventilation exacte à relever.", contexte:"À confirmer sur le scrutin officiel." },
-          "philippe": { cand:"na", candNote:"Ne siège pas.", parti:"contre", partiDetail:"Horizons contre, avec EPR et MoDem (presse).", contexte:"À confirmer." },
-          "attal": { cand:"?", candNote:"À relever.", parti:"contre", partiDetail:"EPR contre (presse) - à confirmer.", contexte:"À confirmer." },
-          "retailleau": { cand:"na", candNote:"Scrutin de l'Assemblée.", parti:"?", partiDetail:"Cosignataire de la PPL au Sénat : sa position se lit sur la 1re lecture au Sénat (16/10/2024), à relever.", contexte:"INDISPENSABLE : traiter le Sénat pour lui, sinon sa fiche paraît vide alors que la matière existe." },
-          "primaire-gauche": { cand:"?", parti:"contre", partiDetail:"Gauche contre (presse).", contexte:"À détailler après la primaire." }
-        }
-      },
-      "L-APER": {
-        title:"Loi d'accélération des énergies renouvelables (APER) - lecture définitive", date:"07/02/2023 (CMP du 31/01/2023)", chambre:"Assemblée nationale",
-        resultat:"Adopté", score:"53 % pour sur 409 votants (CMP)",
-        tags:["Énergies renouvelables","Éolien","Solaire"],
-        description:"Simplifie et accélère les procédures d'implantation de projets solaires et éoliens, notamment via des zones d'accélération définies avec les communes. Le scrutin le plus clivant sur le développement des renouvelables.",
-        lien:{ label:"Datan - vote final CMP (16e législature)", url:"https://datan.fr/votes/legislature-16/vote_897" },
-        votes:{
-          "melenchon": { cand:"na", candNote:"Ne siégeait plus (mandat 2017-2022).", parti:"?", partiDetail:"Position LFI à relever sur le scrutin final.", contexte:"Datan documente : Renaissance, Horizons, MoDem pour ; LR et RN contre ; PS pour ; Écologistes abstention." },
-          "le-pen": { cand:"?", candNote:"Vote personnel à relever.", parti:"contre", partiDetail:"Groupe RN contre (Datan).", contexte:"À confirmer sur le scrutin officiel." },
-          "philippe": { cand:"na", candNote:"Ne siège pas.", parti:"pour", partiDetail:"Groupe Horizons pour (Datan).", contexte:"Position du groupe, pas de la personne." },
-          "attal": { cand:"na", candNote:"Membre du gouvernement : un ministre ne vote pas.", parti:"pour", partiDetail:"Groupe Renaissance pour (Datan).", contexte:"Trou 2018-2024 normal pour lui : à signaler comme tel, pas comme une absence de position." },
-          "retailleau": { cand:"?", candNote:"Vote au Sénat à relever.", parti:"contre", partiDetail:"LR contre à l'Assemblée (Datan).", contexte:"Sa position personnelle est à chercher dans les scrutins du Sénat." },
-          "primaire-gauche": { cand:"?", parti:"?", partiDetail:"PS pour, Écologistes abstention (Datan) : dépendra de la personne désignée.", contexte:"Exemple typique où la primaire changera la lecture." }
-        }
-      },
-      "L-NUCLEAIRE": {
-        title:"Loi d'accélération du nucléaire", date:"16/05/2023 (scrutin AN du 21/03/2023)", chambre:"Assemblée nationale",
-        resultat:"Adopté", score:"402 pour / 102 contre",
-        tags:["Nucléaire","EPR"],
-        description:"Simplifie les procédures administratives pour construire de nouveaux réacteurs à proximité de sites existants et supprime le plafond de 50 % de nucléaire dans le mix électrique. Contrepoint indispensable à la loi renouvelables : il permet de distinguer pro-nucléaire, pro-renouvelables et partisans des deux.",
-        lien:{ label:"Datan - PJL accélération nucléaire (16e législature)", url:"https://datan.fr/votes/legislature-16/vote_1243" },
-        votes:{
-          "melenchon": { cand:"na", candNote:"Ne siégeait plus.", parti:"contre", partiDetail:"LFI contre (Datan).", contexte:"LFI, Écologistes et SOC contre ; GDR divisé." },
-          "le-pen": { cand:"?", candNote:"Vote personnel à relever.", parti:"pour", partiDetail:"RN pour (Datan).", contexte:"À confirmer sur le scrutin officiel." },
-          "philippe": { cand:"na", candNote:"Ne siège pas.", parti:"pour", partiDetail:"Horizons pour (Datan).", contexte:"Position du groupe." },
-          "attal": { cand:"na", candNote:"Membre du gouvernement.", parti:"pour", partiDetail:"Renaissance pour (Datan).", contexte:"Texte gouvernemental." },
-          "retailleau": { cand:"?", candNote:"Vote au Sénat à relever.", parti:"pour", partiDetail:"LR pour (Datan, Assemblée).", contexte:"Cohérent avec sa ligne pro-nucléaire ; à confirmer au Sénat." },
-          "primaire-gauche": { cand:"?", parti:"?", partiDetail:"Écologistes et SOC contre (Datan) : dépendra de la personne désignée.", contexte:"À documenter après la primaire." }
-        }
-      }
-    },
-    subjects: [
-      {
-        id:"sante", title:"Santé", emoji:"🩺",
-        question:"Que proposent-ils pour rendre les soins accessibles, réduire les délais et financer l'hôpital, la médecine de ville et la santé mentale ?",
-        sousThemes: TAG_TAXONOMY["sante"].sousThemes,
-        tags: TAG_TAXONOMY["sante"].tags,
-        cards:[
-          { candidateId:"melenchon", docCriteria:{primary:true, precise:true, coverage:true, corroborated:true},
-            axe:"Reconstruire le service public de santé, avec un objectif simple : personne à plus de 30 minutes d'un service d'urgence ou d'une maternité. C'est l'un des chapitres les plus détaillés de son programme publié (L'Avenir en commun, 4e version, janvier 2025).",
-            impact:"Moins d'attente pour un rendez-vous et fin des dépassements d'honoraires. Premiers concernés : les patients des déserts médicaux et les personnes à faibles revenus. Le financement des 100 000 emplois promis reste toutefois à chiffrer intégralement.",
-            engagements:[
-              { type:"Programme officiel", date:"01/2025", text:"Urgences et maternités à moins de 30 minutes, interdiction des dépassements d'honoraires, abrogation de la réforme de l'Assurance maladie de 2023, création de 100 000 emplois dans la santé.",
-                warn:"« Réforme de l'Assurance maladie de 2023 » : préciser le texte visé avant publication - s'il est passé par 49.3, il n'y a pas eu de vote sur le texte.",
-                source:{ label:"melenchon2027.fr - chapitre 15", url:"https://melenchon2027.fr/programme2025/livre/chapitre15/s2/", primary:true } }
-            ],
-            votes:["L-PMA","L-AAM-FINAL","L-GAROT"] },
-          { candidateId:"le-pen", docCriteria:{primary:true, precise:true, coverage:false, corroborated:false},
-            axe:"Pas de plan santé chiffré identifié pour l'Hexagone à ce stade. Son programme officiel (PDF, juin 2024) prévoit en revanche une grande loi santé de 20 Md€ pour les Outre-mer, avec suppression des ARS au profit d'un pilotage préfectoral.",
-            impact:"Impact potentiellement fort dans les Outre-mer : revalorisation des soignant·es et investissement hospitalier. Pour l'Hexagone, la fiche reste floue faute de programme détaillé - cette différence de périmètre est l'information principale.",
-            engagements:[
-              { type:"Programme officiel", date:"06/2024", text:"Grande loi santé de 20 Md€ pour les territoires ultramarins : revalorisation des soignants, investissement hospitalier, suppression des ARS.",
-                warn:"Préciser la page du PDF ; vérifier si une actualisation 2027 a été publiée depuis.",
-                source:{ label:"RN - programme officiel (PDF juin 2024)", url:"https://rassemblementnational.fr/documents/202406-programme.pdf", primary:true } }
-            ],
-            votes:["L-AAM-FINAL","L-PMA","L-GAROT"] },
-          { candidateId:"philippe", docCriteria:{primary:false, precise:false, coverage:false, corroborated:false},
-            axe:"Aucune proposition santé détaillée confirmée après recherche datée du 13/08/2026 : ses priorités affichées sont l'école, la sécurité et les retraites. Une piste de 20 000 nouveaux médecins d'ici 2033 circule, mais sur une source faible.",
-            impact:"Indéterminé tant que le volet santé n'est pas publié. Son bilan se lit surtout dans les décisions de Matignon 2017-2020 (« Ma Santé 2022 », pilotée par la ministre Agnès Buzyn, pas par lui directement).",
-            engagements:[
-              { type:"Programme relayé", date:"06/2026", text:"Formation de 20 000 nouveaux médecins généralistes d'ici 2033 (hausse du numerus, nouvelles facultés) ; recrutement de soignants et « grand service public de santé » décentralisé.",
-                warn:"Source faible (agrégateur) : contredit la fiche précédente (« aucune proposition trouvée »). À vérifier en priorité sur un discours intégral, puis corriger la fiche si confirmé.",
-                source:{ label:"ÉlyséeScope - programme économique Philippe", url:"https://www.elyseescope.com/questions/programme-economique-edouard-philippe-2027" } }
-            ],
-            votes:["L-AAM-FINAL"] },
-          { candidateId:"attal", docCriteria:{primary:false, precise:false, coverage:false, corroborated:false},
-            axe:"La santé ne figure pas dans ses quatre chantiers de campagne (école, salaires, frontières, IA). Aucune proposition santé structurée trouvée après recherche datée du 13/08/2026 - cette absence, datée, est une information en soi.",
-            impact:"Sans mesure ciblée annoncée, ses économies budgétaires (120 à 150 Md€, plan présenté le 02/07/2026) pourraient contraindre les dépenses de santé. Député depuis 2024, il a en revanche des votes personnels exploitables.",
-            engagements:[
-              { type:"Programme relayé", date:"2026", text:"Quatre chantiers de campagne : école, salaires, frontières, IA - la santé n'y figure pas ; plan de finances publiques (120-150 Md€ d'économies) présenté le 02/07/2026.",
-                warn:"À sourcer directement sur attalpresident.fr et à dater précisément (« au JJ/MM, les chantiers publiés ne comportent pas de volet santé »).",
-                source:{ label:"ÉlyséeScope - programme de Gabriel Attal", url:"https://www.elyseescope.com/questions/gabriel-attal-programme-propositions-presidentielle-2027" } }
-            ],
-            votes:["L-AAM-FINAL","L-GAROT"] },
-          { candidateId:"retailleau", docCriteria:{primary:false, precise:false, coverage:false, corroborated:false},
-            axe:"Aucune proposition santé identifiée après recherche datée du 13/08/2026 : sa communication de campagne porte sur la sécurité, l'immigration et l'économie. Ministre de l'Intérieur, il n'a pas de compétence santé.",
-            impact:"Indéterminé à ce stade. Attention méthodologique : ses votes se trouvent au Sénat, pas à l'Assemblée - et un ministre en exercice ne prend plus part aux votes. Sa fiche paraît vide, mais la matière sénatoriale existe et reste à relever.",
-            engagements:[
-              { type:"Programme relayé", date:"2026", text:"Feuille de route centrée sécurité / immigration / économie ; volet santé non développé à ce stade.",
-                warn:"Croiser avec la feuille de route officielle sur republicains.fr pour obtenir une source primaire.",
-                source:{ label:"ÉlyséeScope - programme de Bruno Retailleau", url:"https://www.elyseescope.com/questions/programme-retailleau-lr-2027-securite-immigration" } }
-            ],
-            votes:["L-AAM-SENAT"] },
-          { candidateId:"primaire-gauche", placeholder:"Le ou la candidate n'est pas encore désignée (primaire fermée le 11/10/2026 : Tondelier, Ruffin, Autain, Massard, Brun, Guedj en lice ; Glucksmann pressenti). La carte sera remplie après la désignation, avec la même grille que les autres." }
-        ]
-      },
-      {
-        id:"ecologie", title:"Écologie / climat", emoji:"🌿",
-        question:"Comment comptent-ils réduire les émissions, adapter le pays aux crises climatiques et financer la transition sans aggraver les inégalités ?",
-        sousThemes: TAG_TAXONOMY["ecologie"].sousThemes,
-        tags: TAG_TAXONOMY["ecologie"].tags,
-        cards:[
-          { candidateId:"melenchon", docCriteria:{primary:false, precise:true, coverage:true, corroborated:true},
-            axe:"Planification écologique pilotée par l'État : sortie progressive des énergies fossiles, décarbonation de l'industrie, renforcement des normes environnementales. L'État reprend la main sur la trajectoire énergétique du pays.",
-            impact:"Rénovation des logements, végétalisation des villes, moins de canicules extrêmes à long terme (20-30 ans). Concerne d'abord les habitant·es des villes et les ménages précaires en passoire thermique. Le calendrier de sortie des fossiles n'est pas totalement chiffré.",
-            engagements:[
-              { type:"Programme relayé", date:"2025-2026", text:"Planification écologique : sortie progressive des énergies fossiles, décarbonation de l'industrie, renforcement des normes environnementales.",
-                warn:"Remplacer par le lien direct vers le chapitre écologie de melenchon2027.fr (source primaire disponible).",
-                source:{ label:"ÉlyséeScope - programme économique Mélenchon", url:"https://www.elyseescope.com/le-radar/programme-economique-melenchon-2027" } }
-            ],
-            votes:["L-GREMILLET","L-DUPLOMB","L-NUCLEAIRE"] },
-          { candidateId:"le-pen", docCriteria:{primary:true, precise:true, coverage:false, corroborated:true},
-            axe:"Priorité au nucléaire avec de nouveaux EPR, et arrêt des subventions à l'éolien et au solaire. L'écologie y passe surtout par l'indépendance énergétique, pas par la sobriété ou la biodiversité.",
-            impact:"Moins de nouveaux parcs éoliens ou solaires près de chez soi ; la filière renouvelable et ses emplois seraient directement touchés. L'ambition chiffrée sur la biodiversité ou les pesticides reste peu développée.",
-            engagements:[
-              { type:"Programme officiel", date:"06/2024", text:"Priorité au nucléaire avec de nouveaux EPR ; arrêt des subventions à l'éolien et au solaire.",
-                warn:"Préciser la page du PDF. Cohérent avec les votes du groupe RN relevés (moratoire éolien, PPL Gremillet).",
-                source:{ label:"RN - programme officiel (PDF juin 2024)", url:"https://rassemblementnational.fr/documents/202406-programme.pdf", primary:true } }
-            ],
-            votes:["L-MORATOIRE","L-GREMILLET","L-DUPLOMB","L-NUCLEAIRE"] },
-          { candidateId:"philippe", docCriteria:{primary:false, precise:false, coverage:true, corroborated:false},
-            axe:"Énergie décarbonée combinant nucléaire (6 à 8 nouveaux EPR) et renouvelables, plutôt que l'un contre l'autre. Il défend une écologie dite « non punitive », avec un accent original mis sur l'adaptation aux canicules.",
-            impact:"Un plan annoncé de 80 Md€ sur 5 ans pour la rénovation thermique transformerait logements, écoles et hôpitaux, au bénéfice des ménages modestes en passoire thermique. Le financement précis (État, collectivités, ménages) n'est pas détaillé.",
-            vigilance:"A été Premier ministre lors du recul de la fiscalité carbone après les Gilets jaunes ; défend aujourd'hui une écologie « non punitive ». À documenter selon les cinq conditions de la charte avant de qualifier cela de contradiction.",
-            engagements:[
-              { type:"Déclarations de meeting", date:"2026 (dates à préciser)", text:"6 à 8 nouveaux EPR + renouvelables ; plan de 80 Md€ sur 5 ans pour la rénovation thermique ; écologie « non punitive ».",
-                warn:"Source faible (agrégateur non officiel) : les chiffres 80 Md€ et 6-8 EPR ne doivent pas être publiés sans confirmation sur un discours intégral.",
-                source:{ label:"Agrégateur - programme Philippe 2027", url:"https://election-presidentielle-francaise-2027.fr/edouard-philippe-le-programme-pour-2027/" } },
-              { type:"Déclaration / presse", date:"07/2026", text:"Priorité à l'adaptation au changement climatique : préparer écoles, logements et services publics aux canicules (en cohérence avec le PNACC-3, +4 °C en 2100).",
-                source:{ label:"Parlons Politique - Philippe et l'adaptation", url:"https://www.parlons-politique.fr/elections/quand-les-canicules-frappent-les-ecoles-et-les-villes-edouard-philippe-mise-sur-ladaptation-au-climat-pour-2027_22470/" } }
-            ],
-            votes:["L-APER","L-NUCLEAIRE","L-MORATOIRE","L-GREMILLET"] },
-          { candidateId:"attal", docCriteria:{primary:true, precise:true, coverage:false, corroborated:true},
-            axe:"Soutien assumé au nucléaire, présenté comme « une fierté française » et un atout de souveraineté (déclaration de politique générale, 30/01/2024). L'écologie ne figure pas parmi ses quatre chantiers officiels de campagne.",
-            impact:"Priorité au nucléaire, au bénéfice de la filière et de ses salarié·es. Pas de mesure climat chiffrée dans ses chantiers, ni de plan trouvé sur la rénovation thermique ou la biodiversité.",
-            engagements:[
-              { type:"Déclaration officielle (DPG)", date:"30/01/2024", text:"Gouvernement assumé comme pro-nucléaire ; renouvelables en complément ; « écologie populaire » ; service civique écologique de 50 000 jeunes.",
-                warn:"Position exprimée comme chef du gouvernement en 2024 : ne pas la présenter comme un engagement de campagne 2027.",
-                source:{ label:"vie-publique.fr - DPG du 30/01/2024", url:"https://www.vie-publique.fr/discours/292847-declaration-de-politique-generale-gabriel-attal-30012024", primary:true } }
-            ],
-            votes:["L-MORATOIRE","L-GREMILLET","L-DUPLOMB"] },
-          { candidateId:"retailleau", docCriteria:{primary:false, precise:true, coverage:false, corroborated:true},
-            axe:"Le pari le plus radical des cinq sur le tout-nucléaire : arrêt de l'expansion des renouvelables, abrogation du volet électricité de la PPE3, appels d'offres renouvelables déclarés infructueux. Il est cosignataire de la PPL Gremillet au Sénat.",
-            impact:"Arrêt de nouveaux projets éoliens et solaires ; pari sur le nucléaire pour la souveraineté énergétique. La filière renouvelable serait directement touchée ; l'impact sur la facture d'électricité des ménages n'est pas détaillé.",
-            engagements:[
-              { type:"Prises de position", date:"2025-2026", text:"Nucléaire quasi exclusif : arrêt de l'expansion du renouvelable, abrogation du volet électricité de la PPE3, appels d'offres renouvelables déclarés infructueux.",
-                warn:"Croiser avec sa feuille de route officielle LR (republicains.fr) pour obtenir une source primaire.",
-                source:{ label:"Gaz d'aujourd'hui - le pari radical de Retailleau", url:"https://www.gazdaujourdhui.fr/nucleaire-facture-souverainete-le-pari-radical-de-bruno-retailleau/" } }
-            ],
-            votes:["L-GREMILLET","L-DUPLOMB","L-NUCLEAIRE","L-APER"] },
-          { candidateId:"primaire-gauche", placeholder:"Carte à remplir après la primaire du 11/10/2026, avec la même grille que les autres candidat·es (axe, impact, engagements, votes)." }
-        ]
-      }
-    ],
-    subs: [
-      { id:"ss-fin-de-vie", subjectId:"sante", type:"theme", title:"Fin de vie & soins palliatifs",
-        tags:["Fin de vie","Aide à mourir","Soins palliatifs"],
-        description:"Le « sujet fin de vie » n'est pas une seule loi : c'est un parcours législatif de deux ans, avec un texte sur l'aide à mourir (adopté, rejeté au Sénat, puis réadopté) et un texte jumeau sur les soins palliatifs voté à la quasi-unanimité. Le tableau rassemble tous les scrutins des 5 dernières années sur ce thème ; chaque loi renvoie vers sa carte détaillée quand elle existe.",
-        lois:["L-AAM-1L","L-PALLIATIFS","L-AAM-SENAT","L-AAM-FINAL"] },
-      { id:"ss-aide-mourir", subjectId:"sante", type:"loi", law:"L-AAM-FINAL" },
-      { id:"ss-pma", subjectId:"sante", type:"loi", law:"L-PMA" },
-      { id:"ss-deserts", subjectId:"sante", type:"loi", law:"L-GAROT" },
-      { id:"ss-energie", subjectId:"ecologie", type:"theme", title:"Énergie : nucléaire vs renouvelables",
-        tags:["Nucléaire","Énergies renouvelables","Éolien","Solaire"],
-        description:"Quatre scrutins qui, ensemble, permettent de distinguer trois familles : pro-nucléaire, pro-renouvelables, et partisans des deux. Le clivage n'est pas simplement gauche-droite : la PPL Gremillet a été rejetée par une alliance gauche + bloc central contre RN/UDR.",
-        lois:["L-APER","L-NUCLEAIRE","L-MORATOIRE","L-GREMILLET"] },
-      { id:"ss-moratoire", subjectId:"ecologie", type:"loi", law:"L-MORATOIRE" },
-      { id:"ss-duplomb", subjectId:"ecologie", type:"loi", law:"L-DUPLOMB" }
-    ],
-    sources: [
-      { t:"Assemblée nationale - scrutins publics, 17e législature (source primaire)", u:"https://www.assemblee-nationale.fr/dyn/17/scrutins" },
-      { t:"Sénat - scrutins publics (source primaire, indispensable pour Bruno Retailleau)", u:"https://www.senat.fr/les_senateurs_et_les_scrutins/scrutins_publics.html" },
-      { t:"Assemblée nationale - scrutin n°1214, amendement Garot (source primaire)", u:"https://www.assemblee-nationale.fr/dyn/17/scrutins/1214" },
-      { t:"Assemblée nationale - scrutin n°2107, aide à mourir 1re lecture (source primaire)", u:"https://www.assemblee-nationale.fr/dyn/17/scrutins/2107" },
-      { t:"Assemblée nationale - scrutin n°3855, loi bioéthique / PMA (source primaire, 15e législature)", u:"https://www.assemblee-nationale.fr/dyn/15/scrutins/3855" },
-      { t:"Datan - votes de la 17e législature (source secondaire : trouver vite, confirmer ensuite)", u:"https://datan.fr/votes/legislature-17" },
-      { t:"Datan - loi Duplomb, ventilation par groupe", u:"https://datan.fr/votes/legislature-17/vote_2957" },
-      { t:"Datan - loi APER, vote final CMP (16e législature)", u:"https://datan.fr/votes/legislature-16/vote_897" },
-      { t:"Datan - PJL accélération du nucléaire (16e législature)", u:"https://datan.fr/votes/legislature-16/vote_1243" },
-      { t:"Sénat - communiqué PPL Gremillet (01/07/2025)", u:"https://www.senat.fr/salle-de-presse/communiques-de-presse/presse/01-07-2025/propositiondeloi-gremillet-programmation-energetique-relance-filiere-nucleaire.html" },
-      { t:"melenchon2027.fr - Faire passer la santé d'abord (programme officiel)", u:"https://melenchon2027.fr/programme2025/livre/chapitre15/s2/" },
-      { t:"Rassemblement National - programme officiel (PDF juin 2024)", u:"https://rassemblementnational.fr/documents/202406-programme.pdf" },
-      { t:"vie-publique.fr - déclaration de politique générale de Gabriel Attal (30/01/2024)", u:"https://www.vie-publique.fr/discours/292847-declaration-de-politique-generale-gabriel-attal-30012024" },
-      { t:"ÉlyséeScope - programmes Mélenchon / Attal / Retailleau / Philippe (source secondaire)", u:"https://www.elyseescope.com" },
-      { t:"Gaz d'aujourd'hui - le pari radical de Bruno Retailleau", u:"https://www.gazdaujourdhui.fr/nucleaire-facture-souverainete-le-pari-radical-de-bruno-retailleau/" },
-      { t:"Natura Sciences - l'union des droites contre les énergies renouvelables", u:"https://www.natura-sciences.com/decider/retailleau-lunion-droites-contre-eoliennes-solaire-renouvelable.html" },
-      { t:"Parlons Politique - Philippe mise sur l'adaptation au climat", u:"https://www.parlons-politique.fr/elections/quand-les-canicules-frappent-les-ecoles-et-les-villes-edouard-philippe-mise-sur-ladaptation-au-climat-pour-2027_22470/" },
-      { t:"NosDéputés / NosSénateurs - historique des parlementaires", u:"https://www.nosdeputes.fr" },
-      { t:"Légifrance - textes de loi promulgués", u:"https://www.legifrance.gouv.fr" }
-    ]
-  };
+    function el(html) {
+      var t = document.createElement('template');
+      t.innerHTML = html.trim();
+      return t.content.firstElementChild;
+    }
+    var CAND = {};
+    D.CANDIDATS.forEach(function (c) { CAND[c.id] = c; });
+    var JOUEURS = ['melenchon', 'le-pen', 'philippe', 'attal', 'retailleau'];
+    var LOI = {};
+    D.LOIS.forEach(function (l) { LOI[l.id] = l; });
+
+    function avatar(c, extra) {
+      return '<span class="avatar av-' + esc(c.teinte) + (extra ? ' ' + extra : '') + '" aria-hidden="true">' + esc(c.initiales) + '</span>';
+    }
+    function voteChip(v, prefix) {
+      if (!v) return '';
+      var title = v.brut && v.brut !== v.label ? ' title="' + esc(v.brut) + '"' : '';
+      return '<span class="chip vote-' + esc(v.code) + '"' + title + '>' + (prefix ? esc(prefix) + ' : ' : '') + esc(v.label) + '</span>';
+    }
+
+    /* ---- placeholder : la suite du script est ajoutée plus bas ---- */
+    window.__KOMUNE_HELPERS = { esc: esc, el: el, CAND: CAND, JOUEURS: JOUEURS, LOI: LOI, avatar: avatar, voteChip: voteChip };
+  })();
   </script>
   <script>
-  /* ===================== RENDU ===================== */
-  const byId = Object.fromEntries(DATA.candidates.map(c => [c.id, c]));
-  const lawToSub = {};
-  DATA.subs.forEach(s => { if (s.type === "loi") lawToSub[s.law] = s.id; });
-  let selected = new Set(DATA.candidates.filter(c => c.defaultChecked).map(c => c.id));
-  let query = "";
-  let focusedCardId = "";
-  const $ = sel => document.querySelector(sel);
-  const $$ = sel => Array.from(document.querySelectorAll(sel));
-  const esc = v => String(v ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]));
-  const normalize = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  const DOC_CRITERIA_LABELS = {
-    primary:"Source primaire",
-    precise:"Mesures précises",
-    coverage:"Couverture suffisante",
-    corroborated:"Recoupement"
-  };
-  function documentationScore(criteria = {}) {
-    return Object.keys(DOC_CRITERIA_LABELS).reduce((n, key) => n + (criteria[key] ? 1 : 0), 0);
-  }
-  function documentationLevel(criteria = {}) {
-    const score = documentationScore(criteria);
-    if (score === 4) return { label:"Fort", cls:"fort", score };
-    if (score >= 2) return { label:"Moyen", cls:"moyen", score };
-    return { label:"À compléter", cls:"acompleter", score };
-  }
-  function documentationDetails(criteria = {}) {
-    return `<details class="doc-why"><summary>Pourquoi ce niveau ?</summary><div class="doc-checks">${
-      Object.entries(DOC_CRITERIA_LABELS).map(([key, label]) =>
-        `<div class="doc-check ${criteria[key] ? "yes" : "no"}">${esc(label)}</div>`
-      ).join("")
-    }</div></details>`;
-  }
-  const VOTE_LABEL = { pour:"Pour", contre:"Contre", abstention:"Abst.", divise:"Divisé", na:"-", "?":"À relever" };
-  const VOTE_ICON  = { pour:"●", contre:"✕", abstention:"◐", divise:"◑", na:"·", "?":"?" };
-  function voteChip(value, scope) {
-    const v = VOTE_LABEL[value] ? value : "?";
-    const cls = { pour:"pour", contre:"contre", abstention:"abstention", divise:"divise", na:"na", "?":"inconnu" }[v];
-    const scopeTxt = scope === "groupe" ? `<span class="vote-scope">groupe</span>` : "";
-    return `<span class="vote-chip ${cls}${scope === "groupe" ? " is-groupe" : ""}" title="${scope === "groupe" ? "Position du groupe / parti" : "Vote personnel"}">${VOTE_ICON[v]} ${VOTE_LABEL[v]}${scopeTxt}</span>`;
-  }
-  function sourcePills(law) {
-    const links = [law.lien, law.lien2].filter(Boolean);
-    if (!links.length) return "";
-    return `<div class="source-buttons">${links.map((l, i) =>
-      `<a class="source-pill ${i ? "secondary" : ""}" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)} ↗</a>`).join("")}</div>`;
-  }
-  function miniAvatar(c) {
-    return `<span class="mini-avatar" style="--bg:${esc(c.bg)}">${c.photo ? `<img src="${esc(c.photo)}" alt="">` : esc(c.emoji || "✨")}</span>`;
-  }
-  function candidateAvatar(c) {
-    if (!c) return `<div class="candidate-avatar"><span class="avatar-emoji">✨</span></div>`;
-    return `<div class="candidate-avatar" style="--tilt:${esc(c.tilt)}">${c.photo ? `<img src="${esc(c.photo)}" alt="">` : `<span class="avatar-emoji">${esc(c.emoji || "✨")}</span>`}</div>`;
-  }
-  /* ---------- Hero, stats, sélecteur, nav ---------- */
-  function renderHeroOrbit() {
-    $("#hero-orbit").innerHTML = DATA.candidates.map(c => `
-      <div class="orbit-person" style="--tilt:${esc(c.tilt)}; --bubble:${esc(c.bg)};">
-        ${c.photo ? `<img src="${esc(c.photo)}" alt="">` : `<span class="emoji-head">${esc(c.emoji || "✨")}</span>`}
-      </div>`).join("");
-  }
-  function renderStats() {
-    const nLaws = Object.keys(DATA.laws).length;
-    const nCells = Object.values(DATA.laws).reduce((s, l) => s + Object.keys(l.votes).length, 0);
-    const stats = [
-      [String(DATA.subjects.length), "gros sujets ouverts (bêta Santé + Écologie)"],
-      [String(DATA.subs.length), "cartes sous-sujets : lois précises et thèmes"],
-      [String(nLaws), "scrutins documentés sur les 5 dernières années"],
-      [String(nCells), "cases de vote candidat·e × loi (remplies ou « à relever »)"]
-    ];
-    $("#stat-grid").innerHTML = stats.map(([n, label]) => `
-      <article class="stat"><div class="stat-number">${esc(n)}</div><div class="stat-label">${esc(label)}</div></article>`).join("");
-  }
-  function renderSelector() {
-    $("#candidate-selector").innerHTML = DATA.candidates.map(c => `
-      <label class="cand-toggle" style="--bg:${esc(c.bg)};">
-        <input type="checkbox" value="${esc(c.id)}" ${selected.has(c.id) ? "checked" : ""}>
-        <span class="${c.photo ? "cand-mini-img" : "cand-mini-emoji"}">
-          ${c.photo ? `<img src="${esc(c.photo)}" alt="">` : esc(c.emoji || "✨")}
-        </span>
-        <span>${esc(c.short)}</span>
-      </label>`).join("");
-    $$("#candidate-selector input").forEach(input => {
-      input.addEventListener("change", () => {
-        if (input.checked) selected.add(input.value); else selected.delete(input.value);
-        renderAll();
-      });
-    });
-  }
-  function renderNav() {
-    const bigs = DATA.subjects.map(s => `<button class="topic-chip is-priority" type="button" data-nav-target="${esc(s.id)}" data-nav-mode="focus">${esc(s.emoji)} ${esc(s.title)}</button>`);
-    const subs = DATA.subs.map(s => {
-      const title = s.type === "loi" ? (DATA.laws[s.law].shortTitle || DATA.laws[s.law].title) : s.title;
-      const short = title.length > 42 ? title.slice(0, 40).replace(/\s+\S*$/, "") + "…" : title;
-      return `<button class="topic-chip is-sub" type="button" data-nav-target="${esc(s.id)}" data-nav-mode="focus">${s.type === "loi" ? "📜" : "🧩"} ${esc(short)}</button>`;
-    });
-    $("#topic-nav").innerHTML = bigs.concat(subs).join("");
-  }
-  /* ---------- Cartes gros sujets ---------- */
-  function engagementBlock(e) {
-    const typeClass = normalize(e.type).includes("declaration") ? "declaration" : normalize(e.type).includes("promesse") ? "promesse" : "";
-    return `<div class="engagement-item">
-      <div class="engagement-head">
-        <span class="engagement-type ${typeClass}">${esc(e.type)}</span>
-        ${e.date ? `<span class="engagement-date">${esc(e.date)}</span>` : ""}
-      </div>
-      <p>${esc(e.text)}</p>
-      ${e.warn ? `<div class="engagement-warn">⚠ ${esc(e.warn)}</div>` : ""}
-      ${e.source ? `<div class="source-buttons"><a class="source-pill ${e.source.primary ? "" : "secondary"}" href="${esc(e.source.url)}" target="_blank" rel="noopener noreferrer">${esc(e.source.label)}${e.source.primary ? " · primaire" : ""} ↗</a></div>` : ""}
-    </div>`;
-  }
-  function voteLine(lawId, candId) {
-    const law = DATA.laws[lawId]; if (!law) return "";
-    const v = law.votes[candId] || {};
-    const subId = lawToSub[lawId];
-    const target = subId || DATA.subs.find(s => s.type === "theme" && s.lois && s.lois.includes(lawId))?.id || "sous-sujets";
-    const mode = target === "sous-sujets" ? "section" : "focus";
-    return `<button class="vote-line" type="button" data-nav-target="${esc(target)}" data-nav-mode="${mode}">
-      <span class="vote-law">${esc(law.shortTitle || law.title)}<small>${esc(law.date)} · ${esc(law.resultat)}</small></span>
-      ${voteChip(v.cand, "perso")}
-      ${voteChip(v.parti, "groupe")}
-    </button>`;
-  }
-  function renderCandidateCard(card) {
-    const c = byId[card.candidateId];
-    if (card.placeholder) {
-      return `<article class="candidate-card" style="--card-bg:${esc(c.bg)};--card-shadow:${esc(c.shadow)};">
-        <div class="candidate-top">${candidateAvatar(c)}<div><h3>${esc(c.short)}</h3><span class="candidate-party">${esc(c.party)}</span><div class="proof acompleter">🧾 À compléter · 0/4</div></div></div>
-        <div class="fact-box"><span class="fact-label">Pourquoi c'est vide</span><p>${esc(card.placeholder)}</p></div>
-      </article>`;
+  (function () {
+    'use strict';
+    var H = window.__KOMUNE_HELPERS;
+    if (!H) { return; }
+    var D = window.KOMUNE_DATA;
+    var esc = H.esc, el = H.el, CAND = H.CAND, JOUEURS = H.JOUEURS, LOI = H.LOI,
+        avatar = H.avatar, voteChip = H.voteChip;
+
+    /* ==================== stats ==================== */
+    document.getElementById('stat-lois').textContent = D.LOIS.length;
+    var nbLiens = 0;
+    D.LOIS.forEach(function (l) { nbLiens += l.liens.length; });
+    document.getElementById('stat-src').textContent = (nbLiens + D.SOURCES.length) + '+';
+
+    /* ==================== LES FICHES ==================== */
+    var fichesGrid = document.getElementById('fiches-grid');
+    var sujetActif = 'sante';
+
+    function blocFiche(titre, texte) {
+      if (!texte) return '';
+      return '<div><dt>' + esc(titre) + '</dt><dd>' + esc(texte) + '</dd></div>';
     }
-    const doc = documentationLevel(card.docCriteria);
-    return `<article class="candidate-card" style="--card-bg:${esc(c.bg)};--card-shadow:${esc(c.shadow)};">
-      <div class="candidate-top">
-        ${candidateAvatar(c)}
-        <div>
-          <h3>${esc(c.short)}</h3>
-          <span class="candidate-party">${esc(c.party)}</span>
-          <div class="proof ${doc.cls}" title="Niveau de documentation, pas une note politique">🧾 Documentation : ${esc(doc.label)} · ${doc.score}/4</div>
-          ${documentationDetails(card.docCriteria)}
-        </div>
-      </div>
-      <div class="card-summary">
-        <div class="fact-box axe"><span class="fact-label">L'axe principal</span><p>${esc(card.axe)}</p></div>
-        <div class="fact-box impact"><span class="fact-label">Ce que ça changerait</span><p>${esc(card.impact)}</p></div>
-      </div>
-      <details class="more">
-        <summary>🧾 Ses engagements - programme, déclarations, promesses</summary>
-        <div class="more-content">
-          ${card.engagements.map(engagementBlock).join("")}
-          ${card.vigilance ? `<div class="fact-box"><span class="fact-label">À surveiller</span><p>${esc(card.vigilance)}</p></div>` : ""}
-        </div>
-      </details>
-      <details class="more">
-        <summary>🗳️ Ses principaux votes</summary>
-        <div class="more-content">
-          <div class="fact-box"><span class="fact-label">Où chercher ses votes</span><p>${esc(c.parlementaire)}</p></div>
-          ${card.votes.map(id => voteLine(id, card.candidateId)).join("")}
-          <div class="legend">${voteChip("pour","perso")} vote personnel · ${voteChip("pour","groupe")} position du groupe (pointillés) - clique une ligne pour ouvrir la carte de la loi.</div>
-        </div>
-      </details>
-    </article>`;
-  }
-  function subjectHaystack(s) {
-    return normalize([s.title, s.question, ...(s.sousThemes || []), ...(s.tags || []),
-      ...s.cards.flatMap(c => [byId[c.candidateId]?.name, c.axe, c.impact, c.vigilance, c.placeholder,
-        ...(c.engagements || []).map(e => e.type + " " + e.text)])].join(" "));
-  }
-  function subHaystack(s) {
-    const laws = s.type === "loi" ? [DATA.laws[s.law]] : (s.lois || []).map(id => DATA.laws[id]);
-    return normalize([s.title, s.description, ...(s.tags || []),
-      ...laws.flatMap(l => [l.title, l.description, ...(l.tags || []),
-        ...Object.values(l.votes).map(v => [v.contexte, v.candNote, v.partiDetail].join(" "))])].join(" "));
-  }
-  function tagsForSub(s) {
-    const tags = [...(s.tags || [])];
-    if (s.type === "loi") tags.push(...(DATA.laws[s.law]?.tags || []));
-    if (s.type === "theme") {
-      (s.lois || []).forEach(id => tags.push(...(DATA.laws[id]?.tags || [])));
-    }
-    return tags;
-  }
-  function tagTargetId(label, subjectId) {
-    const needle = normalize(label);
-    const subs = DATA.subs.filter(s => s.subjectId === subjectId);
-    const exactTitle = subs.find(s => {
-      const title = s.type === "loi" ? (DATA.laws[s.law]?.shortTitle || DATA.laws[s.law]?.title || "") : (s.title || "");
-      return normalize(title) === needle;
-    });
-    if (exactTitle) return exactTitle.id;
-    const exactTag = subs.find(s => tagsForSub(s).some(t => normalize(t) === needle));
-    if (exactTag) return exactTag.id;
-    const titleContains = subs.find(s => {
-      const title = s.type === "loi" ? (DATA.laws[s.law]?.shortTitle || DATA.laws[s.law]?.title || "") : (s.title || "");
-      return normalize(title).includes(needle) || needle.includes(normalize(title));
-    });
-    if (titleContains) return titleContains.id;
-    const related = subs.find(s => subHaystack(s).includes(needle));
-    return related?.id || subjectId;
-  }
-  function tagLink(label, subjectId, prefix = "") {
-    const target = tagTargetId(label, subjectId);
-    return `<button class="tag tag-link" type="button" data-nav-target="${esc(target)}" data-nav-mode="focus" title="Ouvrir la fiche correspondante">${prefix}${esc(label)}</button>`;
-  }
-  function renderTopics() {
-    const q = normalize(query);
-    const visible = DATA.subjects.filter(s => {
-      if (focusedCardId) return s.id === focusedCardId;
-      return !q || subjectHaystack(s).includes(q);
-    });
-    $("#topics").innerHTML = visible.map(subject => {
-      const cards = subject.cards.filter(c => selected.has(c.candidateId));
-      return `<article class="card topic-card" id="${esc(subject.id)}">
-        <header class="topic-head">
-          <div class="topic-emoji">${esc(subject.emoji)}</div>
-          <div>
-            <div class="topic-title">${esc(subject.title)}</div>
-            <p class="topic-question">${esc(subject.question)}</p>
-            <div class="topic-meta">
-              ${(subject.sousThemes || []).map(t => tagLink(t, subject.id, "🧩 ")).join("")}
-            </div>
-            <details class="tag-bank">
-              <summary>🏷️ Tous les tags (${(subject.tags || []).length})</summary>
-              <div class="tag-bank-list">
-                ${(subject.tags || []).map(t => tagLink(t, subject.id)).join("")}
-              </div>
-            </details>
-          </div>
-        </header>
-        <div class="compare-grid">
-          ${cards.length ? cards.map(renderCandidateCard).join("")
-            : `<article class="candidate-card" style="--card-bg:#fff;--card-shadow:var(--ink)"><p>Sélectionne au moins un·e candidat·e pour afficher les cartes.</p></article>`}
-        </div>
-      </article>`;
-    }).join("");
-    return visible.length;
-  }
-  /* ---------- Cartes sous-sujets ---------- */
-  function lawMetaTags(law) {
-    return `<div class="sub-meta">
-      <span class="tag">📅 ${esc(law.date)}</span>
-      <span class="tag">🏛️ ${esc(law.chambre)}</span>
-      <span class="tag">${law.resultat === "Adopté" ? "✅" : "❌"} ${esc(law.resultat)}</span>
-      ${law.score ? `<span class="tag">🔢 ${esc(law.score)}</span>` : ""}
-    </div>`;
-  }
-  function renderLoiCard(sub) {
-    const law = DATA.laws[sub.law];
-    const subjTitle = DATA.subjects.find(s => s.id === sub.subjectId)?.title || "";
-    const rows = DATA.candidates.filter(c => selected.has(c.id)).map(c => {
-      const v = law.votes[c.id] || { cand:"?", parti:"?" };
-      return `<tr>
-        <td><span class="cand-cell">${miniAvatar(c)}<span>${esc(c.short)}<small style="display:block;font-size:11px;font-weight:800;color:var(--muted)">${esc(c.party)}</small></span></span></td>
-        <td>${voteChip(v.cand, "perso")}${v.candNote ? `<div style="margin-top:6px;font-size:12px;font-weight:750;color:var(--muted)">${esc(v.candNote)}</div>` : ""}</td>
-        <td>${voteChip(v.parti, "groupe")}${v.partiDetail ? `<div style="margin-top:6px;font-size:12px;font-weight:750;color:var(--muted)">${esc(v.partiDetail)}</div>` : ""}</td>
-        <td class="ctx-cell">${esc(v.contexte || "Contexte à rédiger.")}${sourcePills(law)}</td>
-      </tr>`;
-    }).join("");
-    return `<article class="card sub-card" id="${esc(sub.id)}">
-      <span class="sub-kicker loi">📜 Carte loi · ${esc(subjTitle)}</span>
-      <div class="sub-title">${esc(law.title)}</div>
-      <div class="sub-meta">${(law.tags || []).map(t => tagLink(t, sub.subjectId, "🏷️ ")).join("")}</div>
-      <div class="fact-box sub-desc"><span class="fact-label">C'est quoi cette loi ?</span><p>${esc(law.description)}</p></div>
-      ${lawMetaTags(law)}
-      ${law.verif ? `<div class="verif-flag">⚠️ <span>${esc(law.verif)}</span></div>` : ""}
-      <div class="table-scroll">
-        <table class="votes">
-          <thead><tr><th>Candidat·e</th><th>Son vote</th><th>Son parti / groupe</th><th>Contexte & sources</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-      <div class="legend">
-        ${voteChip("pour","perso")} pour · ${voteChip("contre","perso")} contre · ${voteChip("abstention","perso")} abstention ·
-        ${voteChip("divise","groupe")} groupe divisé · ${voteChip("na","perso")} ne siégeait pas / ne vote pas · ${voteChip("?","perso")} à relever ·
-        pointillés = position du groupe, jamais attribuée à la personne.
-      </div>
-    </article>`;
-  }
-  function themeCellFor(law, candId) {
-    const v = law.votes[candId];
-    if (!v) return voteChip("?", "perso");
-    if (v.cand && v.cand !== "na" && v.cand !== "?") return voteChip(v.cand, "perso");
-    if (v.cand === "na" && v.parti && v.parti !== "na") return voteChip(v.parti, "groupe");
-    if (v.cand === "?" && v.parti && v.parti !== "?" && v.parti !== "na") return voteChip(v.parti, "groupe");
-    if (v.cand === "na" && v.parti === "na") return voteChip("na", "perso");
-    return voteChip("?", "perso");
-  }
-  function renderThemeCard(sub) {
-    const subjTitle = DATA.subjects.find(s => s.id === sub.subjectId)?.title || "";
-    const cands = DATA.candidates.filter(c => selected.has(c.id));
-    const head = `<tr><th>Loi / scrutin</th>${cands.map(c => `<th><span style="display:inline-flex;align-items:center;gap:7px">${miniAvatar(c)} ${esc(c.short)}</span></th>`).join("")}</tr>`;
-    const rows = (sub.lois || []).map(id => {
-      const law = DATA.laws[id];
-      const detail = lawToSub[id];
-      return `<tr>
-        <td class="law-cell">${esc(law.shortTitle || law.title)}
-          <small>${esc(law.date)} · ${esc(law.resultat)}${law.score ? " · " + esc(law.score) : ""}</small>
-          ${detail ? `<button class="tag tag-link" type="button" data-nav-target="${esc(detail)}" data-nav-mode="focus">🔎 voir la carte détaillée</button>` : ""}
-        </td>
-        ${cands.map(c => `<td>${themeCellFor(law, c.id)}</td>`).join("")}
-      </tr>`;
-    }).join("");
-    return `<article class="card sub-card" id="${esc(sub.id)}">
-      <span class="sub-kicker theme">🧩 Carte thème · ${esc(subjTitle)}</span>
-      <div class="sub-title">${esc(sub.title)}</div>
-      <div class="sub-meta">${(sub.tags || []).map(t => tagLink(t, sub.subjectId, "🏷️ ")).join("")}</div>
-      <div class="fact-box sub-desc"><span class="fact-label">C'est quoi ce thème ?</span><p>${esc(sub.description)}</p></div>
-      <div class="table-scroll">
-        <table class="votes"><thead>${head}</thead><tbody>${rows}</tbody></table>
-      </div>
-      <div class="legend">
-        Plein = vote personnel · pointillés = position du groupe (jamais attribuée à la personne) ·
-        ${voteChip("na","perso")} ne siégeait pas · ${voteChip("?","perso")} à relever. Les contextes détaillés et les sources sont dans les cartes loi.
-      </div>
-    </article>`;
-  }
-  function renderSubs() {
-    const q = normalize(query);
-    const visible = DATA.subs.filter(s => {
-      if (focusedCardId) return s.id === focusedCardId;
-      return !q || subHaystack(s).includes(q);
-    });
-    $("#subs").innerHTML = visible.map(s => s.type === "loi" ? renderLoiCard(s) : renderThemeCard(s)).join("");
-    return visible.length;
-  }
-  function renderSources() {
-    $("#sources-list").innerHTML = DATA.sources.map(s =>
-      `<li><a href="${esc(s.u)}" target="_blank" rel="noopener noreferrer">${esc(s.t)}</a></li>`).join("");
-  }
-  function renderAll() {
-    const nTopics = renderTopics();
-    const nSubs = renderSubs();
-    $("#empty-state").classList.toggle("is-visible", nTopics + nSubs === 0);
-    const focusButton = $("#show-all-cards");
-    if (focusButton) focusButton.hidden = !focusedCardId;
-    $("#result-count").textContent = focusedCardId
-      ? `1 fiche affichée - ${selected.size} candidat·e${selected.size > 1 ? "s" : ""} sélectionné·e${selected.size > 1 ? "s" : ""}`
-      : `${nTopics} gros sujet${nTopics > 1 ? "s" : ""} · ${nSubs} sous-sujet${nSubs > 1 ? "s" : ""} - ${selected.size} candidat·e${selected.size > 1 ? "s" : ""} sélectionné·e${selected.size > 1 ? "s" : ""}`;
-  }
-  /* ---------- Interactions ---------- */
-  function initHeroFlee() {
-    const stage = $(".hero-side");
-    if (!stage) return;
-    const people = () => $$("#hero-orbit .orbit-person");
-    const reset = () => {
-      stage.classList.remove("is-chasing");
-      people().forEach(p => {
-        p.classList.remove("is-spooked");
-        p.style.setProperty("--repel-x", "0px"); p.style.setProperty("--repel-y", "0px");
-        p.style.setProperty("--spin", "0deg"); p.style.setProperty("--scale", "1");
-      });
-    };
-    stage.addEventListener("mousemove", event => {
-      stage.classList.add("is-chasing");
-      const threshold = Math.min(280, Math.max(190, stage.getBoundingClientRect().width * .42));
-      const now = performance.now();
-      people().forEach((person, index) => {
-        const rect = person.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
-        const dx = cx - event.clientX, dy = cy - event.clientY;
-        const dist = Math.max(1, Math.hypot(dx, dy));
-        const intensity = Math.max(0, 1 - dist / threshold);
-        const strength = intensity * intensity * 130;
-        const wiggle = Math.sin(now / 115 + index * 1.7) * intensity * 18;
-        const x = (dx / dist) * strength + wiggle;
-        const y = (dy / dist) * strength + Math.cos(now / 130 + index) * intensity * 14;
-        const spin = (dx / dist) * intensity * (index % 2 ? -26 : 26);
-        person.style.setProperty("--repel-x", `${x.toFixed(1)}px`);
-        person.style.setProperty("--repel-y", `${y.toFixed(1)}px`);
-        person.style.setProperty("--spin", `${spin.toFixed(1)}deg`);
-        person.style.setProperty("--scale", (1 + intensity * .12).toFixed(3));
-        person.classList.toggle("is-spooked", intensity > .05);
-      });
-    });
-    stage.addEventListener("mouseleave", reset);
-  }
-  function initControls() {
-    $("#search").addEventListener("input", e => { focusedCardId = ""; query = e.target.value; renderAll(); });
-    $("#select-all").addEventListener("click", () => {
-      selected = new Set(DATA.candidates.map(c => c.id)); renderSelector(); renderAll();
-    });
-    $("#select-main").addEventListener("click", () => {
-      selected = new Set(DATA.candidates.filter(c => c.id !== "primaire-gauche").map(c => c.id));
-      renderSelector(); renderAll();
-    });
-    function navigateInternal(targetId, mode = "scroll") {
-      if (!targetId) return;
-      if (mode === "focus") {
-        focusedCardId = targetId;
-        query = "";
-        $("#search").value = "";
-        renderAll();
-      } else if (mode === "section") {
-        focusedCardId = "";
-        query = "";
-        $("#search").value = "";
-        renderAll();
-      }
-      requestAnimationFrame(() => {
-        const target = document.getElementById(targetId);
-        if (!target) return;
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-        if (mode === "focus") {
-          target.classList.remove("tag-target-flash");
-          void target.offsetWidth;
-          target.classList.add("tag-target-flash");
-          window.setTimeout(() => target.classList.remove("tag-target-flash"), 1200);
+    function renderFiches() {
+      fichesGrid.innerHTML = '';
+      D.FICHES.filter(function (f) { return f.sujet === sujetActif; }).forEach(function (f) {
+        var c = CAND[f.cid];
+        if (!c) return;
+        if (f.cid === 'primaire-gauche') {
+          fichesGrid.appendChild(el(
+            '<article class="fiche" style="justify-content:center;text-align:center;background:linear-gradient(150deg,#fff,#ded1ff)">' +
+            '<div class="fiche-head" style="justify-content:center">' + avatar(c) + '<div><h3>Primaire de la gauche</h3><div class="parti">PS · Écologistes · Place publique…</div></div></div>' +
+            '<p class="engros">Candidat·e désigné·e le <strong>11 octobre 2026</strong>. La fiche complète (promesses, votes, alignements) sera publiée dès la désignation — la grille de recherche est déjà prête.</p>' +
+            '</article>'));
+          return;
         }
+        var preuveCls = 'preuve-' + esc((f.preuve || 'flou').toLowerCase().replace(/\s+/g, '-').replace('à', 'a'));
+        var srcHtml = f.sources.length
+          ? '<div class="fiche-src"><dt>Sources</dt>' + f.sources.map(function (u, i) {
+              return '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">Source ' + (i + 1) + ' ↗</a>';
+            }).join(' · ') + '</div>'
+          : '';
+        var fiche = el(
+          '<article class="fiche">' +
+            '<div class="fiche-head">' + avatar(c) +
+              '<div><h3>' + esc(c.court) + '</h3><div class="parti">' + esc(c.parti) + '</div></div>' +
+              '<div class="preuve"><span class="chip ' + preuveCls + '">Preuve : ' + esc(f.preuve || 'à documenter') + '</span></div>' +
+            '</div>' +
+            (f.engros ? '<p class="engros">' + esc(f.engros) + '</p>' : '') +
+            '<dl>' +
+              blocFiche('La promesse retrouvée', f.proposition) +
+              blocFiche('Ses votes passés', f.votePasse) +
+              blocFiche('Au pouvoir', f.actionPassee) +
+              blocFiche('Le groupe parlementaire', f.voteGroupe) +
+            '</dl>' +
+            (f.contradiction ? '<div class="contradiction"><strong>Contradiction relevée :</strong> ' + esc(f.contradiction) + '</div>' : '') +
+            (f.flou ? '<div class="flou"><strong>Ce qui reste flou :</strong> ' + esc(f.flou) + '</div>' : '') +
+            '<details><summary>Ce que ça changerait, et pour qui</summary><dl style="margin-top:8px">' +
+              blocFiche('Ce que ça changerait', f.impact) +
+              blocFiche('Qui serait concerné·e', f.concernes) +
+            '</dl></details>' +
+            srcHtml +
+          '</article>');
+        fichesGrid.appendChild(fiche);
       });
     }
-    $("#show-all-cards").addEventListener("click", () => navigateInternal("compare", "section"));
-    document.addEventListener("click", event => {
-      const control = event.target.closest("[data-nav-target]");
-      if (!control) return;
-      event.preventDefault();
-      navigateInternal(control.dataset.navTarget, control.dataset.navMode || "scroll");
+    document.querySelectorAll('.switch button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        sujetActif = b.dataset.sujet;
+        document.querySelectorAll('.switch button').forEach(function (x) {
+          x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+        });
+        renderFiches();
+      });
     });
-    const topButton = $("#to-top");
-    window.addEventListener("scroll", () => topButton.classList.toggle("is-visible", window.scrollY > 700));
-    topButton.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-  }
-  renderHeroOrbit();
-  initHeroFlee();
-  renderStats();
-  renderSelector();
-  renderNav();
-  renderSources();
-  renderAll();
-  initControls();
+    renderFiches();
+
+    /* ==================== LES VOTES, LOI PAR LOI ==================== */
+    var loisGrid = document.getElementById('lois-grid');
+    var filtres = document.getElementById('filtres');
+    var filtreActif = 'tous';
+    [['tous', 'Tout voir'], ['sante', '🩺 Santé'], ['ecologie', '🌱 Écologie & climat']].forEach(function (f) {
+      var b = el('<button type="button" class="chip" aria-pressed="' + (f[0] === filtreActif) + '">' + esc(f[1]) + '</button>');
+      b.addEventListener('click', function () {
+        filtreActif = f[0];
+        filtres.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        renderLois();
+      });
+      filtres.appendChild(b);
+    });
+
+    function statutChip(l) {
+      if (!l.statut) return '';
+      var cls = /adopt/i.test(l.statut) ? 'adopte' : /rejet/i.test(l.statut) ? 'rejete' : 'attente';
+      return '<span class="chip statut ' + cls + '">' + esc(l.statut) + '</span>';
+    }
+    function miniBloc(titre, texte) {
+      if (!texte) return '';
+      return '<div class="mini"><b class="mini-titre">' + esc(titre) + '</b>' + esc(texte) + '</div>';
+    }
+    function renderLois() {
+      loisGrid.innerHTML = '';
+      D.LOIS.filter(function (l) { return filtreActif === 'tous' || l.sujet === filtreActif; }).forEach(function (l) {
+        var rows = JOUEURS.map(function (cid) {
+          var c = CAND[cid], v = l.votes[cid];
+          if (!v) return '';
+          var badges = (v.badges || []).map(function (b) {
+            return '<span class="badge-align">' + b.icon + ' ' + esc(b.label) + '</span>';
+          }).join(' ');
+          return '<details class="cand-row"><summary>' +
+              '<span class="nom">' + avatar(c) + esc(c.court) + '</span>' +
+              '<span class="col-perso"><span class="cell-label">Vote personnel</span>' + voteChip(v.perso) + '</span>' +
+              '<span class="col-groupe"><span class="cell-label">Son groupe</span>' + voteChip(v.groupe) + '</span>' +
+              '<span class="plus" aria-hidden="true"></span>' +
+            '</summary><div class="cand-detail">' +
+              (v.perso.brut && v.perso.brut !== v.perso.label ? miniBloc('Vote personnel — détail', v.perso.brut) : '') +
+              miniBloc('Le groupe en chiffres', v.detail) +
+              miniBloc('Ce qui était promis', v.promesse) +
+              miniBloc('Les actes', v.actes) +
+              (v.alignement ? '<div class="mini"><b class="mini-titre">Alignement promesse ↔ actes</b>' + (badges ? '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 8px">' + badges + '</div>' : '') + esc(v.alignement) + '</div>' : '') +
+            '</div></details>';
+        }).join('');
+        var liens = l.liens.map(function (s) {
+          return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a>';
+        }).join('');
+        loisGrid.appendChild(el(
+          '<article class="loi-card">' +
+            '<div class="loi-top"><h3>' + esc(l.nom) + '</h3>' + statutChip(l) +
+              '<span class="chip">' + (l.sujet === 'sante' ? '🩺' : '🌱') + ' ' + esc(l.sousTheme) + '</span>' +
+            '</div>' +
+            '<div class="loi-meta">' + esc(l.date) + (l.chambre ? ' · ' + esc(l.chambre) : '') + (l.initiative ? ' · ' + esc(l.initiative.slice(0, 120)) : '') + '</div>' +
+            (l.resume ? '<details class="loi-resume-details"><summary>Ce que fait ce texte, en clair</summary><p>' + esc(l.resume) + '</p></details>' : '') +
+            '<div class="grille">' + rows + '</div>' +
+            (liens ? '<div class="loi-links">' + liens + '</div>' : '') +
+          '</article>'));
+      });
+    }
+    renderLois();
+
+    /* ==================== LES SOURCES ==================== */
+    var srcList = document.getElementById('sources-list');
+    D.SOURCES.forEach(function (s) {
+      if (!s.url) return;
+      srcList.appendChild(el(
+        '<div class="source-item">' +
+          '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.titre) + ' ↗</a>' +
+          '<div class="src-meta">' + esc(s.type) + (s.niveau ? ' · ' + esc(s.niveau) : '') + (s.date ? ' · ' + esc(s.date) : '') +
+          (s.preuve ? ' — ' + esc(s.preuve) : '') + '</div>' +
+        '</div>'));
+    });
+
+    /* ==================== LE JEU « QUI A DIT QUOI ? » ==================== */
+    var jeu = document.getElementById('jeu-card');
+    var ordre = [], idx = 0, score = 0;
+
+    function shuffle(a) {
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+    function renderIntro() {
+      jeu.innerHTML =
+        '<div class="jeu-intro">' +
+          '<div class="mega">Sauras-tu deviner<br>qui a dit quoi&nbsp;?</div>' +
+          '<p>10 déclarations, 5 candidat·es. À chaque réponse, on te montre la vérité&nbsp;: la date, le contexte, la source — et surtout si <strong>les votes suivent les paroles</strong>.</p>' +
+          '<p class="note">2 minutes, sur canapé ou dans le métro. Aucune donnée collectée, promis.</p>' +
+          '<p style="margin-top:22px"><button type="button" class="btn primary" id="jeu-start" style="font-size:18px;padding:14px 28px">C\'est parti ! →</button></p>' +
+        '</div>';
+      document.getElementById('jeu-start').addEventListener('click', startJeu);
+    }
+    function startJeu() {
+      ordre = shuffle(D.JEU.map(function (_, i) { return i; }));
+      idx = 0; score = 0;
+      renderQuestion();
+      document.getElementById('jeu').scrollIntoView({ block: 'start' });
+    }
+    function renderQuestion() {
+      var q = D.JEU[ordre[idx]];
+      var choix = shuffle(JOUEURS.slice());
+      jeu.innerHTML =
+        '<div class="jeu-progress">' +
+          '<span class="chip">Déclaration ' + (idx + 1) + ' / ' + D.JEU.length + '</span>' +
+          '<span class="chip">' + (q.sujet === 'sante' ? '🩺' : '🌱') + ' ' + esc(q.theme) + '</span>' +
+          '<div class="pbar" aria-hidden="true"><i style="width:' + Math.round(idx / D.JEU.length * 100) + '%"></i></div>' +
+          '<span class="score">' + score + ' pt' + (score > 1 ? 's' : '') + '</span>' +
+        '</div>' +
+        '<div class="quote-box"><blockquote>' + esc(q.citation) + '</blockquote></div>' +
+        '<p class="jeu-q-label">Qui a dit ça&nbsp;?</p>' +
+        '<div class="answers" id="answers"></div>';
+      var zone = document.getElementById('answers');
+      choix.forEach(function (cid) {
+        var c = CAND[cid];
+        var b = el('<button type="button" class="answer-btn" data-cid="' + esc(cid) + '">' + avatar(c) +
+          '<span>' + esc(c.nom) + '<small>' + esc(c.parti) + '</small></span></button>');
+        b.addEventListener('click', function () { repondre(cid, b); });
+        zone.appendChild(b);
+      });
+    }
+    function confetti(container) {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var couleurs = ['#5423df', '#f099f9', '#b0fda4', '#fee075', '#9abdff'];
+      var boite = el('<div class="confetti" aria-hidden="true"></div>');
+      for (var i = 0; i < 26; i++) {
+        var f = document.createElement('i');
+        f.style.left = Math.random() * 100 + '%';
+        f.style.background = couleurs[i % couleurs.length];
+        f.style.animationDelay = (Math.random() * .3) + 's';
+        f.style.transform = 'rotate(' + Math.random() * 180 + 'deg)';
+        boite.appendChild(f);
+      }
+      container.appendChild(boite);
+      setTimeout(function () { boite.remove(); }, 1800);
+    }
+    function ligneVoteJeu(l, cid) {
+      var v = l.votes[cid];
+      if (!v) return '';
+      var c = CAND[cid];
+      var lien = l.liens.length ? ' <a class="loi-src" href="' + esc(l.liens[0].url) + '" target="_blank" rel="noopener noreferrer">source ↗</a>' : '';
+      return '<div class="vote-line"><span class="loi-nom">' + esc(l.nom) + '</span>' +
+        voteChip(v.perso, esc(c.court)) + voteChip(v.groupe, 'Groupe') + lien + '</div>';
+    }
+    function repondre(cid, bouton) {
+      var q = D.JEU[ordre[idx]];
+      var ok = cid === q.reponse;
+      if (ok) score++;
+      var zone = document.getElementById('answers');
+      zone.querySelectorAll('button').forEach(function (b) {
+        b.disabled = true;
+        if (b.dataset.cid === q.reponse) b.classList.add('good');
+      });
+      if (!ok) bouton.classList.add('bad');
+      var bonne = CAND[q.reponse];
+      var lois = q.lois.map(function (id) { return LOI[id]; }).filter(Boolean);
+      var autresHtml = lois.map(function (l) {
+        var rows = JOUEURS.filter(function (x) { return x !== q.reponse; }).map(function (x) {
+          var v = l.votes[x];
+          if (!v) return '';
+          return '<div class="autres-row"><span class="nom">' + esc(CAND[x].court) + '</span>' +
+            voteChip(v.perso, 'Perso') + voteChip(v.groupe, 'Groupe') + '</div>';
+        }).join('');
+        return '<div class="autres-loi"><h5>' + esc(l.nom) + '</h5><div class="autres-rows">' + rows + '</div></div>';
+      }).join('');
+      var reveal = el(
+        '<div class="reveal">' +
+          '<div class="verdict ' + (ok ? 'ok' : 'ko') + '" role="status">' +
+            (ok ? '✅ Vrai ! C\'est bien ' : '❌ Raté ! C\'était ') + esc(bonne.nom) +
+            ' <span style="font-weight:600">· ' + esc(q.date) + '</span>' +
+          '</div>' +
+          '<div class="reveal-card"><h4>Le contexte</h4><p>' + esc(q.contexte) + '</p>' +
+            '<ul class="src-list">' + q.sources.map(function (s) {
+              return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a></li>';
+            }).join('') + '</ul></div>' +
+          '<div class="reveal-card"><h4>Déclarations VS actes</h4>' +
+            '<div class="align-grid">' +
+              '<div class="align-cell"><div class="who">' + esc(bonne.court) + '</div>' +
+                '<span class="badge-align">' + q.alignCandidat.icon + ' ' + esc(q.alignCandidat.label) + '</span>' +
+                '<p>' + esc(q.alignCandidat.texte) + '</p></div>' +
+              '<div class="align-cell"><div class="who">Son parti (' + esc(bonne.parti.replace(/\s*\(.*\)$/, '')) + ')</div>' +
+                '<span class="badge-align">' + q.alignParti.icon + ' ' + esc(q.alignParti.label) + '</span>' +
+                '<p>' + esc(q.alignParti.texte) + '</p></div>' +
+            '</div>' +
+            '<div class="nuancier" style="margin-top:12px"><h4>Pour aller plus loin que le badge</h4><p>' + esc(q.nuancier) + '</p></div>' +
+            '<h4 style="margin-top:16px">Les votes de ' + esc(bonne.court) + ' sur le sujet</h4>' +
+            '<div class="vote-lines">' + lois.map(function (l) { return ligneVoteJeu(l, q.reponse); }).join('') + '</div>' +
+            '<details class="autres" style="margin-top:12px"><summary>Et les autres candidat·es, ils ont voté quoi&nbsp;?</summary>' +
+              '<div class="autres-body">' + autresHtml +
+                '<p style="margin:0;font-size:13.5px;color:var(--muted)">Le détail complet (chiffres par groupe, promesses, alignements) est dans la section <a href="#votes">Les votes, loi par loi</a>.</p>' +
+              '</div></details>' +
+          '</div>' +
+          '<div class="jeu-next-row">' +
+            '<span class="chip" style="align-self:center">Score : ' + score + ' / ' + (idx + 1) + '</span>' +
+            '<button type="button" class="btn primary" id="jeu-next">' + (idx + 1 < D.JEU.length ? 'Déclaration suivante →' : 'Voir mon score →') + '</button>' +
+          '</div>' +
+        '</div>');
+      jeu.appendChild(reveal);
+      if (ok) confetti(jeu.querySelector('.quote-box'));
+      document.getElementById('jeu-next').addEventListener('click', function () {
+        idx++;
+        if (idx < D.JEU.length) { renderQuestion(); } else { renderFin(); }
+        document.getElementById('jeu').scrollIntoView({ block: 'start' });
+      });
+      reveal.scrollIntoView({ block: 'nearest' });
+    }
+    function renderFin() {
+      var titre = score >= 9 ? 'Détecteur·rice de discours 🏆' :
+                  score >= 7 ? 'Sacré flair politique 👀' :
+                  score >= 5 ? 'Pas mal du tout !' :
+                  score >= 3 ? 'Les apparences sont trompeuses…' :
+                  'Les discours se ressemblent, hein ?';
+      var texte = score >= 7
+        ? 'Tu connais tes politiques. Prochaine étape : vérifier si leurs votes suivent — c\'est tout l\'objet des fiches ci-dessous.'
+        : 'C\'est normal : sur la santé et le climat, les promesses se ressemblent beaucoup d\'un camp à l\'autre. Ce qui les distingue vraiment, ce sont les votes — et c\'est exactement ce que montre ce comparateur.';
+      jeu.innerHTML =
+        '<div class="jeu-fin">' +
+          '<p class="eyebrow">Ton score</p>' +
+          '<div class="score-big">' + score + '<span style="font-size:.45em"> / ' + D.JEU.length + '</span></div>' +
+          '<h3 style="font-size:26px;margin:8px 0 4px">' + esc(titre) + '</h3>' +
+          '<p>' + texte + '</p>' +
+          '<div class="cta-row" style="justify-content:center">' +
+            '<button type="button" class="btn play" id="jeu-replay">↺ Rejouer</button>' +
+            '<a class="btn primary" href="#fiches">Explorer les fiches</a>' +
+            '<a class="btn" href="#votes">Voir les votes</a>' +
+          '</div>' +
+        '</div>';
+      document.getElementById('jeu-replay').addEventListener('click', startJeu);
+    }
+    renderIntro();
+
+    /* ==================== sommaire actif ==================== */
+    var liens = document.querySelectorAll('.toc a');
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            liens.forEach(function (a) {
+              a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
+            });
+          }
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+      document.querySelectorAll('section.bloc').forEach(function (s) { obs.observe(s); });
+    }
+  })();
   </script>
 </body>
 </html>
