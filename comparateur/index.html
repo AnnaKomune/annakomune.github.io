@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Le comparateur politique citoyen de Komune pour 2027 : un jeu pour tester votre flair, des réponses rapides pour vos débats, les fiches par candidat·e et les votes réels, loi par loi, avec toutes les sources.">
-  <title>Komune — Le Comparateur politique citoyen 2027</title>
+  <title>Komune - Le Comparateur politique citoyen 2027</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -150,15 +150,15 @@
       box-shadow: 6px 6px 0 var(--ink); transform: rotate(7deg);
     }
     .orbit-person img, .orbit-person .emoji-head {
-      position: relative; z-index: 1; width: 108%; height: 108%; object-fit: contain; object-position: center bottom;
+      position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: contain; object-position: center bottom;
       filter: drop-shadow(7px 10px 0 rgba(51,46,50,.13));
     }
     .orbit-person .emoji-head { display: grid; place-items: center; font-size: clamp(50px, 7vw, 84px); }
     .orbit-person:hover { z-index: 9; transform: rotate(var(--tilt)) scale(1.12); filter: saturate(1.22) drop-shadow(0 0 18px rgba(255,255,146,.65)); }
-    .orbit-person:nth-child(1) { left: 3%; top: 34%; --tilt: -7deg; --delay: 0s; }
-    .orbit-person:nth-child(2) { right: 5%; top: 17%; --tilt: 6deg; --delay: .2s; }
-    .orbit-person:nth-child(3) { left: 14%; bottom: 5%; --tilt: 5deg; --delay: .4s; }
-    .orbit-person:nth-child(4) { right: 1%; bottom: 6%; --tilt: -5deg; --delay: .6s; }
+    .orbit-person:nth-child(1) { left: 5%; top: 33%; --tilt: -7deg; --delay: 0s; }
+    .orbit-person:nth-child(2) { right: 6%; top: 16%; --tilt: 6deg; --delay: .2s; }
+    .orbit-person:nth-child(3) { left: 15%; bottom: 6%; --tilt: 5deg; --delay: .4s; }
+    .orbit-person:nth-child(4) { right: 5%; bottom: 7%; --tilt: -5deg; --delay: .6s; }
     .orbit-person:nth-child(5) { left: 40%; top: 42%; --tilt: 4deg; --delay: .8s; }
     .orbit-person:nth-child(6) { right: 33%; bottom: 0%; --tilt: -4deg; --delay: 1s; }
     @keyframes idleFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
@@ -209,12 +209,13 @@
 
     /* ---------- avatars ---------- */
     .avatar {
+      position: relative;
       flex: 0 0 auto; width: 44px; height: 44px; border-radius: 14px;
       border: 2px solid var(--ink); display: grid; place-items: center;
       font-weight: 800; font-size: 13px; background: var(--cream); overflow: hidden;
       box-shadow: 3px 3px 0 rgba(51,46,50,.14); transform: rotate(var(--tilt, 0deg));
     }
-    .avatar img { width: 112%; height: 112%; object-fit: contain; object-position: center bottom; filter: drop-shadow(2px 3px 0 rgba(51,46,50,.12)); }
+    .avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; filter: drop-shadow(2px 3px 0 rgba(51,46,50,.12)); }
     .avatar.mini { width: 30px; height: 30px; border-radius: 999px; border-width: 1.5px; box-shadow: none; }
     .avatar.big { width: 82px; height: 82px; border-radius: 22px; font-size: 20px; box-shadow: 5px 5px 0 rgba(51,46,50,.15); }
     .av-pink { background: var(--pink); } .av-sky { background: var(--sky); }
@@ -236,7 +237,7 @@
     }
     .q-item > summary::-webkit-details-marker { display: none; }
     .q-item > summary::after { content: "+"; margin-left: auto; font-size: 26px; font-weight: 700; flex: 0 0 auto; }
-    .q-item[open] > summary::after { content: "–"; }
+    .q-item[open] > summary::after { content: "-"; }
     .q-item[open] > summary { background: var(--yellow); border-bottom: 2px solid var(--ink); }
     .q-body { padding: 14px 18px 16px; }
     .q-body p { margin: 0 0 12px; font-weight: 600; font-size: 15.5px; }
@@ -316,7 +317,7 @@
     details.autres > summary { cursor: pointer; list-style: none; font-weight: 800; padding: 14px 18px; display: flex; align-items: center; gap: 10px; }
     details.autres > summary::-webkit-details-marker { display: none; }
     details.autres > summary::after { content: "+"; margin-left: auto; font-family: "Oswald", sans-serif; font-size: 22px; }
-    details.autres[open] > summary::after { content: "–"; }
+    details.autres[open] > summary::after { content: "-"; }
     details.autres .autres-body { padding: 0 18px 16px; display: grid; gap: 14px; }
     .autres-loi h5 { margin: 0 0 8px; font-size: 15px; }
     .autres-rows { display: grid; gap: 6px; }
@@ -351,7 +352,7 @@
       font-size: 22px; line-height: 1.05; letter-spacing: -.02em;
     }
     .loi-sum-top .plus { font-family: "Oswald", sans-serif; font-size: 24px; font-weight: 700; margin-left: auto; }
-    details.loi-card[open] .loi-sum-top .plus::after { content: "–"; }
+    details.loi-card[open] .loi-sum-top .plus::after { content: "-"; }
     details.loi-card:not([open]) .loi-sum-top .plus::after { content: "+"; }
     .loi-engros { margin: 0; font-weight: 650; font-size: 15px; max-width: 90ch; }
     .cle-star {
@@ -390,7 +391,7 @@
     .cand-row > summary > span { min-width: 0; }
     .cand-row > summary .nom { font-weight: 800; font-size: 15px; display: flex; align-items: center; gap: 8px; }
     .cand-row > summary .plus { font-family: "Oswald", sans-serif; font-size: 20px; text-align: center; }
-    .cand-row[open] > summary .plus::after { content: "–"; }
+    .cand-row[open] > summary .plus::after { content: "-"; }
     .cand-row:not([open]) > summary .plus::after { content: "+"; }
     .cell-label { display: block; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 800; margin-bottom: 3px; }
     .cand-detail { padding: 6px 2px 16px; display: grid; gap: 10px; }
@@ -523,6 +524,148 @@
       #komune-chat { right: 8px; left: 8px; width: auto; bottom: 78px; max-height: calc(100vh - 96px); }
       #komune-fab { right: 10px; bottom: 10px; }
     }
+
+    .foot-charte {
+      border: 0; padding: 0; background: none; color: inherit; cursor: pointer;
+      font: inherit; font-weight: 800; text-decoration: underline;
+    }
+
+    /* ---------- v5 : pourquoi « non concerné·e » ---------- */
+    .why {
+      display: block; margin-top: 5px; max-width: 46ch;
+      font-size: 12.5px; font-weight: 650; line-height: 1.32; color: var(--muted);
+    }
+    .why::before { content: "↳ "; font-weight: 800; }
+
+    /* ---------- v5 : qui sont les candidat·es ---------- */
+    .qui-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr)); gap: 16px; align-items: start; }
+    .qui-card {
+      border: 2px solid var(--ink); border-radius: 26px; padding: 18px 18px 16px;
+      background: var(--card-bg, var(--white)); box-shadow: 8px 8px 0 var(--card-shadow, var(--blue));
+    }
+    .qui-head { display: flex; gap: 13px; align-items: center; margin-bottom: 10px; }
+    .qui-head h3 { margin: 0; font-size: clamp(21px, 2.6vw, 26px); }
+    .qui-head .qui-role { display: block; margin-top: 2px; font-size: 12.5px; font-weight: 800; color: var(--muted); }
+    .qui-cand {
+      display: inline-block; margin: 0 0 12px; padding: 6px 13px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--white);
+      font-size: 13px; font-weight: 800; box-shadow: 3px 3px 0 rgba(51,46,50,.14);
+    }
+    .qui-list { margin: 0 0 12px; padding-left: 20px; }
+    .qui-list li { margin-bottom: 7px; font-size: 14.5px; font-weight: 650; line-height: 1.4; }
+    .qui-lecture {
+      margin: 0; padding-top: 11px; border-top: 2px dashed rgba(51,46,50,.28);
+      font-size: 14px; font-weight: 650; line-height: 1.45;
+    }
+    .qui-lecture b { font-weight: 800; }
+    .qui-src { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
+    .qui-src a {
+      display: inline-flex; border: 1.5px solid var(--ink); border-radius: 999px; padding: 4px 11px;
+      background: var(--white); font-size: 12px; font-weight: 800; color: var(--ink); text-decoration: none;
+    }
+    .qui-src a:hover { background: var(--yellow); }
+
+    /* ---------- v5 : où on en est ---------- */
+    .chantier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 14px; margin-bottom: 18px; align-items: start; }
+    .chant-card { border: 2px solid var(--ink); border-radius: 22px; padding: 17px; background: var(--white); box-shadow: 6px 6px 0 var(--sky); }
+    .chant-card:nth-child(2) { box-shadow: 6px 6px 0 var(--green); }
+    .chant-card:nth-child(3) { box-shadow: 6px 6px 0 var(--gold); }
+    .chant-card:nth-child(4) { box-shadow: 6px 6px 0 var(--pink); }
+    .chant-card h3 { margin: 0 0 8px; font-size: 19px; }
+    .chant-card p { margin: 0; font-size: 14.5px; font-weight: 650; line-height: 1.45; }
+    .suite-list { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+    .suite-list li { display: flex; align-items: baseline; gap: 9px; font-size: 14px; font-weight: 700; }
+    .suite-list .pct {
+      flex: 0 0 auto; min-width: 46px; text-align: center; padding: 2px 7px;
+      border: 1.5px solid var(--ink); border-radius: 999px; background: var(--yellow);
+      font-family: "Oswald", Impact, sans-serif; font-size: 13px;
+    }
+    .soutien-card {
+      border: 3px solid var(--ink); border-radius: 28px; padding: clamp(20px, 3vw, 30px);
+      background: linear-gradient(135deg, var(--yellow), var(--pink));
+      box-shadow: 10px 10px 0 var(--ink);
+    }
+    .soutien-card h3 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 38px); }
+    .soutien-card p { margin: 0 0 16px; max-width: 62ch; font-size: 15.5px; font-weight: 700; line-height: 1.45; }
+    .soutien-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .soutien-row .btn.don { background: var(--ink); color: var(--cream); }
+    .soutien-row .btn.don:hover { background: var(--purple); }
+
+    /* ---------- v5 : la charte qui se déplie ---------- */
+    #charte-wrap {
+      position: fixed; inset: 0; z-index: 90; display: grid; place-items: start center;
+      padding: clamp(12px, 3vw, 34px) 12px; overflow: auto;
+      background: rgba(51,46,50,.6); backdrop-filter: blur(3px);
+    }
+    #charte-wrap[hidden] { display: none; }
+    .charte {
+      position: relative; width: min(780px, 100%); padding: clamp(22px, 3vw, 32px);
+      border: 3px solid var(--ink); border-radius: 30px; background: var(--cream);
+      box-shadow: 14px 14px 0 var(--purple); transform-origin: top center;
+      animation: charteUnfold .62s cubic-bezier(.2, 1.25, .3, 1) both;
+    }
+    @keyframes charteUnfold {
+      0%   { transform: perspective(1000px) rotateX(-88deg) scale(.93); opacity: 0; }
+      58%  { transform: perspective(1000px) rotateX(8deg) scale(1.012); opacity: 1; }
+      100% { transform: perspective(1000px) rotateX(0deg) scale(1); opacity: 1; }
+    }
+    .charte-tampon {
+      position: absolute; top: -20px; right: clamp(10px, 4vw, 30px);
+      padding: 8px 14px; border: 2.5px solid var(--ink); border-radius: 999px;
+      background: var(--green); font-family: "Oswald", Impact, sans-serif; font-weight: 700;
+      font-size: 14px; letter-spacing: -.02em; text-transform: uppercase;
+      box-shadow: 4px 4px 0 var(--ink); animation: tamponPop .45s .42s both;
+    }
+    @keyframes tamponPop {
+      0% { transform: rotate(-46deg) scale(.2); opacity: 0; }
+      70% { transform: rotate(-6deg) scale(1.08); opacity: 1; }
+      100% { transform: rotate(-9deg) scale(1); opacity: 1; }
+    }
+    .charte-close {
+      position: absolute; top: 14px; right: 14px; width: 38px; height: 38px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--white);
+      font-size: 16px; font-weight: 800; cursor: pointer; box-shadow: 3px 3px 0 var(--ink);
+    }
+    .charte-close:hover { background: var(--pink); }
+    .charte h2 { margin: 6px 0 4px; font-size: clamp(34px, 6vw, 54px); }
+    .charte .charte-chapo { margin: 0 0 18px; max-width: 60ch; font-size: 15.5px; font-weight: 700; line-height: 1.45; }
+    .charte-art {
+      margin-bottom: 10px; border: 2px solid var(--ink); border-radius: 20px;
+      background: var(--white); box-shadow: 5px 5px 0 rgba(51,46,50,.14);
+      animation: charteDrop .42s both;
+    }
+    @keyframes charteDrop { from { opacity: 0; transform: translateY(-9px) rotate(-.6deg); } to { opacity: 1; transform: none; } }
+    .charte-art:nth-of-type(1) { animation-delay: .30s; }
+    .charte-art:nth-of-type(2) { animation-delay: .38s; }
+    .charte-art:nth-of-type(3) { animation-delay: .46s; }
+    .charte-art:nth-of-type(4) { animation-delay: .54s; }
+    .charte-art > summary {
+      display: flex; align-items: center; gap: 11px; padding: 14px 16px; cursor: pointer;
+      font-family: "Oswald", Impact, sans-serif; font-weight: 700; font-size: 19px;
+      letter-spacing: -.02em; list-style: none;
+    }
+    .charte-art > summary::-webkit-details-marker { display: none; }
+    .charte-art > summary::after {
+      content: "+"; margin-left: auto; flex: 0 0 auto;
+      display: grid; place-items: center; width: 28px; height: 28px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--yellow);
+      font-size: 16px; transition: transform .3s cubic-bezier(.2, 1.4, .3, 1);
+    }
+    .charte-art[open] > summary::after { content: "+"; transform: rotate(135deg); background: var(--pink); }
+    .charte-art .art-body { padding: 0 16px 15px; }
+    .charte-art .art-body p, .charte-art .art-body li { font-size: 14.5px; font-weight: 650; line-height: 1.5; }
+    .charte-art .art-body ol, .charte-art .art-body ul { margin: 0; padding-left: 20px; }
+    .charte-art .art-body li { margin-bottom: 8px; }
+    .charte-art .art-body li b { font-weight: 800; }
+    .charte-pied {
+      margin-top: 16px; padding: 16px; border: 2px dashed var(--ink); border-radius: 20px;
+      background: var(--sky); font-size: 14.5px; font-weight: 700; line-height: 1.45;
+      animation: charteDrop .42s .62s both;
+    }
+    .charte-pied a { font-weight: 800; }
+    @media (prefers-reduced-motion: reduce) {
+      .charte, .charte-art, .charte-tampon, .charte-pied { animation: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -552,13 +695,14 @@
       <div class="hero-main">
         <p class="eyebrow">Le comparateur politique citoyen · Komune</p>
         <h1>2027&nbsp;: comparez sur du concret.</h1>
-        <p class="pitch">Pas de clash, pas de sondage, pas de petite phrase&nbsp;: ce qu'ils et elles <strong>promettent</strong>, ce qu'ils <strong>votent</strong>, ce qu'ils <strong>font au pouvoir</strong> — et l'écart entre les trois.</p>
+        <p class="pitch">Pas de clash, pas de sondage, pas de petite phrase&nbsp;: ce qu'ils et elles <strong>promettent</strong>, ce qu'ils <strong>votent</strong>, ce qu'ils <strong>font au pouvoir</strong> - et l'écart entre les trois.</p>
         <div class="cta-row">
           <a class="btn primary" href="#jeu">🎮 Jouer au «&nbsp;Qui a dit quoi&nbsp;?&nbsp;»</a>
           <a class="btn pink" href="#debat">⚡ Réponses rapides</a>
           <button type="button" class="btn play" data-open-komune>💬 Demander à Komune</button>
+          <button type="button" class="btn" data-open-charte>📜 Notre charte</button>
         </div>
-        <p class="beta">Version bêta&nbsp;: on commence par la <strong>santé</strong> et l'<strong>écologie</strong>, avec 5 candidat·es documenté·es. La gauche issue de la primaire (11 octobre 2026) sera ajoutée dès sa désignation. Les cases «&nbsp;en cours de vérification&nbsp;» montrent où notre recherche continue — on ne maquille pas les trous.</p>
+        <p class="beta"><strong>Chantier ouvert, et on l'assume&nbsp;:</strong> on commence par la <strong>santé</strong> et l'<strong>écologie</strong>, vos deux sujets les plus demandés, avec 5 candidat·es. Les droits des femmes, l'école, les services publics arrivent ensuite. Les cases «&nbsp;en cours de vérification&nbsp;» montrent où la recherche continue&nbsp;: on ne maquille pas les trous. <a href="#chantier">Où on en est exactement →</a></p>
       </div>
       <div class="hero-side">
         <p class="eyebrow">Ils disent, ils votent</p>
@@ -578,8 +722,10 @@
     <nav class="toc" aria-label="Sommaire du comparateur">
       <a href="#jeu">🎮 Le jeu</a>
       <a href="#debat">⚡ Réponses rapides</a>
+      <a href="#qui">👤 Qui est qui</a>
       <a href="#votes">🗳️ Les votes</a>
       <a href="#fiches">🗂️ Les fiches</a>
+      <a href="#chantier">🚧 Où on en est</a>
       <a href="#methode">🧭 La méthode</a>
       <a href="#sources">📚 Les sources</a>
     </nav>
@@ -590,7 +736,7 @@
         <span class="bloc-emoji" aria-hidden="true">🎮</span>
         <h2 id="jeu-titre">Qui a dit quoi&nbsp;?</h2>
       </div>
-      <p class="bloc-intro">10 déclarations bien réelles, prononcées ces cinq dernières années. À vous de deviner qui parle — puis on regarde ensemble si les votes suivent les paroles.</p>
+      <p class="bloc-intro">10 déclarations bien réelles, prononcées ces cinq dernières années. À vous de deviner qui parle - puis on regarde ensemble si les votes suivent les paroles.</p>
       <div class="jeu-shell">
         <div class="jeu-card" id="jeu-card" aria-live="polite"></div>
       </div>
@@ -602,11 +748,21 @@
         <span class="bloc-emoji" aria-hidden="true">⚡</span>
         <h2 id="debat-titre">En plein débat&nbsp;? Réponse en 10 secondes.</h2>
       </div>
-      <p class="bloc-intro">Au bar, en famille, dans le groupe WhatsApp&nbsp;: touchez une question, la réponse tient en trois phrases — et chaque mot est vérifiable dans les votes juste en dessous.</p>
+      <p class="bloc-intro">Au bar, en famille, dans le groupe WhatsApp&nbsp;: touchez une question, la réponse tient en trois phrases - et chaque mot est vérifiable dans les votes juste en dessous.</p>
       <div class="debat-grid" id="debat-grid"></div>
       <div class="debat-foot cta-row">
         <button type="button" class="btn play" data-open-komune>💬 Votre question n'y est pas&nbsp;? Demandez à Komune</button>
       </div>
+    </section>
+
+    <!-- ===== QUI EST QUI (parcours) ===== -->
+    <section class="bloc" id="qui" aria-labelledby="qui-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">👤</span>
+        <h2 id="qui-titre">Qui est qui, et d'où il parle</h2>
+      </div>
+      <p class="bloc-intro">Avant de lire des votes, il faut savoir qui pouvait voter. Ces parcours expliquent pourquoi l'une a un vote personnel sur presque tout, et pourquoi un autre n'en a aucun. C'est la clé pour lire le reste de la page sans se tromper.</p>
+      <div class="qui-grid" id="qui-grid"></div>
     </section>
 
     <!-- ===== LES VOTES ===== -->
@@ -615,9 +771,9 @@
         <span class="bloc-emoji" aria-hidden="true">🗳️</span>
         <h2 id="votes-titre">Les votes, loi par loi</h2>
       </div>
-      <p class="bloc-intro">Chaque texte en une phrase, et les positions d'un coup d'œil. Touchez une carte pour tout le détail&nbsp;: vote <strong>personnel</strong>, vote du <strong>groupe</strong> — deux choses qu'on ne mélange jamais — promesses, actes et alignement.</p>
+      <p class="bloc-intro">Chaque texte en une phrase, et les positions d'un coup d'œil. Touchez une carte pour tout le détail&nbsp;: vote <strong>personnel</strong>, vote du <strong>groupe</strong> - deux choses qu'on ne mélange jamais - promesses, actes et alignement.</p>
       <div class="filtres" id="filtres" role="group" aria-label="Filtrer les textes"></div>
-      <p class="dots-legende">Pastille pleine&nbsp;: <span class="dot pour"></span> pour · <span class="dot contre"></span> contre · <span class="dot abstention"></span> abstention · <span class="dot divise"></span> divisé · <span class="dot absent"></span> absent·e — cerclée de blanc&nbsp;: vote du <strong>groupe</strong> (pas de vote personnel possible). ⭐ = texte clé.</p>
+      <p class="dots-legende">Pastille pleine&nbsp;: <span class="dot pour"></span> pour · <span class="dot contre"></span> contre · <span class="dot abstention"></span> abstention · <span class="dot divise"></span> divisé · <span class="dot absent"></span> absent·e · <span class="dot na"></span> non concerné·e - cerclée de blanc&nbsp;: vote du <strong>groupe</strong> (pas de vote personnel possible). ⭐ = texte clé.<br><strong>«&nbsp;Non concerné·e&nbsp;» n'est jamais un reproche</strong>&nbsp;: c'est un ministre qui ne peut pas voter, un sénateur sur un scrutin de l'Assemblée, un texte adopté sans vote au 49.3 ou une personne sans mandat. Chaque case dit laquelle de ces raisons s'applique.</p>
       <div class="lois-grid" id="lois-grid"></div>
     </section>
 
@@ -627,22 +783,65 @@
         <span class="bloc-emoji" aria-hidden="true">🗂️</span>
         <h2 id="fiches-titre">Les fiches, candidat·e par candidat·e</h2>
       </div>
-      <p class="bloc-intro">Pour chaque candidat·e et chaque sujet&nbsp;: la promesse retrouvée, les votes passés, les actes au pouvoir, ce qui reste flou — et le niveau de preuve de notre documentation.</p>
+      <p class="bloc-intro">Pour chaque candidat·e et chaque sujet&nbsp;: la promesse retrouvée, les votes passés, les actes au pouvoir, ce qui reste flou - et le niveau de preuve de notre documentation.</p>
       <div class="switch" role="group" aria-label="Choisir un sujet">
         <button type="button" data-sujet="sante" aria-pressed="true">🩺 Santé</button>
         <button type="button" data-sujet="ecologie" aria-pressed="false">🌱 Écologie &amp; climat</button>
       </div>
       <div class="fiches-grid" id="fiches-grid"></div>
-      <p class="note-bas">Le «&nbsp;niveau de preuve&nbsp;» mesure la solidité de <em>notre documentation</em>, jamais la qualité d'un programme. «&nbsp;Flou&nbsp;» veut dire&nbsp;: pas assez d'éléments vérifiés pour affirmer — pas «&nbsp;pas de position&nbsp;».</p>
+      <p class="note-bas">Le «&nbsp;niveau de preuve&nbsp;» mesure la solidité de <em>notre documentation</em>, jamais la qualité d'un programme. «&nbsp;Flou&nbsp;» veut dire&nbsp;: pas assez d'éléments vérifiés pour affirmer - pas «&nbsp;pas de position&nbsp;».</p>
     </section>
 
     <!-- ===== LA MÉTHODE ===== -->
+    <!-- ===== OÙ ON EN EST ===== -->
+    <section class="bloc" id="chantier" aria-labelledby="chantier-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🚧</span>
+        <h2 id="chantier-titre">Où on en est</h2>
+      </div>
+      <p class="bloc-intro">Ce comparateur n'est pas fini, et ce n'est pas un défaut&nbsp;: il se construit sujet par sujet, sous vos yeux. Voici exactement ce qui est là, ce qui manque, et ce qui arrive.</p>
+      <div class="chantier-grid">
+        <div class="chant-card">
+          <h3>🩺🌱 Pourquoi la santé et l'écologie d'abord</h3>
+          <p>Parce que ce sont les deux sujets que vous avez le plus demandés dans notre enquête citoyenne&nbsp;: l'écologie chez 84&nbsp;% des répondant·es, la santé chez 68&nbsp;%. On a préféré commencer par ces deux-là sérieusement, plutôt que survoler dix sujets.</p>
+        </div>
+        <div class="chant-card">
+          <h3>🔍 Même là, ce n'est pas complet</h3>
+          <p><span id="ch-lois">25</span> textes de loi, <span id="ch-pos">250</span> positions vérifiées une par une, <span id="ch-src">22</span> sources documentées&nbsp;: c'est déjà beaucoup, ce n'est pas tout. Il reste des cases «&nbsp;en cours de vérification&nbsp;» et on les laisse visibles. Le comparateur est enrichi presque chaque jour.</p>
+        </div>
+        <div class="chant-card">
+          <h3>📋 Ça deviendra bien plus fort</h3>
+          <p>Aujourd'hui, plusieurs candidat·es n'ont pas publié de programme complet&nbsp;: on ne peut comparer que ce qui existe, les votes, les actes et les déclarations. Dès que les programmes officiels sortiront, chaque promesse sera confrontée ligne à ligne au bilan réel. C'est là que l'outil prendra toute sa valeur.</p>
+        </div>
+        <div class="chant-card">
+          <h3>📅 Les prochains sujets</h3>
+          <p>Dans l'ordre de vos demandes&nbsp;:</p>
+          <ul class="suite-list">
+            <li><span class="pct">57&nbsp;%</span> Droits des femmes</li>
+            <li><span class="pct">50&nbsp;%</span> Racisme et discriminations</li>
+            <li><span class="pct">49&nbsp;%</span> École</li>
+            <li><span class="pct">45&nbsp;%</span> Services publics</li>
+            <li><span class="pct">38&nbsp;%</span> Financement des campagnes</li>
+          </ul>
+        </div>
+      </div>
+      <div class="soutien-card">
+        <h3>Ce projet tient à ses lecteurs.</h3>
+        <p>Chaque sujet, c'est des semaines de lecture de scrutins, de programmes et de comptes rendus de séance, texte par texte, candidat·e par candidat·e. Il n'y a ni annonceur, ni parti, ni argent public derrière ce comparateur&nbsp;: c'est ce qui nous permet de dire les choses telles qu'elles sont. Si vous voulez qu'il aille jusqu'au bout, les sept sujets, les six candidat·es, jusqu'en avril 2027, c'est votre soutien qui le décide.</p>
+        <div class="soutien-row">
+          <a class="btn don" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">💛 Soutenir le comparateur</a>
+          <a class="btn" href="../soutenir/">Toutes les façons d'aider</a>
+          <button type="button" class="btn play" data-open-charte>📜 Lire notre charte</button>
+        </div>
+      </div>
+    </section>
+
     <section class="bloc" id="methode" aria-labelledby="methode-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">🧭</span>
         <h2 id="methode-titre">La méthode</h2>
       </div>
-      <p class="bloc-intro">Quatre niveaux d'information, jamais mélangés — et des badges d'alignement qui mesurent une seule chose&nbsp;: la cohérence entre la parole et les actes.</p>
+      <p class="bloc-intro">Quatre niveaux d'information, jamais mélangés - et des badges d'alignement qui mesurent une seule chose&nbsp;: la cohérence entre la parole et les actes.</p>
       <div class="methode-grid">
         <div class="meth-card"><h3>1 · Vote personnel</h3><p>La personne siégeait et a voté, nommément. Le seul cas où l'on écrit «&nbsp;il ou elle a voté&nbsp;».</p></div>
         <div class="meth-card"><h3>2 · Position du groupe</h3><p>Son groupe parlementaire a voté majoritairement dans un sens. Ce n'est pas son vote à elle ou à lui.</p></div>
@@ -650,7 +849,7 @@
         <div class="meth-card"><h3>4 · Action au pouvoir</h3><p>Décision prise comme ministre, Premier ministre ou élu·e locale. Des actes, pas des mots.</p></div>
       </div>
       <div class="legende" id="legende-badges">
-        <div class="row"><span class="badge-align">✅ Aligné</span><p>Les votes et les actes suivent la promesse. Ça ne dit pas que la promesse est bonne — juste qu'elle est tenue.</p></div>
+        <div class="row"><span class="badge-align">✅ Aligné</span><p>Les votes et les actes suivent la promesse. Ça ne dit pas que la promesse est bonne - juste qu'elle est tenue.</p></div>
         <div class="row"><span class="badge-align">⚠️ Partiellement aligné</span><p>Une partie des actes suit, une partie s'en écarte (abstention ambiguë, vote absent, discours à géométrie variable).</p></div>
         <div class="row"><span class="badge-align">❌ Contradictoire</span><p>Les actes vont à l'encontre de la promesse, de façon documentée.</p></div>
         <div class="row"><span class="badge-align">➖ Non testable</span><p>Pas de vote ni d'acte possible (pas de mandat, ministre qui ne vote pas, texte sans scrutin). Ce n'est pas une mauvaise note.</p></div>
@@ -670,10 +869,11 @@
     </section>
 
     <footer class="site-foot">
-      <span>© Komune Média — comparateur citoyen, indépendant et sourcé.</span>
+      <span>© Komune Média - comparateur citoyen, indépendant et sourcé.</span>
       <div class="foot-links">
         <a href="../">Accueil</a>
         <a href="../soutenir/">Nous soutenir</a>
+        <button type="button" class="foot-charte" data-open-charte>Notre charte</button>
         <a href="mailto:contact@komunemedia.fr">Signaler une erreur</a>
       </div>
     </footer>
@@ -686,7 +886,7 @@
   <div id="komune-chat" role="dialog" aria-label="Komune, l'assistant du comparateur" hidden>
     <div class="kc-head">
       <span class="k-logo" aria-hidden="true">K</span>
-      <div><b>Komune</b><small>Répond uniquement avec les données du comparateur — tout est sourcé.</small></div>
+      <div><b>Komune</b><small>Répond uniquement avec les données du comparateur - tout est sourcé.</small></div>
       <button type="button" class="kc-close" aria-label="Fermer">✕</button>
     </div>
     <div class="kc-msgs" id="kc-msgs" aria-live="polite"></div>
@@ -695,6 +895,78 @@
       <input type="text" id="kc-input" placeholder="Ex. : qui a voté la loi Duplomb ?" autocomplete="off" maxlength="200">
       <button type="submit">→</button>
     </form>
+  </div>
+
+
+  <!-- ===== La charte qui se déplie ===== -->
+  <div id="charte-wrap" role="dialog" aria-modal="true" aria-labelledby="charte-titre" hidden>
+    <div class="charte">
+      <span class="charte-tampon" aria-hidden="true">Brouillon vivant</span>
+      <button type="button" class="charte-close" aria-label="Fermer la charte">✕</button>
+      <p class="eyebrow">Nos engagements · Komune</p>
+      <h2 id="charte-titre">La charte.</h2>
+      <p class="charte-chapo">Un comparateur politique, ça se juge sur sa méthode. Voici la nôtre, en entier, y compris ce qu'elle nous interdit de faire. Dépliez, lisez, et dites-nous où on se trompe&nbsp;: c'est le seul moyen que cet outil reste digne de confiance.</p>
+
+      <details class="charte-art" open>
+        <summary>1. Nos huit engagements</summary>
+        <div class="art-body">
+          <ol>
+            <li><b>On ne mélange jamais un vote personnel et un vote de groupe.</b> Ce sont deux informations différentes, affichées dans deux colonnes différentes. «&nbsp;Son groupe a voté pour&nbsp;» ne devient jamais «&nbsp;il a voté pour&nbsp;».</li>
+            <li><b>On dit quand on ne sait pas.</b> Une case «&nbsp;en cours de vérification&nbsp;» reste affichée telle quelle. On préfère un trou visible à une affirmation confortable.</li>
+            <li><b>Deux sources minimum par fiche, dont une primaire.</b> Un scrutin officiel, un texte de loi, un programme publié, un compte rendu de séance. La presse sert à contextualiser, jamais à prouver seule.</li>
+            <li><b>On mesure la cohérence, pas la qualité.</b> «&nbsp;Aligné&nbsp;» veut dire que les actes suivent la promesse. Ça ne dit rien de la valeur de la promesse&nbsp;: ce jugement-là vous appartient.</li>
+            <li><b>Un «&nbsp;non concerné·e&nbsp;» n'est pas une mauvaise note.</b> Un ministre ne vote pas, un sénateur ne vote pas à l'Assemblée, un maire ne vote aucune loi. On explique la raison à chaque fois plutôt que de laisser un blanc suspect.</li>
+            <li><b>Pas de petite phrase hors contexte.</b> Chaque citation du jeu est datée, située, sourcée et reliée aux votes correspondants. Si le contexte affaiblit la citation, on garde le contexte.</li>
+            <li><b>On corrige vite, et on le dit.</b> Une erreur signalée est vérifiée, corrigée et datée. On ne réécrit pas l'histoire en silence.</li>
+            <li><b>On est indépendants.</b> Aucun parti, aucun candidat, aucun annonceur ne finance ce travail, et personne ne le relit avant publication. Il vit des dons de ses lecteurs.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="charte-art">
+        <summary>2. Comment on documente un texte de loi</summary>
+        <div class="art-body">
+          <ol>
+            <li><b>On part du scrutin officiel</b> publié par l'Assemblée nationale ou le Sénat, avec son numéro et le détail nominatif. C'est le socle&nbsp;: sans scrutin identifié, pas de fiche.</li>
+            <li><b>On relève le vote personnel</b> de la personne, s'il existe. Si elle ne siégeait pas, on note pourquoi&nbsp;: ministre, sans mandat, autre chambre, texte adopté au 49.3.</li>
+            <li><b>On relève la position de son groupe</b>, avec les chiffres exacts (pour, contre, abstention). Au-delà de 20&nbsp;% de voix divergentes, on ne parle plus d'une ligne mais d'une position hétérogène.</li>
+            <li><b>On cherche la promesse correspondante</b> dans le programme, une tribune signée ou une déclaration publique datée. Si on ne la trouve pas, on écrit qu'on ne l'a pas trouvée.</li>
+            <li><b>On regarde les actes au pouvoir</b>&nbsp;: décrets, textes portés, amendements déposés, décisions comme ministre ou élu·e local·e. Un acte pèse plus qu'une déclaration.</li>
+            <li><b>On qualifie l'alignement</b> promesse ↔ actes, séparément pour la personne et pour son parti, avec le raisonnement affiché. Vous pouvez le contester point par point.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="charte-art">
+        <summary>3. Ce que ce comparateur ne fera jamais</summary>
+        <div class="art-body">
+          <ul>
+            <li><b>Pas de note globale, pas de classement, pas de podium.</b> Additionner des votes sur des sujets différents pour sortir un score, ça fabrique une opinion et ça la déguise en calcul.</li>
+            <li><b>Pas de «&nbsp;meilleur candidat&nbsp;».</b> L'outil vous donne les faits pour trancher, il ne tranche pas à votre place.</li>
+            <li><b>Pas de sondage, pas de pronostic.</b> Ce n'est pas notre métier ici.</li>
+            <li><b>Pas d'intelligence artificielle qui invente.</b> Komune, l'assistant de cette page, ne répond qu'avec les données de ce comparateur. Quand une question sort du périmètre, il le dit au lieu de bricoler une réponse.</li>
+            <li><b>Pas de vie privée, pas de rumeur, pas de procès d'intention.</b> On documente des votes et des actes publics.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="charte-art">
+        <summary>4. Nos limites, en toute franchise</summary>
+        <div class="art-body">
+          <ul>
+            <li><b>Le périmètre est étroit pour l'instant&nbsp;:</b> deux sujets, 25 textes, cinq candidat·es. Ce n'est pas tout le débat public, c'est un début solide.</li>
+            <li><b>Les votes du Sénat sont moins couverts que ceux de l'Assemblée.</b> C'est une vraie faiblesse quand un candidat est sénateur&nbsp;: on l'indique au lieu de la masquer.</li>
+            <li><b>Sélectionner 25 textes, c'est déjà un choix.</b> On l'a fait sur des critères affichés&nbsp;: textes clivants, textes clés, textes votés récemment. Un autre choix donnerait une autre photo, et vous pouvez nous proposer les textes qui manquent.</li>
+            <li><b>Les programmes 2027 ne sont pas tous publiés.</b> Tant qu'ils ne le sont pas, la colonne «&nbsp;promesses&nbsp;» reste partielle pour certains, et ça n'a rien à voir avec un jugement de notre part.</li>
+            <li><b>On est une toute petite équipe.</b> D'où le rythme, et d'où l'importance de vos signalements.</li>
+          </ul>
+        </div>
+      </details>
+
+      <p class="charte-pied">
+        <strong>Contredisez-nous.</strong> Une erreur, une source qui manque, un vote mal interprété, un texte oublié, une formulation qui vous semble orientée&nbsp;: écrivez-nous à <a href="mailto:contact@komunemedia.fr?subject=Retour%20sur%20le%20comparateur%20Komune">contact@komunemedia.fr</a>. Les critiques argumentées sont traitées et, quand elles ont raison, publiées. C'est comme ça qu'un outil citoyen reste citoyen.
+      </p>
+    </div>
   </div>
 
   <script src="data.js"></script>
@@ -731,7 +1003,9 @@
     function voteChip(v, prefix) {
       if (!v) return '';
       var title = v.brut && v.brut !== v.label ? ' title="' + esc(v.brut) + '"' : '';
-      return '<span class="chip vote-' + esc(v.code) + '"' + title + '>' + (prefix ? esc(prefix) + ' : ' : '') + esc(v.label) + '</span>';
+      var chip = '<span class="chip vote-' + esc(v.code) + '"' + title + '>' + (prefix ? esc(prefix) + ' : ' : '') + esc(v.label) + '</span>';
+      /* « non concerné·e », « absent·e » : on dit toujours pourquoi */
+      return chip + (v.raison ? '<span class="why">' + esc(v.raison) + '</span>' : '');
     }
     /* le vote « d'un coup d'œil » : personnel si dispo, sinon celui du groupe */
     function voteGlance(v) {
@@ -775,6 +1049,23 @@
     var nbLiens = 0;
     D.LOIS.forEach(function (l) { nbLiens += l.liens.length; });
     document.getElementById('stat-src').textContent = (nbLiens + D.SOURCES.length) + '+';
+    /* les chiffres de la section « où on en est » : toujours recalculés */
+    (function () {
+      var nbPos = 0;
+      D.LOIS.forEach(function (l) {
+        JOUEURS.forEach(function (cid) {
+          var v = l.votes[cid];
+          if (!v) return;
+          if (v.perso) nbPos++;
+          if (v.groupe) nbPos++;
+        });
+      });
+      var maj = { 'ch-lois': D.LOIS.length, 'ch-pos': nbPos, 'ch-src': D.SOURCES.length };
+      Object.keys(maj).forEach(function (k) {
+        var n = document.getElementById(k);
+        if (n) n.textContent = maj[k];
+      });
+    })();
 
     /* ==================== navigation : ouvrir une loi depuis n'importe où ==================== */
     function openLoi(id) {
@@ -829,7 +1120,7 @@
           fichesGrid.appendChild(el(
             '<article class="fiche" style="justify-content:center;text-align:center;--card-bg:linear-gradient(150deg,#fff,#ded1ff);--card-shadow:#5423df">' +
             '<div class="fiche-head" style="justify-content:center">' + avatar(c, 'big') + '<div><h3>Primaire de la gauche</h3><div class="parti">PS · Écologistes · Place publique…</div></div></div>' +
-            '<p class="engros">Candidat·e désigné·e le <strong>11 octobre 2026</strong>. La fiche complète (promesses, votes, alignements) sera publiée dès la désignation — la grille de recherche est déjà prête.</p>' +
+            '<p class="engros">Candidat·e désigné·e le <strong>11 octobre 2026</strong>. La fiche complète (promesses, votes, alignements) sera publiée dès la désignation - la grille de recherche est déjà prête.</p>' +
             '</article>'));
           return;
         }
@@ -903,7 +1194,9 @@
         var v = l.votes[cid];
         if (!v) return '';
         var g = voteGlance(v);
-        var t = CAND[cid].court + ' — ' + (g.groupe ? 'groupe : ' : '') + g.label;
+        var t = CAND[cid].court + ' - ' + (g.groupe ? 'groupe : ' : '') + g.label;
+        var pourquoi = (v.perso && v.perso.raison) || (v.groupe && v.groupe.raison) || '';
+        if (g.code === 'na' && pourquoi) { t += ' (' + pourquoi + ')'; }
         return '<span class="strip-item" title="' + esc(t) + '">' + avatar(CAND[cid], 'mini') +
           '<span class="dot ' + esc(g.code) + (g.groupe ? ' groupe' : '') + '"></span></span>';
       }).join('') + '</div>';
@@ -930,7 +1223,7 @@
               '<span class="col-groupe"><span class="cell-label">Son groupe</span>' + voteChip(v.groupe) + '</span>' +
               '<span class="plus" aria-hidden="true"></span>' +
             '</summary><div class="cand-detail">' +
-              (v.perso.brut && v.perso.brut !== v.perso.label ? miniBloc('Vote personnel — détail', v.perso.brut) : '') +
+              (v.perso.brut && v.perso.brut !== v.perso.label ? miniBloc('Vote personnel - détail', v.perso.brut) : '') +
               miniBloc('Le groupe en chiffres', v.detail) +
               miniBloc('Ce qui était promis', v.promesse) +
               miniBloc('Les actes', v.actes) +
@@ -963,6 +1256,29 @@
     }
     renderLois();
 
+    /* ==================== QUI EST QUI (parcours) ==================== */
+    var quiGrid = document.getElementById('qui-grid');
+    if (quiGrid && D.PARCOURS) {
+      JOUEURS.concat(['primaire-gauche']).forEach(function (cid) {
+        var p = D.PARCOURS[cid], c = CAND[cid];
+        if (!p || !c) return;
+        var puces = (p.cinqAns || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+        var srcs = (p.sources || []).map(function (x) {
+          return '<a href="' + esc(x.url) + '" target="_blank" rel="noopener noreferrer">' + esc(x.label) + '</a>';
+        }).join('');
+        quiGrid.appendChild(el(
+          '<article class="qui-card" style="--card-bg:' + esc(c.bg || '#ffffff') + ';--card-shadow:' + esc(c.shadow || '#332e32') + '">' +
+            '<div class="qui-head">' + avatar(c, 'big') +
+              '<div><h3>' + esc(c.nom) + '</h3><span class="qui-role">' + esc(p.role || '') + '</span></div>' +
+            '</div>' +
+            (p.candidature ? '<span class="qui-cand">🗳️ ' + esc(p.candidature) + '</span>' : '') +
+            (puces ? '<ul class="qui-list">' + puces + '</ul>' : '') +
+            (p.lecture ? '<p class="qui-lecture"><b>Ce que ça change pour lire ses votes&nbsp;:</b> ' + esc(p.lecture) + '</p>' : '') +
+            (srcs ? '<div class="qui-src">' + srcs + '</div>' : '') +
+          '</article>'));
+      });
+    }
+
     /* ==================== LES SOURCES ==================== */
     var srcList = document.getElementById('sources-list');
     D.SOURCES.forEach(function (s) {
@@ -971,7 +1287,7 @@
         '<div class="source-item">' +
           '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.titre) + ' ↗</a>' +
           '<div class="src-meta">' + esc(s.type) + (s.niveau ? ' · ' + esc(s.niveau) : '') + (s.date ? ' · ' + esc(s.date) : '') +
-          (s.preuve ? ' — ' + esc(s.preuve) : '') + '</div>' +
+          (s.preuve ? ' - ' + esc(s.preuve) : '') + '</div>' +
         '</div>'));
     });
 
@@ -989,7 +1305,7 @@
       jeu.innerHTML =
         '<div class="jeu-intro">' +
           '<div class="mega">Sauras-tu deviner<br>qui a dit quoi&nbsp;?</div>' +
-          '<p>10 déclarations, 5 candidat·es. À chaque réponse, on te montre la vérité&nbsp;: la date, le contexte, la source — et surtout si <strong>les votes suivent les paroles</strong>.</p>' +
+          '<p>10 déclarations, 5 candidat·es. À chaque réponse, on te montre la vérité&nbsp;: la date, le contexte, la source - et surtout si <strong>les votes suivent les paroles</strong>.</p>' +
           '<p class="note">2 minutes, sur canapé ou dans le métro. Aucune donnée collectée, promis.</p>' +
           '<p style="margin-top:22px"><button type="button" class="btn primary" id="jeu-start" style="font-size:18px;padding:14px 28px">C\'est parti ! →</button></p>' +
         '</div>';
@@ -1115,8 +1431,8 @@
                   score >= 3 ? 'Les apparences sont trompeuses…' :
                   'Les discours se ressemblent, hein ?';
       var texte = score >= 7
-        ? 'Tu connais tes politiques. Prochaine étape : vérifier si leurs votes suivent — c\'est tout l\'objet des fiches ci-dessous.'
-        : 'C\'est normal : sur la santé et le climat, les promesses se ressemblent beaucoup d\'un camp à l\'autre. Ce qui les distingue vraiment, ce sont les votes — et c\'est exactement ce que montre ce comparateur.';
+        ? 'Tu connais tes politiques. Prochaine étape : vérifier si leurs votes suivent - c\'est tout l\'objet des fiches ci-dessous.'
+        : 'C\'est normal : sur la santé et le climat, les promesses se ressemblent beaucoup d\'un camp à l\'autre. Ce qui les distingue vraiment, ce sont les votes - et c\'est exactement ce que montre ce comparateur.';
       jeu.innerHTML =
         '<div class="jeu-fin">' +
           '<p class="eyebrow">Ton score</p>' +
@@ -1132,6 +1448,39 @@
       document.getElementById('jeu-replay').addEventListener('click', startJeu);
     }
     renderIntro();
+
+    /* ==================== LA CHARTE QUI SE DÉPLIE ==================== */
+    (function () {
+      var wrap = document.getElementById('charte-wrap');
+      if (!wrap) return;
+      var panneau = wrap.querySelector('.charte');
+      var closeBtn = wrap.querySelector('.charte-close');
+      var dernierFocus = null;
+
+      function ouvrir() {
+        dernierFocus = document.activeElement;
+        wrap.hidden = false;
+        document.body.style.overflow = 'hidden';
+        /* on rejoue l'animation de dépliage à chaque ouverture */
+        panneau.style.animation = 'none';
+        void panneau.offsetWidth;
+        panneau.style.animation = '';
+        if (closeBtn) closeBtn.focus();
+      }
+      function fermer() {
+        wrap.hidden = true;
+        document.body.style.overflow = '';
+        if (dernierFocus && dernierFocus.focus) dernierFocus.focus();
+      }
+      document.querySelectorAll('[data-open-charte]').forEach(function (b) {
+        b.addEventListener('click', ouvrir);
+      });
+      if (closeBtn) closeBtn.addEventListener('click', fermer);
+      wrap.addEventListener('click', function (e) { if (e.target === wrap) fermer(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !wrap.hidden) fermer();
+      });
+    })();
 
     /* ==================== sommaire actif ==================== */
     var liensToc = document.querySelectorAll('.toc a');
@@ -1316,7 +1665,7 @@
     function repFallback(question) {
       var sujet = horsChamp(question);
       if (sujet) {
-        addMsg('<p>Bonne question — mais pour l’instant, le comparateur ne couvre que la <strong>santé</strong> et l’<strong>écologie</strong> (25 textes vérifiés). On préfère être solides sujet par sujet que flous sur tout.</p>' +
+        addMsg('<p>Bonne question - mais pour l’instant, le comparateur ne couvre que la <strong>santé</strong> et l’<strong>écologie</strong> (25 textes vérifiés). On préfère être solides sujet par sujet que flous sur tout.</p>' +
           '<p>' + esc('Le sujet « ' + sujet + ' » fait partie des prochains chantiers, nourris par le questionnaire citoyen.') + ' Dites-nous qu’il vous intéresse : <a href="mailto:contact@komunemedia.fr">contact@komunemedia.fr</a> 💌</p>');
         return;
       }
@@ -1382,7 +1731,7 @@
       fab.setAttribute('aria-expanded', 'true');
       if (!opened) {
         opened = true;
-        addMsg('<p>Salut, moi c’est <strong>Komune</strong> 👋 Je réponds à vos questions avec les données vérifiées de ce comparateur — rien d’autre. Pas d’IA magique&nbsp;: chaque réponse renvoie aux votes et aux sources.</p><p>Une question sur la santé ou l’écologie&nbsp;?</p>');
+        addMsg('<p>Salut, moi c’est <strong>Komune</strong> 👋 Je réponds à vos questions avec les données vérifiées de ce comparateur - rien d’autre. Pas d’IA magique&nbsp;: chaque réponse renvoie aux votes et aux sources.</p><p>Une question sur la santé ou l’écologie&nbsp;?</p>');
         renderSugg();
       }
       input.focus();
