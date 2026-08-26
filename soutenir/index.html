@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Komune — Soutenir la plateforme présidentielle 2027</title>
+  <title>Komune - Soutenir la plateforme présidentielle 2027</title>
+  <link rel="icon" type="image/png" href="../img/favicon.png">
+  <link rel="apple-touch-icon" href="../img/favicon.png">
   <meta name="description" content="Soutenir Komune pour lancer et développer une plateforme citoyenne indépendante pour la présidentielle 2027.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1404,7 +1406,7 @@
 
 
 
-    /* Correction finale propre — photos Komune flottantes, lisibles, sans fond */
+    /* Correction finale propre - photos Komune flottantes, lisibles, sans fond */
     .helped-grid {
       grid-template-columns: minmax(0, .98fr) minmax(320px, .82fr);
       align-items: center;
@@ -1512,7 +1514,7 @@
     }
 
 
-    /* Reveal jauge Komune — gros bouton + apparition animée */
+    /* Reveal jauge Komune - gros bouton + apparition animée */
     .meter-wrapper-reveal {
       position: relative;
       display: block;
@@ -1687,7 +1689,7 @@
     }
 
 
-    /* V26 — nouvelle jauge avec premier palier visible */
+    /* V26 - nouvelle jauge avec premier palier visible */
     .milestone-track-wrap {
       position: relative;
       width: 100%;
@@ -1782,13 +1784,13 @@
 
 
 
-    /* V27 — libellé de mise à jour demandé */
+    /* V27 - libellé de mise à jour demandé */
     .meter-updated {
       text-transform: none;
       letter-spacing: .02em;
     }
 
-    /* V22 — statut de lecture Google Sheet */
+    /* V22 - statut de lecture Google Sheet */
     .meter-updated.is-error {
       color: #b00020;
       background: rgba(255,255,255,.72);
@@ -1801,7 +1803,7 @@
     }
 
 
-    /* V28 — correction mobile : le titre hero ne déborde plus */
+    /* V28 - correction mobile : le titre hero ne déborde plus */
     @media (max-width: 640px) {
       #page-title {
         font-size: clamp(36px, 11.5vw, 56px);
@@ -1815,7 +1817,17 @@
   <!-- ===== Navigation commune du site (ajout : supprimable / modifiable librement) ===== -->
   <style>
     .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 4px 4px 16px; }
-    .site-nav .site-brand { margin-right: auto; font-family: "Oswald", Impact, sans-serif; font-size: 27px; font-weight: 700; letter-spacing: -.04em; color: var(--ink); text-decoration: none; }
+    .site-nav .site-brand { margin-right: auto; display: inline-flex; align-items: center; text-decoration: none; }
+    .site-nav .site-brand img { display: block; height: 46px; width: auto; transition: transform .15s ease; }
+    .site-nav .site-brand:hover img { transform: rotate(-2deg) scale(1.04); }
+    .site-foot-brand { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; justify-content: center;
+      border-top: 2px solid var(--ink); margin: 40px auto 0; padding: 20px 0 6px; }
+    .site-foot-brand img { display: block; height: 34px; width: auto; }
+    .site-foot-brand span { font-weight: 700; font-size: 13.5px; color: rgba(51,46,50,.72); }
+    @media (max-width: 640px) {
+      .site-nav .site-brand img { height: 38px; }
+      .site-foot-brand img { height: 28px; }
+    }
     .site-nav a.site-link {
       display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px;
       border: 2px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
@@ -1832,7 +1844,7 @@
   <main class="page">
     <!-- ===== Navigation commune du site ===== -->
     <nav class="site-nav" aria-label="Navigation du site">
-      <a class="site-brand" href="../">KOMUNE</a>
+      <a class="site-brand" href="../" aria-label="Komune Média - retour à l'accueil"><img src="../img/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>
       <a class="site-link" href="../">Accueil</a>
       <a class="site-link" href="../articles/">Articles</a>
       <a class="site-link" href="../comparateur-2027/">Comparateur 2027</a>
@@ -2079,7 +2091,7 @@
 
   <script>
     /*
-      V25 — Jauge Komune reliée à une seule cellule.
+      V25 - Jauge Komune reliée à une seule cellule.
 
       Base conservée : on ne touche pas au HTML/CSS de la page.
       La jauge lit uniquement :
@@ -2318,9 +2330,9 @@
 
         const meter = document.querySelector(".supporter-meter");
         if (meter) {
-          updateText("[data-supporter-current]", "—", meter);
-          updateText("[data-supporter-current-big]", "—", meter);
-          updateText("[data-supporter-percent]", "—", meter);
+          updateText("[data-supporter-current]", "-", meter);
+          updateText("[data-supporter-current-big]", "-", meter);
+          updateText("[data-supporter-percent]", "-", meter);
           meter.style.setProperty("--meter-progress", "0%");
         }
 
@@ -2411,5 +2423,9 @@
     initKomuneMeterReveal();
   </script>
 
+  <div class="site-foot-brand">
+    <img src="../img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">
+    <span>© Komune Média - média citoyen, indépendant et sourcé.</span>
+  </div>
 </body>
 </html>
