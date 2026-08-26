@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Le comparateur politique citoyen de Komune pour 2027 : un jeu pour tester votre flair, des fiches par candidat·e et les votes réels, loi par loi, avec toutes les sources.">
+  <meta name="description" content="Le comparateur politique citoyen de Komune pour 2027 : un jeu pour tester votre flair, des réponses rapides pour vos débats, les fiches par candidat·e et les votes réels, loi par loi, avec toutes les sources.">
   <title>Komune — Le Comparateur politique citoyen 2027</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,6 @@
       --line: rgba(51, 46, 50, .15);
       --muted: rgba(51, 46, 50, .72);
       --shadow: 0 16px 40px rgba(51, 46, 50, .08);
-      --radius: 22px;
       --ko: rgba(51, 46, 50, .10);
     }
 
@@ -43,103 +42,155 @@
       font-family: "Bricolage Grotesque", Inter, ui-sans-serif, system-ui, sans-serif;
       line-height: 1.5;
       font-size: 16.5px;
+      overflow-x: hidden;
     }
     a { color: inherit; }
     h1, h2, h3, h4, p { margin-top: 0; }
-    h1, h2 { font-family: "Oswald", Impact, sans-serif; letter-spacing: .01em; text-transform: none; }
+    h1, h2, .display { font-family: "Oswald", Impact, sans-serif; letter-spacing: -.045em; }
+    h1 { font-size: clamp(46px, 7.5vw, 100px); font-weight: 700; line-height: .88; text-transform: uppercase; }
+    h2 { font-size: clamp(34px, 5vw, 64px); font-weight: 700; line-height: .94; text-transform: uppercase; }
     h1, h2, h3, h4, h5, p, dd, summary, blockquote { overflow-wrap: break-word; }
     button { font: inherit; color: inherit; cursor: pointer; }
     :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 6px; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-    .page { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: 18px 0 80px; }
+    /* ---------- ticker ---------- */
+    .ticker { overflow: hidden; background: var(--blue); color: var(--cream); border-bottom: 2px solid var(--ink); }
+    .ticker-track {
+      display: inline-flex; white-space: nowrap; will-change: transform;
+      animation: ticker 30s linear infinite;
+      font-family: "Oswald", Impact, sans-serif; font-weight: 500; font-size: 15px;
+      letter-spacing: .08em; text-transform: uppercase; padding: 8px 0;
+    }
+    .ticker-track span { padding: 0 18px; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* ---------- entête commune ---------- */
-    .site-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 6px 2px 16px; flex-wrap: wrap; }
-    .brand { font-weight: 800; font-size: 24px; letter-spacing: .04em; text-decoration: none; }
+    .page { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: 14px 0 90px; }
+
+    /* ---------- entête ---------- */
+    .site-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 8px 2px 16px; flex-wrap: wrap; }
+    .brand { font-weight: 800; font-size: 26px; letter-spacing: .04em; text-decoration: none; }
     .site-nav { display: flex; gap: 8px; flex-wrap: wrap; }
     .site-nav a {
-      text-decoration: none; font-weight: 700; font-size: 14px;
-      padding: 8px 14px; border: 1px solid var(--ink); border-radius: 999px; background: var(--white);
+      text-decoration: none; font-weight: 800; font-size: 13.5px;
+      padding: 8px 14px; border: 2px solid var(--ink); border-radius: 999px; background: var(--white);
+      box-shadow: 3px 3px 0 rgba(51,46,50,.12);
     }
-    .site-nav a:hover { background: var(--yellow); }
+    .site-nav a:hover { background: var(--yellow); box-shadow: 3px 3px 0 var(--pink); }
 
     /* ---------- sommaire collant ---------- */
     .toc {
       position: sticky; top: 10px; z-index: 40;
       display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
-      padding: 8px; margin: 4px 0 22px;
-      background: rgba(252, 247, 232, .92); backdrop-filter: blur(6px);
-      border: 1px solid var(--ink); border-radius: 999px; box-shadow: var(--shadow);
+      padding: 8px; margin: 4px 0 26px;
+      background: rgba(252, 247, 232, .94); backdrop-filter: blur(8px);
+      border: 2px solid var(--ink); border-radius: 999px; box-shadow: 6px 6px 0 var(--blue);
       scrollbar-width: none;
     }
     .toc::-webkit-scrollbar { display: none; }
     .toc a {
-      flex: 0 0 auto; text-decoration: none; font-weight: 700; font-size: 14px;
+      flex: 0 0 auto; text-decoration: none; font-weight: 800; font-size: 14px;
       padding: 9px 15px; border-radius: 999px; border: 1px solid transparent; white-space: nowrap;
     }
     .toc a:hover, .toc a.active { background: var(--ink); color: var(--cream); }
 
     /* ---------- héros ---------- */
-    .hero {
-      display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; margin-bottom: 18px;
+    .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr); gap: 18px; margin-bottom: 20px; }
+    .hero-main {
+      position: relative; overflow: hidden; padding: clamp(26px, 4.5vw, 60px);
+      border: 2px solid var(--ink); border-radius: 30px; box-shadow: 8px 8px 0 var(--pink);
+      background:
+        radial-gradient(circle at 92% 10%, rgba(254,224,117,.80), transparent 25%),
+        radial-gradient(circle at 8% 98%, rgba(240,153,249,.58), transparent 33%),
+        var(--white);
     }
-    .hero-card {
-      background: var(--white); border: 1px solid var(--ko); border-radius: 30px;
-      box-shadow: var(--shadow); padding: clamp(22px, 4vw, 44px);
-      position: relative; overflow: hidden;
+    .hero-main::after {
+      content: "des faits, des sources";
+      position: absolute; right: -12px; bottom: 16px; transform: rotate(-6deg);
+      padding: 10px 18px 13px; border: 2px solid var(--ink); border-radius: 999px;
+      background: var(--yellow); color: var(--ink); box-shadow: 7px 7px 0 var(--pink);
+      font-size: clamp(18px, 2vw, 30px); font-weight: 800; z-index: 0;
     }
-    .hero-card.left { background: linear-gradient(135deg, #fff 55%, var(--yellow)); }
-    .hero-card.right {
-      background: linear-gradient(160deg, var(--pink), var(--gold));
-      display: flex; flex-direction: column; justify-content: center; gap: 14px;
-    }
-    .eyebrow { margin: 0 0 10px; font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
-    .hero h1 { font-size: clamp(38px, 6vw, 64px); line-height: 1.02; margin-bottom: 14px; }
-    .hero .pitch { font-weight: 600; max-width: 46ch; }
-    .hero .beta {
-      font-size: 14px; color: var(--muted); margin-top: 12px; max-width: 52ch;
-    }
-    .cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .eyebrow { margin: 0 0 12px; font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+    .hero-main h1 { position: relative; z-index: 1; margin: 0; max-width: 12ch; overflow-wrap: normal; word-break: keep-all; }
+    .hero .pitch { position: relative; z-index: 1; font-weight: 650; max-width: 52ch; margin-top: 18px; font-size: clamp(16.5px, 1.5vw, 21px); line-height: 1.34; }
+    .hero .beta { position: relative; z-index: 1; font-size: 14px; color: var(--muted); margin-top: 12px; max-width: 56ch; font-weight: 600; }
+    .cta-row { position: relative; z-index: 1; display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
     .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid var(--ink); border-radius: 999px; padding: 12px 20px;
-      font-weight: 800; font-size: 15px; text-decoration: none; background: var(--white);
-      box-shadow: 3px 3px 0 var(--blue); transition: transform .12s ease, box-shadow .12s ease;
+      display: inline-flex; align-items: center; gap: 8px; min-height: 48px;
+      border: 2px solid var(--ink); border-radius: 14px; padding: 11px 18px;
+      font-weight: 800; font-size: 15px; text-decoration: none; background: var(--white); color: var(--ink);
+      box-shadow: 5px 5px 0 var(--blue); transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
     }
-    .btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--blue); }
+    .btn:hover { transform: translateY(-2px) rotate(-.5deg); background: var(--yellow); box-shadow: 5px 5px 0 var(--pink); }
     .btn:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--blue); }
     .btn.primary { background: var(--ink); color: var(--cream); }
+    .btn.primary:hover { color: var(--ink); }
     .btn.play { background: var(--green); }
-    .hero-card.right h2 { font-size: clamp(26px, 3.4vw, 40px); line-height: 1.05; margin: 0; }
-    .hero-steps { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
-    .hero-steps li {
-      background: rgba(255, 255, 255, .8); border: 1px solid var(--ko);
-      border-radius: 14px; padding: 10px 14px; font-weight: 600; font-size: 15px;
+    .btn.pink { background: var(--pink); }
+
+    .hero-side {
+      position: relative; min-height: 470px; overflow: hidden; padding: clamp(22px, 3vw, 40px);
+      border: 2px solid var(--ink); border-radius: 30px; box-shadow: 8px 8px 0 var(--blue);
+      background: linear-gradient(135deg, var(--pink), var(--yellow));
     }
-    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 34px; }
+    .hero-side h2 { position: relative; z-index: 2; max-width: 10ch; margin: 0; }
+    .orbit { position: absolute; inset: 0; }
+    .orbit-person {
+      position: absolute; display: grid; place-items: center;
+      width: clamp(104px, 12vw, 168px); aspect-ratio: 1;
+      transform: rotate(var(--tilt));
+      animation: idleFloat 4.5s ease-in-out infinite; animation-delay: var(--delay);
+      transition: transform .26s cubic-bezier(.18, 1.35, .22, 1), filter .18s ease;
+      will-change: transform;
+    }
+    .orbit-person::before {
+      content: ""; position: absolute; inset: 17%;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--bubble);
+      box-shadow: 6px 6px 0 var(--ink); transform: rotate(7deg);
+    }
+    .orbit-person img, .orbit-person .emoji-head {
+      position: relative; z-index: 1; width: 108%; height: 108%; object-fit: contain; object-position: center bottom;
+      filter: drop-shadow(7px 10px 0 rgba(51,46,50,.13));
+    }
+    .orbit-person .emoji-head { display: grid; place-items: center; font-size: clamp(50px, 7vw, 84px); }
+    .orbit-person:hover { z-index: 9; transform: rotate(var(--tilt)) scale(1.12); filter: saturate(1.22) drop-shadow(0 0 18px rgba(255,255,146,.65)); }
+    .orbit-person:nth-child(1) { left: 3%; top: 34%; --tilt: -7deg; --delay: 0s; }
+    .orbit-person:nth-child(2) { right: 5%; top: 17%; --tilt: 6deg; --delay: .2s; }
+    .orbit-person:nth-child(3) { left: 14%; bottom: 5%; --tilt: 5deg; --delay: .4s; }
+    .orbit-person:nth-child(4) { right: 1%; bottom: 6%; --tilt: -5deg; --delay: .6s; }
+    .orbit-person:nth-child(5) { left: 40%; top: 42%; --tilt: 4deg; --delay: .8s; }
+    .orbit-person:nth-child(6) { right: 33%; bottom: 0%; --tilt: -4deg; --delay: 1s; }
+    @keyframes idleFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+
+    /* ---------- stats ---------- */
+    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 40px; }
     .stat {
-      background: var(--white); border: 1px solid var(--ko); border-radius: 18px;
-      box-shadow: var(--shadow); padding: 14px 16px; text-align: center;
+      position: relative; min-height: 120px; overflow: hidden; padding: 16px;
+      border: 2px solid var(--ink); border-radius: 22px; background: var(--white); box-shadow: 6px 6px 0 var(--blue);
     }
-    .stat b { display: block; font-family: "Oswald", sans-serif; font-size: 32px; line-height: 1.1; }
-    .stat span { font-size: 13.5px; color: var(--muted); font-weight: 600; }
+    .stat:nth-child(2) { background: var(--yellow); }
+    .stat:nth-child(3) { background: var(--green); }
+    .stat:nth-child(4) { background: var(--sky); }
+    .stat b { display: block; font-family: "Oswald", Impact, sans-serif; font-weight: 700; font-size: clamp(40px, 5.5vw, 68px); line-height: .85; letter-spacing: -.05em; }
+    .stat span { display: block; margin-top: 8px; font-size: 13.5px; font-weight: 800; line-height: 1.15; }
 
     /* ---------- sections ---------- */
-    section.bloc { margin-bottom: 46px; scroll-margin-top: 84px; }
-    .bloc-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
-    .bloc-head h2 { font-size: clamp(30px, 4.4vw, 46px); margin: 0; }
-    .bloc-head .tag {
-      font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
-      background: var(--ink); color: var(--cream); border-radius: 999px; padding: 6px 12px;
+    section.bloc { margin-bottom: 54px; scroll-margin-top: 84px; }
+    .bloc-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; margin-bottom: 8px; }
+    .bloc-emoji {
+      display: grid; place-items: center; width: clamp(56px, 6.5vw, 80px); aspect-ratio: 1;
+      border: 2px solid var(--ink); border-radius: 20px; background: var(--yellow);
+      font-size: clamp(28px, 3.6vw, 42px); box-shadow: 7px 7px 0 var(--pink); transform: rotate(-4deg);
     }
-    .bloc-intro { color: var(--muted); font-weight: 600; max-width: 72ch; margin-bottom: 18px; }
+    .bloc-head h2 { margin: 0; }
+    .bloc-intro { color: var(--muted); font-weight: 650; max-width: 72ch; margin: 10px 0 18px; }
 
-    /* ---------- chips génériques ---------- */
+    /* ---------- chips ---------- */
     .chip {
       display: inline-flex; align-items: center; gap: 6px;
-      border-radius: 999px; padding: 4px 12px; font-size: 13.5px; font-weight: 700;
-      border: 1px solid var(--ko); background: var(--white);
+      border-radius: 999px; padding: 4px 12px; font-size: 13.5px; font-weight: 800;
+      border: 1px solid var(--ink); background: var(--white);
     }
     .chip.vote-pour { background: var(--green); }
     .chip.vote-contre { background: var(--pink); }
@@ -152,94 +203,117 @@
     .chip.vote-autre { background: var(--white); }
     .badge-align {
       display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid var(--ink); border-radius: 999px; padding: 7px 14px;
-      font-weight: 800; font-size: 14.5px; background: var(--white); box-shadow: 2px 2px 0 var(--ko);
+      border: 2px solid var(--ink); border-radius: 999px; padding: 7px 14px;
+      font-weight: 800; font-size: 14.5px; background: var(--white); box-shadow: 3px 3px 0 rgba(51,46,50,.14);
     }
 
-    /* ---------- le jeu ---------- */
-    #jeu .jeu-shell {
-      background: linear-gradient(150deg, var(--purple), var(--blue));
-      border-radius: 30px; padding: clamp(14px, 2.6vw, 26px); box-shadow: var(--shadow);
-    }
-    .jeu-card {
-      background: var(--cream); border-radius: 22px; padding: clamp(18px, 3.4vw, 34px);
-      min-height: 300px;
-    }
-    .jeu-intro { text-align: center; padding: clamp(20px, 5vw, 50px) 10px; }
-    .jeu-intro .mega { font-family: "Oswald", sans-serif; font-size: clamp(34px, 6vw, 58px); line-height: 1.02; margin-bottom: 12px; }
-    .jeu-intro p { max-width: 56ch; margin: 0 auto 8px; font-weight: 600; }
-    .jeu-intro .note { color: var(--muted); font-size: 14.5px; font-weight: 500; }
-    .jeu-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-    .jeu-progress .score { margin-left: auto; font-weight: 800; }
-    .pbar { flex: 1 1 140px; height: 10px; background: var(--white); border: 1px solid var(--ko); border-radius: 999px; overflow: hidden; min-width: 120px; }
-    .pbar i { display: block; height: 100%; background: var(--purple); border-radius: 999px; transition: width .3s ease; }
-    .quote-box {
-      position: relative; background: var(--white); border: 1px solid var(--ko);
-      border-radius: 18px; box-shadow: var(--shadow);
-      padding: clamp(22px, 4vw, 40px) clamp(18px, 4vw, 46px); margin-bottom: 20px;
-    }
-    .quote-box::before {
-      content: "«"; position: absolute; top: -18px; left: 14px;
-      font-family: "Oswald", sans-serif; font-size: 74px; color: var(--purple); line-height: 1;
-    }
-    .quote-box blockquote {
-      margin: 0; font-family: "Oswald", sans-serif; font-weight: 500;
-      font-size: clamp(21px, 3.2vw, 32px); line-height: 1.25;
-    }
-    .jeu-q-label { font-weight: 800; margin: 0 0 10px; font-size: 17px; }
-    .answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
-    .answer-btn {
-      display: flex; align-items: center; gap: 10px; text-align: left;
-      background: var(--white); border: 1px solid var(--ink); border-radius: 16px;
-      padding: 12px 14px; font-weight: 700; font-size: 15.5px; min-height: 58px;
-      transition: transform .1s ease, background .15s ease;
-    }
-    .answer-btn small { display: block; font-weight: 600; color: var(--muted); font-size: 12.5px; }
-    .answer-btn:hover:not(:disabled) { background: var(--yellow); transform: translateY(-2px); }
-    .answer-btn:disabled { cursor: default; opacity: .55; }
-    .answer-btn.good { background: var(--green); opacity: 1; box-shadow: 3px 3px 0 var(--ink); }
-    .answer-btn.bad { background: var(--pink); opacity: 1; }
+    /* ---------- avatars ---------- */
     .avatar {
-      flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%;
-      border: 1px solid var(--ink); display: grid; place-items: center;
-      font-weight: 800; font-size: 13px; background: var(--cream);
+      flex: 0 0 auto; width: 44px; height: 44px; border-radius: 14px;
+      border: 2px solid var(--ink); display: grid; place-items: center;
+      font-weight: 800; font-size: 13px; background: var(--cream); overflow: hidden;
+      box-shadow: 3px 3px 0 rgba(51,46,50,.14); transform: rotate(var(--tilt, 0deg));
     }
+    .avatar img { width: 112%; height: 112%; object-fit: contain; object-position: center bottom; filter: drop-shadow(2px 3px 0 rgba(51,46,50,.12)); }
+    .avatar.mini { width: 30px; height: 30px; border-radius: 999px; border-width: 1.5px; box-shadow: none; }
+    .avatar.big { width: 82px; height: 82px; border-radius: 22px; font-size: 20px; box-shadow: 5px 5px 0 rgba(51,46,50,.15); }
     .av-pink { background: var(--pink); } .av-sky { background: var(--sky); }
     .av-green { background: var(--green); } .av-gold { background: var(--gold); }
     .av-yellow { background: var(--yellow); } .av-purple { background: #ded1ff; }
 
-    .verdict { border-radius: 16px; padding: 14px 18px; margin: 18px 0 14px; font-weight: 800; font-size: 18px; border: 1px solid var(--ink); }
+    /* ---------- mode débat ---------- */
+    #debat .debat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 14px; align-items: start; }
+    .q-item {
+      border: 2px solid var(--ink); border-radius: 22px; background: var(--white);
+      box-shadow: 6px 6px 0 var(--sky); overflow: hidden;
+    }
+    .q-item:nth-child(3n+2) { box-shadow: 6px 6px 0 var(--pink); }
+    .q-item:nth-child(3n) { box-shadow: 6px 6px 0 var(--gold); }
+    .q-item > summary {
+      cursor: pointer; list-style: none; padding: 16px 18px;
+      display: flex; gap: 12px; align-items: baseline;
+      font-family: "Oswald", Impact, sans-serif; font-weight: 500; font-size: 20px; line-height: 1.1; letter-spacing: -.02em;
+    }
+    .q-item > summary::-webkit-details-marker { display: none; }
+    .q-item > summary::after { content: "+"; margin-left: auto; font-size: 26px; font-weight: 700; flex: 0 0 auto; }
+    .q-item[open] > summary::after { content: "–"; }
+    .q-item[open] > summary { background: var(--yellow); border-bottom: 2px solid var(--ink); }
+    .q-body { padding: 14px 18px 16px; }
+    .q-body p { margin: 0 0 12px; font-weight: 600; font-size: 15.5px; }
+    .q-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .q-links button, .q-links a {
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--cream);
+      padding: 7px 13px; font-size: 13px; font-weight: 800; text-decoration: none;
+      box-shadow: 2px 2px 0 rgba(51,46,50,.16);
+    }
+    .q-links button:hover, .q-links a:hover { background: var(--green); }
+    .debat-foot { margin-top: 16px; }
+
+    /* ---------- le jeu ---------- */
+    #jeu .jeu-shell {
+      background: linear-gradient(150deg, var(--purple), var(--blue));
+      border: 2px solid var(--ink); border-radius: 30px; padding: clamp(14px, 2.6vw, 26px);
+      box-shadow: 8px 8px 0 var(--pink);
+    }
+    .jeu-card { background: var(--cream); border-radius: 22px; padding: clamp(18px, 3.4vw, 34px); min-height: 300px; }
+    .jeu-intro { text-align: center; padding: clamp(20px, 5vw, 50px) 10px; }
+    .jeu-intro .mega { font-family: "Oswald", Impact, sans-serif; font-weight: 700; font-size: clamp(38px, 6.5vw, 72px); line-height: .92; letter-spacing: -.045em; text-transform: uppercase; margin-bottom: 14px; }
+    .jeu-intro p { max-width: 56ch; margin: 0 auto 8px; font-weight: 600; }
+    .jeu-intro .note { color: var(--muted); font-size: 14.5px; font-weight: 500; }
+    .jeu-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .jeu-progress .score { margin-left: auto; font-weight: 800; }
+    .pbar { flex: 1 1 140px; height: 12px; background: var(--white); border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; min-width: 120px; }
+    .pbar i { display: block; height: 100%; background: var(--purple); border-radius: 999px; transition: width .3s ease; }
+    .quote-box {
+      position: relative; background: var(--white); border: 2px solid var(--ink);
+      border-radius: 18px; box-shadow: 7px 7px 0 var(--gold); transform: rotate(-.6deg);
+      padding: clamp(22px, 4vw, 40px) clamp(18px, 4vw, 46px); margin-bottom: 22px;
+    }
+    .quote-box::before {
+      content: "«"; position: absolute; top: -20px; left: 14px;
+      font-family: "Oswald", sans-serif; font-size: 78px; color: var(--purple); line-height: 1;
+    }
+    .quote-box blockquote {
+      margin: 0; font-family: "Oswald", sans-serif; font-weight: 500;
+      font-size: clamp(22px, 3.4vw, 34px); line-height: 1.22; letter-spacing: -.02em;
+    }
+    .jeu-q-label { font-weight: 800; margin: 0 0 10px; font-size: 17px; }
+    .answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+    .answer-btn {
+      display: flex; align-items: center; gap: 10px; text-align: left;
+      background: var(--white); border: 2px solid var(--ink); border-radius: 16px;
+      padding: 10px 14px 10px 10px; font-weight: 700; font-size: 15.5px; min-height: 62px;
+      box-shadow: 4px 4px 0 rgba(51,46,50,.12);
+      transition: transform .12s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .answer-btn small { display: block; font-weight: 600; color: var(--muted); font-size: 12.5px; }
+    .answer-btn:hover:not(:disabled) { background: var(--yellow); transform: translateY(-2px) rotate(-.4deg); box-shadow: 4px 4px 0 var(--pink); }
+    .answer-btn:disabled { cursor: default; opacity: .55; }
+    .answer-btn.good { background: var(--green); opacity: 1; box-shadow: 4px 4px 0 var(--ink); }
+    .answer-btn.bad { background: var(--pink); opacity: 1; }
+    .verdict { border-radius: 16px; padding: 14px 18px; margin: 18px 0 14px; font-weight: 800; font-size: 18px; border: 2px solid var(--ink); box-shadow: 4px 4px 0 rgba(51,46,50,.14); }
     .verdict.ok { background: var(--green); }
     .verdict.ko { background: var(--pink); }
     .reveal { display: grid; gap: 14px; }
-    .reveal-card { background: var(--white); border: 1px solid var(--ko); border-radius: 16px; padding: 16px 18px; }
+    .reveal-card { background: var(--white); border: 2px solid var(--ink); border-radius: 16px; padding: 16px 18px; box-shadow: 5px 5px 0 rgba(51,46,50,.10); }
     .reveal-card h4 { margin: 0 0 8px; font-size: 13px; letter-spacing: .07em; text-transform: uppercase; }
     .reveal-card p { margin: 0 0 6px; }
     .src-list { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
     .src-list a { font-weight: 700; text-decoration-color: var(--blue); }
     .src-list li::before { content: "↗ "; color: var(--blue); font-weight: 800; }
     .align-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .align-cell { background: var(--white); border: 1px solid var(--ko); border-radius: 16px; padding: 14px 16px; }
+    .align-cell { background: var(--cream); border: 1px solid var(--ink); border-radius: 16px; padding: 14px 16px; }
     .align-cell .who { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
     .align-cell p { margin: 10px 0 0; font-size: 15px; }
-    .nuancier {
-      background: linear-gradient(120deg, var(--yellow), var(--white));
-      border: 1px solid var(--ko); border-radius: 16px; padding: 16px 18px;
-    }
+    .nuancier { background: linear-gradient(120deg, var(--yellow), var(--white)); border: 1px solid var(--ink); border-radius: 16px; padding: 16px 18px; }
     .nuancier h4 { margin: 0 0 8px; font-size: 13px; letter-spacing: .07em; text-transform: uppercase; }
     .nuancier p { margin: 0; font-size: 15.5px; }
     .vote-lines { display: grid; gap: 8px; margin-top: 10px; }
-    .vote-line {
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-      background: var(--cream); border: 1px solid var(--ko); border-radius: 12px; padding: 10px 12px;
-    }
+    .vote-line { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--cream); border: 1px solid var(--ink); border-radius: 12px; padding: 10px 12px; }
     .vote-line .loi-nom { font-weight: 700; flex: 1 1 220px; font-size: 15px; }
     .vote-line a.loi-src { font-size: 13px; font-weight: 700; color: var(--blue); white-space: nowrap; }
-    details.autres { background: var(--white); border: 1px solid var(--ko); border-radius: 16px; padding: 0; overflow: hidden; }
-    details.autres > summary {
-      cursor: pointer; list-style: none; font-weight: 800; padding: 14px 18px;
-      display: flex; align-items: center; gap: 10px;
-    }
+    details.autres { background: var(--white); border: 1px solid var(--ink); border-radius: 16px; padding: 0; overflow: hidden; }
+    details.autres > summary { cursor: pointer; list-style: none; font-weight: 800; padding: 14px 18px; display: flex; align-items: center; gap: 10px; }
     details.autres > summary::-webkit-details-marker { display: none; }
     details.autres > summary::after { content: "+"; margin-left: auto; font-family: "Oswald", sans-serif; font-size: 22px; }
     details.autres[open] > summary::after { content: "–"; }
@@ -250,67 +324,66 @@
     .autres-row .nom { font-weight: 700; flex: 0 0 110px; }
     .jeu-next-row { display: flex; justify-content: space-between; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
     .jeu-fin { text-align: center; padding: clamp(18px, 4vw, 40px) 8px; }
-    .jeu-fin .score-big { font-family: "Oswald", sans-serif; font-size: clamp(52px, 9vw, 92px); line-height: 1; }
+    .jeu-fin .score-big { font-family: "Oswald", sans-serif; font-weight: 700; font-size: clamp(56px, 10vw, 104px); line-height: .9; letter-spacing: -.05em; }
     .jeu-fin p { max-width: 52ch; margin: 10px auto; font-weight: 600; }
     .confetti { pointer-events: none; position: absolute; inset: 0; overflow: hidden; border-radius: 18px; }
-    .confetti i {
-      position: absolute; top: -12px; width: 9px; height: 14px; border-radius: 3px; opacity: .95;
-      animation: fall 1.15s ease-in forwards;
-    }
+    .confetti i { position: absolute; top: -12px; width: 9px; height: 14px; border-radius: 3px; opacity: .95; animation: fall 1.15s ease-in forwards; }
     @keyframes fall { to { transform: translateY(120px) rotate(240deg); opacity: 0; } }
 
-    /* ---------- fiches ---------- */
-    .switch { display: inline-flex; border: 1px solid var(--ink); border-radius: 999px; background: var(--white); padding: 4px; gap: 4px; margin-bottom: 18px; }
-    .switch button { border: 0; background: transparent; border-radius: 999px; padding: 9px 18px; font-weight: 800; font-size: 15px; }
-    .switch button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
-    .fiches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-    .fiche {
-      background: var(--white); border: 1px solid var(--ko); border-radius: var(--radius);
-      box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 12px;
-    }
-    .fiche-head { display: flex; align-items: center; gap: 12px; }
-    .fiche-head .avatar { width: 48px; height: 48px; font-size: 15px; }
-    .fiche-head h3 { margin: 0; font-size: 21px; }
-    .fiche-head .parti { font-size: 13px; color: var(--muted); font-weight: 700; }
-    .preuve { margin-left: auto; }
-    .preuve .chip { font-size: 12px; }
-    .preuve-fort { background: var(--green); }
-    .preuve-moyen { background: var(--gold); }
-    .preuve-flou, .preuve-a-documenter { background: #eee9dc; color: var(--muted); }
-    .fiche .engros { font-weight: 600; }
-    .fiche dl { margin: 0; display: grid; gap: 10px; }
-    .fiche dt { font-size: 12px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
-    .fiche dd { margin: 0; font-size: 15px; }
-    .fiche details > summary { cursor: pointer; font-weight: 800; font-size: 14.5px; padding: 6px 0; }
-    .fiche .contradiction { background: var(--pink); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; }
-    .fiche .flou { background: var(--cream); border: 1px dashed var(--ko); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; }
-    .fiche-src { font-size: 13.5px; }
-
-    /* ---------- votes ---------- */
-    .filtres { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-    .filtres .chip { cursor: pointer; border: 1px solid var(--ink); }
+    /* ---------- votes (compact) ---------- */
+    .filtres { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .filtres .chip { cursor: pointer; border: 2px solid var(--ink); box-shadow: 3px 3px 0 rgba(51,46,50,.12); padding: 8px 14px; }
     .filtres .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
-    .lois-grid { display: grid; gap: 16px; }
-    .loi-card {
-      background: var(--white); border: 1px solid var(--ko); border-radius: var(--radius);
-      box-shadow: var(--shadow); padding: 20px;
+    .dots-legende { color: var(--muted); font-size: 13px; font-weight: 700; margin: 0 0 16px; }
+    .dots-legende .dot { vertical-align: -2px; }
+    .lois-grid { display: grid; gap: 14px; }
+    details.loi-card {
+      background: var(--white); border: 2px solid var(--ink); border-radius: 22px;
+      box-shadow: 6px 6px 0 rgba(51,46,50,.12); overflow: hidden;
     }
-    .loi-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
-    .loi-top h3 { margin: 0; font-size: 21px; flex: 1 1 300px; }
-    .loi-meta { font-size: 13.5px; color: var(--muted); font-weight: 700; }
+    details.loi-card[data-cle="1"] { box-shadow: 6px 6px 0 var(--gold); }
+    details.loi-card[open] { box-shadow: 8px 8px 0 var(--blue); }
+    .loi-sum { cursor: pointer; list-style: none; padding: 16px 18px; display: grid; gap: 8px; }
+    .loi-sum::-webkit-details-marker { display: none; }
+    .loi-sum-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .loi-sum-top h3 {
+      margin: 0; flex: 1 1 260px; font-family: "Oswald", Impact, sans-serif; font-weight: 500;
+      font-size: 22px; line-height: 1.05; letter-spacing: -.02em;
+    }
+    .loi-sum-top .plus { font-family: "Oswald", sans-serif; font-size: 24px; font-weight: 700; margin-left: auto; }
+    details.loi-card[open] .loi-sum-top .plus::after { content: "–"; }
+    details.loi-card:not([open]) .loi-sum-top .plus::after { content: "+"; }
+    .loi-engros { margin: 0; font-weight: 650; font-size: 15px; max-width: 90ch; }
+    .cle-star {
+      display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px 4px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--gold);
+      font-size: 12px; font-weight: 800; transform: rotate(-2deg);
+    }
     .statut { font-size: 12px; }
     .statut.adopte { background: var(--green); }
     .statut.rejete { background: var(--pink); }
     .statut.attente { background: var(--gold); }
-    .loi-resume { font-size: 15px; margin: 8px 0 4px; }
-    .loi-resume-details summary { cursor: pointer; font-weight: 800; font-size: 14px; padding: 4px 0; color: var(--muted); }
+    .strip { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 2px; }
+    .strip-item { display: flex; align-items: center; gap: 6px; }
+    .dot { width: 13px; height: 13px; border-radius: 999px; display: inline-block; border: 2px solid var(--ink); flex: 0 0 auto; }
+    .dot.pour { background: var(--green); }
+    .dot.contre { background: var(--pink); }
+    .dot.abstention { background: var(--gold); }
+    .dot.absent { background: #d9d2c4; }
+    .dot.divise { background: var(--sky); }
+    .dot.autre { background: var(--white); }
+    .dot.encours { background: repeating-linear-gradient(45deg, #fff, #fff 2px, #eee 2px, #eee 4px); }
+    .dot.na, .dot.vide { background: transparent; border-style: dashed; }
+    .dot.groupe { border-style: solid; box-shadow: inset 0 0 0 2px var(--white); }
+    .loi-body { padding: 0 18px 18px; border-top: 2px solid var(--ink); background: var(--cream); }
+    .loi-meta { font-size: 13.5px; color: var(--muted); font-weight: 700; padding-top: 12px; }
+    .loi-resume-details summary { cursor: pointer; font-weight: 800; font-size: 14px; padding: 6px 0; color: var(--muted); }
     .loi-resume-details p { white-space: pre-line; font-size: 14.5px; }
-    .grille { margin-top: 12px; border-top: 1px solid var(--line); }
-    .grille-head { display: none; }
+    .grille { margin-top: 10px; border-top: 1px solid var(--line); }
     .cand-row { border-bottom: 1px solid var(--line); }
     .cand-row > summary {
       cursor: pointer; list-style: none; display: grid;
-      grid-template-columns: minmax(120px, 1.1fr) 1fr 1fr 26px; gap: 8px; align-items: center;
+      grid-template-columns: minmax(130px, 1.1fr) 1fr 1fr 26px; gap: 8px; align-items: center;
       padding: 10px 2px;
     }
     .cand-row > summary::-webkit-details-marker { display: none; }
@@ -321,32 +394,123 @@
     .cand-row:not([open]) > summary .plus::after { content: "+"; }
     .cell-label { display: block; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 800; margin-bottom: 3px; }
     .cand-detail { padding: 6px 2px 16px; display: grid; gap: 10px; }
-    .cand-detail .mini { background: var(--cream); border: 1px solid var(--ko); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; white-space: pre-line; }
+    .cand-detail .mini { background: var(--white); border: 1px solid var(--ko); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; white-space: pre-line; }
     .cand-detail .mini b.mini-titre { display: block; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
     .loi-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; font-size: 14px; }
     .loi-links a { font-weight: 700; text-decoration-color: var(--blue); }
     .loi-links a::before { content: "↗ "; color: var(--blue); }
+    .flash { animation: flashCard 1.2s ease; }
+    @keyframes flashCard { 35% { box-shadow: 0 0 0 5px var(--yellow), 10px 10px 0 var(--pink); } }
+
+    /* ---------- fiches ---------- */
+    .switch { display: inline-flex; border: 2px solid var(--ink); border-radius: 999px; background: var(--white); padding: 4px; gap: 4px; margin-bottom: 18px; box-shadow: 4px 4px 0 rgba(51,46,50,.12); }
+    .switch button { border: 0; background: transparent; border-radius: 999px; padding: 9px 18px; font-weight: 800; font-size: 15px; }
+    .switch button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+    .fiches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; align-items: start; }
+    .fiche {
+      background: var(--card-bg, var(--white)); border: 2px solid var(--ink); border-radius: 24px;
+      box-shadow: 7px 7px 0 var(--card-shadow, rgba(51,46,50,.14)); padding: 18px; display: flex; flex-direction: column; gap: 12px;
+      overflow-wrap: anywhere;
+    }
+    .fiche-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .fiche-head h3 { margin: 0; font-size: 21px; }
+    .fiche-head .parti { font-size: 13px; color: var(--muted); font-weight: 700; }
+    .preuve { margin-left: auto; }
+    .preuve .chip { font-size: 12px; }
+    .preuve-fort { background: var(--green); }
+    .preuve-moyen { background: var(--gold); }
+    .preuve-flou, .preuve-a-documenter { background: #eee9dc; color: var(--muted); }
+    .fiche .engros { font-weight: 650; }
+    .fiche dl { margin: 0; display: grid; gap: 10px; }
+    .fiche dt { font-size: 12px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+    .fiche dd { margin: 0; font-size: 15px; }
+    .fiche details > summary { cursor: pointer; font-weight: 800; font-size: 14.5px; padding: 6px 0; }
+    .fiche .contradiction { background: var(--pink); border: 1px solid var(--ink); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; }
+    .fiche .flou { background: rgba(255,255,255,.7); border: 1px dashed var(--ink); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; }
+    .fiche-src { font-size: 13.5px; }
 
     /* ---------- méthode & sources ---------- */
     .methode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-    .meth-card { background: var(--white); border: 1px solid var(--ko); border-radius: 18px; box-shadow: var(--shadow); padding: 18px; }
+    .meth-card { background: var(--white); border: 2px solid var(--ink); border-radius: 18px; box-shadow: 5px 5px 0 rgba(51,46,50,.12); padding: 18px; }
+    .meth-card:nth-child(2) { background: var(--green); }
+    .meth-card:nth-child(3) { background: var(--sky); }
+    .meth-card:nth-child(4) { background: var(--gold); }
     .meth-card h3 { margin: 0 0 8px; font-size: 17px; }
-    .meth-card p { margin: 0; font-size: 14.5px; color: var(--muted); font-weight: 600; }
+    .meth-card p { margin: 0; font-size: 14.5px; font-weight: 600; }
     .legende { display: grid; gap: 10px; margin-top: 18px; }
-    .legende .row { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; background: var(--white); border: 1px solid var(--ko); border-radius: 14px; padding: 12px 16px; }
+    .legende .row { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; background: var(--white); border: 2px solid var(--ink); border-radius: 14px; padding: 12px 16px; box-shadow: 4px 4px 0 rgba(51,46,50,.08); }
     .legende .row p { margin: 0; font-size: 14.5px; color: var(--muted); font-weight: 600; flex: 1 1 300px; }
     .sources-list { display: grid; gap: 10px; }
-    .source-item { background: var(--white); border: 1px solid var(--ko); border-radius: 14px; padding: 12px 16px; }
+    .source-item { background: var(--white); border: 2px solid var(--ink); border-radius: 14px; padding: 12px 16px; box-shadow: 3px 3px 0 rgba(51,46,50,.08); }
     .source-item a { font-weight: 800; text-decoration-color: var(--blue); }
     .source-item .src-meta { font-size: 13px; color: var(--muted); font-weight: 600; }
     .note-bas { color: var(--muted); font-size: 14px; margin-top: 14px; max-width: 76ch; }
 
-    footer.site-foot { border-top: 1px solid var(--line); margin-top: 30px; padding-top: 22px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between; color: var(--muted); font-size: 14px; }
+    footer.site-foot { border-top: 2px solid var(--ink); margin-top: 30px; padding-top: 22px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between; color: var(--muted); font-size: 14px; }
     footer.site-foot .foot-links { display: flex; gap: 14px; flex-wrap: wrap; }
     footer.site-foot a { font-weight: 700; }
 
+    /* ---------- Komune, le chatbot ---------- */
+    #komune-fab {
+      position: fixed; right: 16px; bottom: 16px; z-index: 90;
+      display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 10px 18px 10px 12px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--yellow);
+      font-weight: 800; font-size: 15px; box-shadow: 5px 5px 0 var(--blue);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    #komune-fab:hover { transform: translateY(-2px) rotate(-1deg); box-shadow: 5px 5px 0 var(--pink); }
+    #komune-fab .k-logo {
+      display: grid; place-items: center; width: 36px; height: 36px; border-radius: 999px;
+      border: 2px solid var(--ink); background: var(--pink);
+      font-family: "Oswald", sans-serif; font-weight: 700; font-size: 20px;
+    }
+    #komune-chat {
+      position: fixed; right: 16px; bottom: 84px; z-index: 95;
+      width: min(400px, calc(100vw - 32px)); max-height: min(600px, calc(100vh - 110px)) ;
+      display: flex; flex-direction: column;
+      border: 2px solid var(--ink); border-radius: 24px; background: var(--cream);
+      box-shadow: 8px 8px 0 var(--blue); overflow: hidden;
+    }
+    #komune-chat[hidden] { display: none; }
+    .kc-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--pink); border-bottom: 2px solid var(--ink); }
+    .kc-head .k-logo { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 999px; border: 2px solid var(--ink); background: var(--yellow); font-family: "Oswald", sans-serif; font-weight: 700; font-size: 21px; }
+    .kc-head b { font-size: 17px; }
+    .kc-head small { display: block; font-size: 11.5px; font-weight: 700; color: rgba(51,46,50,.75); line-height: 1.2; }
+    .kc-close { margin-left: auto; border: 2px solid var(--ink); background: var(--white); border-radius: 999px; width: 34px; height: 34px; font-weight: 800; font-size: 16px; line-height: 1; }
+    .kc-msgs { flex: 1 1 auto; overflow-y: auto; padding: 14px; display: grid; gap: 10px; align-content: start; }
+    .kc-msg { max-width: 88%; border: 2px solid var(--ink); border-radius: 16px; padding: 10px 13px; font-size: 14.5px; font-weight: 600; background: var(--white); box-shadow: 3px 3px 0 rgba(51,46,50,.10); }
+    .kc-msg.bot { justify-self: start; border-bottom-left-radius: 4px; }
+    .kc-msg.user { justify-self: end; background: var(--yellow); border-bottom-right-radius: 4px; }
+    .kc-msg .chip { margin: 3px 4px 0 0; font-size: 12.5px; }
+    .kc-msg h5 { margin: 0 0 6px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+    .kc-msg p { margin: 0 0 6px; }
+    .kc-msg p:last-child { margin-bottom: 0; }
+    .kc-msg .kc-line { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .kc-msg .kc-line .who { font-weight: 800; flex: 0 0 92px; font-size: 13.5px; }
+    .kc-msg a { font-weight: 800; text-decoration-color: var(--blue); }
+    .kc-msg button.kc-go {
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--green);
+      padding: 6px 12px; font-size: 12.5px; font-weight: 800; margin-top: 8px;
+      box-shadow: 2px 2px 0 rgba(51,46,50,.16);
+    }
+    .kc-sugg { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 14px 10px; }
+    .kc-sugg button { border: 2px solid var(--ink); border-radius: 999px; background: var(--white); padding: 6px 11px; font-size: 12px; font-weight: 800; }
+    .kc-sugg button:hover { background: var(--yellow); }
+    .kc-input { display: flex; gap: 8px; padding: 10px 12px 12px; border-top: 2px solid var(--ink); background: var(--white); }
+    .kc-input input {
+      flex: 1 1 auto; min-width: 0; min-height: 46px; padding: 10px 14px;
+      border: 2px solid var(--ink); border-radius: 14px; background: var(--cream);
+      font: inherit; font-weight: 700; font-size: 15px; outline: none;
+    }
+    .kc-input input:focus { box-shadow: 0 0 0 4px rgba(240,153,249,.55); }
+    .kc-input button { border: 2px solid var(--ink); border-radius: 14px; background: var(--ink); color: var(--cream); font-weight: 800; padding: 0 18px; box-shadow: 3px 3px 0 var(--blue); }
+    .kc-input button:hover { background: var(--blue); }
+
     @media (max-width: 860px) {
       .hero { grid-template-columns: 1fr; }
+      .hero-side { min-height: 380px; }
+      .hero-main { padding-bottom: 74px; }
+      .hero-main::after { font-size: 16px; right: -10px; bottom: 12px; box-shadow: 4px 4px 0 var(--pink); }
       .stat-row { grid-template-columns: repeat(2, 1fr); }
       .align-grid { grid-template-columns: 1fr; }
       .cand-row > summary { display: flex; flex-wrap: wrap; align-items: center; }
@@ -354,11 +518,21 @@
       .cand-row > summary .plus { flex: 0 0 26px; margin-left: auto; }
       .cand-row > summary .col-perso, .cand-row > summary .col-groupe { flex: 1 1 46%; min-width: 140px; }
       .vote-line .loi-nom { flex-basis: 100%; }
+      .strip { gap: 10px; }
       body { font-size: 16px; }
+      #komune-chat { right: 8px; left: 8px; width: auto; bottom: 78px; max-height: calc(100vh - 96px); }
+      #komune-fab { right: 10px; bottom: 10px; }
     }
   </style>
 </head>
 <body>
+  <!-- ===== bandeau défilant ===== -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="ticker-track">
+      <span>Des faits, des sources ✦</span><span>Qui a dit quoi ? ✦</span><span>Les votes, loi par loi ✦</span><span>Réponses rapides pour tes débats ✦</span><span>Média citoyen &amp; indépendant ✦</span><span>Présidentielle 2027 ✦</span>
+    </div>
+  </div>
+
   <div class="page">
 
     <!-- ===== Navigation commune du site ===== -->
@@ -373,36 +547,23 @@
       </nav>
     </header>
 
-    <!-- ===== Sommaire de la page ===== -->
-    <nav class="toc" aria-label="Sommaire du comparateur">
-      <a href="#jeu">🎮 Le jeu</a>
-      <a href="#fiches">🗂️ Les fiches</a>
-      <a href="#votes">🗳️ Les votes, loi par loi</a>
-      <a href="#methode">🧭 La méthode</a>
-      <a href="#sources">📚 Les sources</a>
-    </nav>
-
     <!-- ===== Héros ===== -->
     <div class="hero">
-      <div class="hero-card left">
+      <div class="hero-main">
         <p class="eyebrow">Le comparateur politique citoyen · Komune</p>
         <h1>2027&nbsp;: comparez sur du concret.</h1>
         <p class="pitch">Pas de clash, pas de sondage, pas de petite phrase&nbsp;: ce qu'ils et elles <strong>promettent</strong>, ce qu'ils <strong>votent</strong>, ce qu'ils <strong>font au pouvoir</strong> — et l'écart entre les trois.</p>
         <div class="cta-row">
-          <a class="btn play" href="#jeu">🎮 Jouer au «&nbsp;Qui a dit quoi&nbsp;?&nbsp;»</a>
-          <a class="btn" href="#fiches">Voir les fiches</a>
-          <a class="btn" href="#votes">Explorer les votes</a>
+          <a class="btn primary" href="#jeu">🎮 Jouer au «&nbsp;Qui a dit quoi&nbsp;?&nbsp;»</a>
+          <a class="btn pink" href="#debat">⚡ Réponses rapides</a>
+          <button type="button" class="btn play" data-open-komune>💬 Demander à Komune</button>
         </div>
         <p class="beta">Version bêta&nbsp;: on commence par la <strong>santé</strong> et l'<strong>écologie</strong>, avec 5 candidat·es documenté·es. La gauche issue de la primaire (11 octobre 2026) sera ajoutée dès sa désignation. Les cases «&nbsp;en cours de vérification&nbsp;» montrent où notre recherche continue — on ne maquille pas les trous.</p>
       </div>
-      <div class="hero-card right">
-        <p class="eyebrow">Comment ça marche&nbsp;?</p>
-        <h2>3 façons d'entrer.</h2>
-        <ol class="hero-steps">
-          <li><strong>1 · Jouez.</strong> Devinez qui a dit quoi, découvrez si les actes suivent.</li>
-          <li><strong>2 · Comparez.</strong> Une fiche par candidat·e et par sujet, en langage clair.</li>
-          <li><strong>3 · Vérifiez.</strong> Chaque affirmation renvoie à un scrutin ou un document officiel.</li>
-        </ol>
+      <div class="hero-side">
+        <p class="eyebrow">Ils disent, ils votent</p>
+        <h2>On compare.</h2>
+        <div class="orbit" id="orbit" aria-hidden="true"></div>
       </div>
     </div>
 
@@ -413,11 +574,21 @@
       <div class="stat"><b id="stat-src">60+</b><span>sources, toutes en lien</span></div>
     </div>
 
+    <!-- ===== Sommaire de la page ===== -->
+    <nav class="toc" aria-label="Sommaire du comparateur">
+      <a href="#jeu">🎮 Le jeu</a>
+      <a href="#debat">⚡ Réponses rapides</a>
+      <a href="#votes">🗳️ Les votes</a>
+      <a href="#fiches">🗂️ Les fiches</a>
+      <a href="#methode">🧭 La méthode</a>
+      <a href="#sources">📚 Les sources</a>
+    </nav>
+
     <!-- ===== LE JEU ===== -->
     <section class="bloc" id="jeu" aria-labelledby="jeu-titre">
       <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🎮</span>
         <h2 id="jeu-titre">Qui a dit quoi&nbsp;?</h2>
-        <span class="tag">Le jeu</span>
       </div>
       <p class="bloc-intro">10 déclarations bien réelles, prononcées ces cinq dernières années. À vous de deviner qui parle — puis on regarde ensemble si les votes suivent les paroles.</p>
       <div class="jeu-shell">
@@ -425,11 +596,36 @@
       </div>
     </section>
 
+    <!-- ===== RÉPONSES RAPIDES / MODE DÉBAT ===== -->
+    <section class="bloc" id="debat" aria-labelledby="debat-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">⚡</span>
+        <h2 id="debat-titre">En plein débat&nbsp;? Réponse en 10 secondes.</h2>
+      </div>
+      <p class="bloc-intro">Au bar, en famille, dans le groupe WhatsApp&nbsp;: touchez une question, la réponse tient en trois phrases — et chaque mot est vérifiable dans les votes juste en dessous.</p>
+      <div class="debat-grid" id="debat-grid"></div>
+      <div class="debat-foot cta-row">
+        <button type="button" class="btn play" data-open-komune>💬 Votre question n'y est pas&nbsp;? Demandez à Komune</button>
+      </div>
+    </section>
+
+    <!-- ===== LES VOTES ===== -->
+    <section class="bloc" id="votes" aria-labelledby="votes-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🗳️</span>
+        <h2 id="votes-titre">Les votes, loi par loi</h2>
+      </div>
+      <p class="bloc-intro">Chaque texte en une phrase, et les positions d'un coup d'œil. Touchez une carte pour tout le détail&nbsp;: vote <strong>personnel</strong>, vote du <strong>groupe</strong> — deux choses qu'on ne mélange jamais — promesses, actes et alignement.</p>
+      <div class="filtres" id="filtres" role="group" aria-label="Filtrer les textes"></div>
+      <p class="dots-legende">Pastille pleine&nbsp;: <span class="dot pour"></span> pour · <span class="dot contre"></span> contre · <span class="dot abstention"></span> abstention · <span class="dot divise"></span> divisé · <span class="dot absent"></span> absent·e — cerclée de blanc&nbsp;: vote du <strong>groupe</strong> (pas de vote personnel possible). ⭐ = texte clé.</p>
+      <div class="lois-grid" id="lois-grid"></div>
+    </section>
+
     <!-- ===== LES FICHES ===== -->
     <section class="bloc" id="fiches" aria-labelledby="fiches-titre">
       <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🗂️</span>
         <h2 id="fiches-titre">Les fiches, candidat·e par candidat·e</h2>
-        <span class="tag">Comparer</span>
       </div>
       <p class="bloc-intro">Pour chaque candidat·e et chaque sujet&nbsp;: la promesse retrouvée, les votes passés, les actes au pouvoir, ce qui reste flou — et le niveau de preuve de notre documentation.</p>
       <div class="switch" role="group" aria-label="Choisir un sujet">
@@ -440,22 +636,11 @@
       <p class="note-bas">Le «&nbsp;niveau de preuve&nbsp;» mesure la solidité de <em>notre documentation</em>, jamais la qualité d'un programme. «&nbsp;Flou&nbsp;» veut dire&nbsp;: pas assez d'éléments vérifiés pour affirmer — pas «&nbsp;pas de position&nbsp;».</p>
     </section>
 
-    <!-- ===== LES VOTES ===== -->
-    <section class="bloc" id="votes" aria-labelledby="votes-titre">
-      <div class="bloc-head">
-        <h2 id="votes-titre">Les votes, loi par loi</h2>
-        <span class="tag">Vérifier</span>
-      </div>
-      <p class="bloc-intro">Chaque texte des 5 dernières années, expliqué en une phrase, avec le vote <strong>personnel</strong> du candidat ou de la candidate et le vote de son <strong>groupe</strong> — deux choses qu'on ne mélange jamais. Touchez une ligne pour le détail complet.</p>
-      <div class="filtres" id="filtres" role="group" aria-label="Filtrer les textes"></div>
-      <div class="lois-grid" id="lois-grid"></div>
-    </section>
-
     <!-- ===== LA MÉTHODE ===== -->
     <section class="bloc" id="methode" aria-labelledby="methode-titre">
       <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🧭</span>
         <h2 id="methode-titre">La méthode</h2>
-        <span class="tag">Transparence</span>
       </div>
       <p class="bloc-intro">Quatre niveaux d'information, jamais mélangés — et des badges d'alignement qui mesurent une seule chose&nbsp;: la cohérence entre la parole et les actes.</p>
       <div class="methode-grid">
@@ -477,8 +662,8 @@
     <!-- ===== LES SOURCES ===== -->
     <section class="bloc" id="sources" aria-labelledby="sources-titre">
       <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">📚</span>
         <h2 id="sources-titre">Les sources</h2>
-        <span class="tag">Tout vérifier</span>
       </div>
       <p class="bloc-intro">Deux sources minimum par fiche, dont une primaire (scrutin officiel, programme, texte de loi). En plus des liens présents dans chaque carte, voici la bibliothèque complète.</p>
       <div class="sources-list" id="sources-list"></div>
@@ -494,9 +679,27 @@
     </footer>
   </div>
 
+  <!-- ===== Komune, le chatbot ===== -->
+  <button type="button" id="komune-fab" aria-haspopup="dialog" aria-expanded="false">
+    <span class="k-logo" aria-hidden="true">K</span> Une question&nbsp;?
+  </button>
+  <div id="komune-chat" role="dialog" aria-label="Komune, l'assistant du comparateur" hidden>
+    <div class="kc-head">
+      <span class="k-logo" aria-hidden="true">K</span>
+      <div><b>Komune</b><small>Répond uniquement avec les données du comparateur — tout est sourcé.</small></div>
+      <button type="button" class="kc-close" aria-label="Fermer">✕</button>
+    </div>
+    <div class="kc-msgs" id="kc-msgs" aria-live="polite"></div>
+    <div class="kc-sugg" id="kc-sugg"></div>
+    <form class="kc-input" id="kc-form">
+      <input type="text" id="kc-input" placeholder="Ex. : qui a voté la loi Duplomb ?" autocomplete="off" maxlength="200">
+      <button type="submit">→</button>
+    </form>
+  </div>
+
   <script src="data.js"></script>
   <script>
-  /* ==================== moteur du comparateur & du jeu ==================== */
+  /* ==================== socle : helpers partagés ==================== */
   (function () {
     'use strict';
     var D = window.KOMUNE_DATA;
@@ -519,16 +722,26 @@
     D.LOIS.forEach(function (l) { LOI[l.id] = l; });
 
     function avatar(c, extra) {
-      return '<span class="avatar av-' + esc(c.teinte) + (extra ? ' ' + extra : '') + '" aria-hidden="true">' + esc(c.initiales) + '</span>';
+      var style = ' style="--tilt:' + esc(c.tilt || '0deg') + ';background:' + esc(c.bg || '#fcf7e8') + '"';
+      var inner = c.photo
+        ? '<img src="' + esc(c.photo) + '" alt="" loading="lazy">'
+        : esc(c.initiales);
+      return '<span class="avatar av-' + esc(c.teinte) + (extra ? ' ' + extra : '') + '"' + style + ' aria-hidden="true">' + inner + '</span>';
     }
     function voteChip(v, prefix) {
       if (!v) return '';
       var title = v.brut && v.brut !== v.label ? ' title="' + esc(v.brut) + '"' : '';
       return '<span class="chip vote-' + esc(v.code) + '"' + title + '>' + (prefix ? esc(prefix) + ' : ' : '') + esc(v.label) + '</span>';
     }
-
-    /* ---- placeholder : la suite du script est ajoutée plus bas ---- */
-    window.__KOMUNE_HELPERS = { esc: esc, el: el, CAND: CAND, JOUEURS: JOUEURS, LOI: LOI, avatar: avatar, voteChip: voteChip };
+    /* le vote « d'un coup d'œil » : personnel si dispo, sinon celui du groupe */
+    function voteGlance(v) {
+      var persoOk = v && v.perso && ['na', 'vide', 'encours'].indexOf(v.perso.code) === -1;
+      if (persoOk) return { code: v.perso.code, groupe: false, label: v.perso.label };
+      var g = v && v.groupe ? v.groupe : null;
+      if (g && ['na', 'vide'].indexOf(g.code) === -1) return { code: g.code, groupe: true, label: g.label };
+      return { code: 'na', groupe: !persoOk, label: (g && g.label) || 'Non concerné·e' };
+    }
+    window.__KOMUNE_HELPERS = { esc: esc, el: el, CAND: CAND, JOUEURS: JOUEURS, LOI: LOI, avatar: avatar, voteChip: voteChip, voteGlance: voteGlance };
   })();
   </script>
   <script>
@@ -538,13 +751,66 @@
     if (!H) { return; }
     var D = window.KOMUNE_DATA;
     var esc = H.esc, el = H.el, CAND = H.CAND, JOUEURS = H.JOUEURS, LOI = H.LOI,
-        avatar = H.avatar, voteChip = H.voteChip;
+        avatar = H.avatar, voteChip = H.voteChip, voteGlance = H.voteGlance;
+
+    /* ==================== ticker : doubler la piste pour la boucle ==================== */
+    var tick = document.getElementById('ticker-track');
+    if (tick) { tick.innerHTML += tick.innerHTML; }
+
+    /* ==================== héros : les têtes qui flottent ==================== */
+    var orbit = document.getElementById('orbit');
+    if (orbit) {
+      var bulles = ['#5423df', '#9abdff', '#b0fda4', '#fee075', '#f099f9', '#ffffff'];
+      D.CANDIDATS.forEach(function (c, i) {
+        var inner = c.photo
+          ? '<img src="' + esc(c.photo) + '" alt="">'
+          : '<span class="emoji-head">🌹</span>';
+        orbit.appendChild(el(
+          '<div class="orbit-person" style="--bubble:' + esc(c.bg && c.id !== 'primaire-gauche' ? bulles[i % bulles.length] : '#ffffff') + '" title="' + esc(c.court) + '">' + inner + '</div>'));
+      });
+    }
 
     /* ==================== stats ==================== */
     document.getElementById('stat-lois').textContent = D.LOIS.length;
     var nbLiens = 0;
     D.LOIS.forEach(function (l) { nbLiens += l.liens.length; });
     document.getElementById('stat-src').textContent = (nbLiens + D.SOURCES.length) + '+';
+
+    /* ==================== navigation : ouvrir une loi depuis n'importe où ==================== */
+    function openLoi(id) {
+      filtreActif = 'tous';
+      var boutons = document.querySelectorAll('#filtres button');
+      boutons.forEach(function (x, i) { x.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'); });
+      renderLois();
+      var carte = document.querySelector('details.loi-card[data-loi="' + id + '"]');
+      if (!carte) return;
+      carte.open = true;
+      carte.scrollIntoView({ block: 'start' });
+      carte.classList.remove('flash');
+      void carte.offsetWidth;
+      carte.classList.add('flash');
+    }
+    window.__KOMUNE_OPEN_LOI = openLoi;
+
+    /* ==================== RÉPONSES RAPIDES (mode débat) ==================== */
+    var debatGrid = document.getElementById('debat-grid');
+    (D.QUICK || []).forEach(function (q) {
+      var liens = (q.lois || []).map(function (id) {
+        var l = LOI[id];
+        if (!l) return '';
+        return '<button type="button" data-loi="' + esc(id) + '">🗳️ ' + esc(l.nom.length > 42 ? l.nom.slice(0, 40) + '…' : l.nom) + '</button>';
+      }).join('');
+      var jeuLien = q.jeu ? '<a href="#jeu">🎮 Vérifier en jouant</a>' : '';
+      var item = el(
+        '<details class="q-item"><summary>' + esc(q.q) + '</summary>' +
+          '<div class="q-body"><p>' + esc(q.r) + '</p>' +
+          (liens || jeuLien ? '<div class="q-links">' + liens + jeuLien + '</div>' : '') +
+        '</div></details>');
+      item.querySelectorAll('button[data-loi]').forEach(function (b) {
+        b.addEventListener('click', function () { openLoi(b.dataset.loi); });
+      });
+      debatGrid.appendChild(item);
+    });
 
     /* ==================== LES FICHES ==================== */
     var fichesGrid = document.getElementById('fiches-grid');
@@ -561,8 +827,8 @@
         if (!c) return;
         if (f.cid === 'primaire-gauche') {
           fichesGrid.appendChild(el(
-            '<article class="fiche" style="justify-content:center;text-align:center;background:linear-gradient(150deg,#fff,#ded1ff)">' +
-            '<div class="fiche-head" style="justify-content:center">' + avatar(c) + '<div><h3>Primaire de la gauche</h3><div class="parti">PS · Écologistes · Place publique…</div></div></div>' +
+            '<article class="fiche" style="justify-content:center;text-align:center;--card-bg:linear-gradient(150deg,#fff,#ded1ff);--card-shadow:#5423df">' +
+            '<div class="fiche-head" style="justify-content:center">' + avatar(c, 'big') + '<div><h3>Primaire de la gauche</h3><div class="parti">PS · Écologistes · Place publique…</div></div></div>' +
             '<p class="engros">Candidat·e désigné·e le <strong>11 octobre 2026</strong>. La fiche complète (promesses, votes, alignements) sera publiée dès la désignation — la grille de recherche est déjà prête.</p>' +
             '</article>'));
           return;
@@ -574,8 +840,8 @@
             }).join(' · ') + '</div>'
           : '';
         var fiche = el(
-          '<article class="fiche">' +
-            '<div class="fiche-head">' + avatar(c) +
+          '<article class="fiche" style="--card-bg:' + esc(c.bg) + ';--card-shadow:' + esc(c.shadow) + '">' +
+            '<div class="fiche-head">' + avatar(c, 'big') +
               '<div><h3>' + esc(c.court) + '</h3><div class="parti">' + esc(c.parti) + '</div></div>' +
               '<div class="preuve"><span class="chip ' + preuveCls + '">Preuve : ' + esc(f.preuve || 'à documenter') + '</span></div>' +
             '</div>' +
@@ -608,11 +874,11 @@
     });
     renderFiches();
 
-    /* ==================== LES VOTES, LOI PAR LOI ==================== */
+    /* ==================== LES VOTES, LOI PAR LOI (compact) ==================== */
     var loisGrid = document.getElementById('lois-grid');
     var filtres = document.getElementById('filtres');
     var filtreActif = 'tous';
-    [['tous', 'Tout voir'], ['sante', '🩺 Santé'], ['ecologie', '🌱 Écologie & climat']].forEach(function (f) {
+    [['tous', 'Tout voir'], ['cle', '⭐ Textes clés'], ['sante', '🩺 Santé'], ['ecologie', '🌱 Écologie & climat']].forEach(function (f, i) {
       var b = el('<button type="button" class="chip" aria-pressed="' + (f[0] === filtreActif) + '">' + esc(f[1]) + '</button>');
       b.addEventListener('click', function () {
         filtreActif = f[0];
@@ -632,9 +898,26 @@
       if (!texte) return '';
       return '<div class="mini"><b class="mini-titre">' + esc(titre) + '</b>' + esc(texte) + '</div>';
     }
+    function stripHtml(l) {
+      return '<div class="strip" aria-label="Les positions d’un coup d’œil">' + JOUEURS.map(function (cid) {
+        var v = l.votes[cid];
+        if (!v) return '';
+        var g = voteGlance(v);
+        var t = CAND[cid].court + ' — ' + (g.groupe ? 'groupe : ' : '') + g.label;
+        return '<span class="strip-item" title="' + esc(t) + '">' + avatar(CAND[cid], 'mini') +
+          '<span class="dot ' + esc(g.code) + (g.groupe ? ' groupe' : '') + '"></span></span>';
+      }).join('') + '</div>';
+    }
     function renderLois() {
       loisGrid.innerHTML = '';
-      D.LOIS.filter(function (l) { return filtreActif === 'tous' || l.sujet === filtreActif; }).forEach(function (l) {
+      var liste = D.LOIS.filter(function (l) {
+        if (filtreActif === 'tous') return true;
+        if (filtreActif === 'cle') return !!l.cle;
+        return l.sujet === filtreActif;
+      });
+      /* textes clés d'abord, dans l'ordre d'origine ensuite */
+      var ordonnee = liste.filter(function (l) { return l.cle; }).concat(liste.filter(function (l) { return !l.cle; }));
+      ordonnee.forEach(function (l) {
         var rows = JOUEURS.map(function (cid) {
           var c = CAND[cid], v = l.votes[cid];
           if (!v) return '';
@@ -658,15 +941,24 @@
           return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a>';
         }).join('');
         loisGrid.appendChild(el(
-          '<article class="loi-card">' +
-            '<div class="loi-top"><h3>' + esc(l.nom) + '</h3>' + statutChip(l) +
-              '<span class="chip">' + (l.sujet === 'sante' ? '🩺' : '🌱') + ' ' + esc(l.sousTheme) + '</span>' +
+          '<details class="loi-card" data-loi="' + esc(l.id) + '"' + (l.cle ? ' data-cle="1"' : '') + '>' +
+            '<summary class="loi-sum">' +
+              '<div class="loi-sum-top">' +
+                (l.cle ? '<span class="cle-star">⭐ texte clé</span>' : '') +
+                '<h3>' + esc(l.nom) + '</h3>' + statutChip(l) +
+                '<span class="chip">' + (l.sujet === 'sante' ? '🩺' : '🌱') + ' ' + esc(l.sousTheme) + '</span>' +
+                '<span class="plus" aria-hidden="true"></span>' +
+              '</div>' +
+              (l.engros ? '<p class="loi-engros">' + esc(l.engros) + '</p>' : '') +
+              stripHtml(l) +
+            '</summary>' +
+            '<div class="loi-body">' +
+              '<div class="loi-meta">' + esc(l.date) + (l.chambre ? ' · ' + esc(l.chambre) : '') + (l.initiative ? ' · ' + esc(l.initiative.length > 120 ? l.initiative.slice(0, 119).replace(/\s+\S*$/, '') + '…' : l.initiative) : '') + '</div>' +
+              (l.resume ? '<details class="loi-resume-details"><summary>Ce que fait ce texte, en clair</summary><p>' + esc(l.resume) + '</p></details>' : '') +
+              '<div class="grille">' + rows + '</div>' +
+              (liens ? '<div class="loi-links">' + liens + '</div>' : '') +
             '</div>' +
-            '<div class="loi-meta">' + esc(l.date) + (l.chambre ? ' · ' + esc(l.chambre) : '') + (l.initiative ? ' · ' + esc(l.initiative.slice(0, 120)) : '') + '</div>' +
-            (l.resume ? '<details class="loi-resume-details"><summary>Ce que fait ce texte, en clair</summary><p>' + esc(l.resume) + '</p></details>' : '') +
-            '<div class="grille">' + rows + '</div>' +
-            (liens ? '<div class="loi-links">' + liens + '</div>' : '') +
-          '</article>'));
+          '</details>'));
       });
     }
     renderLois();
@@ -833,7 +1125,7 @@
           '<p>' + texte + '</p>' +
           '<div class="cta-row" style="justify-content:center">' +
             '<button type="button" class="btn play" id="jeu-replay">↺ Rejouer</button>' +
-            '<a class="btn primary" href="#fiches">Explorer les fiches</a>' +
+            '<a class="btn pink" href="#debat">⚡ Réponses rapides</a>' +
             '<a class="btn" href="#votes">Voir les votes</a>' +
           '</div>' +
         '</div>';
@@ -842,12 +1134,12 @@
     renderIntro();
 
     /* ==================== sommaire actif ==================== */
-    var liens = document.querySelectorAll('.toc a');
+    var liensToc = document.querySelectorAll('.toc a');
     if ('IntersectionObserver' in window) {
       var obs = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
           if (e.isIntersecting) {
-            liens.forEach(function (a) {
+            liensToc.forEach(function (a) {
               a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
             });
           }
@@ -855,6 +1147,263 @@
       }, { rootMargin: '-30% 0px -60% 0px' });
       document.querySelectorAll('section.bloc').forEach(function (s) { obs.observe(s); });
     }
+  })();
+  </script>
+  <script>
+  /* ==================== KOMUNE, l'assistant du comparateur ====================
+     Pas d'IA générative, pas de serveur, pas de données collectées :
+     une recherche honnête dans les données vérifiées de la page. */
+  (function () {
+    'use strict';
+    var H = window.__KOMUNE_HELPERS;
+    var D = window.KOMUNE_DATA;
+    if (!H || !D) { return; }
+    var esc = H.esc, el = H.el, CAND = H.CAND, JOUEURS = H.JOUEURS, LOI = H.LOI,
+        voteChip = H.voteChip, voteGlance = H.voteGlance;
+
+    var fab = document.getElementById('komune-fab');
+    var panel = document.getElementById('komune-chat');
+    var msgs = document.getElementById('kc-msgs');
+    var sugg = document.getElementById('kc-sugg');
+    var form = document.getElementById('kc-form');
+    var input = document.getElementById('kc-input');
+    var opened = false;
+
+    function norm(s) {
+      return String(s || '').toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[’'`-]/g, ' ')
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .replace(/\s+/g, ' ').trim();
+    }
+    var STOP = {};
+    ('qui que quoi quel quelle quels quelles est sont cest il elle ils elles les des la le un une du de et ou a au aux en sur pour dans avec sans par se sa son ses leur leurs ce cette ca ont fait faire dit dis plus moins tout tous tres comment pourquoi combien veut veulent voulait etre avoir aussi encore vote votes voter loi lois texte textes candidat candidats candidate donc alors mais si oui non pas').split(' ').forEach(function (w) { STOP[w] = 1; });
+    function tokens(s) {
+      return norm(s).split(' ').filter(function (w) { return w.length > 1 && !STOP[w]; });
+    }
+
+    /* ---- alias candidats ---- */
+    var ALIAS = [
+      ['melenchon', 'melenchon jean luc jlm insoumis insoumise lfi'],
+      ['le-pen', 'le pen lepen marine rn rassemblement national'],
+      ['philippe', 'philippe edouard horizons havre'],
+      ['attal', 'attal gabriel renaissance ensemble macron macroniste'],
+      ['retailleau', 'retailleau bruno lr republicains droite'],
+      ['primaire-gauche', 'primaire gauche ps socialiste ecologiste ecologistes place publique glucksmann']
+    ];
+    function findCandidats(q) {
+      var n = ' ' + norm(q) + ' ';
+      var out = [];
+      ALIAS.forEach(function (a) {
+        var mots = a[1].split(' ');
+        for (var i = 0; i < mots.length; i++) {
+          if (n.indexOf(' ' + mots[i] + ' ') !== -1) { out.push(a[0]); return; }
+        }
+      });
+      return out;
+    }
+
+    /* ---- index lois & réponses rapides ---- */
+    function joinTags(t) { return Array.isArray(t) ? t.join(' ') : String(t || ''); }
+    var LOIS_IDX = D.LOIS.map(function (l) {
+      var texte = [l.nom, l.sousTheme, joinTags(l.tags), l.engros || '', l.intitule || ''].join(' ');
+      return { l: l, toks: tokens(texte), brut: norm(texte) };
+    });
+    var QUICK_IDX = (D.QUICK || []).map(function (q) {
+      var texte = [q.q, joinTags(q.tags), q.r].join(' ');
+      return { q: q, toks: tokens(texte), brut: norm([q.q, joinTags(q.tags)].join(' ')) };
+    });
+    function scoreIdx(idx, qToks, qNorm) {
+      var s = 0;
+      qToks.forEach(function (t) {
+        if (idx.toks.indexOf(t) !== -1) s += 2;
+        else if (idx.brut.indexOf(t) !== -1) s += 1;
+      });
+      return s;
+    }
+
+    /* ---- sujets pas (encore) couverts, en toute honnêteté ---- */
+    var HORS_CHAMP = [
+      ['retraite retraites pension pensions', 'les retraites'],
+      ['immigration immigres etrangers frontieres asile', 'l’immigration'],
+      ['securite police delinquance prison justice', 'la sécurité et la justice'],
+      ['salaire salaires smic pouvoir achat inflation impot impots taxe taxes economie budget dette', 'l’économie et le pouvoir d’achat'],
+      ['ecole education professeur professeurs universite', 'l’école et l’éducation'],
+      ['logement loyer loyers hlm', 'le logement'],
+      ['europe ukraine guerre defense armee international', 'l’international et la défense'],
+      ['financement financements finance financer campagne campagnes argent dons comptes patrimoine lobbys lobby', 'le financement des campagnes']
+    ];
+    function horsChamp(q) {
+      var n = ' ' + norm(q) + ' ';
+      for (var i = 0; i < HORS_CHAMP.length; i++) {
+        var mots = HORS_CHAMP[i][0].split(' ');
+        for (var j = 0; j < mots.length; j++) {
+          if (n.indexOf(' ' + mots[j] + ' ') !== -1) return HORS_CHAMP[i][1];
+        }
+      }
+      return null;
+    }
+
+    /* ---- rendu des messages ---- */
+    function addMsg(html, who) {
+      var m = el('<div class="kc-msg ' + (who || 'bot') + '">' + html + '</div>');
+      msgs.appendChild(m);
+      msgs.scrollTop = msgs.scrollHeight;
+      return m;
+    }
+    function btnLoi(id, label) {
+      return '<button type="button" class="kc-go" data-loi="' + esc(id) + '">🗳️ ' + esc(label) + '</button>';
+    }
+    function bindLoiButtons(m) {
+      m.querySelectorAll('button[data-loi]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          fermer();
+          if (window.__KOMUNE_OPEN_LOI) window.__KOMUNE_OPEN_LOI(b.dataset.loi);
+        });
+      });
+    }
+
+    function repLoiComplete(l) {
+      var lignes = JOUEURS.map(function (cid) {
+        var v = l.votes[cid];
+        if (!v) return '';
+        var g = voteGlance(v);
+        return '<span class="kc-line"><span class="who">' + esc(CAND[cid].court) + '</span>' +
+          voteChip(g.groupe ? v.groupe : v.perso, g.groupe ? 'Groupe' : null) + '</span>';
+      }).join('');
+      var m = addMsg(
+        '<h5>' + esc(l.nom) + (l.statut ? ' · ' + esc(l.statut) : '') + '</h5>' +
+        (l.engros ? '<p>' + esc(l.engros) + '</p>' : '') +
+        lignes +
+        '<p style="margin-top:8px;font-size:12px;color:var(--muted)">« Groupe » = pas de vote personnel possible ; on ne les confond jamais.</p>' +
+        btnLoi(l.id, 'Tout le détail + sources'));
+      bindLoiButtons(m);
+    }
+    function repCandLoi(cid, l) {
+      var v = l.votes[cid];
+      var c = CAND[cid];
+      if (!v) { repLoiComplete(l); return; }
+      var badges = (v.badges || []).map(function (b) { return '<span class="chip">' + b.icon + ' ' + esc(b.label) + '</span>'; }).join(' ');
+      var m = addMsg(
+        '<h5>' + esc(c.court) + ' · ' + esc(l.nom) + '</h5>' +
+        '<span class="kc-line"><span class="who">Perso</span>' + voteChip(v.perso) + '</span>' +
+        '<span class="kc-line"><span class="who">Son groupe</span>' + voteChip(v.groupe) + '</span>' +
+        (badges ? '<p style="margin-top:8px">' + badges + '</p>' : '') +
+        btnLoi(l.id, 'Le détail + sources'));
+      bindLoiButtons(m);
+    }
+    function repCandidat(cid) {
+      var c = CAND[cid];
+      var fiches = D.FICHES.filter(function (f) { return f.cid === cid && f.engros; });
+      var html = '<h5>' + esc(c.nom) + ' · ' + esc(c.parti) + '</h5>';
+      if (c.vigilance) html += '<p style="font-size:13px;color:var(--muted)">' + esc(c.vigilance) + '</p>';
+      fiches.forEach(function (f) {
+        html += '<p><strong>' + (f.sujet === 'sante' ? '🩺 Santé' : '🌱 Écologie') + ' :</strong> ' + esc(f.engros) + '</p>';
+      });
+      html += '<p style="margin-top:6px"><a href="#fiches">Voir sa fiche complète ↓</a></p>';
+      var m = addMsg(html);
+      m.querySelectorAll('a[href="#fiches"]').forEach(function (a) {
+        a.addEventListener('click', function () { fermer(); });
+      });
+    }
+    function repQuick(q) {
+      var liens = (q.lois || []).map(function (id) {
+        return LOI[id] ? btnLoi(id, LOI[id].nom.length > 34 ? LOI[id].nom.slice(0, 32) + '…' : LOI[id].nom) : '';
+      }).join(' ');
+      var m = addMsg('<h5>' + esc(q.q) + '</h5><p>' + esc(q.r) + '</p>' + liens);
+      bindLoiButtons(m);
+    }
+    function repFallback(question) {
+      var sujet = horsChamp(question);
+      if (sujet) {
+        addMsg('<p>Bonne question — mais pour l’instant, le comparateur ne couvre que la <strong>santé</strong> et l’<strong>écologie</strong> (25 textes vérifiés). On préfère être solides sujet par sujet que flous sur tout.</p>' +
+          '<p>' + esc('Le sujet « ' + sujet + ' » fait partie des prochains chantiers, nourris par le questionnaire citoyen.') + ' Dites-nous qu’il vous intéresse : <a href="mailto:contact@komunemedia.fr">contact@komunemedia.fr</a> 💌</p>');
+        return;
+      }
+      addMsg('<p>Je n’ai pas trouvé ça dans les données du comparateur (santé &amp; écologie, 25 textes, 5 candidat·es). Je ne préfère pas inventer 🤷</p>' +
+        '<p>Essayez par exemple : «&nbsp;qui a voté la loi Duplomb&nbsp;?&nbsp;», «&nbsp;Le Pen et l’IVG&nbsp;», «&nbsp;c’est quoi la loi Garot&nbsp;?&nbsp;»</p>');
+    }
+
+    function repondre(question) {
+      var qToks = tokens(question);
+      var qNorm = norm(question);
+      var cands = findCandidats(question);
+
+      var bestQuick = null, bq = 0;
+      QUICK_IDX.forEach(function (i) {
+        var s = scoreIdx(i, qToks, qNorm);
+        if (s > bq) { bq = s; bestQuick = i.q; }
+      });
+      var bestLoi = null, bl = 0;
+      LOIS_IDX.forEach(function (i) {
+        var s = scoreIdx(i, qToks, qNorm);
+        if (s > bl) { bl = s; bestLoi = i.l; }
+      });
+
+      /* sujet clairement hors du champ couvert + correspondances faibles : on le dit franchement */
+      if (horsChamp(question) && bq < 4 && bl < 4) { repFallback(question); return; }
+      if (cands.length && bestLoi && bl >= 4) {
+        if (cands[0] === 'primaire-gauche') { repCandidat(cands[0]); return; }
+        repCandLoi(cands[0], bestLoi);
+        if (bestQuick && bq >= 6) repQuick(bestQuick);
+        return;
+      }
+      if (bestQuick && bq >= 4 && bq >= bl) { repQuick(bestQuick); return; }
+      if (bestLoi && bl >= 4) { repLoiComplete(bestLoi); return; }
+      if (cands.length) { repCandidat(cands[0]); return; }
+      if (bestQuick && bq >= 2) { repQuick(bestQuick); return; }
+      if (bestLoi && bl >= 2) { repLoiComplete(bestLoi); return; }
+      repFallback(question);
+    }
+
+    /* ---- suggestions ---- */
+    var SUGG = [
+      'Qui a voté la loi Duplomb ?',
+      'Le Pen et l’IVG ?',
+      'Qui est pour l’aide à mourir ?',
+      'C’est quoi la loi Garot ?',
+      'Mélenchon et le climat ?',
+      'Qui est revenu sur les ZFE ?'
+    ];
+    function renderSugg() {
+      sugg.innerHTML = '';
+      SUGG.slice(0, 4).forEach(function (s) {
+        var b = el('<button type="button">' + esc(s) + '</button>');
+        b.addEventListener('click', function () {
+          addMsg(esc(s), 'user');
+          repondre(s);
+        });
+        sugg.appendChild(b);
+      });
+    }
+
+    function ouvrir() {
+      panel.hidden = false;
+      fab.setAttribute('aria-expanded', 'true');
+      if (!opened) {
+        opened = true;
+        addMsg('<p>Salut, moi c’est <strong>Komune</strong> 👋 Je réponds à vos questions avec les données vérifiées de ce comparateur — rien d’autre. Pas d’IA magique&nbsp;: chaque réponse renvoie aux votes et aux sources.</p><p>Une question sur la santé ou l’écologie&nbsp;?</p>');
+        renderSugg();
+      }
+      input.focus();
+    }
+    function fermer() {
+      panel.hidden = true;
+      fab.setAttribute('aria-expanded', 'false');
+    }
+    fab.addEventListener('click', function () { panel.hidden ? ouvrir() : fermer(); });
+    panel.querySelector('.kc-close').addEventListener('click', fermer);
+    document.querySelectorAll('[data-open-komune]').forEach(function (b) {
+      b.addEventListener('click', ouvrir);
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = input.value.trim();
+      if (!q) return;
+      input.value = '';
+      addMsg(esc(q), 'user');
+      repondre(q);
+    });
   })();
   </script>
 </body>
