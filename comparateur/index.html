@@ -6,6 +6,8 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Le comparateur politique citoyen de Komune pour 2027 : un jeu pour tester votre flair, des réponses rapides pour vos débats, les fiches par candidat·e et les votes réels, loi par loi, avec toutes les sources.">
   <title>Komune - Le Comparateur politique citoyen 2027</title>
+  <link rel="icon" type="image/png" href="../img/favicon.png">
+  <link rel="apple-touch-icon" href="../img/favicon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,7 +71,13 @@
 
     /* ---------- entête ---------- */
     .site-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 8px 2px 16px; flex-wrap: wrap; }
-    .brand { font-weight: 800; font-size: 26px; letter-spacing: .04em; text-decoration: none; }
+    .brand { display: inline-flex; align-items: center; text-decoration: none; }
+    .brand img { display: block; height: 50px; width: auto; transition: transform .15s ease; }
+    .brand:hover img { transform: rotate(-2deg) scale(1.04); }
+
+    /* ---------- logos Komune ---------- */
+    .foot-logo { display: block; height: 36px; width: auto; }
+    footer.site-foot .foot-brand { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; }
     .site-nav { display: flex; gap: 8px; flex-wrap: wrap; }
     .site-nav a {
       text-decoration: none; font-weight: 800; font-size: 13.5px;
@@ -461,10 +469,10 @@
     }
     #komune-fab:hover { transform: translateY(-2px) rotate(-1deg); box-shadow: 5px 5px 0 var(--pink); }
     #komune-fab .k-logo {
-      display: grid; place-items: center; width: 36px; height: 36px; border-radius: 999px;
-      border: 2px solid var(--ink); background: var(--pink);
-      font-family: "Oswald", sans-serif; font-weight: 700; font-size: 20px;
+      display: grid; place-items: center; width: 60px; height: 38px; border-radius: 13px;
+      border: 2px solid var(--ink); background: var(--pink); padding: 3px 5px; box-sizing: border-box;
     }
+    #komune-fab .k-logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
     #komune-chat {
       position: fixed; right: 16px; bottom: 84px; z-index: 95;
       width: min(400px, calc(100vw - 32px)); max-height: min(600px, calc(100vh - 110px)) ;
@@ -474,7 +482,8 @@
     }
     #komune-chat[hidden] { display: none; }
     .kc-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--pink); border-bottom: 2px solid var(--ink); }
-    .kc-head .k-logo { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 999px; border: 2px solid var(--ink); background: var(--yellow); font-family: "Oswald", sans-serif; font-weight: 700; font-size: 21px; }
+    .kc-head .k-logo { display: grid; place-items: center; width: 62px; height: 40px; border-radius: 13px; border: 2px solid var(--ink); background: var(--yellow); padding: 3px 5px; box-sizing: border-box; flex: none; }
+    .kc-head .k-logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
     .kc-head b { font-size: 17px; }
     .kc-head small { display: block; font-size: 11.5px; font-weight: 700; color: rgba(51,46,50,.75); line-height: 1.2; }
     .kc-close { margin-left: auto; border: 2px solid var(--ink); background: var(--white); border-radius: 999px; width: 34px; height: 34px; font-weight: 800; font-size: 16px; line-height: 1; }
@@ -523,6 +532,8 @@
       body { font-size: 16px; }
       #komune-chat { right: 8px; left: 8px; width: auto; bottom: 78px; max-height: calc(100vh - 96px); }
       #komune-fab { right: 10px; bottom: 10px; }
+      .brand img { height: 38px; }
+      .foot-logo { height: 30px; }
     }
 
     .foot-charte {
@@ -680,7 +691,7 @@
 
     <!-- ===== Navigation commune du site ===== -->
     <header class="site-top">
-      <a class="brand" href="../">KOMUNE</a>
+      <a class="brand" href="../" aria-label="Komune Média - retour à l'accueil"><img src="../img/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>
       <nav class="site-nav" aria-label="Navigation du site">
         <a href="../">Accueil</a>
         <a href="../articles/">Articles</a>
@@ -869,7 +880,10 @@
     </section>
 
     <footer class="site-foot">
-      <span>© Komune Média - comparateur citoyen, indépendant et sourcé.</span>
+      <div class="foot-brand">
+        <img class="foot-logo" src="../img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">
+        <span>© Komune Média - comparateur citoyen, indépendant et sourcé.</span>
+      </div>
       <div class="foot-links">
         <a href="../">Accueil</a>
         <a href="../soutenir/">Nous soutenir</a>
@@ -881,11 +895,11 @@
 
   <!-- ===== Komune, le chatbot ===== -->
   <button type="button" id="komune-fab" aria-haspopup="dialog" aria-expanded="false">
-    <span class="k-logo" aria-hidden="true">K</span> Une question&nbsp;?
+    <span class="k-logo" aria-hidden="true"><img src="../img/kmn-violet-jaune.webp" alt="" width="210" height="121" decoding="async"></span> Une question&nbsp;?
   </button>
   <div id="komune-chat" role="dialog" aria-label="Komune, l'assistant du comparateur" hidden>
     <div class="kc-head">
-      <span class="k-logo" aria-hidden="true">K</span>
+      <span class="k-logo" aria-hidden="true"><img src="../img/kmn-violet-jaune.webp" alt="" width="210" height="121" decoding="async"></span>
       <div><b>Komune</b><small>Répond uniquement avec les données du comparateur - tout est sourcé.</small></div>
       <button type="button" class="kc-close" aria-label="Fermer">✕</button>
     </div>
