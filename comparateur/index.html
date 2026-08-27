@@ -602,6 +602,114 @@
     .soutien-row .btn.don { background: var(--ink); color: var(--cream); }
     .soutien-row .btn.don:hover { background: var(--purple); }
 
+    /* ---------- v8 : dock beta + retours (fixe, en bas a gauche) ---------- */
+    #beta-dock {
+      position: fixed; left: 16px; bottom: 16px; z-index: 88;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 9px;
+      max-width: calc(100vw - 210px);
+    }
+    .beta-pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 8px 8px 14px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--green);
+      box-shadow: 4px 4px 0 var(--ink); font-size: 13.5px; font-weight: 800;
+    }
+    .beta-pill .dot {
+      width: 9px; height: 9px; flex: none; border-radius: 999px; background: var(--purple);
+      box-shadow: 0 0 0 3px rgba(84,35,223,.22); animation: betaPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes betaPulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(84,35,223,.22); }
+      50%      { box-shadow: 0 0 0 7px rgba(84,35,223,.06); }
+    }
+    .beta-pill .beta-why {
+      width: 26px; height: 26px; flex: none; border: 2px solid var(--ink); border-radius: 999px;
+      background: var(--white); font: inherit; font-weight: 800; font-size: 14px;
+      line-height: 1; cursor: pointer; transition: transform .15s ease, background .15s ease;
+    }
+    .beta-pill .beta-why:hover { background: var(--yellow); transform: scale(1.12) rotate(8deg); }
+    #retours-fab {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--sky);
+      box-shadow: 4px 4px 0 var(--ink); font-size: 13.5px; font-weight: 800; cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    #retours-fab:hover { background: var(--pink); transform: translateY(-2px); box-shadow: 5px 5px 0 var(--ink); }
+    .dock-court { display: none; }
+
+    /* ---------- v8 : les deux fenetres ---------- */
+    .modal-wrap {
+      position: fixed; inset: 0; z-index: 96; display: grid; place-items: start center;
+      padding: clamp(12px, 3vw, 34px) 12px; overflow: auto;
+      background: rgba(51,46,50,.6); backdrop-filter: blur(3px);
+    }
+    .modal-wrap[hidden] { display: none; }
+    .modal-box {
+      position: relative; width: min(660px, 100%); padding: clamp(22px, 3vw, 32px);
+      border: 3px solid var(--ink); border-radius: 30px; background: var(--cream);
+      box-shadow: 14px 14px 0 var(--purple);
+      animation: modalPop .34s cubic-bezier(.2, 1.3, .35, 1) both;
+    }
+    @keyframes modalPop {
+      0%   { transform: translateY(22px) scale(.96); opacity: 0; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .modal-box h2 { margin: 4px 0 6px; font-size: clamp(27px, 4.4vw, 38px); }
+    .modal-box p { margin: 0 0 13px; font-size: 15.5px; font-weight: 650; line-height: 1.5; }
+    .modal-close {
+      position: absolute; top: 14px; right: 14px; width: 38px; height: 38px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--white);
+      font-size: 16px; font-weight: 800; cursor: pointer; box-shadow: 3px 3px 0 var(--ink);
+    }
+    .modal-close:hover { background: var(--pink); }
+    .beta-liste { margin: 0 0 16px; padding-left: 20px; }
+    .beta-liste li { margin-bottom: 9px; font-size: 15px; font-weight: 650; line-height: 1.45; }
+    .beta-rythme {
+      margin: 0 0 16px; padding: 15px 17px; border: 2px solid var(--ink); border-radius: 18px;
+      background: var(--yellow); box-shadow: 5px 5px 0 var(--ink);
+    }
+    .beta-rythme b { display: block; margin-bottom: 6px; font-size: 16px; }
+    .beta-rythme ul { margin: 0; padding-left: 19px; }
+    .beta-rythme li { font-size: 14.5px; font-weight: 650; line-height: 1.4; }
+
+    /* ---------- v8 : le formulaire de retours ---------- */
+    .champ { display: block; margin-bottom: 15px; }
+    .champ > span.lab { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 800;
+      letter-spacing: .04em; text-transform: uppercase; }
+    .champ > span.aide { display: block; margin: -2px 0 6px; font-size: 12.5px; font-weight: 650; color: var(--muted); }
+    .champ input[type=text], .champ input[type=email], .champ textarea, .champ select {
+      width: 100%; box-sizing: border-box; padding: 11px 13px; font: inherit; font-weight: 650;
+      border: 2px solid var(--ink); border-radius: 14px; background: var(--white); color: var(--ink);
+    }
+    .champ textarea { min-height: 132px; resize: vertical; line-height: 1.45; }
+    .champ input:focus-visible, .champ textarea:focus-visible, .champ select:focus-visible {
+      outline: 3px solid var(--purple); outline-offset: 1px;
+    }
+    .champ .compteur { display: block; margin-top: 4px; font-size: 12px; font-weight: 700; color: var(--muted); text-align: right; }
+    .retours-pied { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 4px; }
+    .retours-note { margin: 14px 0 0; font-size: 12.5px; font-weight: 650; color: var(--muted); line-height: 1.4; }
+    .retours-etat {
+      margin: 0 0 15px; padding: 13px 15px; border: 2px solid var(--ink); border-radius: 16px;
+      font-size: 14.5px; font-weight: 700; line-height: 1.4;
+    }
+    .retours-etat[hidden] { display: none; }
+    .retours-etat.ok { background: var(--green); }
+    .retours-etat.ko { background: var(--pink); }
+    .retours-merci { text-align: center; padding: 12px 0 4px; }
+    .retours-merci .grand { font-size: 46px; line-height: 1; margin-bottom: 10px; }
+
+    @media (max-width: 760px) {
+      #beta-dock { left: 8px; bottom: 8px; gap: 7px; max-width: calc(100vw - 16px); }
+      .dock-long { display: none; }
+      .dock-court { display: inline; }
+      .beta-pill, #retours-fab { font-size: 12.5px; box-shadow: 3px 3px 0 var(--ink); }
+      #retours-fab { padding: 9px 13px; }
+      #komune-fab { bottom: 104px; }
+      #komune-chat { bottom: 168px; max-height: calc(100vh - 186px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .beta-pill .dot, .modal-box { animation: none !important; }
+    }
+
     /* ---------- v5 : la charte qui se déplie ---------- */
     #charte-wrap {
       position: fixed; inset: 0; z-index: 90; display: grid; place-items: start center;
@@ -891,6 +999,103 @@
         <a href="mailto:contact@komunemedia.fr">Signaler une erreur</a>
       </div>
     </footer>
+  </div>
+
+  <!-- ===== v8 : pastille beta + retours, fixes pendant toute la navigation ===== -->
+  <div id="beta-dock">
+    <div class="beta-pill">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="dock-long">Vous testez la version beta</span>
+      <span class="dock-court">Version beta</span>
+      <button type="button" class="beta-why" id="beta-why" aria-haspopup="dialog"
+              aria-label="En savoir plus sur la version beta">?</button>
+    </div>
+    <button type="button" id="retours-fab" aria-haspopup="dialog">
+      <span aria-hidden="true">✉️</span>
+      <span class="dock-long">J'ai des retours sur le comparateur ou la charte</span>
+      <span class="dock-court">J'ai des retours</span>
+    </button>
+  </div>
+
+  <!-- ===== v8 : ce qu'est la version beta ===== -->
+  <div class="modal-wrap" id="beta-wrap" role="dialog" aria-modal="true" aria-labelledby="beta-titre" hidden>
+    <div class="modal-box">
+      <button type="button" class="modal-close" aria-label="Fermer">✕</button>
+      <p class="eyebrow">Version beta · Komune</p>
+      <h2 id="beta-titre">Oui, c'est un chantier.</h2>
+      <p>Vous ne regardez pas un outil fini, et on préfère le dire en grand plutôt que de le cacher. Voilà exactement où on en est.</p>
+      <ul class="beta-liste">
+        <li><b>Deux sujets seulement</b> pour l'instant : la santé et l'écologie. Ce sont les deux que vous nous avez le plus demandés, alors on a commencé par là.</li>
+        <li><b>Et même sur ces deux sujets, ce n'est pas complet.</b> Il manque des scrutins, des positions, des sources. Les cases « en cours de vérification » sont là pour ça : elles montrent les trous au lieu de les maquiller.</li>
+        <li><b>L'outil sera bien plus utile quand les programmes officiels sortiront.</b> Aujourd'hui on documente des votes passés et des déclarations ; à partir de là, on pourra confronter les promesses écrites aux actes.</li>
+      </ul>
+      <div class="beta-rythme">
+        <b>Plusieurs fois par semaine, on déplie des mises à jour</b>
+        <ul>
+          <li>au fil de notre avancement sur les textes déjà en ligne,</li>
+          <li>à chaque sortie ou mise à jour d'un programme officiel,</li>
+          <li>quand un vote, une nomination ou une candidature change la donne,</li>
+          <li>et à mesure que les nouveaux sujets se construisent : pouvoir d'achat, éducation, logement, sécurité, institutions.</li>
+        </ul>
+      </div>
+      <p>Rien n'est publié sans deux sources, dont une primaire. C'est ce qui prend du temps, et c'est ce qui fait que l'outil vaut quelque chose.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#chantier" data-close-modal>🚧 Voir où on en est en détail</a>
+        <button type="button" class="btn" data-open-charte data-close-modal>📜 Notre charte</button>
+        <button type="button" class="btn pink" id="beta-vers-retours">✉️ J'ai un retour</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== v8 : formulaire de retours ===== -->
+  <div class="modal-wrap" id="retours-wrap" role="dialog" aria-modal="true" aria-labelledby="retours-titre" hidden>
+    <div class="modal-box">
+      <button type="button" class="modal-close" aria-label="Fermer">✕</button>
+      <p class="eyebrow">Vos retours · Komune</p>
+      <h2 id="retours-titre">Dites-nous où on se trompe.</h2>
+      <p>Une erreur dans un vote, une source qui manque, un désaccord avec notre méthode, un bug&nbsp;: tout nous intéresse. On lit tout, et les corrections passent avant les nouveautés.</p>
+
+      <div class="retours-etat" id="retours-etat" role="status" hidden></div>
+
+      <form id="retours-form" novalidate>
+        <label class="champ">
+          <span class="lab">Sur quoi porte votre retour&nbsp;?</span>
+          <select id="r-sujet" name="sujet">
+            <option>Une erreur dans les données ou les votes</option>
+            <option>Une source manquante ou contestable</option>
+            <option>La charte et la méthode</option>
+            <option>Un bug ou un problème d'affichage</option>
+            <option>Une suggestion de sujet à traiter</option>
+            <option>Autre</option>
+          </select>
+        </label>
+
+        <label class="champ">
+          <span class="lab">Votre retour</span>
+          <span class="aide">Le plus précis possible&nbsp;: quelle loi, quel candidat·e, quelle phrase. Ça nous fait gagner un temps fou.</span>
+          <textarea id="r-message" name="message" maxlength="2500" required
+                    placeholder="Ex. : sur la loi Duplomb, le vote de groupe affiché ne correspond pas au scrutin n° 5678 de l'Assemblée..."></textarea>
+          <span class="compteur" id="r-compteur">0 / 2500</span>
+        </label>
+
+        <label class="champ">
+          <span class="lab">Votre email <span style="text-transform:none;font-weight:650">(facultatif)</span></span>
+          <span class="aide">Uniquement si vous voulez une réponse. On ne l'utilise pour rien d'autre, jamais.</span>
+          <input type="email" id="r-email" name="email" autocomplete="email" placeholder="prenom@exemple.fr">
+        </label>
+
+        <label class="champ">
+          <span class="lab">Votre prénom ou pseudo <span style="text-transform:none;font-weight:650">(facultatif)</span></span>
+          <input type="text" id="r-nom" name="nom" maxlength="80" autocomplete="nickname">
+        </label>
+
+        <div class="retours-pied">
+          <button type="submit" class="btn primary" id="r-envoyer">Envoyer mon retour</button>
+          <button type="button" class="btn" data-close-modal>Annuler</button>
+        </div>
+        <p class="retours-note">On enregistre aussi la section du comparateur où vous étiez, pour retrouver de quoi vous parlez. Pas de cookie, pas de traceur, pas de revente&nbsp;: on n'a rien à vendre.</p>
+      </form>
+    </div>
   </div>
 
   <!-- ===== Komune, le chatbot ===== -->
@@ -1494,6 +1699,153 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && !wrap.hidden) fermer();
       });
+    })();
+
+    /* ==================== v8 : PASTILLE BETA + RETOURS ==================== */
+    (function () {
+      /* ---------------------------------------------------------------
+         COLLECTE DES RETOURS
+         Pour brancher le Google Form, remplir les cinq valeurs ci-dessous.
+         `action`  = l'URL du formulaire qui finit par /formResponse
+         `champs`  = l'identifiant entry.XXXXXXX de chaque question
+         Tant que `action` est vide, le formulaire le dit honnetement
+         au lieu de faire semblant d'envoyer.
+      --------------------------------------------------------------- */
+      var COLLECTE = {
+        action: '',
+        champs: { sujet: '', message: '', email: '', nom: '', contexte: '' }
+      };
+
+      function ouvrable(id) {
+        var wrap = document.getElementById(id);
+        if (!wrap) return null;
+        var api = {
+          wrap: wrap,
+          dernierFocus: null,
+          ouvrir: function () {
+            api.dernierFocus = document.activeElement;
+            wrap.hidden = false;
+            document.body.style.overflow = 'hidden';
+            var c = wrap.querySelector('.modal-close');
+            if (c) c.focus();
+          },
+          fermer: function () {
+            wrap.hidden = true;
+            if (!document.querySelector('.modal-wrap:not([hidden])') &&
+                (!document.getElementById('charte-wrap') || document.getElementById('charte-wrap').hidden)) {
+              document.body.style.overflow = '';
+            }
+            if (api.dernierFocus && api.dernierFocus.focus) api.dernierFocus.focus();
+          }
+        };
+        wrap.querySelectorAll('.modal-close, [data-close-modal]').forEach(function (b) {
+          b.addEventListener('click', function () { api.fermer(); });
+        });
+        wrap.addEventListener('click', function (e) { if (e.target === wrap) api.fermer(); });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && !wrap.hidden) api.fermer();
+        });
+        return api;
+      }
+
+      var beta = ouvrable('beta-wrap');
+      var retours = ouvrable('retours-wrap');
+
+      var btnWhy = document.getElementById('beta-why');
+      if (btnWhy && beta) btnWhy.addEventListener('click', function () { beta.ouvrir(); });
+
+      var btnRet = document.getElementById('retours-fab');
+      if (btnRet && retours) btnRet.addEventListener('click', function () { retours.ouvrir(); });
+
+      var passerelle = document.getElementById('beta-vers-retours');
+      if (passerelle && beta && retours) {
+        passerelle.addEventListener('click', function () { beta.fermer(); retours.ouvrir(); });
+      }
+
+      /* ---------- compteur de caracteres ---------- */
+      var msg = document.getElementById('r-message');
+      var cpt = document.getElementById('r-compteur');
+      if (msg && cpt) {
+        msg.addEventListener('input', function () {
+          cpt.textContent = msg.value.length + ' / 2500';
+        });
+      }
+
+      /* ---------- quelle section le lecteur regardait ---------- */
+      function sectionCourante() {
+        var titre = '', best = Infinity;
+        document.querySelectorAll('main section[id], section[id]').forEach(function (sec) {
+          var r = sec.getBoundingClientRect();
+          if (r.top <= 140 && Math.abs(r.top) < best) { best = Math.abs(r.top); titre = sec.id; }
+        });
+        return titre || 'haut de page';
+      }
+
+      /* ---------- envoi ---------- */
+      var form = document.getElementById('retours-form');
+      var etat = document.getElementById('retours-etat');
+      var bouton = document.getElementById('r-envoyer');
+
+      function dire(texte, ok) {
+        if (!etat) return;
+        etat.hidden = false;
+        etat.className = 'retours-etat ' + (ok ? 'ok' : 'ko');
+        etat.textContent = texte;
+      }
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var texte = (msg && msg.value || '').trim();
+          if (texte.length < 10) {
+            dire('Il nous faut un peu plus que ça pour agir : décrivez le problème en quelques mots.', false);
+            if (msg) msg.focus();
+            return;
+          }
+          var mail = (document.getElementById('r-email').value || '').trim();
+          if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) {
+            dire('Cet email a l\'air incomplet. Corrigez-le, ou laissez le champ vide.', false);
+            document.getElementById('r-email').focus();
+            return;
+          }
+
+          if (!COLLECTE.action) {
+            dire('La collecte automatique n\'est pas encore branchée sur cette page. En attendant, écrivez-nous à contact@komunemedia.fr : c\'est lu par la même personne et rien ne sera perdu.', false);
+            return;
+          }
+
+          bouton.disabled = true;
+          bouton.textContent = 'Envoi...';
+
+          var fd = new FormData();
+          fd.append(COLLECTE.champs.sujet, document.getElementById('r-sujet').value);
+          fd.append(COLLECTE.champs.message, texte);
+          if (COLLECTE.champs.email) fd.append(COLLECTE.champs.email, mail);
+          if (COLLECTE.champs.nom) fd.append(COLLECTE.champs.nom, (document.getElementById('r-nom').value || '').trim());
+          if (COLLECTE.champs.contexte) {
+            fd.append(COLLECTE.champs.contexte, 'section : ' + sectionCourante() + ' · écran : ' +
+              window.innerWidth + 'x' + window.innerHeight);
+          }
+
+          fetch(COLLECTE.action, { method: 'POST', mode: 'no-cors', body: fd })
+            .then(function () {
+              form.innerHTML =
+                '<div class="retours-merci">' +
+                  '<div class="grand" aria-hidden="true">💛</div>' +
+                  '<h3 style="margin:0 0 8px;font-size:26px">Merci, c\'est parti.</h3>' +
+                  '<p style="max-width:44ch;margin:0 auto 16px">On lit tout. Si votre retour signale une erreur, la correction passera avant les nouveautés.</p>' +
+                  '<button type="button" class="btn" data-close-modal>Fermer</button>' +
+                '</div>';
+              form.querySelector('[data-close-modal]').addEventListener('click', function () { retours.fermer(); });
+              if (etat) etat.hidden = true;
+            })
+            .catch(function () {
+              bouton.disabled = false;
+              bouton.textContent = 'Envoyer mon retour';
+              dire('L\'envoi a échoué, sans doute un souci de réseau. Réessayez, ou écrivez-nous à contact@komunemedia.fr.', false);
+            });
+        });
+      }
     })();
 
     /* ==================== sommaire actif ==================== */
