@@ -67,7 +67,7 @@
     .ticker-track span { padding: 0 18px; }
     @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    .page { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: 14px 0 90px; }
+    .page { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: 14px 0 150px; }
 
     /* ---------- entête ---------- */
     .site-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 8px 2px 16px; flex-wrap: wrap; }
@@ -536,6 +536,11 @@
       .foot-logo { height: 30px; }
     }
 
+    .lien-retours {
+      border: 0; padding: 0; background: none; color: inherit; cursor: pointer;
+      font: inherit; font-weight: 800; text-decoration: underline;
+    }
+    .lien-retours:hover { background: var(--yellow); }
     .foot-charte {
       border: 0; padding: 0; background: none; color: inherit; cursor: pointer;
       font: inherit; font-weight: 800; text-decoration: underline;
@@ -699,6 +704,7 @@
 
     @media (max-width: 760px) {
       #beta-dock { left: 8px; bottom: 8px; gap: 7px; max-width: calc(100vw - 16px); }
+      .page { padding-bottom: 215px; }
       .dock-long { display: none; }
       .dock-court { display: inline; }
       .beta-pill, #retours-fab { font-size: 12.5px; box-shadow: 3px 3px 0 var(--ink); }
@@ -974,7 +980,7 @@
         <div class="row"><span class="badge-align">➖ Non testable</span><p>Pas de vote ni d'acte possible (pas de mandat, ministre qui ne vote pas, texte sans scrutin). Ce n'est pas une mauvaise note.</p></div>
         <div class="row"><span class="badge-align">🔀 Position collective hétérogène</span><p>Le parti ou le groupe se divise&nbsp;: à partir de 20&nbsp;% de voix divergentes dans un vote, on ne parle plus d'une «&nbsp;ligne&nbsp;» mais d'une position hétérogène.</p></div>
       </div>
-      <p class="note-bas">Ce comparateur est un travail journalistique citoyen, en cours et daté. Une case «&nbsp;en cours de vérification&nbsp;» signifie que la recherche continue, pas qu'une position n'existe pas. Vous repérez une erreur&nbsp;? Écrivez-nous, on corrige et on le dit&nbsp;: <a href="mailto:contact@komunemedia.fr">contact@komunemedia.fr</a>.</p>
+      <p class="note-bas">Ce comparateur est un travail journalistique citoyen, en cours et daté. Une case «&nbsp;en cours de vérification&nbsp;» signifie que la recherche continue, pas qu'une position n'existe pas. Vous repérez une erreur&nbsp;? <button type="button" class="lien-retours" data-open-retours>Dites-le-nous</button>, on corrige et on le dit.</p>
     </section>
 
     <!-- ===== LES SOURCES ===== -->
@@ -996,7 +1002,7 @@
         <a href="../">Accueil</a>
         <a href="../soutenir/">Nous soutenir</a>
         <button type="button" class="foot-charte" data-open-charte>Notre charte</button>
-        <a href="mailto:contact@komunemedia.fr">Signaler une erreur</a>
+        <button type="button" class="foot-charte" data-open-retours>Signaler une erreur</button>
       </div>
     </footer>
   </div>
@@ -1183,7 +1189,7 @@
       </details>
 
       <p class="charte-pied">
-        <strong>Contredisez-nous.</strong> Une erreur, une source qui manque, un vote mal interprété, un texte oublié, une formulation qui vous semble orientée&nbsp;: écrivez-nous à <a href="mailto:contact@komunemedia.fr?subject=Retour%20sur%20le%20comparateur%20Komune">contact@komunemedia.fr</a>. Les critiques argumentées sont traitées et, quand elles ont raison, publiées. C'est comme ça qu'un outil citoyen reste citoyen.
+        <strong>Contredisez-nous.</strong> Une erreur, une source qui manque, un vote mal interprété, un texte oublié, une formulation qui vous semble orientée&nbsp;: passez par le bouton <button type="button" class="lien-retours" data-open-retours>«&nbsp;j'ai des retours&nbsp;»</button>, en bas à gauche de chaque page. Les critiques argumentées sont traitées et, quand elles ont raison, publiées. C'est comme ça qu'un outil citoyen reste citoyen.
       </p>
     </div>
   </div>
@@ -1711,6 +1717,7 @@
          Tant que `action` est vide, le formulaire le dit honnetement
          au lieu de faire semblant d'envoyer.
       --------------------------------------------------------------- */
+      var MAIL_RETOURS = 'anna.jegopro@gmail.com';
       var COLLECTE = {
         action: '',
         champs: { sujet: '', message: '', email: '', nom: '', contexte: '' }
@@ -1754,8 +1761,9 @@
       var btnWhy = document.getElementById('beta-why');
       if (btnWhy && beta) btnWhy.addEventListener('click', function () { beta.ouvrir(); });
 
-      var btnRet = document.getElementById('retours-fab');
-      if (btnRet && retours) btnRet.addEventListener('click', function () { retours.ouvrir(); });
+      document.querySelectorAll('#retours-fab, [data-open-retours]').forEach(function (b) {
+        if (retours) b.addEventListener('click', function () { retours.ouvrir(); });
+      });
 
       var passerelle = document.getElementById('beta-vers-retours');
       if (passerelle && beta && retours) {
@@ -1809,8 +1817,42 @@
             return;
           }
 
+          var sujet = document.getElementById('r-sujet').value;
+          var nom = (document.getElementById('r-nom').value || '').trim();
+          var corps =
+            'Sujet : ' + sujet + '\n' +
+            'Section : ' + sectionCourante() + '\n' +
+            (nom ? 'De : ' + nom + '\n' : '') +
+            (mail ? 'Email : ' + mail + '\n' : '') +
+            '\n' + texte + '\n';
+
+          /* Pas de collecte automatique branchée : on passe par le logiciel
+             de mail du lecteur. Rien n'est perdu, et il garde la main. */
           if (!COLLECTE.action) {
-            dire('La collecte automatique n\'est pas encore branchée sur cette page. En attendant, écrivez-nous à contact@komunemedia.fr : c\'est lu par la même personne et rien ne sera perdu.', false);
+            var lien = 'mailto:' + MAIL_RETOURS +
+              '?subject=' + encodeURIComponent('Retour comparateur - ' + sujet) +
+              '&body=' + encodeURIComponent(corps);
+            window.location.href = lien;
+            form.innerHTML =
+              '<div class="retours-merci">' +
+                '<div class="grand" aria-hidden="true">💛</div>' +
+                '<h3 style="margin:0 0 8px;font-size:26px">Votre message est prêt.</h3>' +
+                '<p style="max-width:46ch;margin:0 auto 14px">Il vient de s\'ouvrir dans votre logiciel de mail&nbsp;: il ne reste qu\'à l\'envoyer. Si rien ne s\'est ouvert, copiez votre retour et envoyez-le à <b>' + MAIL_RETOURS + '</b>.</p>' +
+                '<div class="cta-row" style="justify-content:center">' +
+                  '<button type="button" class="btn primary" id="r-copier">📋 Copier mon retour</button>' +
+                  '<button type="button" class="btn" data-close-modal>Fermer</button>' +
+                '</div>' +
+              '</div>';
+            var cop = document.getElementById('r-copier');
+            cop.addEventListener('click', function () {
+              var t = MAIL_RETOURS + '\n\nRetour comparateur - ' + sujet + '\n\n' + corps;
+              if (navigator.clipboard) {
+                navigator.clipboard.writeText(t).then(function () { cop.textContent = '✅ Copié'; })
+                  .catch(function () { cop.textContent = 'Copie impossible'; });
+              } else { cop.textContent = 'Copie impossible'; }
+            });
+            form.querySelector('[data-close-modal]').addEventListener('click', function () { retours.fermer(); });
+            if (etat) etat.hidden = true;
             return;
           }
 
@@ -1842,7 +1884,7 @@
             .catch(function () {
               bouton.disabled = false;
               bouton.textContent = 'Envoyer mon retour';
-              dire('L\'envoi a échoué, sans doute un souci de réseau. Réessayez, ou écrivez-nous à contact@komunemedia.fr.', false);
+              dire('L\'envoi a échoué, sans doute un souci de réseau. Réessayez, ou écrivez-nous à ' + MAIL_RETOURS + '.', false);
             });
         });
       }
@@ -2032,7 +2074,7 @@
       var sujet = horsChamp(question);
       if (sujet) {
         addMsg('<p>Bonne question - mais pour l’instant, le comparateur ne couvre que la <strong>santé</strong> et l’<strong>écologie</strong> (25 textes vérifiés). On préfère être solides sujet par sujet que flous sur tout.</p>' +
-          '<p>' + esc('Le sujet « ' + sujet + ' » fait partie des prochains chantiers, nourris par le questionnaire citoyen.') + ' Dites-nous qu’il vous intéresse : <a href="mailto:contact@komunemedia.fr">contact@komunemedia.fr</a> 💌</p>');
+          '<p>' + esc('Le sujet « ' + sujet + ' » fait partie des prochains chantiers, nourris par le questionnaire citoyen.') + ' Dites-nous qu’il vous intéresse par le bouton « j’ai des retours », en bas à gauche 💌</p>');
         return;
       }
       addMsg('<p>Je n’ai pas trouvé ça dans les données du comparateur (santé &amp; écologie, 25 textes, 5 candidat·es). Je ne préfère pas inventer 🤷</p>' +
