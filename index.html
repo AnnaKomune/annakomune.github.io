@@ -712,7 +712,121 @@
       text-shadow: 3px 3px 0 var(--pink);
     }
 
-    /* VIDEOS INSTAGRAM */
+    /* VIDEOS */
+    /* ---------- VIDEOS : YouTube (clic pour lire) ---------- */
+    .yt-section {
+      margin-top: 18px;
+      padding: clamp(22px, 3.2vw, 38px);
+      border: 2px solid var(--ink);
+      border-radius: var(--radius-xl);
+      background: var(--white);
+      box-shadow: 12px 12px 0 var(--purple);
+    }
+
+    .yt-intro { margin-bottom: 18px; color: var(--muted); }
+
+    .yt-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .yt-card { display: flex; flex-direction: column; gap: 9px; min-width: 0; height: 100%; }
+
+    .yt-play {
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      border-radius: 20px;
+      background: var(--ink);
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+
+    .yt-thumb {
+      position: relative;
+      display: block;
+      aspect-ratio: 16 / 9;
+      background: var(--purple);
+    }
+
+    .yt-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    .yt-thumb.sans-image {
+      background:
+        radial-gradient(circle at 20% 22%, rgba(255, 255, 146, .92), transparent 44%),
+        linear-gradient(135deg, var(--purple), var(--blue));
+    }
+
+    .yt-badge {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      padding-left: 3px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--pink);
+      color: var(--ink);
+      font-size: 19px;
+      transform: translate(-50%, -50%);
+      transition: transform .16s ease, background .16s ease;
+    }
+
+    .yt-label {
+      display: block;
+      padding: 12px 14px 14px;
+      background: var(--white);
+      color: var(--ink);
+      font-size: 15.5px;
+      font-weight: 700;
+      line-height: 1.3;
+      /* la vignette garde sa hauteur, le titre prend le reste : toutes les
+         cartes d'une meme rangee finissent a la meme hauteur et les liens
+         « Voir sur YouTube » restent alignes. */
+      flex: 1 1 auto;
+    }
+
+    .yt-play:hover { transform: translateY(-3px); }
+    .yt-play:hover .yt-badge { background: var(--yellow); transform: translate(-50%, -50%) scale(1.12); }
+    .yt-play:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+    .yt-card.sh-pink .yt-play { box-shadow: 6px 6px 0 var(--pink); }
+    .yt-card.sh-sky .yt-play { box-shadow: 6px 6px 0 var(--sky); }
+    .yt-card.sh-gold .yt-play { box-shadow: 6px 6px 0 var(--gold); }
+    .yt-card.sh-green .yt-play { box-shadow: 6px 6px 0 var(--green); }
+    .yt-card.sh-purple .yt-play { box-shadow: 6px 6px 0 var(--purple); }
+    .yt-card.sh-blue .yt-play { box-shadow: 6px 6px 0 var(--sky); }
+
+    .yt-frame { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+    .yt-lecture { cursor: default; }
+    .yt-lecture:hover { transform: none; }
+
+    .yt-open {
+      align-self: start;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    .yt-open:hover { background: var(--yellow); color: var(--ink); }
+
+    /* ---------- VIDEOS : Instagram (couverture + lightbox) ---------- */
     .videos {
       margin-top: 20px;
       padding: clamp(28px, 4vw, 48px);
@@ -723,118 +837,172 @@
 
     .videos h2 { color: var(--cream); }
 
-    .video-row {
+    .videos-intro {
+      margin-top: 10px;
+      max-width: 62ch;
+      color: rgba(252, 247, 232, .74);
+      font-size: 16px;
+    }
+
+    .ig-row {
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: 272px;
+      grid-auto-columns: 228px;
       gap: 16px;
       overflow-x: auto;
-      padding: 16px 2px 14px;
+      padding: 18px 2px 14px;
       scroll-snap-type: x mandatory;
     }
 
-    .video-card {
-      position: relative;
+    .ig-card {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
       min-width: 0;
-      height: 420px;
-      overflow: hidden;
-      border: 1px solid rgba(252,247,232,.19);
-      border-radius: 24px;
-      background: var(--cream);
-      box-shadow: 0 14px 34px rgba(0,0,0,.2);
       scroll-snap-align: start;
     }
 
-    .video-card iframe {
+    .ig-btn {
       display: block;
       width: 100%;
-      height: 100%;
-      border: 0;
-      background: var(--cream);
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      border-radius: 22px;
+      background: var(--purple);
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .16s ease;
     }
 
-    .video-open {
-      position: absolute;
-      right: 12px;
-      bottom: 12px;
-      z-index: 2;
-      padding: 9px 11px;
-      border-radius: 999px;
-      background: rgba(51,46,50,.90);
-      color: var(--cream);
-      font-size: 12px;
-      font-weight: 800;
-      backdrop-filter: blur(6px);
-    }
+    .ig-card.sh-pink .ig-btn { box-shadow: 7px 7px 0 var(--pink); }
+    .ig-card.sh-sky .ig-btn { box-shadow: 7px 7px 0 var(--sky); }
+    .ig-card.sh-green .ig-btn { box-shadow: 7px 7px 0 var(--green); }
+    .ig-card.sh-gold .ig-btn { box-shadow: 7px 7px 0 var(--gold); }
+    .ig-card.sh-purple .ig-btn { box-shadow: 7px 7px 0 var(--pink); }
+    .ig-card.sh-yellow .ig-btn { box-shadow: 7px 7px 0 var(--yellow); }
+    .ig-card.sh-blue .ig-btn { box-shadow: 7px 7px 0 var(--sky); }
 
-    .video-open:hover { background: var(--pink); color: var(--ink); }
+    .ig-btn:hover { transform: translateY(-3px); }
+    .ig-btn:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
 
-    .comparator-instagram-card {
-      width: 100%;
-      height: clamp(460px, 58vw, 640px);
-      margin-top: 4px;
-      scroll-snap-align: initial;
-    }
-
-    .comparator-instagram-card iframe {
-      height: 100%;
-    }
-
-
-    .comparator-feature-video {
-      width: min(100%, 330px);
-      height: 520px;
-      margin-top: 4px;
-      background: var(--cream);
-      border-color: rgba(252,247,232,.19);
-    }
-
-    .comparator-feature-video iframe {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      background: var(--cream);
-    }
-
-
-    .instagram-official-embed {
+    .ig-cover {
       position: relative;
+      display: block;
+      aspect-ratio: 9 / 16;
+    }
+
+    .ig-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+    .ig-cover::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 62%;
+      background: linear-gradient(rgba(51, 46, 50, 0), rgba(51, 46, 50, .9));
+      pointer-events: none;
+    }
+
+    .ig-badge {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      z-index: 2;
       display: grid;
       place-items: center;
-      width: min(100%, 540px);
-      min-height: 540px;
-      height: auto;
-      padding: 0;
-      overflow: visible;
-      border: 1px solid rgba(252,247,232,.19);
+      width: 34px;
+      height: 34px;
+      padding-left: 2px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 13px;
+      transition: background .16s ease;
+    }
+
+    .ig-btn:hover .ig-badge { background: var(--pink); }
+
+    .ig-legende {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 11px;
+      z-index: 2;
+      color: var(--cream);
+      font-size: 13.5px;
+      font-weight: 800;
+      line-height: 1.28;
+    }
+
+    .ig-open {
+      align-self: start;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: rgba(252, 247, 232, .78);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    .ig-open:hover { background: var(--pink); color: var(--ink); }
+
+    .ig-lb {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      background: rgba(51, 46, 50, .74);
+      backdrop-filter: blur(3px);
+    }
+
+    .ig-lb[hidden] { display: none; }
+
+    .ig-lb-box {
+      position: relative;
+      width: min(94vw, 400px);
+      height: min(86vh, 800px);
+      overflow: hidden;
+      border: 2px solid var(--ink);
       border-radius: 24px;
       background: var(--cream);
-      box-shadow: 0 14px 34px rgba(0,0,0,.22);
+      box-shadow: 12px 12px 0 var(--purple);
     }
 
-    .instagram-official-embed .instagram-media {
-      min-width: 0 !important;
-      width: 100% !important;
-      max-width: 540px !important;
-      margin: 0 auto !important;
-      border-radius: 24px !important;
-      background: var(--cream) !important;
-    }
+    .ig-lb-box iframe { display: block; width: 100%; height: 100%; border: 0; }
 
-    .instagram-official-embed .video-open {
+    .ig-lb-close {
       position: absolute;
-      right: 12px;
-      bottom: 12px;
+      right: 9px;
+      top: 9px;
       z-index: 3;
+      width: 36px;
+      height: 36px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--pink);
+      color: var(--ink);
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1;
+      cursor: pointer;
     }
+
+    .ig-lb-close:hover { background: var(--yellow); }
 
     @media (max-width: 980px) {
-      .comparator-feature-video { width: min(100%, 360px); }
+      .yt-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 640px) {
-      .comparator-feature-video { width: 100%; height: 500px; }
+      .yt-grid { grid-template-columns: minmax(0, 1fr); }
+      .yt-section { box-shadow: 7px 7px 0 var(--purple); }
+      .ig-row { grid-auto-columns: 198px; }
     }
 
     /* CONTACT */
@@ -1065,18 +1233,161 @@
 
       <section class="carousel" id="latest-articles" aria-label="Derniers articles Komune"></section>
 
-      <section class="videos" aria-labelledby="videos-title">
-        <h2 id="videos-title">Vidéos</h2>
-        <div class="video-row" aria-label="Formats Instagram Komune">
-          <article class="video-card"><iframe title="Publication Instagram Komune" loading="lazy" src="https://www.instagram.com/p/DZcOU3KtyHY/embed/"></iframe><a class="video-open" href="https://www.instagram.com/p/DZcOU3KtyHY/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
-          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DXeyQEVjYzm/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DXeyQEVjYzm/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
-          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DY2TNEitttX/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DY2TNEitttX/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
-          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DWn1lHyDZLj/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DWn1lHyDZLj/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
-          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DVnhfW3DcaU/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DVnhfW3DcaU/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
-          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DXMlQI4DXh4/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DXMlQI4DXh4/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
-          <article class="video-card"><iframe title="Reel Instagram Komune" loading="lazy" src="https://www.instagram.com/reel/DZDSTJktI6g/embed/"></iframe><a class="video-open" href="https://www.instagram.com/reel/DZDSTJktI6g/" target="_blank" rel="noopener noreferrer">Voir sur Instagram ↗</a></article>
+      <div class="section-head">
+        <h2>Nos vidéos</h2>
+        <a class="articles-link" href="https://www.youtube.com/@komune4882" target="_blank" rel="noopener noreferrer">Notre chaîne YouTube &#8599;</a>
+      </div>
+
+      <section class="yt-section" aria-labelledby="yt-title">
+        <h3 class="eyebrow" id="yt-title">Sur YouTube - nos formats longs</h3>
+        <p class="yt-intro">Enquêtes, reportages et décryptages. Rien ne se charge avant votre clic&nbsp;: la lecture se lance seulement quand vous le décidez.</p>
+        <div class="yt-grid">
+          <article class="yt-card sh-pink">
+            <button type="button" class="yt-play" data-yt="_AR48pR6zyE" aria-label="Lire la vidéo : POURQUOI LA RD CONGO EST EN GUERRE ? Bingo EP4">
+              <span class="yt-thumb">
+                <img src="https://i.ytimg.com/vi/_AR48pR6zyE/maxresdefault.jpg" data-repli="https://i.ytimg.com/vi/_AR48pR6zyE/hqdefault.jpg" alt="" width="480" height="270" loading="lazy" decoding="async">
+                <span class="yt-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="yt-label">POURQUOI LA RD CONGO EST EN GUERRE ? Bingo EP4</span>
+            </button>
+            <a class="yt-open" href="https://www.youtube.com/watch?v=_AR48pR6zyE" target="_blank" rel="noopener noreferrer">Voir sur YouTube &#8599;</a>
+          </article>
+          <article class="yt-card sh-sky">
+            <button type="button" class="yt-play" data-yt="ikmgwLqigAE" aria-label="Lire la vidéo : Enfants placés : que vivent-ils vraiment ? Bingo EP3">
+              <span class="yt-thumb">
+                <img src="https://i.ytimg.com/vi/ikmgwLqigAE/maxresdefault.jpg" data-repli="https://i.ytimg.com/vi/ikmgwLqigAE/hqdefault.jpg" alt="" width="480" height="270" loading="lazy" decoding="async">
+                <span class="yt-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="yt-label">Enfants placés : que vivent-ils vraiment ? Bingo EP3</span>
+            </button>
+            <a class="yt-open" href="https://www.youtube.com/watch?v=ikmgwLqigAE" target="_blank" rel="noopener noreferrer">Voir sur YouTube &#8599;</a>
+          </article>
+          <article class="yt-card sh-gold">
+            <button type="button" class="yt-play" data-yt="4--SGjUL22E" aria-label="Lire la vidéo : On debunk les arguments du RN - Bingo EP2">
+              <span class="yt-thumb">
+                <img src="https://i.ytimg.com/vi/4--SGjUL22E/maxresdefault.jpg" data-repli="https://i.ytimg.com/vi/4--SGjUL22E/hqdefault.jpg" alt="" width="480" height="270" loading="lazy" decoding="async">
+                <span class="yt-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="yt-label">On debunk les arguments du RN - Bingo EP2</span>
+            </button>
+            <a class="yt-open" href="https://www.youtube.com/watch?v=4--SGjUL22E" target="_blank" rel="noopener noreferrer">Voir sur YouTube &#8599;</a>
+          </article>
+          <article class="yt-card sh-green">
+            <button type="button" class="yt-play" data-yt="qQX_mferWuI" aria-label="Lire la vidéo : Ancien mineur isolé étranger, il lutte contre l'isolement des jeunes">
+              <span class="yt-thumb">
+                <img src="https://i.ytimg.com/vi/qQX_mferWuI/maxresdefault.jpg" data-repli="https://i.ytimg.com/vi/qQX_mferWuI/hqdefault.jpg" alt="" width="480" height="270" loading="lazy" decoding="async">
+                <span class="yt-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="yt-label">Ancien mineur isolé étranger, il lutte contre l'isolement des jeunes</span>
+            </button>
+            <a class="yt-open" href="https://www.youtube.com/watch?v=qQX_mferWuI" target="_blank" rel="noopener noreferrer">Voir sur YouTube &#8599;</a>
+          </article>
+          <article class="yt-card sh-purple">
+            <button type="button" class="yt-play" data-yt="6bSOA1UAaBQ" aria-label="Lire la vidéo : Les clichés sur les femmes métisses, avec Eva de toffeecluub">
+              <span class="yt-thumb">
+                <img src="https://i.ytimg.com/vi/6bSOA1UAaBQ/maxresdefault.jpg" data-repli="https://i.ytimg.com/vi/6bSOA1UAaBQ/hqdefault.jpg" alt="" width="480" height="270" loading="lazy" decoding="async">
+                <span class="yt-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="yt-label">Les clichés sur les femmes métisses, avec Eva de toffeecluub</span>
+            </button>
+            <a class="yt-open" href="https://www.youtube.com/watch?v=6bSOA1UAaBQ" target="_blank" rel="noopener noreferrer">Voir sur YouTube &#8599;</a>
+          </article>
+          <article class="yt-card sh-blue">
+            <button type="button" class="yt-play" data-yt="XVSKpTXFWB0" aria-label="Lire la vidéo : Méritocratie, coiffeur à l'Assemblée, RER D : Suline nous dit tout">
+              <span class="yt-thumb">
+                <img src="https://i.ytimg.com/vi/XVSKpTXFWB0/maxresdefault.jpg" data-repli="https://i.ytimg.com/vi/XVSKpTXFWB0/hqdefault.jpg" alt="" width="480" height="270" loading="lazy" decoding="async">
+                <span class="yt-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="yt-label">Méritocratie, coiffeur à l'Assemblée, RER D : Suline nous dit tout</span>
+            </button>
+            <a class="yt-open" href="https://www.youtube.com/watch?v=XVSKpTXFWB0" target="_blank" rel="noopener noreferrer">Voir sur YouTube &#8599;</a>
+          </article>
         </div>
       </section>
+
+      <section class="videos" aria-labelledby="videos-title">
+        <h2 id="videos-title">Sur Instagram</h2>
+        <p class="videos-intro">Nos formats courts. Cliquez sur une couverture pour lire la vidéo ici, ou ouvrez-la directement sur Instagram.</p>
+        <div class="ig-row" aria-label="Vidéos Instagram Komune">
+          <article class="ig-card sh-pink">
+            <button type="button" class="ig-btn" data-ig="reel/DXeyQEVjYzm" aria-label="Ouvrir la vidéo Instagram : Micro-agressions racistes : des scènes fictives, des vécus réels">
+              <span class="ig-cover">
+                <img src="img/ig-DXeyQEVjYzm.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+                <span class="ig-legende">Micro-agressions racistes : des scènes fictives, des vécus réels</span>
+              </span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DXeyQEVjYzm/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-sky">
+            <button type="button" class="ig-btn" data-ig="reel/DXMlQI4DXh4" aria-label="Ouvrir la vidéo Instagram : « Je ne suis pas raciste » : est-ce que ça suffit vraiment ?">
+              <span class="ig-cover">
+                <img src="img/ig-DXMlQI4DXh4.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+                <span class="ig-legende">« Je ne suis pas raciste » : est-ce que ça suffit vraiment ?</span>
+              </span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DXMlQI4DXh4/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-green">
+            <button type="button" class="ig-btn" data-ig="reel/DY2TNEitttX" aria-label="Ouvrir la vidéo Instagram : Écologie et « néo-extractivisme vert » : ce que ça change">
+              <span class="ig-cover">
+                <img src="img/ig-DY2TNEitttX.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+                <span class="ig-legende">Écologie et « néo-extractivisme vert » : ce que ça change</span>
+              </span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DY2TNEitttX/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-gold">
+            <button type="button" class="ig-btn" data-ig="reel/DWn1lHyDZLj" aria-label="Ouvrir la vidéo Instagram : Dans l'Ain, Yaya lutte contre l'isolement en milieu rural">
+              <span class="ig-cover">
+                <img src="img/ig-DWn1lHyDZLj.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+                <span class="ig-legende">Dans l'Ain, Yaya lutte contre l'isolement en milieu rural</span>
+              </span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DWn1lHyDZLj/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-purple">
+            <button type="button" class="ig-btn" data-ig="reel/DZDSTJktI6g" aria-label="Ouvrir la vidéo Instagram : Une BD passée au crible : notre analyse et nos précisions">
+              <span class="ig-cover">
+                <img src="img/ig-DZDSTJktI6g.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+                <span class="ig-legende">Une BD passée au crible : notre analyse et nos précisions</span>
+              </span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DZDSTJktI6g/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-yellow">
+            <button type="button" class="ig-btn" data-ig="reel/DVnhfW3DcaU" aria-label="Ouvrir la vidéo Instagram : L'article de Monsieur Kys, écrit depuis la peur et la rage">
+              <span class="ig-cover">
+                <img src="img/ig-DVnhfW3DcaU.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+                <span class="ig-legende">L'article de Monsieur Kys, écrit depuis la peur et la rage</span>
+              </span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DVnhfW3DcaU/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-blue">
+            <button type="button" class="ig-btn" data-ig="p/DZcOU3KtyHY" aria-label="Ouvrir la vidéo Instagram : La « honte noire » : d'où vient cette expression raciste">
+              <span class="ig-cover">
+                <img src="img/ig-DZcOU3KtyHY.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+                <span class="ig-legende">La « honte noire » : d'où vient cette expression raciste</span>
+              </span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/p/DZcOU3KtyHY/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+        </div>
+      </section>
+
+      <div class="ig-lb" id="ig-lb" hidden role="dialog" aria-modal="true" aria-label="Vidéo Instagram">
+        <div class="ig-lb-box">
+          <button type="button" class="ig-lb-close" id="ig-lb-close" aria-label="Fermer la vidéo">&#10005;</button>
+          <div id="ig-lb-slot"></div>
+        </div>
+      </div>
 
       <section class="contact" aria-label="Nous contacter">
         <div class="contact-card">
@@ -1122,5 +1433,87 @@
     <img src="img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">
     <span>© Komune Média - média citoyen, indépendant et sourcé.</span>
   </div>
+  <!-- ===== Videos : YouTube en clic-pour-lire, Instagram en lightbox ===== -->
+  <script>
+    (function () {
+      /* Miniatures YouTube : maxresdefault n'existe pas pour toutes les videos,
+         on retombe alors sur hqdefault. */
+      document.querySelectorAll('.yt-thumb img[data-repli]').forEach(function (im) {
+        im.addEventListener('error', function () {
+          var r = im.getAttribute('data-repli');
+          if (r && im.src !== r) { im.removeAttribute('data-repli'); im.src = r; return; }
+          /* Miniature vraiment indisponible : on masque l'image cassee et on
+             laisse un fond Komune plutot qu'une icone de fichier absent. */
+          im.style.display = 'none';
+          var t = im.closest('.yt-thumb');
+          if (t) t.classList.add('sans-image');
+        });
+      });
+
+      /* Le lecteur ne se charge qu'au clic : aucun cookie, aucune requete
+         YouTube avant que la personne l'ait demande. */
+      document.querySelectorAll('.yt-play').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var id = b.getAttribute('data-yt');
+          var titre = (b.querySelector('.yt-label') || {}).textContent || 'Vidéo';
+          var f = document.createElement('iframe');
+          f.className = 'yt-frame';
+          f.title = titre;
+          f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          f.setAttribute('allowfullscreen', '');
+          f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+          var boite = document.createElement('div');
+          boite.className = 'yt-play yt-lecture';
+          boite.appendChild(f);
+          var l = document.createElement('span');
+          l.className = 'yt-label';
+          l.textContent = titre;
+          boite.appendChild(l);
+          b.replaceWith(boite);
+        });
+      });
+
+      /* Instagram : la carte d'un post est fluide et haute. Dans une vignette
+         etroite elle serait rognee, alors on l'ouvre ici a sa vraie largeur. */
+      var lb = document.getElementById('ig-lb');
+      var slot = document.getElementById('ig-lb-slot');
+      var fermeture = document.getElementById('ig-lb-close');
+      if (!lb || !slot) return;
+      var precedent = null;
+
+      function ouvrir(chemin, titre) {
+        precedent = document.activeElement;
+        slot.innerHTML = '';
+        var f = document.createElement('iframe');
+        f.title = titre || 'Vidéo Instagram';
+        f.setAttribute('allowtransparency', 'true');
+        f.setAttribute('allowfullscreen', '');
+        f.src = 'https://www.instagram.com/' + chemin + '/embed/';
+        slot.appendChild(f);
+        lb.hidden = false;
+        document.body.style.overflow = 'hidden';
+        fermeture.focus();
+      }
+
+      function fermer() {
+        lb.hidden = true;
+        slot.innerHTML = '';
+        document.body.style.overflow = '';
+        if (precedent && precedent.focus) precedent.focus();
+      }
+
+      document.querySelectorAll('.ig-btn').forEach(function (b) {
+        b.addEventListener('click', function () {
+          ouvrir(b.getAttribute('data-ig'),
+                 (b.querySelector('.ig-legende') || {}).textContent);
+        });
+      });
+      fermeture.addEventListener('click', fermer);
+      lb.addEventListener('click', function (e) { if (e.target === lb) fermer(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !lb.hidden) fermer();
+      });
+    })();
+  </script>
 </body>
 </html>
