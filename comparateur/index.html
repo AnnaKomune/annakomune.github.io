@@ -774,7 +774,68 @@
     .loi-body { padding: 0 18px 18px; border-top: 2px solid var(--ink); background: var(--cream); }
     .loi-meta { font-size: 13.5px; color: var(--muted); font-weight: 700; padding-top: 12px; }
     .loi-resume-details summary { cursor: pointer; font-weight: 800; font-size: 14px; padding: 6px 0; color: var(--muted); }
-    .loi-resume-details p { white-space: pre-line; font-size: 14.5px; }
+    .loi-resume-details > p { white-space: pre-line; font-size: 14.5px; }
+    /* ---- « Ce que fait ce texte, en clair » : mise en forme lisible ---- */
+    .clair { --acc: var(--purple); max-width: 74ch; padding: 4px 0 8px; }
+    .clair.suj-ecologie { --acc: #2f6b47; }
+    .clair > * + * { margin-top: 12px; }
+    .clair-ligne {
+      background: var(--gold); border: 2px solid var(--ink); border-radius: 10px;
+      padding: 11px 14px; box-shadow: 3px 3px 0 var(--ink); font-size: 15px; line-height: 1.5;
+    }
+    .clair-ligne b {
+      display: block; font-family: 'Oswald', system-ui, sans-serif; text-transform: uppercase;
+      letter-spacing: .07em; font-size: 11.5px; font-weight: 600; margin-bottom: 4px; opacity: .8;
+    }
+    .clair-officiel {
+      font-size: 12.5px; font-weight: 700; color: var(--muted);
+      letter-spacing: .01em; padding-bottom: 2px;
+    }
+    .clair-titre {
+      font-family: 'Oswald', system-ui, sans-serif; font-size: 16px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .03em; margin: 22px 0 0;
+      padding-bottom: 5px; border-bottom: 3px solid var(--acc);
+    }
+    .clair-titre:first-child { margin-top: 4px; }
+    .clair-sous {
+      font-family: 'Oswald', system-ui, sans-serif; font-size: 12.5px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .07em; color: var(--ink);
+      margin: 20px 0 0; display: flex; align-items: center; gap: 9px;
+    }
+    .clair-sous::after { content: ''; flex: 1; height: 2px; background: var(--acc); opacity: .35; }
+    .clair-sous:first-child { margin-top: 4px; }
+    .clair-p { font-size: 15px; line-height: 1.62; }
+    .clair-liste { list-style: none; padding: 0; margin-top: 8px; }
+    .clair-liste li {
+      position: relative; padding-left: 20px; font-size: 15px; line-height: 1.55;
+    }
+    .clair-liste li + li { margin-top: 7px; }
+    .clair-liste li::before {
+      content: ''; position: absolute; left: 4px; top: .62em;
+      width: 7px; height: 7px; background: var(--acc); border-radius: 2px;
+    }
+    .clair-point {
+      border-left: 4px solid var(--acc); padding: 1px 0 1px 12px;
+    }
+    .clair-point + .clair-point { margin-top: 10px; }
+    .clair-point b {
+      display: block; font-family: 'Oswald', system-ui, sans-serif; font-size: 12px;
+      font-weight: 600; text-transform: uppercase; letter-spacing: .06em;
+      color: var(--acc); margin-bottom: 2px;
+    }
+    .clair-point span { display: block; font-size: 14.8px; line-height: 1.58; }
+    .clair-note {
+      margin-top: 20px; padding: 10px 12px; border: 1px dashed var(--line);
+      border-radius: 8px; background: rgba(255,255,255,.5);
+      font-size: 13px; line-height: 1.5; color: var(--muted);
+    }
+    .clair-note b {
+      font-family: 'Oswald', system-ui, sans-serif; text-transform: uppercase;
+      letter-spacing: .06em; font-size: 11px; margin-right: 6px;
+    }
+    @media (max-width: 620px) {
+      .clair-p, .clair-liste li, .clair-point span, .clair-ligne { font-size: 15.5px; }
+    }
     .grille { margin-top: 10px; border-top: 1px solid var(--line); }
     .cand-row { border-bottom: 1px solid var(--line); }
     .cand-row > summary {
@@ -2037,6 +2098,97 @@
       filtres.appendChild(b);
     });
 
+    /* ---------- lecture du champ resume (texte brut du classeur) ---------- */
+    var C_PUCE    = /^[-•·*]\s+/;
+    var C_ENTETE  = /^(objets? cl[ée]s?|dans le d[ée]tail|points? cl[ée]s?|mesures?|en d[ée]tail)\s*:?\s*$/i;
+    var C_COURTE  = /(version\s+(tr[èe]s\s+)?courte|pour\s+ton\s+tableau|r[ée]sum[ée]\s+court)/i;
+    var C_SOURCES = /^sur les sources\s*:?\s*/i;
+    var C_TITRE   = /^(loi|ppl|plf|plfss|projet de loi|proposition de loi|r[ée]solution|strat[ée]gie|plan|d[ée]cret)\b/i;
+    var C_NUM     = /^\d+\s*[.)]\s+(.{3,90})$/;
+    var C_LABEL   = /^([^:\n]{3,62}?)\s*:\s+(.+)$/;
+    var C_CHAPEAU = /^(en bref|en r[ée]sum[ée]|en gros|en une phrase|r[ée]sum[ée]|l'essentiel)$/i;
+    var C_PICTO   = /^([←-⯿️‍\u{1F300}-\u{1FAFF}\u{1F1E6}-\u{1F1FF}]+)\s*(.{3,80})$/u;
+
+    function sansAcc(s) {
+      return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    }
+
+    function enClair(txt, nom) {
+      var blocs = String(txt).replace(/\r\n/g, '\n').split(/\n\s*-{3,}\s*\n/);
+      var plus = blocs.length > 1;
+      var items = [], ligne = '', sources = '';
+      blocs.forEach(function (bloc, bi) {
+        var lignes = bloc.split('\n').map(function (x) { return x.trim(); })
+                         .filter(function (x) { return x.length; });
+        if (lignes.length) {
+          var L = lignes[0];
+          if (L.length <= 120 && L.slice(-1) !== '.' && C_TITRE.test(L)) {
+            if (plus) items.push({ k: 'titre', t: L });
+            else if (L.length > (nom || '').length + 6 ||
+                     sansAcc(L).replace(/[^a-z0-9]/g, '') !== sansAcc(nom).replace(/[^a-z0-9]/g, ''))
+              items.push({ k: 'officiel', t: L });
+            lignes = lignes.slice(1);
+          }
+        }
+        var mode = null, liste = false;
+        lignes.forEach(function (s) {
+          var m;
+          if (C_COURTE.test(s) && (s.slice(-1) === ':' || s.length < 70)) { mode = 'ligne'; return; }
+          if (C_SOURCES.test(s)) {
+            var r = s.replace(C_SOURCES, '').trim();
+            if (r) sources += (sources ? ' ' : '') + r; else mode = 'sources';
+            return;
+          }
+          if (C_ENTETE.test(s)) { mode = null; liste = false; return; }
+          if (mode === 'sources') { sources += (sources ? ' ' : '') + s; return; }
+          if (mode === 'ligne')   { ligne   += (ligne   ? ' ' : '') + s; return; }
+          if (C_PUCE.test(s)) { items.push({ k: 'puce', t: s.replace(C_PUCE, '') }); return; }
+          m = s.match(C_NUM);
+          if (m && m[1].slice(-1) !== '.') { items.push({ k: 'sous', t: s }); liste = true; return; }
+          m = s.match(C_PICTO);
+          if (m && m[2].slice(-1) !== '.') { items.push({ k: 'sous', t: m[2] }); liste = true; return; }
+          m = s.match(C_LABEL);
+          if (m && m[1].indexOf('.') < 0 && m[2].length > 25) {
+            if (C_CHAPEAU.test(m[1].trim())) { if (!ligne) ligne = m[2].trim(); return; }
+            items.push({ k: 'point', lab: m[1].trim(), t: m[2].trim() });
+            liste = true;
+            return;
+          }
+          if (s.length <= 66 && s.slice(-1) !== '.' && s.slice(-1) !== '?') {
+            items.push({ k: 'sous', t: s.replace(/[\s:]+$/, '') }); liste = true; return;
+          }
+          if (s.length <= 95 && s.slice(-1) === '?') { items.push({ k: 'sous', t: s }); liste = false; return; }
+          items.push({ k: (liste && s.length <= 240) ? 'puce' : 'texte', t: s });
+        });
+      });
+      return { items: items, ligne: ligne, sources: sources };
+    }
+
+    function htmlClair(l) {
+      var r = enClair(l.resume, l.nom || '');
+      var out = '<div class="clair suj-' + (l.sujet === 'sante' ? 'sante' : 'ecologie') + '">';
+      if (r.ligne) out += '<p class="clair-ligne"><b>En une ligne</b>' + esc(r.ligne) + '</p>';
+      var pile = [];
+      var vider = function () {
+        if (pile.length) {
+          out += '<ul class="clair-liste"><li>' + pile.join('</li><li>') + '</li></ul>';
+          pile = [];
+        }
+      };
+      r.items.forEach(function (it) {
+        if (it.k === 'puce') { pile.push(esc(it.t)); return; }
+        vider();
+        if (it.k === 'titre')     out += '<h5 class="clair-titre">' + esc(it.t) + '</h5>';
+        else if (it.k === 'sous') out += '<h6 class="clair-sous">' + esc(it.t) + '</h6>';
+        else if (it.k === 'officiel') out += '<p class="clair-officiel">' + esc(it.t) + '</p>';
+        else if (it.k === 'point') out += '<div class="clair-point"><b>' + esc(it.lab) + '</b><span>' + esc(it.t) + '</span></div>';
+        else out += '<p class="clair-p">' + esc(it.t) + '</p>';
+      });
+      vider();
+      if (r.sources) out += '<p class="clair-note"><b>Sur nos sources</b>' + esc(r.sources) + '</p>';
+      return out + '</div>';
+    }
+
     function statutChip(l) {
       if (!l.statut) return '';
       var cls = /adopt/i.test(l.statut) ? 'adopte' : /rejet/i.test(l.statut) ? 'rejete' : 'attente';
@@ -2108,7 +2260,7 @@
             '</summary>' +
             '<div class="loi-body">' +
               '<div class="loi-meta">' + esc(l.date) + (l.chambre ? ' · ' + esc(l.chambre) : '') + (l.initiative ? ' · ' + esc(l.initiative.length > 120 ? l.initiative.slice(0, 119).replace(/\s+\S*$/, '') + '…' : l.initiative) : '') + '</div>' +
-              (l.resume ? '<details class="loi-resume-details"><summary>Ce que fait ce texte, en clair</summary><p>' + esc(l.resume) + '</p></details>' : '') +
+              (l.resume ? '<details class="loi-resume-details"><summary>Ce que fait ce texte, en clair</summary>' + htmlClair(l) + '</details>' : '') +
               '<div class="grille">' + rows + '</div>' +
               (liens ? '<div class="loi-links">' + liens + '</div>' : '') +
             '</div>' +
