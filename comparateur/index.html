@@ -1176,7 +1176,7 @@
 
     <!-- ===== Sommaire de la page ===== -->
     <nav class="toc" aria-label="Sommaire du comparateur">
-      <a href="#atelier">🎯 Commence par toi</a>
+      <a href="#atelier">🎯 Par où entrer</a>
       <a href="#jeu">🎮 Le jeu</a>
       <a href="#debat">⚡ Réponses rapides</a>
       <a href="#qui">👤 Qui est qui</a>
@@ -1191,9 +1191,9 @@
     <section class="bloc" id="atelier" aria-labelledby="atelier-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">🎯</span>
-        <h2 id="atelier-titre">Commence par toi</h2>
+        <h2 id="atelier-titre">Trois portes d'entrée</h2>
       </div>
-      <p class="bloc-intro">Trois façons d'entrer&nbsp;: chercher un sujet, ne garder que les candidat·es qui t'intéressent, ou cocher ce qui te ressemble pour savoir quoi lire en premier.</p>
+      <p class="bloc-intro">Un programme ne se lit pas dans le vide&nbsp;: il protège des gens, il en fragilise d'autres. Chercher un sujet, ne garder que quelques candidat·es, ou passer par un profil&nbsp;: trois manières de rendre ça concret. Les profils ne servent pas à ne regarder que ce qui te concerne, mais à voir ce qu'un texte change dans une vie précise - la tienne, et tout autant celle de quelqu'un d'autre.</p>
 
       <div class="etapes">
         <article class="etape">
@@ -1228,18 +1228,18 @@
         <div class="profil-panneau">
           <h3>Nouveau - profils combinés</h3>
           <p class="gros">Mix ton profil.</p>
-          <p>Une demande revient fort&nbsp;: ne pas lire douze fiches séparées quand on est par exemple jeune + rural·e + précaire. Coche ce qui te ressemble et l'outil sort les sujets à regarder en priorité.</p>
+          <p>Au départ, une demande qui revenait souvent&nbsp;: ne pas avoir à lire douze fiches séparées quand on est par exemple jeune + rural·e + précaire. Alors on a fait des combinaisons - et elles marchent dans les deux sens. Coche ce qui te ressemble pour t'y retrouver. Coche ce qui ne te ressemble pas pour voir ce qu'un programme change dans une vie qui n'est pas la tienne&nbsp;: c'est souvent là qu'on apprend le plus. Ce qu'on cherche à montrer, ce n'est pas ton intérêt&nbsp;: c'est qui est protégé, qui est fragilisé, et ce que ça produit pour tout le monde.</p>
           <div class="profil-cases" id="profil-cases"></div>
           <div class="profil-actions">
             <button type="button" class="btn" id="profil-vider">Tout décocher</button>
-            <button type="button" class="btn play" id="profil-seul" aria-pressed="false">Ne montrer que ce qui me concerne</button>
+            <button type="button" class="btn play" id="profil-seul" aria-pressed="false">N'afficher que les textes concernés</button>
           </div>
           <p class="profil-note">Aucune phrase n'est générée ici. La mise en lumière ne fait que trier et citer ce que nous avons déjà documenté et sourcé&nbsp;: elle affiche toujours le tag ou le mot de nos fiches qui a déclenché la correspondance. Quand nous n'avons rien, elle le dit.</p>
         </div>
         <div class="route-panneau">
-          <h3>Tes sujets prioritaires</h3>
+          <h3>Les sujets à regarder d'abord</h3>
           <p class="gros">À lire d'abord</p>
-          <p class="route-soustitre">Trié par notre moteur de correspondance&nbsp;: il compare ce que tu as coché aux tags de nos textes et aux mots de nos fiches, et affiche à chaque fois ce qui a déclenché la correspondance.</p>
+          <p class="route-soustitre">Trié par notre moteur de correspondance&nbsp;: il compare la combinaison cochée aux tags de nos textes et aux mots de nos fiches, et affiche à chaque fois ce qui a déclenché la correspondance. Il ne classe pas les candidat·es, il indique seulement où regarder.</p>
           <div id="route" aria-live="polite"></div>
         </div>
       </div>
@@ -1911,7 +1911,7 @@
             '</div>' +
             '<div class="loi-sum-top" style="gap:8px">' +
               '<span class="chip">' + (f.sujet === 'sante' ? '🩺 Santé' : '🌱 Écologie & climat') + '</span>' +
-              (lum ? '<span class="chip lumiere" title="Repéré via : ' + esc(pourquoi(lum, 6)) + '">🔎 concerne ton profil</span>' : '') +
+              (lum ? '<span class="chip lumiere" title="Repéré via : ' + esc(pourquoi(lum, 6)) + '">🔎 concerne ce profil</span>' : '') +
             '</div>' +
             (lum ? '<p class="lumiere-pourquoi">Repéré via&nbsp;: ' + esc(pourquoi(lum, 4)) + '</p>' : '') +
             (f.engros ? '<p class="engros">' + esc(f.engros) + '</p>' : '') +
@@ -2016,7 +2016,7 @@
                 (l.cle ? '<span class="cle-star">⭐ texte clé</span>' : '') +
                 '<h3>' + esc(l.nom) + '</h3>' + statutChip(l) +
                 '<span class="chip">' + (l.sujet === 'sante' ? '🩺' : '🌱') + ' ' + esc(l.sousTheme) + '</span>' +
-                (lum ? '<span class="chip lumiere" title="Repéré via : ' + esc(pourquoi(lum, 6)) + '">🔎 concerne ton profil</span>' : '') +
+                (lum ? '<span class="chip lumiere" title="Repéré via : ' + esc(pourquoi(lum, 6)) + '">🔎 concerne ce profil</span>' : '') +
                 '<span class="plus" aria-hidden="true"></span>' +
               '</div>' +
               (l.engros ? '<p class="loi-engros">' + esc(l.engros) + '</p>' : '') +
@@ -2266,7 +2266,7 @@
     function videEtat(quoi) {
       var raisons = [];
       if (ETAT.q) raisons.push('la recherche « ' + ETAT.q + ' »');
-      if (ETAT.seul && ETAT.profil.length) raisons.push('le filtre « ne montrer que ce qui me concerne »');
+      if (ETAT.seul && ETAT.profil.length) raisons.push('le filtre « n\'afficher que les textes concernés »');
       if (quoi === 'fiche' && ETAT.cands.length) raisons.push('les candidat·es retenu·es');
       if (quoi === 'loi' && filtreActif !== 'tous') raisons.push('le filtre en cours');
       var n = quoi === 'loi' ? loisVisibles(true).length : fichesVisibles(true).length;
@@ -2368,8 +2368,9 @@
       if (!zoneRoute) return;
       zoneRoute.innerHTML = '';
       if (!ETAT.profil.length) {
-        zoneRoute.appendChild(el('<p class="route-vide">Coche ton profil à gauche pour générer une mini feuille de route&nbsp;: ' +
-          'les sujets à regarder en premier, et les textes déjà documentés qui te concernent.</p>'));
+        zoneRoute.appendChild(el('<p class="route-vide">Coche une combinaison à gauche pour générer une feuille de route&nbsp;: ' +
+          'les sujets à regarder en premier, et les textes déjà documentés qui concernent ce profil. ' +
+          'Rien n\'oblige à cocher le tien.</p>'));
         return;
       }
 
@@ -2440,7 +2441,7 @@
       lois.sort(function (a, b) { return b.r.score - a.r.score; });
       fiches.sort(function (a, b) { return b.r.score - a.r.score; });
 
-      var bl = el('<div class="route-bloc"><b>Les textes qui te concernent</b></div>');
+      var bl = el('<div class="route-bloc"><b>Les textes concernés</b></div>');
       if (!lois.length) {
         bl.appendChild(el('<p class="route-rien">Aucun texte documenté ne correspond à ce profil pour l\'instant. ' +
           'Ce n\'est pas un vide de position&nbsp;: c\'est un vide dans notre documentation, et on le comble sujet par sujet.</p>'));
@@ -2454,12 +2455,12 @@
         if (lois.length > 5) {
           bl.appendChild(el('<p class="route-rien">' + (lois.length - 5) + ' autre' + (lois.length - 5 > 1 ? 's' : '') +
             ' texte' + (lois.length - 5 > 1 ? 's' : '') + ' concerné' + (lois.length - 5 > 1 ? 's' : '') +
-            '. Coche « ne montrer que ce qui me concerne » pour les voir tous.</p>'));
+            '. Le bouton « n\'afficher que les textes concernés » les montre tous.</p>'));
         }
       }
       zoneRoute.appendChild(bl);
 
-      var bf = el('<div class="route-bloc"><b>Les fiches candidat·es qui te concernent</b></div>');
+      var bf = el('<div class="route-bloc"><b>Les fiches candidat·es concernées</b></div>');
       if (!fiches.length) {
         bf.appendChild(el('<p class="route-rien">Aucune fiche de candidat·e ne mentionne encore ces points. ' +
           'On ne comble pas ce trou en devinant&nbsp;: il faut la source.</p>'));
@@ -2483,7 +2484,8 @@
       var nl = loisVisibles().length, nf = fichesVisibles().length;
       var bouts = ['<b>' + nl + '</b> texte' + (nl > 1 ? 's' : ''),
                    '<b>' + nf + '</b> fiche' + (nf > 1 ? 's' : '')];
-      var txt = bouts.join(' · ') + (ETAT.q ? ' pour « ' + esc(ETAT.q) + ' »' : ' affiché' + (nl + nf > 1 ? 's' : ''));
+      var txt = (ETAT.q ? '' : 'À l\'écran&nbsp;: ') + bouts.join(' · ') +
+        (ETAT.q ? ' pour « ' + esc(ETAT.q) + ' »' : '');
       if (ETAT.q) {
         var horsFiltre = loisVisibles(true).length;
         if (horsFiltre > nl) txt += ' · <b>' + (horsFiltre - nl) + '</b> au-delà du filtre en cours';
@@ -2502,7 +2504,7 @@
         seul.disabled = !possible;
         if (!possible) ETAT.seul = false;
         seul.setAttribute('aria-pressed', String(!!ETAT.seul));
-        seul.textContent = ETAT.seul ? '✓ Je ne vois que ce qui me concerne' : 'Ne montrer que ce qui me concerne';
+        seul.textContent = ETAT.seul ? '✓ Seuls les textes concernés' : 'N\'afficher que les textes concernés';
       }
       var sw = document.getElementById('fiches-switch-note');
       if (sw) sw.hidden = !ETAT.q;
