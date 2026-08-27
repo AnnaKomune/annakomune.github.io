@@ -591,6 +591,17 @@
       font-weight: 800; font-size: 14.5px; background: var(--white); box-shadow: 3px 3px 0 rgba(51,46,50,.14);
     }
 
+    .badge-qui {
+      padding: 2px 8px 3px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--cream);
+      font-size: 11.5px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
     /* ---------- avatars ---------- */
     .avatar {
       position: relative;
@@ -1416,6 +1427,7 @@
         <div class="row"><span class="badge-align">❌ Contradictoire</span><p>Les actes vont à l'encontre de la promesse, de façon documentée.</p></div>
         <div class="row"><span class="badge-align">➖ Non testable</span><p>Pas de vote ni d'acte possible (pas de mandat, ministre qui ne vote pas, texte sans scrutin). Ce n'est pas une mauvaise note.</p></div>
         <div class="row"><span class="badge-align">🔀 Position collective hétérogène</span><p>Le parti ou le groupe se divise&nbsp;: à partir de 20&nbsp;% de voix divergentes dans un vote, on ne parle plus d'une «&nbsp;ligne&nbsp;» mais d'une position hétérogène.</p></div>
+        <div class="row"><span class="badge-align"><b class="badge-qui">Candidat·e</b>✅ Aligné</span><p>Chaque texte porte deux pastilles&nbsp;: la première juge la <strong>personne</strong>, la seconde son <strong>parti</strong>. Elles peuvent diverger, et c'est souvent là que la lecture devient intéressante.</p></div>
       </div>
       <p class="note-bas">Ce comparateur est un travail journalistique citoyen, en cours et daté. Une case «&nbsp;en cours de vérification&nbsp;» signifie que la recherche continue, pas qu'une position n'existe pas. Vous repérez une erreur&nbsp;? <button type="button" class="lien-retours" data-open-retours>Dites-le-nous</button>, on corrige et on le dit.</p>
     </section>
@@ -2057,7 +2069,11 @@
           var c = CAND[cid], v = l.votes[cid];
           if (!v) return '';
           var badges = (v.badges || []).map(function (b) {
-            return '<span class="badge-align">' + b.icon + ' ' + esc(b.label) + '</span>';
+            /* deux pastilles identiques cote a cote n'apprenaient rien :
+               on nomme ce que chacune qualifie */
+            return '<span class="badge-align">' +
+              (b.qui ? '<b class="badge-qui">' + esc(b.qui) + '</b>' : '') +
+              b.icon + ' ' + esc(b.label) + '</span>';
           }).join(' ');
           return '<details class="cand-row"><summary>' +
               '<span class="nom">' + avatar(c) + esc(c.court) + '</span>' +
