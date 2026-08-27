@@ -194,6 +194,337 @@
     .bloc-head h2 { margin: 0; }
     .bloc-intro { color: var(--muted); font-weight: 650; max-width: 72ch; margin: 10px 0 18px; }
 
+    /* ---------- ATELIER : comment ça marche ---------- */
+    .etapes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 0 0 20px;
+    }
+
+    .etape {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      padding: 18px;
+      border: 2px solid var(--ink);
+      border-radius: 22px;
+      background: var(--white);
+      box-shadow: 7px 7px 0 var(--pink);
+    }
+
+    .etape:nth-child(2) { background: var(--green); box-shadow: 7px 7px 0 var(--ink); }
+    .etape:nth-child(3) { background: var(--sky); box-shadow: 7px 7px 0 var(--pink); }
+
+    .etape-emoji {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: rgba(252, 247, 232, .8);
+      border: 2px solid var(--ink);
+      font-size: 22px;
+      transform: rotate(-4deg);
+    }
+
+    .etape h3 { margin: 0; font-size: 16px; letter-spacing: 0; text-transform: none; font-family: inherit; }
+    .etape p { margin: 0; font-size: 14.5px; font-weight: 650; color: rgba(51, 46, 50, .82); }
+
+    /* ---------- ATELIER : la recherche ---------- */
+    .cherche {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 6px 6px 16px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--blue);
+    }
+
+    .cherche span[aria-hidden] { font-size: 19px; }
+
+    .cherche input {
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 44px;
+      border: 0;
+      background: transparent;
+      font: inherit;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--ink);
+    }
+
+    .cherche input:focus { outline: 0; }
+    .cherche input::placeholder { color: rgba(51, 46, 50, .5); font-weight: 650; }
+
+    .cherche button {
+      flex: 0 0 auto;
+      min-height: 40px;
+      padding: 0 15px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--yellow);
+      font: inherit;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .cherche button:hover { background: var(--pink); }
+    .cherche button[hidden] { display: none; }
+
+    .atelier-compte {
+      margin: 10px 0 0;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .atelier-compte b { color: var(--ink); }
+
+    /* ---------- ATELIER : le choix des candidat·es ---------- */
+    .choix-titre {
+      margin: 22px 0 8px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .085em;
+      text-transform: uppercase;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: var(--muted);
+    }
+
+    .choix-cand { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .choix-cand button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 6px 14px 6px 8px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--white);
+      font: inherit;
+      font-weight: 800;
+      font-size: 14.5px;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 rgba(51, 46, 50, .12);
+    }
+
+    .choix-cand button[aria-pressed="true"] { background: var(--ink); color: var(--cream); box-shadow: 3px 3px 0 var(--pink); }
+    .choix-cand button.tout { padding-left: 14px; background: var(--gold); }
+    .choix-cand button.tout[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+
+    /* ---------- ATELIER : profil + feuille de route ---------- */
+    .profil-duo {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .profil-panneau,
+    .route-panneau {
+      padding: clamp(20px, 2.6vw, 30px);
+      border: 2px solid var(--ink);
+      border-radius: 28px;
+    }
+
+    .profil-panneau { background: var(--white); box-shadow: 10px 10px 0 var(--pink); }
+
+    @media (min-width: 981px) {
+      /* la feuille de route est souvent plus longue : le panneau des cases
+         reste sous les yeux pendant qu'on la parcourt. */
+      .profil-panneau { position: sticky; top: 74px; }
+    }
+    .route-panneau { background: var(--ink); color: var(--cream); box-shadow: 10px 10px 0 var(--purple); }
+
+    .profil-panneau h3,
+    .route-panneau h3 { color: var(--muted); margin-bottom: 10px; }
+    .route-panneau h3 { color: rgba(252, 247, 232, .68); }
+
+    .profil-panneau .gros,
+    .route-panneau .gros {
+      margin: 0 0 12px;
+      font-family: "Oswald", Impact, sans-serif;
+      font-size: clamp(34px, 4vw, 52px);
+      font-weight: 700;
+      line-height: .92;
+      letter-spacing: -.035em;
+    }
+
+    .profil-panneau p { margin: 0 0 16px; font-size: 15px; }
+    .route-panneau p { margin: 0 0 16px; font-size: 15px; color: rgba(252, 247, 232, .78); }
+
+    .profil-cases { display: flex; flex-wrap: wrap; gap: 9px; }
+
+    .profil-case {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 15px 9px 11px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--white);
+      font-size: 14.5px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background .14s ease, transform .14s ease;
+    }
+
+    .profil-case:hover { transform: translateY(-2px); background: var(--yellow); }
+    .profil-case input { width: 17px; height: 17px; margin: 0; accent-color: var(--blue); flex: 0 0 auto; }
+    .profil-case:has(input:checked) { background: var(--sky); box-shadow: 3px 3px 0 var(--ink); }
+    .profil-case:has(input:focus-visible) { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+    .profil-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+    .profil-note {
+      margin: 16px 0 0;
+      padding-top: 14px;
+      border-top: 2px dashed rgba(51, 46, 50, .22);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    /* la feuille de route */
+    .route-soustitre {
+      margin: 0 0 16px;
+      padding-bottom: 14px;
+      border-bottom: 2px dashed rgba(252, 247, 232, .26);
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(252, 247, 232, .7);
+    }
+
+    .route-vide { font-size: 15px; color: rgba(252, 247, 232, .78); }
+
+    .route-sujets { display: flex; flex-wrap: wrap; gap: 9px; margin: 0 0 4px; }
+
+    .route-sujet {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 14px;
+      border: 2px solid var(--cream);
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 14.5px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .route-sujet .compte {
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--cream);
+      font-size: 12px;
+    }
+
+    .route-sujet.a-venir {
+      background: transparent;
+      color: rgba(252, 247, 232, .82);
+      border-color: rgba(252, 247, 232, .42);
+      border-style: dashed;
+      cursor: default;
+    }
+
+    .route-sujet.a-venir .compte { background: rgba(252, 247, 232, .18); color: var(--cream); }
+
+    .route-bloc { margin-top: 18px; }
+
+    .route-bloc > b {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 12px;
+      letter-spacing: .085em;
+      text-transform: uppercase;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: rgba(252, 247, 232, .68);
+    }
+
+    .route-item {
+      display: block;
+      width: 100%;
+      margin: 0 0 9px;
+      padding: 12px 14px;
+      border: 2px solid rgba(252, 247, 232, .28);
+      border-radius: 16px;
+      background: rgba(252, 247, 232, .07);
+      color: var(--cream);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: background .14s ease, border-color .14s ease;
+    }
+
+    .route-item:hover { background: rgba(252, 247, 232, .15); border-color: var(--cream); }
+    .route-item .titre { display: block; font-weight: 800; font-size: 15px; line-height: 1.28; }
+
+    .route-item .pourquoi {
+      display: block;
+      margin-top: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: rgba(252, 247, 232, .74);
+    }
+
+    .route-rien {
+      margin: 0;
+      padding: 12px 14px;
+      border: 2px dashed rgba(252, 247, 232, .34);
+      border-radius: 16px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: rgba(252, 247, 232, .74);
+    }
+
+    /* ---------- la mise en lumière sur les cartes ---------- */
+    .lumiere {
+      background: var(--sky);
+      border-color: var(--ink);
+      cursor: help;
+    }
+
+    details.loi-card.est-lumiere { box-shadow: 6px 6px 0 var(--sky); }
+    .fiche.est-lumiere { box-shadow: 7px 7px 0 var(--sky); }
+
+    .lumiere-pourquoi {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .vide-etat {
+      padding: 22px;
+      border: 2px dashed var(--ink);
+      border-radius: 22px;
+      background: var(--white);
+      font-weight: 700;
+    }
+
+    .vide-etat p { margin: 0 0 12px; }
+
+    @media (max-width: 980px) {
+      .etapes { grid-template-columns: minmax(0, 1fr); }
+      .profil-duo { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .profil-panneau { box-shadow: 6px 6px 0 var(--pink); }
+      .route-panneau { box-shadow: 6px 6px 0 var(--purple); }
+      .cherche { box-shadow: 4px 4px 0 var(--blue); }
+    }
+
     /* ---------- chips ---------- */
     .chip {
       display: inline-flex; align-items: center; gap: 6px;
@@ -845,6 +1176,7 @@
 
     <!-- ===== Sommaire de la page ===== -->
     <nav class="toc" aria-label="Sommaire du comparateur">
+      <a href="#atelier">🎯 Commence par toi</a>
       <a href="#jeu">🎮 Le jeu</a>
       <a href="#debat">⚡ Réponses rapides</a>
       <a href="#qui">👤 Qui est qui</a>
@@ -854,6 +1186,64 @@
       <a href="#methode">🧭 La méthode</a>
       <a href="#sources">📚 Les sources</a>
     </nav>
+
+    <!-- ===== L'ATELIER : chercher, choisir, se reconnaitre ===== -->
+    <section class="bloc" id="atelier" aria-labelledby="atelier-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🎯</span>
+        <h2 id="atelier-titre">Commence par toi</h2>
+      </div>
+      <p class="bloc-intro">Trois façons d'entrer&nbsp;: chercher un sujet, ne garder que les candidat·es qui t'intéressent, ou cocher ce qui te ressemble pour savoir quoi lire en premier.</p>
+
+      <div class="etapes">
+        <article class="etape">
+          <span class="etape-emoji" aria-hidden="true">🔍</span>
+          <h3>1. Tu cherches un sujet</h3>
+          <p>Logement, santé, médias, ruralité, droits LGBT+, coût de la vie… la recherche filtre les lois et les fiches en même temps.</p>
+        </article>
+        <article class="etape">
+          <span class="etape-emoji" aria-hidden="true">🎛️</span>
+          <h3>2. Tu choisis les candidat·es</h3>
+          <p>Tu peux comparer tout le monde, ou garder seulement deux ou trois cartes pour lire tranquille.</p>
+        </article>
+        <article class="etape">
+          <span class="etape-emoji" aria-hidden="true">🧾</span>
+          <h3>3. Tu ouvres les preuves</h3>
+          <p>Chaque carte sépare promesse, vote passé, bilan, flou, contradiction et conséquence concrète.</p>
+        </article>
+      </div>
+
+      <label class="cherche">
+        <span aria-hidden="true">🔍</span>
+        <input type="search" id="recherche" placeholder="Chercher : passoires thermiques, IVG, déserts médicaux, 49.3…"
+               autocomplete="off" aria-describedby="atelier-compte">
+        <button type="button" id="recherche-vider" hidden>Effacer</button>
+      </label>
+      <p class="atelier-compte" id="atelier-compte" role="status" aria-live="polite"></p>
+
+      <p class="choix-titre" id="choix-titre">Qui tu veux comparer</p>
+      <div class="choix-cand" id="choix-cand" role="group" aria-labelledby="choix-titre"></div>
+
+      <div class="profil-duo">
+        <div class="profil-panneau">
+          <h3>Nouveau - profils combinés</h3>
+          <p class="gros">Mix ton profil.</p>
+          <p>Une demande revient fort&nbsp;: ne pas lire douze fiches séparées quand on est par exemple jeune + rural·e + précaire. Coche ce qui te ressemble et l'outil sort les sujets à regarder en priorité.</p>
+          <div class="profil-cases" id="profil-cases"></div>
+          <div class="profil-actions">
+            <button type="button" class="btn" id="profil-vider">Tout décocher</button>
+            <button type="button" class="btn play" id="profil-seul" aria-pressed="false">Ne montrer que ce qui me concerne</button>
+          </div>
+          <p class="profil-note">Aucune phrase n'est générée ici. La mise en lumière ne fait que trier et citer ce que nous avons déjà documenté et sourcé&nbsp;: elle affiche toujours le tag ou le mot de nos fiches qui a déclenché la correspondance. Quand nous n'avons rien, elle le dit.</p>
+        </div>
+        <div class="route-panneau">
+          <h3>Tes sujets prioritaires</h3>
+          <p class="gros">À lire d'abord</p>
+          <p class="route-soustitre">Trié par notre moteur de correspondance&nbsp;: il compare ce que tu as coché aux tags de nos textes et aux mots de nos fiches, et affiche à chaque fois ce qui a déclenché la correspondance.</p>
+          <div id="route" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
 
     <!-- ===== LE JEU ===== -->
     <section class="bloc" id="jeu" aria-labelledby="jeu-titre">
@@ -913,6 +1303,7 @@
         <button type="button" data-sujet="sante" aria-pressed="true">🩺 Santé</button>
         <button type="button" data-sujet="ecologie" aria-pressed="false">🌱 Écologie &amp; climat</button>
       </div>
+      <p class="note-bas" id="fiches-switch-note" hidden>Une recherche est en cours&nbsp;: les fiches affichées traversent les deux sujets, le bouton ci-dessus reprend la main dès que vous effacez la recherche.</p>
       <div class="fiches-grid" id="fiches-grid"></div>
       <p class="note-bas">Le «&nbsp;niveau de preuve&nbsp;» mesure la solidité de <em>notre documentation</em>, jamais la qualité d'un programme. «&nbsp;Flou&nbsp;» veut dire&nbsp;: pas assez d'éléments vérifiés pour affirmer - pas «&nbsp;pas de position&nbsp;».</p>
     </section>
@@ -1252,6 +1643,152 @@
     var esc = H.esc, el = H.el, CAND = H.CAND, JOUEURS = H.JOUEURS, LOI = H.LOI,
         avatar = H.avatar, voteChip = H.voteChip, voteGlance = H.voteGlance;
 
+    /* ==================== L'ATELIER : recherche, candidat·es, profil ====================
+       La « mise en lumière » est un moteur de correspondance sur nos seules
+       données. Elle compare les axes de profil aux tags et sousThemes de nos
+       lois, et à des mots relevés dans nos fiches, puis affiche verbatim ce
+       qui a matché. Elle ne rédige rien et n'invente rien. */
+    var TAX = {"SUJETS": [{"id": "sante", "label": "Santé", "emoji": "🩺", "etat": "en-ligne"}, {"id": "ecologie", "label": "Écologie & climat", "emoji": "🌱", "etat": "en-ligne"}, {"id": "logement", "label": "Logement", "emoji": "🏡", "etat": "a-venir"}, {"id": "cout-vie", "label": "Coût de la vie", "emoji": "🛒", "etat": "a-venir"}, {"id": "services-publics", "label": "Services publics", "emoji": "🏦", "etat": "a-venir"}, {"id": "travail", "label": "Travail / salaires", "emoji": "💸", "etat": "a-venir"}, {"id": "chomage", "label": "Chômage", "emoji": "📄", "etat": "a-venir"}, {"id": "fiscalite", "label": "Fiscalité", "emoji": "🪙", "etat": "a-venir"}, {"id": "handicap", "label": "Handicap", "emoji": "♿", "etat": "a-venir"}, {"id": "medias", "label": "Médias / démocratie", "emoji": "📰", "etat": "a-venir"}], "PROFILS": [{"id": "jeune", "label": "moins de 26 ans", "emoji": "🎟️", "tags": ["Santé sexuelle & reproductive", "Santé mentale", "IVG", "PMA"], "mots": ["moins de 26 ans", "jeune", "jeunes", "étudiant", "étudiante", "contraception", "dépistage des IST", "IST", "santé mentale", "20-25"], "sujets": ["sante", "logement", "travail", "cout-vie"]}, {"id": "rural", "label": "campagne / sans voiture", "emoji": "🌾", "tags": ["Ruralités", "Déserts médicaux", "Médecine de ville", "Urgences", "Automobile", "Gestion de l'eau", "Sécheresse", "Agriculture"], "mots": ["rural", "rurale", "ruralité", "ruralités", "désert médical", "déserts médicaux", "30 minutes", "maternité", "urgences", "sans voiture", "zone peu dense"], "sujets": ["sante", "ecologie", "services-publics", "cout-vie"]}, {"id": "locataire", "label": "locataire", "emoji": "🏚️", "tags": ["Rénovation énergétique", "Passoires thermiques"], "mots": ["passoire", "passoires thermiques", "rénovation énergétique", "locataire", "locataires", "logement", "logements", "propriétaire bailleur"], "sujets": ["logement", "ecologie", "cout-vie"]}, {"id": "precaire", "label": "précaire / petit salaire", "emoji": "💸", "tags": ["Accès financier aux soins", "Inégalités de santé", "Assurance maladie", "Passoires thermiques", "Inégalités environnementales", "Justice climatique"], "mots": ["faibles revenus", "précaire", "précaires", "ménages modestes", "ménages précaires", "reste à charge", "dépassements d'honoraires", "franchise", "renoncement aux soins", "sans reste à charge", "pouvoir d'achat"], "sujets": ["cout-vie", "sante", "travail", "logement", "fiscalite"]}, {"id": "femme", "label": "femme", "emoji": "♀", "tags": ["Santé des femmes", "IVG", "PMA", "Sexisme", "Santé sexuelle & reproductive", "Inégalités de santé"], "mots": ["femme", "femmes", "IVG", "avortement", "contraception", "gynéco", "endométriose", "sexisme", "maternité"], "sujets": ["sante", "travail", "services-publics"]}, {"id": "lgbt", "label": "LGBTQIA+ / queer", "emoji": "🏳️‍🌈", "tags": ["Santé LGBTQIA+", "PMA", "Droit des patients"], "mots": ["LGBT", "LGBTQIA", "PMA", "personnes trans", "couples de femmes", "orientation sexuelle"], "sujets": ["sante", "services-publics", "medias"]}, {"id": "racisme", "label": "racisé·e / concerné·e par le racisme", "emoji": "✊", "tags": ["Inégalités de santé", "Inégalités environnementales", "Justice climatique"], "mots": ["discrimination", "outre-mer", "ultramarin", "ultramarins", "inégalités territoriales", "quartiers populaires", "drépanocytose"], "sujets": ["sante", "logement", "services-publics", "medias"]}, {"id": "handicap", "label": "handicap", "emoji": "♿", "tags": ["Droit des patients", "Autonomie du patient"], "mots": ["handicap", "handicaps", "autonomie", "aidant", "aidants", "accessibilité", "fin de vie", "soins palliatifs", "invalidité", "AAH", "perte d'autonomie"], "sujets": ["handicap", "sante", "services-publics", "travail"]}, {"id": "parent", "label": "parent / enfant à charge", "emoji": "👶", "tags": ["Santé environnementale", "Pesticides", "PMA"], "mots": ["enfant", "enfants", "nouveau-né", "nouveau-nés", "nourrisson", "école", "pédiatrie", "pédiatrique", "famille", "familles", "parents", "drépanocytose", "congé parental", "crèche"], "sujets": ["sante", "ecologie", "cout-vie", "services-publics"]}, {"id": "medias", "label": "médias / démocratie", "emoji": "💻", "tags": ["Procédures administratives", "Collectivités"], "mots": ["49.3", "sans vote", "ordonnance", "commission mixte paritaire", "niche parlementaire", "transparence", "lobby", "lobbying", "conflit d'intérêts"], "sujets": ["medias", "services-publics"]}]};
+    var SEUIL_LOI = 3, SEUIL_FICHE = 1;   /* 3 = au moins un vrai tag ; 1 = un mot entier */
+    var AXE = {}; TAX.PROFILS.forEach(function (p) { AXE[p.id] = p; });
+    var SUJ = {}; TAX.SUJETS.forEach(function (x) { SUJ[x.id] = x; });
+
+    function norm(v) {
+      return String(v == null ? '' : v).toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+    /* mot entier, pas sous-chaine : sinon « IST » matche « ministre », « existe »… */
+    function motEntier(texte, mot) {
+      var m = norm(mot).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return new RegExp('(?:^|[^a-z0-9])' + m + '(?![a-z0-9])').test(texte);
+    }
+    function tagsLoi(l) {
+      var brut = l.tags, plats = [];
+      (Array.isArray(brut) ? brut : [brut]).forEach(function (x) {
+        String(x == null ? '' : x).split('·').forEach(function (y) {
+          y = y.trim(); if (y) plats.push(y);
+        });
+      });
+      if (l.sousTheme) plats.push(String(l.sousTheme).trim());
+      return plats;
+    }
+    var CACHE_TXT = {};
+    function texteDe(cle, champs, obj) {
+      if (CACHE_TXT[cle] != null) return CACHE_TXT[cle];
+      var t = norm(champs.map(function (k) { return obj[k] || ''; }).join(' '));
+      CACHE_TXT[cle] = t;
+      return t;
+    }
+    var CH_LOI = ['nom', 'sousTheme', 'intitule', 'resume', 'synthese', 'engros', 'initiative', 'statut', 'date'];
+    var CH_FICHE = ['proposition', 'impact', 'concernes', 'flou', 'contradiction', 'engros', 'votePasse', 'actionPassee', 'voteGroupe'];
+    function texteLoi(l) { return texteDe('L' + l.id, CH_LOI, l) + ' ' + norm(tagsLoi(l).join(' ')); }
+    function texteFiche(f) { return texteDe('F' + f.cid + f.sujet, CH_FICHE, f); }
+
+    /* -> {score, raisons:[{axe, type, valeur}]} ; raisons = extraits verbatim */
+    function evalue(axes, tags, texte) {
+      var score = 0, raisons = [], vus = {};
+      axes.forEach(function (id) {
+        var p = AXE[id];
+        if (!p) return;
+        (p.tags || []).forEach(function (tg) {
+          tags.forEach(function (reel) {
+            var k = norm(reel);
+            if (norm(tg) === k && !vus[k]) { vus[k] = 1; raisons.push({ axe: id, type: 'tag', valeur: reel }); score += 3; }
+          });
+        });
+        (p.mots || []).forEach(function (m) {
+          var k = norm(m);
+          if (!vus[k] && motEntier(texte, m)) { vus[k] = 1; raisons.push({ axe: id, type: 'mot', valeur: m }); score += 1; }
+        });
+      });
+      return { score: score, raisons: raisons };
+    }
+    function lumiereLoi(l) {
+      if (!ETAT.profil.length) return null;
+      var r = evalue(ETAT.profil, tagsLoi(l), texteLoi(l));
+      return r.score >= SEUIL_LOI ? r : null;
+    }
+    function lumiereFiche(f) {
+      if (!ETAT.profil.length) return null;
+      var r = evalue(ETAT.profil, [], texteFiche(f));
+      return r.score >= SEUIL_FICHE ? r : null;
+    }
+    function pourquoi(r, max) {
+      return r.raisons.slice(0, max || 3).map(function (x) {
+        return x.type === 'tag' ? x.valeur : '« ' + x.valeur + ' »';
+      }).join(' · ');
+    }
+
+    /* ---------- l'état, gardé d'une visite à l'autre ---------- */
+    var CLE_ETAT = 'komune.comparateur.atelier';
+    var ETAT = { q: '', cands: [], profil: [], seul: false };
+    try {
+      var brut = localStorage.getItem(CLE_ETAT);
+      if (brut) {
+        var o = JSON.parse(brut);
+        if (o && typeof o === 'object') {
+          ETAT.cands = (o.cands || []).filter(function (x) { return CAND[x]; });
+          ETAT.profil = (o.profil || []).filter(function (x) { return AXE[x]; });
+          ETAT.seul = !!o.seul;
+        }
+      }
+    } catch (e) { /* navigation privée, stockage bloqué : on continue sans mémoire */ }
+    function garde() {
+      try {
+        localStorage.setItem(CLE_ETAT, JSON.stringify(
+          { cands: ETAT.cands, profil: ETAT.profil, seul: ETAT.seul }));
+      } catch (e) { /* rien à faire : l'outil marche sans */ }
+    }
+
+    function joueurs() {
+      if (!ETAT.cands.length) return JOUEURS;
+      var s = JOUEURS.filter(function (c) { return ETAT.cands.indexOf(c) >= 0; });
+      return s.length ? s : JOUEURS;
+    }
+
+    /* ---------- la recherche ---------- */
+    function colle(texte) {
+      if (!ETAT.q) return true;
+      var mots = norm(ETAT.q).split(/\s+/).filter(Boolean);
+      /* tous les mots doivent être là, mais « passoires thermiques » doit
+         retrouver « passoire thermique » : on retire un s final sur les mots
+         assez longs pour que ce soit sans risque. */
+      return mots.every(function (m) {
+        if (texte.indexOf(m) >= 0) return true;
+        return m.length >= 5 && m.charAt(m.length - 1) === 's' && texte.indexOf(m.slice(0, -1)) >= 0;
+      });
+    }
+    function loiColle(l) {
+      /* on cherche dans le texte de la loi et dans les noms des candidat·es
+         qui y ont une position : « Le Pen IVG » doit marcher. */
+      var t = texteLoi(l) + ' ' + JOUEURS.filter(function (cid) { return l.votes[cid]; })
+        .map(function (cid) { return norm(CAND[cid].nom + ' ' + CAND[cid].court + ' ' + CAND[cid].parti); }).join(' ');
+      return colle(t);
+    }
+    function ficheColle(f) { return colle(texteFiche(f) + ' ' + norm(CAND[f.cid] ? CAND[f.cid].nom + ' ' + CAND[f.cid].parti : '')); }
+
+    function loisVisibles(ignorerFiltre) {
+      return D.LOIS.filter(function (l) {
+        if (!ignorerFiltre) {
+          if (filtreActif === 'cle' && !l.cle) return false;
+          if (filtreActif !== 'tous' && filtreActif !== 'cle' && l.sujet !== filtreActif) return false;
+        }
+        if (!loiColle(l)) return false;
+        if (ETAT.seul && ETAT.profil.length && !lumiereLoi(l)) return false;
+        return true;
+      });
+    }
+    function fichesVisibles(ignorerSujet) {
+      var libre = ignorerSujet || !!ETAT.q;   /* la recherche traverse les deux sujets */
+      return D.FICHES.filter(function (f) {
+        if (!libre && f.sujet !== sujetActif) return false;
+        if (ETAT.cands.length && ETAT.cands.indexOf(f.cid) < 0) return false;
+        if (!ficheColle(f)) return false;
+        if (ETAT.seul && ETAT.profil.length && !lumiereFiche(f)) return false;
+        return true;
+      });
+    }
+
     /* ==================== ticker : doubler la piste pour la boucle ==================== */
     var tick = document.getElementById('ticker-track');
     if (tick) { tick.innerHTML += tick.innerHTML; }
@@ -1294,9 +1831,16 @@
 
     /* ==================== navigation : ouvrir une loi depuis n'importe où ==================== */
     function openLoi(id) {
+      /* on leve tout ce qui pourrait masquer la carte demandée */
+      if (ETAT.q || ETAT.seul) {
+        ETAT.q = ''; ETAT.seul = false; garde();
+        var champ = document.getElementById('recherche');
+        if (champ) { champ.value = ''; }
+        syncAtelier();
+      }
       filtreActif = 'tous';
       var boutons = document.querySelectorAll('#filtres button');
-      boutons.forEach(function (x, i) { x.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'); });
+      boutons.forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.f === 'tous' ? 'true' : 'false'); });
       renderLois();
       var carte = document.querySelector('details.loi-card[data-loi="' + id + '"]');
       if (!carte) return;
@@ -1338,7 +1882,9 @@
     }
     function renderFiches() {
       fichesGrid.innerHTML = '';
-      D.FICHES.filter(function (f) { return f.sujet === sujetActif; }).forEach(function (f) {
+      var visibles = fichesVisibles();
+      if (!visibles.length) { fichesGrid.appendChild(videEtat('fiche')); return; }
+      visibles.forEach(function (f) {
         var c = CAND[f.cid];
         if (!c) return;
         if (f.cid === 'primaire-gauche') {
@@ -1355,12 +1901,19 @@
               return '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">Source ' + (i + 1) + ' ↗</a>';
             }).join(' · ') + '</div>'
           : '';
+        var lum = lumiereFiche(f);
         var fiche = el(
-          '<article class="fiche" style="--card-bg:' + esc(c.bg) + ';--card-shadow:' + esc(c.shadow) + '">' +
+          '<article class="fiche' + (lum ? ' est-lumiere' : '') + '" data-fiche="' + esc(f.cid + '-' + f.sujet) + '"'
+            + ' style="--card-bg:' + esc(c.bg) + ';--card-shadow:' + esc(c.shadow) + '">' +
             '<div class="fiche-head">' + avatar(c, 'big') +
               '<div><h3>' + esc(c.court) + '</h3><div class="parti">' + esc(c.parti) + '</div></div>' +
               '<div class="preuve"><span class="chip ' + preuveCls + '">Preuve : ' + esc(f.preuve || 'à documenter') + '</span></div>' +
             '</div>' +
+            '<div class="loi-sum-top" style="gap:8px">' +
+              '<span class="chip">' + (f.sujet === 'sante' ? '🩺 Santé' : '🌱 Écologie & climat') + '</span>' +
+              (lum ? '<span class="chip lumiere" title="Repéré via : ' + esc(pourquoi(lum, 6)) + '">🔎 concerne ton profil</span>' : '') +
+            '</div>' +
+            (lum ? '<p class="lumiere-pourquoi">Repéré via&nbsp;: ' + esc(pourquoi(lum, 4)) + '</p>' : '') +
             (f.engros ? '<p class="engros">' + esc(f.engros) + '</p>' : '') +
             '<dl>' +
               blocFiche('La promesse retrouvée', f.proposition) +
@@ -1395,7 +1948,7 @@
     var filtres = document.getElementById('filtres');
     var filtreActif = 'tous';
     [['tous', 'Tout voir'], ['cle', '⭐ Textes clés'], ['sante', '🩺 Santé'], ['ecologie', '🌱 Écologie & climat']].forEach(function (f, i) {
-      var b = el('<button type="button" class="chip" aria-pressed="' + (f[0] === filtreActif) + '">' + esc(f[1]) + '</button>');
+      var b = el('<button type="button" class="chip" data-f="' + esc(f[0]) + '" aria-pressed="' + (f[0] === filtreActif) + '">' + esc(f[1]) + '</button>');
       b.addEventListener('click', function () {
         filtreActif = f[0];
         filtres.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
@@ -1415,7 +1968,7 @@
       return '<div class="mini"><b class="mini-titre">' + esc(titre) + '</b>' + esc(texte) + '</div>';
     }
     function stripHtml(l) {
-      return '<div class="strip" aria-label="Les positions d’un coup d’œil">' + JOUEURS.map(function (cid) {
+      return '<div class="strip" aria-label="Les positions d’un coup d’œil">' + joueurs().map(function (cid) {
         var v = l.votes[cid];
         if (!v) return '';
         var g = voteGlance(v);
@@ -1428,15 +1981,12 @@
     }
     function renderLois() {
       loisGrid.innerHTML = '';
-      var liste = D.LOIS.filter(function (l) {
-        if (filtreActif === 'tous') return true;
-        if (filtreActif === 'cle') return !!l.cle;
-        return l.sujet === filtreActif;
-      });
+      var liste = loisVisibles();
+      if (!liste.length) { loisGrid.appendChild(videEtat('loi')); return; }
       /* textes clés d'abord, dans l'ordre d'origine ensuite */
       var ordonnee = liste.filter(function (l) { return l.cle; }).concat(liste.filter(function (l) { return !l.cle; }));
       ordonnee.forEach(function (l) {
-        var rows = JOUEURS.map(function (cid) {
+        var rows = joueurs().map(function (cid) {
           var c = CAND[cid], v = l.votes[cid];
           if (!v) return '';
           var badges = (v.badges || []).map(function (b) {
@@ -1458,16 +2008,19 @@
         var liens = l.liens.map(function (s) {
           return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a>';
         }).join('');
+        var lum = lumiereLoi(l);
         loisGrid.appendChild(el(
-          '<details class="loi-card" data-loi="' + esc(l.id) + '"' + (l.cle ? ' data-cle="1"' : '') + '>' +
+          '<details class="loi-card' + (lum ? ' est-lumiere' : '') + '" data-loi="' + esc(l.id) + '"' + (l.cle ? ' data-cle="1"' : '') + '>' +
             '<summary class="loi-sum">' +
               '<div class="loi-sum-top">' +
                 (l.cle ? '<span class="cle-star">⭐ texte clé</span>' : '') +
                 '<h3>' + esc(l.nom) + '</h3>' + statutChip(l) +
                 '<span class="chip">' + (l.sujet === 'sante' ? '🩺' : '🌱') + ' ' + esc(l.sousTheme) + '</span>' +
+                (lum ? '<span class="chip lumiere" title="Repéré via : ' + esc(pourquoi(lum, 6)) + '">🔎 concerne ton profil</span>' : '') +
                 '<span class="plus" aria-hidden="true"></span>' +
               '</div>' +
               (l.engros ? '<p class="loi-engros">' + esc(l.engros) + '</p>' : '') +
+              (lum ? '<p class="lumiere-pourquoi">Repéré via&nbsp;: ' + esc(pourquoi(lum, 4)) + '</p>' : '') +
               stripHtml(l) +
             '</summary>' +
             '<div class="loi-body">' +
@@ -1705,6 +2258,296 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && !wrap.hidden) fermer();
       });
+    })();
+
+    /* ==================== L'ATELIER : l'interface ==================== */
+
+    /* --- un état vide qui explique et propose une sortie --- */
+    function videEtat(quoi) {
+      var raisons = [];
+      if (ETAT.q) raisons.push('la recherche « ' + ETAT.q + ' »');
+      if (ETAT.seul && ETAT.profil.length) raisons.push('le filtre « ne montrer que ce qui me concerne »');
+      if (quoi === 'fiche' && ETAT.cands.length) raisons.push('les candidat·es retenu·es');
+      if (quoi === 'loi' && filtreActif !== 'tous') raisons.push('le filtre en cours');
+      var n = quoi === 'loi' ? loisVisibles(true).length : fichesVisibles(true).length;
+      var box = el('<div class="vide-etat"><p>Rien ici avec ' +
+        (raisons.length ? esc(raisons.join(' et ')) : 'les réglages actuels') + '.</p></div>');
+      if (quoi === 'loi' && n > 0) {
+        var b1 = el('<button type="button" class="btn">Voir les ' + n + ' texte' + (n > 1 ? 's' : '') + ' au-delà de ce filtre</button>');
+        b1.addEventListener('click', function () {
+          filtreActif = 'tous';
+          filtres.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.f === 'tous' ? 'true' : 'false'); });
+          renderLois();
+        });
+        box.appendChild(b1);
+      }
+      var b2 = el('<button type="button" class="btn primary">Tout réafficher</button>');
+      b2.addEventListener('click', toutReafficher);
+      box.appendChild(b2);
+      return box;
+    }
+
+    function toutReafficher() {
+      ETAT.q = ''; ETAT.seul = false; ETAT.cands = [];
+      filtreActif = 'tous';
+      filtres.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.f === 'tous' ? 'true' : 'false'); });
+      var champ = document.getElementById('recherche');
+      if (champ) champ.value = '';
+      garde();
+      syncAtelier();
+      rafraichir();
+    }
+
+    /* --- le choix des candidat·es --- */
+    var zoneChoix = document.getElementById('choix-cand');
+    function renderChoix() {
+      if (!zoneChoix) return;
+      zoneChoix.innerHTML = '';
+      var tout = el('<button type="button" class="tout" aria-pressed="' + (!ETAT.cands.length) + '">👥 Tout le monde</button>');
+      tout.addEventListener('click', function () { ETAT.cands = []; garde(); renderChoix(); rafraichir(); });
+      zoneChoix.appendChild(tout);
+      JOUEURS.concat(['primaire-gauche']).forEach(function (cid) {
+        var c = CAND[cid];
+        if (!c) return;
+        var on = ETAT.cands.indexOf(cid) >= 0;
+        var b = el('<button type="button" aria-pressed="' + on + '">' + avatar(c, 'mini') + esc(c.court) + '</button>');
+        b.addEventListener('click', function () {
+          var i = ETAT.cands.indexOf(cid);
+          if (i >= 0) { ETAT.cands.splice(i, 1); } else { ETAT.cands.push(cid); }
+          garde(); renderChoix(); rafraichir();
+        });
+        zoneChoix.appendChild(b);
+      });
+    }
+
+    /* --- les cases du profil --- */
+    var zoneCases = document.getElementById('profil-cases');
+    function renderCases() {
+      if (!zoneCases) return;
+      zoneCases.innerHTML = '';
+      TAX.PROFILS.forEach(function (p) {
+        var on = ETAT.profil.indexOf(p.id) >= 0;
+        var lab = el('<label class="profil-case"><input type="checkbox"' + (on ? ' checked' : '') +
+          '><span>' + p.emoji + ' ' + esc(p.label) + '</span></label>');
+        lab.querySelector('input').addEventListener('change', function (e) {
+          var i = ETAT.profil.indexOf(p.id);
+          if (e.target.checked && i < 0) ETAT.profil.push(p.id);
+          if (!e.target.checked && i >= 0) ETAT.profil.splice(i, 1);
+          garde(); syncAtelier(); rafraichir();
+        });
+        zoneCases.appendChild(lab);
+      });
+    }
+
+    /* --- ouvrir une fiche depuis la feuille de route --- */
+    function openFiche(cid, sujet) {
+      if (ETAT.q || ETAT.seul) {
+        ETAT.q = ''; ETAT.seul = false; garde();
+        var champ = document.getElementById('recherche');
+        if (champ) champ.value = '';
+        syncAtelier();
+      }
+      if (ETAT.cands.length && ETAT.cands.indexOf(cid) < 0) { ETAT.cands = []; garde(); renderChoix(); }
+      sujetActif = sujet;
+      document.querySelectorAll('.switch button').forEach(function (x) {
+        x.setAttribute('aria-pressed', x.dataset.sujet === sujet ? 'true' : 'false');
+      });
+      renderFiches();
+      majCompte();
+      var carte = document.querySelector('.fiche[data-fiche="' + cid + '-' + sujet + '"]');
+      if (!carte) return;
+      carte.scrollIntoView({ block: 'center' });
+      carte.classList.remove('flash');
+      void carte.offsetWidth;
+      carte.classList.add('flash');
+    }
+
+    /* --- la feuille de route --- */
+    var zoneRoute = document.getElementById('route');
+    function renderRoute() {
+      if (!zoneRoute) return;
+      zoneRoute.innerHTML = '';
+      if (!ETAT.profil.length) {
+        zoneRoute.appendChild(el('<p class="route-vide">Coche ton profil à gauche pour générer une mini feuille de route&nbsp;: ' +
+          'les sujets à regarder en premier, et les textes déjà documentés qui te concernent.</p>'));
+        return;
+      }
+
+      /* ce qui matche vraiment, sujet par sujet */
+      var parSujet = {};
+      TAX.SUJETS.forEach(function (x) { parSujet[x.id] = { lois: [], fiches: [], axes: 0 }; });
+      D.LOIS.forEach(function (l) {
+        var r = lumiereLoi(l);
+        if (r && parSujet[l.sujet]) parSujet[l.sujet].lois.push({ l: l, r: r });
+      });
+      D.FICHES.forEach(function (f) {
+        var r = lumiereFiche(f);
+        if (r && parSujet[f.sujet]) parSujet[f.sujet].fiches.push({ f: f, r: r });
+      });
+      ETAT.profil.forEach(function (id) {
+        (AXE[id].sujets || []).forEach(function (sid) { if (parSujet[sid]) parSujet[sid].axes++; });
+      });
+      Object.keys(parSujet).forEach(function (k) {
+        parSujet[k].lois.sort(function (a, b) { return b.r.score - a.r.score; });
+        parSujet[k].fiches.sort(function (a, b) { return b.r.score - a.r.score; });
+      });
+
+      /* ordre : les sujets en ligne qui matchent, puis les sujets attendus, puis le reste */
+      var ordre = TAX.SUJETS.slice().sort(function (a, b) {
+        var A = parSujet[a.id], B = parSujet[b.id];
+        var na = A.lois.length + A.fiches.length, nb = B.lois.length + B.fiches.length;
+        /* rang 0 : en ligne et ça matche · 1 : à venir · 2 : en ligne mais rien */
+        var ra = a.etat === 'en-ligne' ? (na > 0 ? 0 : 2) : 1;
+        var rb = b.etat === 'en-ligne' ? (nb > 0 ? 0 : 2) : 1;
+        if (ra !== rb) return ra - rb;
+        if (ra === 0) return nb - na;
+        return B.axes - A.axes;
+      });
+
+      var chips = el('<div class="route-sujets"></div>');
+      ordre.forEach(function (x) {
+        var p = parSujet[x.id];
+        var n = p.lois.length + p.fiches.length;
+        if (x.etat === 'a-venir') {
+          if (!p.axes) return;
+          chips.appendChild(el('<span class="route-sujet a-venir">' + x.emoji + ' ' + esc(x.label) +
+            '<span class="compte">pas encore en ligne</span></span>'));
+          return;
+        }
+        var b = el('<button type="button" class="route-sujet">' + x.emoji + ' ' + esc(x.label) +
+          '<span class="compte">' + n + '</span></button>');
+        b.addEventListener('click', function () {
+          filtreActif = x.id;
+          filtres.querySelectorAll('button').forEach(function (y) {
+            y.setAttribute('aria-pressed', y.dataset.f === x.id ? 'true' : 'false');
+          });
+          renderLois();
+          majCompte();
+          var cible = document.getElementById('votes');
+          if (cible) cible.scrollIntoView({ block: 'start' });
+        });
+        chips.appendChild(b);
+      });
+      zoneRoute.appendChild(chips);
+
+      /* les textes et les fiches, avec le motif de la correspondance */
+      var lois = [], fiches = [];
+      ordre.forEach(function (x) {
+        if (x.etat !== 'en-ligne') return;
+        lois = lois.concat(parSujet[x.id].lois);
+        fiches = fiches.concat(parSujet[x.id].fiches);
+      });
+      lois.sort(function (a, b) { return b.r.score - a.r.score; });
+      fiches.sort(function (a, b) { return b.r.score - a.r.score; });
+
+      var bl = el('<div class="route-bloc"><b>Les textes qui te concernent</b></div>');
+      if (!lois.length) {
+        bl.appendChild(el('<p class="route-rien">Aucun texte documenté ne correspond à ce profil pour l\'instant. ' +
+          'Ce n\'est pas un vide de position&nbsp;: c\'est un vide dans notre documentation, et on le comble sujet par sujet.</p>'));
+      } else {
+        lois.slice(0, 5).forEach(function (o) {
+          var b = el('<button type="button" class="route-item"><span class="titre">🗳️ ' + esc(o.l.nom) +
+            '</span><span class="pourquoi">Repéré via&nbsp;: ' + esc(pourquoi(o.r, 4)) + '</span></button>');
+          b.addEventListener('click', function () { openLoi(o.l.id); });
+          bl.appendChild(b);
+        });
+        if (lois.length > 5) {
+          bl.appendChild(el('<p class="route-rien">' + (lois.length - 5) + ' autre' + (lois.length - 5 > 1 ? 's' : '') +
+            ' texte' + (lois.length - 5 > 1 ? 's' : '') + ' concerné' + (lois.length - 5 > 1 ? 's' : '') +
+            '. Coche « ne montrer que ce qui me concerne » pour les voir tous.</p>'));
+        }
+      }
+      zoneRoute.appendChild(bl);
+
+      var bf = el('<div class="route-bloc"><b>Les fiches candidat·es qui te concernent</b></div>');
+      if (!fiches.length) {
+        bf.appendChild(el('<p class="route-rien">Aucune fiche de candidat·e ne mentionne encore ces points. ' +
+          'On ne comble pas ce trou en devinant&nbsp;: il faut la source.</p>'));
+      } else {
+        fiches.slice(0, 4).forEach(function (o) {
+          var c = CAND[o.f.cid];
+          var b = el('<button type="button" class="route-item"><span class="titre">🗂️ ' +
+            esc((c ? c.court : o.f.cid) + ' - ' + (o.f.sujet === 'sante' ? 'santé' : 'écologie')) +
+            '</span><span class="pourquoi">Repéré via&nbsp;: ' + esc(pourquoi(o.r, 4)) + '</span></button>');
+          b.addEventListener('click', function () { openFiche(o.f.cid, o.f.sujet); });
+          bf.appendChild(b);
+        });
+      }
+      zoneRoute.appendChild(bf);
+    }
+
+    /* --- le compteur --- */
+    var zoneCompte = document.getElementById('atelier-compte');
+    function majCompte() {
+      if (!zoneCompte) return;
+      var nl = loisVisibles().length, nf = fichesVisibles().length;
+      var bouts = ['<b>' + nl + '</b> texte' + (nl > 1 ? 's' : ''),
+                   '<b>' + nf + '</b> fiche' + (nf > 1 ? 's' : '')];
+      var txt = bouts.join(' · ') + (ETAT.q ? ' pour « ' + esc(ETAT.q) + ' »' : ' affiché' + (nl + nf > 1 ? 's' : ''));
+      if (ETAT.q) {
+        var horsFiltre = loisVisibles(true).length;
+        if (horsFiltre > nl) txt += ' · <b>' + (horsFiltre - nl) + '</b> au-delà du filtre en cours';
+      }
+      if (ETAT.cands.length) txt += ' · ' + ETAT.cands.length + ' candidat·e' + (ETAT.cands.length > 1 ? 's' : '') + ' retenu·e' + (ETAT.cands.length > 1 ? 's' : '');
+      zoneCompte.innerHTML = txt;
+    }
+
+    /* --- garder l'interface d'accord avec l'état --- */
+    function syncAtelier() {
+      var vider = document.getElementById('recherche-vider');
+      if (vider) vider.hidden = !ETAT.q;
+      var seul = document.getElementById('profil-seul');
+      if (seul) {
+        var possible = ETAT.profil.length > 0;
+        seul.disabled = !possible;
+        if (!possible) ETAT.seul = false;
+        seul.setAttribute('aria-pressed', String(!!ETAT.seul));
+        seul.textContent = ETAT.seul ? '✓ Je ne vois que ce qui me concerne' : 'Ne montrer que ce qui me concerne';
+      }
+      var sw = document.getElementById('fiches-switch-note');
+      if (sw) sw.hidden = !ETAT.q;
+    }
+
+    function rafraichir() {
+      renderLois();
+      renderFiches();
+      renderRoute();
+      majCompte();
+    }
+
+    /* --- les branchements --- */
+    (function () {
+      var champ = document.getElementById('recherche');
+      if (champ) {
+        var minuteur = null;
+        champ.addEventListener('input', function () {
+          clearTimeout(minuteur);
+          minuteur = setTimeout(function () {
+            ETAT.q = champ.value.trim();
+            syncAtelier();
+            rafraichir();
+          }, 180);
+        });
+      }
+      var vider = document.getElementById('recherche-vider');
+      if (vider) vider.addEventListener('click', function () {
+        ETAT.q = ''; if (champ) { champ.value = ''; champ.focus(); }
+        syncAtelier(); rafraichir();
+      });
+      var pv = document.getElementById('profil-vider');
+      if (pv) pv.addEventListener('click', function () {
+        ETAT.profil = []; ETAT.seul = false; garde();
+        renderCases(); syncAtelier(); rafraichir();
+      });
+      var ps = document.getElementById('profil-seul');
+      if (ps) ps.addEventListener('click', function () {
+        if (!ETAT.profil.length) return;
+        ETAT.seul = !ETAT.seul; garde(); syncAtelier(); rafraichir();
+      });
+      renderChoix();
+      renderCases();
+      syncAtelier();
+      rafraichir();
     })();
 
     /* ==================== v8 : PASTILLE BETA + RETOURS ==================== */
