@@ -773,10 +773,38 @@
     .dot.groupe { border-style: solid; box-shadow: inset 0 0 0 2px var(--white); }
     .loi-body { padding: 0 18px 18px; border-top: 2px solid var(--ink); background: var(--cream); }
     .loi-meta { font-size: 13.5px; color: var(--muted); font-weight: 700; padding-top: 12px; }
-    .loi-resume-details summary { cursor: pointer; font-weight: 800; font-size: 14px; padding: 6px 0; color: var(--muted); }
+    /* ---- le declencheur : on doit voir tout de suite que ca ouvre l'explication ---- */
+    .loi-resume-details { --acc: var(--purple); margin-top: 14px; }
+    .loi-resume-details.suj-ecologie { --acc: #2f6b47; }
+    .loi-resume-details > summary {
+      cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 9px;
+      max-width: 100%; font-family: 'Oswald', system-ui, sans-serif; font-size: 13.5px;
+      font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--ink);
+      background: var(--white); border: 2px solid var(--ink); border-radius: 999px;
+      padding: 8px 15px 8px 12px; box-shadow: 3px 3px 0 var(--acc);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .loi-resume-details > summary::-webkit-details-marker { display: none; }
+    .loi-resume-details > summary::marker { content: ''; }
+    .loi-resume-details > summary:hover {
+      background: var(--yellow); transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--acc);
+    }
+    .loi-resume-details > summary:focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; }
+    .loi-resume-details[open] > summary,
+    .loi-resume-details[open] > summary:hover {
+      background: var(--ink); color: var(--cream);
+      box-shadow: 2px 2px 0 var(--acc); transform: none; margin-bottom: 6px;
+    }
+    .sum-emo { font-size: 17px; line-height: 1; }
+    .sum-txt { min-width: 0; }
+    .sum-fl {
+      margin-left: 2px; font-size: 11px; line-height: 1; opacity: .75;
+      transition: transform .15s ease;
+    }
+    .loi-resume-details[open] > summary .sum-fl { transform: rotate(180deg); }
     .loi-resume-details > p { white-space: pre-line; font-size: 14.5px; }
     /* ---- « Ce que fait ce texte, en clair » : mise en forme lisible ---- */
-    .clair { --acc: var(--purple); max-width: 74ch; padding: 4px 0 8px; }
+    .clair { max-width: 74ch; padding: 4px 0 8px; }
     .clair.suj-ecologie { --acc: #2f6b47; }
     .clair > * + * { margin-top: 12px; }
     .clair-ligne {
@@ -835,6 +863,8 @@
     }
     @media (max-width: 620px) {
       .clair-p, .clair-liste li, .clair-point span, .clair-ligne { font-size: 15.5px; }
+      .loi-resume-details > summary { font-size: 12.5px; gap: 7px; padding: 8px 12px 8px 10px; }
+      .sum-emo { font-size: 15px; }
     }
     .grille { margin-top: 10px; border-top: 1px solid var(--line); }
     .cand-row { border-bottom: 1px solid var(--line); }
@@ -2260,7 +2290,11 @@
             '</summary>' +
             '<div class="loi-body">' +
               '<div class="loi-meta">' + esc(l.date) + (l.chambre ? ' · ' + esc(l.chambre) : '') + (l.initiative ? ' · ' + esc(l.initiative.length > 120 ? l.initiative.slice(0, 119).replace(/\s+\S*$/, '') + '…' : l.initiative) : '') + '</div>' +
-              (l.resume ? '<details class="loi-resume-details"><summary>Ce que fait ce texte, en clair</summary>' + htmlClair(l) + '</details>' : '') +
+              (l.resume ? '<details class="loi-resume-details suj-' + (l.sujet === 'sante' ? 'sante' : 'ecologie') + '">' +
+                 '<summary><span class="sum-emo" aria-hidden="true">\uD83D\uDCA1</span>' +
+                 '<span class="sum-txt">Ce que fait ce texte, en clair</span>' +
+                 '<span class="sum-fl" aria-hidden="true">\u25BC</span></summary>' +
+                 htmlClair(l) + '</details>' : '') +
               '<div class="grille">' + rows + '</div>' +
               (liens ? '<div class="loi-links">' + liens + '</div>' : '') +
             '</div>' +
