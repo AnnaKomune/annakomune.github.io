@@ -383,6 +383,51 @@
 
     .profil-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
 
+    .emprunt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 16px;
+      padding: 13px 15px;
+      border: 2px solid var(--cream);
+      border-radius: 18px;
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .emprunt .quoi {
+      flex: 1 1 14ch;
+      min-width: 0;
+      font-size: 14.5px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .emprunt .quoi small {
+      display: block;
+      margin-top: 3px;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(51, 46, 50, .68);
+    }
+
+    .emprunt button {
+      flex: 0 0 auto;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--white);
+      font: inherit;
+      font-weight: 800;
+      font-size: 13.5px;
+      cursor: pointer;
+    }
+
+    .emprunt button:hover { background: var(--yellow); }
+    .emprunt button.autre { background: var(--pink); }
+
     .profil-note {
       margin: 16px 0 0;
       padding-top: 14px;
@@ -1228,9 +1273,10 @@
         <div class="profil-panneau">
           <h3>Nouveau - profils combinés</h3>
           <p class="gros">Mix ton profil.</p>
-          <p>Au départ, une demande qui revenait souvent&nbsp;: ne pas avoir à lire douze fiches séparées quand on est par exemple jeune + rural·e + précaire. Alors on a fait des combinaisons - et elles marchent dans les deux sens. Coche ce qui te ressemble pour t'y retrouver. Coche ce qui ne te ressemble pas pour voir ce qu'un programme change dans une vie qui n'est pas la tienne&nbsp;: c'est souvent là qu'on apprend le plus. Ce qu'on cherche à montrer, ce n'est pas ton intérêt&nbsp;: c'est qui est protégé, qui est fragilisé, et ce que ça produit pour tout le monde.</p>
+          <p>Au départ, une demande qui revenait souvent&nbsp;: ne pas avoir à lire douze fiches séparées quand on est par exemple jeune + rural·e + précaire. Alors on a fait des combinaisons - et elles marchent dans les deux sens. Coche ce qui te ressemble pour t'y retrouver. Coche ce qui ne te ressemble pas pour voir ce qu'un programme change dans une vie qui n'est pas la tienne&nbsp;: c'est souvent là qu'on apprend le plus, et le bouton «&nbsp;au hasard&nbsp;» est là pour ça. Ce qu'on cherche à montrer, ce n'est pas ton intérêt&nbsp;: c'est qui est protégé, qui est fragilisé, et ce que ça produit pour tout le monde.</p>
           <div class="profil-cases" id="profil-cases"></div>
           <div class="profil-actions">
+            <button type="button" class="btn pink" id="profil-hasard">🎲 Voir un profil au hasard</button>
             <button type="button" class="btn" id="profil-vider">Tout décocher</button>
             <button type="button" class="btn play" id="profil-seul" aria-pressed="false">N'afficher que les textes concernés</button>
           </div>
@@ -1651,6 +1697,24 @@
     var TAX = {"SUJETS": [{"id": "sante", "label": "Santé", "emoji": "🩺", "etat": "en-ligne"}, {"id": "ecologie", "label": "Écologie & climat", "emoji": "🌱", "etat": "en-ligne"}, {"id": "logement", "label": "Logement", "emoji": "🏡", "etat": "a-venir"}, {"id": "cout-vie", "label": "Coût de la vie", "emoji": "🛒", "etat": "a-venir"}, {"id": "services-publics", "label": "Services publics", "emoji": "🏦", "etat": "a-venir"}, {"id": "travail", "label": "Travail / salaires", "emoji": "💸", "etat": "a-venir"}, {"id": "chomage", "label": "Chômage", "emoji": "📄", "etat": "a-venir"}, {"id": "fiscalite", "label": "Fiscalité", "emoji": "🪙", "etat": "a-venir"}, {"id": "handicap", "label": "Handicap", "emoji": "♿", "etat": "a-venir"}, {"id": "medias", "label": "Médias / démocratie", "emoji": "📰", "etat": "a-venir"}], "PROFILS": [{"id": "jeune", "label": "moins de 26 ans", "emoji": "🎟️", "tags": ["Santé sexuelle & reproductive", "Santé mentale", "IVG", "PMA"], "mots": ["moins de 26 ans", "jeune", "jeunes", "étudiant", "étudiante", "contraception", "dépistage des IST", "IST", "santé mentale", "20-25"], "sujets": ["sante", "logement", "travail", "cout-vie"]}, {"id": "rural", "label": "campagne / sans voiture", "emoji": "🌾", "tags": ["Ruralités", "Déserts médicaux", "Médecine de ville", "Urgences", "Automobile", "Gestion de l'eau", "Sécheresse", "Agriculture"], "mots": ["rural", "rurale", "ruralité", "ruralités", "désert médical", "déserts médicaux", "30 minutes", "maternité", "urgences", "sans voiture", "zone peu dense"], "sujets": ["sante", "ecologie", "services-publics", "cout-vie"]}, {"id": "locataire", "label": "locataire", "emoji": "🏚️", "tags": ["Rénovation énergétique", "Passoires thermiques"], "mots": ["passoire", "passoires thermiques", "rénovation énergétique", "locataire", "locataires", "logement", "logements", "propriétaire bailleur"], "sujets": ["logement", "ecologie", "cout-vie"]}, {"id": "precaire", "label": "précaire / petit salaire", "emoji": "💸", "tags": ["Accès financier aux soins", "Inégalités de santé", "Assurance maladie", "Passoires thermiques", "Inégalités environnementales", "Justice climatique"], "mots": ["faibles revenus", "précaire", "précaires", "ménages modestes", "ménages précaires", "reste à charge", "dépassements d'honoraires", "franchise", "renoncement aux soins", "sans reste à charge", "pouvoir d'achat"], "sujets": ["cout-vie", "sante", "travail", "logement", "fiscalite"]}, {"id": "femme", "label": "femme", "emoji": "♀", "tags": ["Santé des femmes", "IVG", "PMA", "Sexisme", "Santé sexuelle & reproductive", "Inégalités de santé"], "mots": ["femme", "femmes", "IVG", "avortement", "contraception", "gynéco", "endométriose", "sexisme", "maternité"], "sujets": ["sante", "travail", "services-publics"]}, {"id": "lgbt", "label": "LGBTQIA+ / queer", "emoji": "🏳️‍🌈", "tags": ["Santé LGBTQIA+", "PMA", "Droit des patients"], "mots": ["LGBT", "LGBTQIA", "PMA", "personnes trans", "couples de femmes", "orientation sexuelle"], "sujets": ["sante", "services-publics", "medias"]}, {"id": "racisme", "label": "racisé·e / concerné·e par le racisme", "emoji": "✊", "tags": ["Inégalités de santé", "Inégalités environnementales", "Justice climatique"], "mots": ["discrimination", "outre-mer", "ultramarin", "ultramarins", "inégalités territoriales", "quartiers populaires", "drépanocytose"], "sujets": ["sante", "logement", "services-publics", "medias"]}, {"id": "handicap", "label": "handicap", "emoji": "♿", "tags": ["Droit des patients", "Autonomie du patient"], "mots": ["handicap", "handicaps", "autonomie", "aidant", "aidants", "accessibilité", "fin de vie", "soins palliatifs", "invalidité", "AAH", "perte d'autonomie"], "sujets": ["handicap", "sante", "services-publics", "travail"]}, {"id": "parent", "label": "parent / enfant à charge", "emoji": "👶", "tags": ["Santé environnementale", "Pesticides", "PMA"], "mots": ["enfant", "enfants", "nouveau-né", "nouveau-nés", "nourrisson", "école", "pédiatrie", "pédiatrique", "famille", "familles", "parents", "drépanocytose", "congé parental", "crèche"], "sujets": ["sante", "ecologie", "cout-vie", "services-publics"]}, {"id": "medias", "label": "médias / démocratie", "emoji": "💻", "tags": ["Procédures administratives", "Collectivités"], "mots": ["49.3", "sans vote", "ordonnance", "commission mixte paritaire", "niche parlementaire", "transparence", "lobby", "lobbying", "conflit d'intérêts"], "sujets": ["medias", "services-publics"]}]};
     var SEUIL_LOI = 3, SEUIL_FICHE = 1;   /* 3 = au moins un vrai tag ; 1 = un mot entier */
     var AXE = {}; TAX.PROFILS.forEach(function (p) { AXE[p.id] = p; });
+    /* Points de vue a emprunter. Aucun portrait invente : ce sont les
+       libelles des axes ci-dessus, recombines. */
+    var POINTS_DE_VUE = [
+      { axes: ['jeune', 'precaire'],              quoi: 'avoir moins de 26 ans et un petit salaire' },
+      { axes: ['parent', 'precaire'],             quoi: 'un enfant à charge et un petit salaire' },
+      { axes: ['rural'],                          quoi: 'la campagne, sans voiture' },
+      { axes: ['handicap', 'rural'],              quoi: 'un handicap, à la campagne' },
+      { axes: ['femme', 'rural'],                 quoi: 'être une femme, à la campagne' },
+      { axes: ['lgbt', 'jeune'],                  quoi: 'être queer et avoir moins de 26 ans' },
+      { axes: ['racisme', 'locataire'],           quoi: 'être concerné·e par le racisme, et locataire' },
+      { axes: ['handicap', 'precaire'],           quoi: 'un handicap et un petit salaire' },
+      { axes: ['parent', 'rural'],                quoi: 'des enfants à charge, à la campagne' },
+      { axes: ['femme', 'parent', 'precaire'],    quoi: 'une femme, un enfant à charge, un petit salaire' },
+      { axes: ['locataire', 'jeune'],             quoi: 'être locataire et avoir moins de 26 ans' },
+      { axes: ['lgbt', 'handicap'],               quoi: 'être queer et en situation de handicap' },
+      { axes: ['racisme', 'femme'],               quoi: 'être une femme, et concernée par le racisme' },
+      { axes: ['medias'],                         quoi: 'vouloir savoir qui décide, et comment' }
+    ];
     var SUJ = {}; TAX.SUJETS.forEach(function (x) { SUJ[x.id] = x; });
 
     function norm(v) {
@@ -1721,7 +1785,7 @@
 
     /* ---------- l'état, gardé d'une visite à l'autre ---------- */
     var CLE_ETAT = 'komune.comparateur.atelier';
-    var ETAT = { q: '', cands: [], profil: [], seul: false };
+    var ETAT = { q: '', cands: [], profil: [], seul: false, emprunt: null, mien: [] };
     try {
       var brut = localStorage.getItem(CLE_ETAT);
       if (brut) {
@@ -1729,6 +1793,8 @@
         if (o && typeof o === 'object') {
           ETAT.cands = (o.cands || []).filter(function (x) { return CAND[x]; });
           ETAT.profil = (o.profil || []).filter(function (x) { return AXE[x]; });
+          ETAT.mien = (o.mien || []).filter(function (x) { return AXE[x]; });
+          ETAT.emprunt = typeof o.emprunt === 'number' ? o.emprunt : null;
           ETAT.seul = !!o.seul;
         }
       }
@@ -1736,7 +1802,8 @@
     function garde() {
       try {
         localStorage.setItem(CLE_ETAT, JSON.stringify(
-          { cands: ETAT.cands, profil: ETAT.profil, seul: ETAT.seul }));
+          { cands: ETAT.cands, profil: ETAT.profil, seul: ETAT.seul,
+            emprunt: ETAT.emprunt, mien: ETAT.mien }));
       } catch (e) { /* rien à faire : l'outil marche sans */ }
     }
 
@@ -2333,10 +2400,44 @@
           var i = ETAT.profil.indexOf(p.id);
           if (e.target.checked && i < 0) ETAT.profil.push(p.id);
           if (!e.target.checked && i >= 0) ETAT.profil.splice(i, 1);
+          /* dès qu'on coche soi-même, ce n'est plus un point de vue emprunté */
+          ETAT.emprunt = null;
+          ETAT.mien = ETAT.profil.slice();
           garde(); syncAtelier(); rafraichir();
         });
         zoneCases.appendChild(lab);
       });
+    }
+
+    /* --- emprunter le point de vue de quelqu'un d'autre --- */
+    function memeJeu(a, b) {
+      if (a.length !== b.length) return false;
+      return a.every(function (x) { return b.indexOf(x) >= 0; });
+    }
+    function emprunter() {
+      /* on ne retombe pas sur la combinaison déjà affichée */
+      var libres = [];
+      POINTS_DE_VUE.forEach(function (v, i) {
+        if (!memeJeu(v.axes, ETAT.profil)) libres.push(i);
+      });
+      if (!libres.length) libres = POINTS_DE_VUE.map(function (_, i) { return i; });
+      var choix = libres[Math.floor(Math.random() * libres.length)];
+      ETAT.emprunt = choix;
+      ETAT.profil = POINTS_DE_VUE[choix].axes.slice();
+      garde();
+      renderCases();
+      syncAtelier();
+      rafraichir();
+      var panneau = document.getElementById('route');
+      if (panneau) panneau.scrollIntoView({ block: 'center' });
+    }
+    function rendreLePointDeVue() {
+      ETAT.emprunt = null;
+      ETAT.profil = ETAT.mien.slice();
+      garde();
+      renderCases();
+      syncAtelier();
+      rafraichir();
     }
 
     /* --- ouvrir une fiche depuis la feuille de route --- */
@@ -2372,6 +2473,22 @@
           'les sujets à regarder en premier, et les textes déjà documentés qui concernent ce profil. ' +
           'Rien n\'oblige à cocher le tien.</p>'));
         return;
+      }
+
+      /* point de vue emprunté : on dit lequel, et on offre de le rendre */
+      if (ETAT.emprunt != null && POINTS_DE_VUE[ETAT.emprunt]) {
+        var v = POINTS_DE_VUE[ETAT.emprunt];
+        var band = el('<div class="emprunt"><span class="quoi">Point de vue emprunté&nbsp;: ' +
+          esc(v.quoi) + '<small>Même moteur, mêmes sources. Seul le point de vue change.</small></span></div>');
+        var bAutre = el('<button type="button" class="autre">🎲 Un autre</button>');
+        bAutre.addEventListener('click', emprunter);
+        band.appendChild(bAutre);
+        if (ETAT.mien.length) {
+          var bMien = el('<button type="button">Revenir à ma sélection</button>');
+          bMien.addEventListener('click', rendreLePointDeVue);
+          band.appendChild(bMien);
+        }
+        zoneRoute.appendChild(band);
       }
 
       /* ce qui matche vraiment, sujet par sujet */
@@ -2536,9 +2653,11 @@
         ETAT.q = ''; if (champ) { champ.value = ''; champ.focus(); }
         syncAtelier(); rafraichir();
       });
+      var ph = document.getElementById('profil-hasard');
+      if (ph) ph.addEventListener('click', emprunter);
       var pv = document.getElementById('profil-vider');
       if (pv) pv.addEventListener('click', function () {
-        ETAT.profil = []; ETAT.seul = false; garde();
+        ETAT.profil = []; ETAT.seul = false; ETAT.emprunt = null; ETAT.mien = []; garde();
         renderCases(); syncAtelier(); rafraichir();
       });
       var ps = document.getElementById('profil-seul');
