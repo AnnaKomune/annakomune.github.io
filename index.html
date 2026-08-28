@@ -957,6 +957,9 @@
       box-shadow: 12px 12px 0 var(--purple);
     }
 
+    /* le conteneur doit porter une hauteur, sinon le « height: 100% » de
+       l'iframe se calcule contre un div vide et la video est tronquee. */
+    .ig-lb-box #ig-lb-slot { position: absolute; inset: 0; }
     .ig-lb-box iframe { display: block; width: 100%; height: 100%; border: 0; }
 
     .ig-lb-close {
