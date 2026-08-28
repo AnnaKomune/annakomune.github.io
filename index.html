@@ -432,7 +432,7 @@
     .comparator-copy > * { position: relative; z-index: 1; }
 
     .comparator-copy h2 {
-      max-width: 11ch;
+      max-width: 22ch;
       margin-top: 16px;
     }
 
@@ -449,30 +449,22 @@
       -webkit-box-decoration-break: clone;
     }
 
-    .comparator-preview {
-      display: block;
-      width: min(100%, 980px);
-      margin-top: 26px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: var(--cream);
-      box-shadow: 0 16px 38px rgba(51,46,50,.14);
-      transform: rotate(-1deg);
-      transition: transform .18s ease, box-shadow .18s ease;
+    .comparator-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
     }
 
-    .comparator-preview:hover {
-      transform: rotate(0deg) translateY(-3px);
-      box-shadow: 0 20px 44px rgba(51,46,50,.18);
+    .comparator-cta .button { margin-top: 23px; }
+
+    .button-ghost {
+      background: var(--white);
+      color: var(--ink);
+      border: 2px solid var(--ink);
     }
 
-    .comparator-preview img {
-      display: block;
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
+    .button-ghost:hover { background: var(--yellow); color: var(--ink); }
 
     .comparator-points {
       display: flex;
@@ -897,14 +889,6 @@
 
     .ig-cover img { width: 100%; height: 100%; object-fit: cover; }
 
-    .ig-cover::after {
-      content: "";
-      position: absolute;
-      inset: auto 0 0 0;
-      height: 62%;
-      background: linear-gradient(rgba(51, 46, 50, 0), rgba(51, 46, 50, .9));
-      pointer-events: none;
-    }
 
     .ig-badge {
       position: absolute;
@@ -927,12 +911,11 @@
     .ig-btn:hover .ig-badge { background: var(--pink); }
 
     .ig-legende {
-      position: absolute;
-      left: 12px;
-      right: 12px;
-      bottom: 11px;
-      z-index: 2;
-      color: var(--cream);
+      display: block;
+      padding: 11px 13px 12px;
+      border-top: 2px solid var(--ink);
+      background: var(--cream);
+      color: var(--ink);
       font-size: 13.5px;
       font-weight: 800;
       line-height: 1.28;
@@ -1123,7 +1106,7 @@
       <a class="site-brand" href="./" aria-label="Komune Média - retour à l'accueil"><img src="img/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>
       <a class="site-link is-current" href="./" aria-current="page">Accueil</a>
       <a class="site-link" href="articles/">Articles</a>
-      <a class="site-link" href="comparateur-2027/">Comparateur 2027</a>
+      <a class="site-link" href="comparateur-2027/">Projet citoyen présidentielles 2027</a>
       <a class="site-link" href="equipe/">L'équipe</a>
       <a class="site-link" href="soutenir/">Nous soutenir</a>
     </nav>
@@ -1209,9 +1192,6 @@
         <article class="comparator-copy">
           <div class="eyebrow">Présidentielle 2027</div>
           <h2 id="comparateur-title">On construit un comparateur politique <span class="mark pink">pour enfin choisir sur du concret</span></h2>
-          <a class="comparator-preview" href="https://drive.google.com/file/d/12lk0fBV-4_-Fk7Ea3tv1kk4W-gp4NUGU/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Voir l’image du comparateur politique en grand">
-            <img src="https://drive.google.com/thumbnail?id=12lk0fBV-4_-Fk7Ea3tv1kk4W-gp4NUGU&sz=w1600" alt="Aperçu du comparateur politique pour l’élection présidentielle de 2027" loading="lazy">
-          </a>
           <p>Pour la présidentielle de 2027, on développe une plateforme gratuite pour comparer les candidat·es autrement : pas seulement à partir des promesses, mais aussi des votes, des actes, des contradictions, des sources et de ce que leurs propositions changent concrètement dans nos vies.</p>
           <p>L’objectif : sortir des clashs, des sondages et des petites phrases pour donner un outil clair, sourcé et accessible à celles et ceux qui veulent comprendre avant de voter.</p>
           <div class="comparator-points" aria-label="Ce que la plateforme comparera">
@@ -1222,7 +1202,10 @@
             <span class="comparator-pill">impacts concrets</span>
             <span class="comparator-pill">sources</span>
           </div>
-          <a class="button" href="comparateur-2027/">Découvrir le comparateur ↗</a>
+          <div class="comparator-cta">
+            <a class="button" href="https://www.komunemedia.fr/comparateur/">Découvrir le comparateur ↗</a>
+            <a class="button button-ghost" href="comparateur-2027/">Découvrir ce projet citoyen présidentielles 2027 ↗</a>
+          </div>
         </article>
       </section>
 
@@ -1237,6 +1220,83 @@
         <h2>Nos vidéos</h2>
         <a class="articles-link" href="https://www.youtube.com/@komune4882" target="_blank" rel="noopener noreferrer">Notre chaîne YouTube &#8599;</a>
       </div>
+
+      <section class="videos" aria-labelledby="videos-title">
+        <h2 id="videos-title">Sur Instagram</h2>
+        <p class="videos-intro">Nos formats courts. Cliquez sur une couverture pour lire la vidéo ici, ou ouvrez-la directement sur Instagram.</p>
+        <div class="ig-row" aria-label="Vidéos Instagram Komune">
+          <article class="ig-card sh-pink">
+            <button type="button" class="ig-btn" data-ig="reel/DXeyQEVjYzm" aria-label="Ouvrir la vidéo Instagram : Micro-agressions racistes : des scènes fictives, des vécus réels">
+              <span class="ig-cover">
+                <img src="img/ig-DXeyQEVjYzm.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">Micro-agressions racistes : des scènes fictives, des vécus réels</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DXeyQEVjYzm/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-sky">
+            <button type="button" class="ig-btn" data-ig="reel/DXMlQI4DXh4" aria-label="Ouvrir la vidéo Instagram : « Je ne suis pas raciste » : est-ce que ça suffit vraiment ?">
+              <span class="ig-cover">
+                <img src="img/ig-DXMlQI4DXh4.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">« Je ne suis pas raciste » : est-ce que ça suffit vraiment ?</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DXMlQI4DXh4/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-green">
+            <button type="button" class="ig-btn" data-ig="reel/DY2TNEitttX" aria-label="Ouvrir la vidéo Instagram : Écologie et « néo-extractivisme vert » : ce que ça change">
+              <span class="ig-cover">
+                <img src="img/ig-DY2TNEitttX.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">Écologie et « néo-extractivisme vert » : ce que ça change</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DY2TNEitttX/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-gold">
+            <button type="button" class="ig-btn" data-ig="reel/DWn1lHyDZLj" aria-label="Ouvrir la vidéo Instagram : Dans l'Ain, Yaya lutte contre l'isolement en milieu rural">
+              <span class="ig-cover">
+                <img src="img/ig-DWn1lHyDZLj.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">Dans l'Ain, Yaya lutte contre l'isolement en milieu rural</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DWn1lHyDZLj/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-purple">
+            <button type="button" class="ig-btn" data-ig="reel/DZDSTJktI6g" aria-label="Ouvrir la vidéo Instagram : Une BD passée au crible : notre analyse et nos précisions">
+              <span class="ig-cover">
+                <img src="img/ig-DZDSTJktI6g.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">Une BD passée au crible : notre analyse et nos précisions</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DZDSTJktI6g/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-yellow">
+            <button type="button" class="ig-btn" data-ig="reel/DVnhfW3DcaU" aria-label="Ouvrir la vidéo Instagram : L'article de Monsieur Kys, écrit depuis la peur et la rage">
+              <span class="ig-cover">
+                <img src="img/ig-DVnhfW3DcaU.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">L'article de Monsieur Kys, écrit depuis la peur et la rage</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DVnhfW3DcaU/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-blue">
+            <button type="button" class="ig-btn" data-ig="p/DZcOU3KtyHY" aria-label="Ouvrir la vidéo Instagram : La « honte noire » : d'où vient cette expression raciste">
+              <span class="ig-cover">
+                <img src="img/ig-DZcOU3KtyHY.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">La « honte noire » : d'où vient cette expression raciste</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/p/DZcOU3KtyHY/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+        </div>
+      </section>
 
       <section class="yt-section" aria-labelledby="yt-title">
         <h3 class="eyebrow" id="yt-title">Sur YouTube - nos formats longs</h3>
@@ -1305,83 +1365,6 @@
         </div>
       </section>
 
-      <section class="videos" aria-labelledby="videos-title">
-        <h2 id="videos-title">Sur Instagram</h2>
-        <p class="videos-intro">Nos formats courts. Cliquez sur une couverture pour lire la vidéo ici, ou ouvrez-la directement sur Instagram.</p>
-        <div class="ig-row" aria-label="Vidéos Instagram Komune">
-          <article class="ig-card sh-pink">
-            <button type="button" class="ig-btn" data-ig="reel/DXeyQEVjYzm" aria-label="Ouvrir la vidéo Instagram : Micro-agressions racistes : des scènes fictives, des vécus réels">
-              <span class="ig-cover">
-                <img src="img/ig-DXeyQEVjYzm.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
-                <span class="ig-badge" aria-hidden="true">&#9654;</span>
-                <span class="ig-legende">Micro-agressions racistes : des scènes fictives, des vécus réels</span>
-              </span>
-            </button>
-            <a class="ig-open" href="https://www.instagram.com/reel/DXeyQEVjYzm/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
-          </article>
-          <article class="ig-card sh-sky">
-            <button type="button" class="ig-btn" data-ig="reel/DXMlQI4DXh4" aria-label="Ouvrir la vidéo Instagram : « Je ne suis pas raciste » : est-ce que ça suffit vraiment ?">
-              <span class="ig-cover">
-                <img src="img/ig-DXMlQI4DXh4.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
-                <span class="ig-badge" aria-hidden="true">&#9654;</span>
-                <span class="ig-legende">« Je ne suis pas raciste » : est-ce que ça suffit vraiment ?</span>
-              </span>
-            </button>
-            <a class="ig-open" href="https://www.instagram.com/reel/DXMlQI4DXh4/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
-          </article>
-          <article class="ig-card sh-green">
-            <button type="button" class="ig-btn" data-ig="reel/DY2TNEitttX" aria-label="Ouvrir la vidéo Instagram : Écologie et « néo-extractivisme vert » : ce que ça change">
-              <span class="ig-cover">
-                <img src="img/ig-DY2TNEitttX.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
-                <span class="ig-badge" aria-hidden="true">&#9654;</span>
-                <span class="ig-legende">Écologie et « néo-extractivisme vert » : ce que ça change</span>
-              </span>
-            </button>
-            <a class="ig-open" href="https://www.instagram.com/reel/DY2TNEitttX/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
-          </article>
-          <article class="ig-card sh-gold">
-            <button type="button" class="ig-btn" data-ig="reel/DWn1lHyDZLj" aria-label="Ouvrir la vidéo Instagram : Dans l'Ain, Yaya lutte contre l'isolement en milieu rural">
-              <span class="ig-cover">
-                <img src="img/ig-DWn1lHyDZLj.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
-                <span class="ig-badge" aria-hidden="true">&#9654;</span>
-                <span class="ig-legende">Dans l'Ain, Yaya lutte contre l'isolement en milieu rural</span>
-              </span>
-            </button>
-            <a class="ig-open" href="https://www.instagram.com/reel/DWn1lHyDZLj/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
-          </article>
-          <article class="ig-card sh-purple">
-            <button type="button" class="ig-btn" data-ig="reel/DZDSTJktI6g" aria-label="Ouvrir la vidéo Instagram : Une BD passée au crible : notre analyse et nos précisions">
-              <span class="ig-cover">
-                <img src="img/ig-DZDSTJktI6g.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
-                <span class="ig-badge" aria-hidden="true">&#9654;</span>
-                <span class="ig-legende">Une BD passée au crible : notre analyse et nos précisions</span>
-              </span>
-            </button>
-            <a class="ig-open" href="https://www.instagram.com/reel/DZDSTJktI6g/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
-          </article>
-          <article class="ig-card sh-yellow">
-            <button type="button" class="ig-btn" data-ig="reel/DVnhfW3DcaU" aria-label="Ouvrir la vidéo Instagram : L'article de Monsieur Kys, écrit depuis la peur et la rage">
-              <span class="ig-cover">
-                <img src="img/ig-DVnhfW3DcaU.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
-                <span class="ig-badge" aria-hidden="true">&#9654;</span>
-                <span class="ig-legende">L'article de Monsieur Kys, écrit depuis la peur et la rage</span>
-              </span>
-            </button>
-            <a class="ig-open" href="https://www.instagram.com/reel/DVnhfW3DcaU/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
-          </article>
-          <article class="ig-card sh-blue">
-            <button type="button" class="ig-btn" data-ig="p/DZcOU3KtyHY" aria-label="Ouvrir la vidéo Instagram : La « honte noire » : d'où vient cette expression raciste">
-              <span class="ig-cover">
-                <img src="img/ig-DZcOU3KtyHY.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
-                <span class="ig-badge" aria-hidden="true">&#9654;</span>
-                <span class="ig-legende">La « honte noire » : d'où vient cette expression raciste</span>
-              </span>
-            </button>
-            <a class="ig-open" href="https://www.instagram.com/p/DZcOU3KtyHY/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
-          </article>
-        </div>
-      </section>
-
       <div class="ig-lb" id="ig-lb" hidden role="dialog" aria-modal="true" aria-label="Vidéo Instagram">
         <div class="ig-lb-box">
           <button type="button" class="ig-lb-close" id="ig-lb-close" aria-label="Fermer la vidéo">&#10005;</button>
@@ -1431,7 +1414,7 @@
   </script>
   <div class="site-foot-brand">
     <img src="img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">
-    <span>© Komune Média - média citoyen, indépendant et sourcé.</span>
+    <span>© Komune Média - Le média indépendant qui décrypte la société avec un regard antiraciste</span>
   </div>
   <!-- ===== Videos : YouTube en clic-pour-lire, Instagram en lightbox ===== -->
   <script>
