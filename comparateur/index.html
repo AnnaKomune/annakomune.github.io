@@ -103,9 +103,10 @@
     .toc a:hover, .toc a.active { background: var(--ink); color: var(--cream); }
 
     /* ---------- héros ---------- */
-    .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr); gap: 18px; margin-bottom: 20px; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); gap: 16px; margin-bottom: 18px; align-items: stretch; }
     .hero-main {
-      position: relative; overflow: hidden; padding: clamp(26px, 4.5vw, 60px);
+      position: relative; overflow: hidden; padding: clamp(22px, 3vw, 38px);
+      display: flex; flex-direction: column; justify-content: center;
       border: 2px solid var(--ink); border-radius: 30px; box-shadow: 8px 8px 0 var(--pink);
       background:
         radial-gradient(circle at 92% 10%, rgba(254,224,117,.80), transparent 25%),
@@ -113,10 +114,10 @@
         var(--white);
     }
     .eyebrow { margin: 0 0 12px; font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
-    .hero-main h1 { position: relative; z-index: 1; margin: 0; max-width: 12ch; overflow-wrap: normal; word-break: keep-all; }
-    .hero .pitch { position: relative; z-index: 1; font-weight: 650; max-width: 52ch; margin-top: 18px; font-size: clamp(16.5px, 1.5vw, 21px); line-height: 1.34; }
-    .hero .beta { position: relative; z-index: 1; font-size: 14px; color: var(--muted); margin-top: 12px; max-width: 56ch; font-weight: 600; }
-    .cta-row { position: relative; z-index: 1; display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+    .hero-main h1 { position: relative; z-index: 1; margin: 0; max-width: 17ch; font-size: clamp(38px, 5.2vw, 66px); overflow-wrap: normal; word-break: keep-all; }
+    .hero .pitch { position: relative; z-index: 1; font-weight: 650; max-width: 56ch; margin-top: 12px; font-size: clamp(15.5px, 1.15vw, 18px); line-height: 1.32; }
+    .hero .beta { position: relative; z-index: 1; font-size: 13px; color: var(--muted); margin-top: 10px; max-width: 62ch; font-weight: 600; line-height: 1.38; }
+    .cta-row { position: relative; z-index: 1; display: flex; gap: 9px; flex-wrap: wrap; margin-top: 16px; }
     .btn {
       display: inline-flex; align-items: center; gap: 8px; min-height: 48px;
       border: 2px solid var(--ink); border-radius: 14px; padding: 11px 18px;
@@ -131,15 +132,15 @@
     .btn.pink { background: var(--pink); }
 
     .hero-side {
-      position: relative; min-height: 540px; overflow: hidden; padding: clamp(22px, 3vw, 40px);
+      position: relative; min-height: 400px; overflow: hidden; padding: clamp(18px, 2.2vw, 28px);
       border: 2px solid var(--ink); border-radius: 30px; box-shadow: 8px 8px 0 var(--blue);
       background: linear-gradient(135deg, var(--pink), var(--yellow));
     }
-    .hero-side h2 { position: relative; z-index: 2; max-width: 10ch; margin: 0; }
+    .hero-side h2 { position: relative; z-index: 2; max-width: 10ch; margin: 0; font-size: clamp(30px, 3.4vw, 46px); }
     .orbit { position: absolute; inset: 0; }
     .orbit-person {
       position: absolute; display: grid; place-items: center;
-      width: clamp(92px, 10.5vw, 148px); aspect-ratio: 1;
+      width: clamp(78px, 8.4vw, 116px); aspect-ratio: 1;
       transform: rotate(var(--tilt));
       animation: idleFloat 4.5s ease-in-out infinite; animation-delay: var(--delay);
       transition: transform .26s cubic-bezier(.18, 1.35, .22, 1), filter .18s ease;
@@ -207,6 +208,54 @@
     .bloc-pli { margin-top: 22px; }
     .bloc-pli[hidden] { display: none; }
     .pli-teaser { font-size: 14px; font-weight: 700; color: var(--muted); margin: 12px 0 0; }
+
+    /* ---------- les trois outils, côte à côte et dépliables ---------- */
+    .trio {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px; margin: 0 0 54px; scroll-margin-top: 84px;
+    }
+    .trio-item { min-width: 0; scroll-margin-top: 84px; }
+    .trio-carte {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+      width: 100%; height: 100%; text-align: left; cursor: pointer;
+      border: 2px solid var(--ink); border-radius: 24px; padding: 18px 18px 16px;
+      background: var(--white); color: var(--ink); box-shadow: 6px 6px 0 var(--blue);
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .trio-carte:hover { transform: translateY(-3px); box-shadow: 8px 8px 0 var(--pink); background: var(--cream); }
+    .trio-carte:active { transform: translate(1px, 1px); box-shadow: 3px 3px 0 var(--blue); }
+    .trio-item:nth-child(2) .trio-carte { box-shadow: 6px 6px 0 var(--green); }
+    .trio-item:nth-child(3) .trio-carte { box-shadow: 6px 6px 0 var(--gold); }
+    .trio-emoji {
+      display: grid; place-items: center; width: 54px; aspect-ratio: 1; flex: 0 0 auto;
+      border: 2px solid var(--ink); border-radius: 16px; background: var(--yellow);
+      font-size: 27px; box-shadow: 4px 4px 0 var(--pink); transform: rotate(-4deg);
+    }
+    .trio-txt { display: block; }
+    .trio-titre {
+      display: block; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      letter-spacing: .01em; font-size: clamp(18px, 1.7vw, 22px); line-height: 1.08;
+    }
+    .trio-sous { display: block; margin-top: 6px; font-size: 14px; font-weight: 650; color: var(--muted); }
+    .trio-etat {
+      display: inline-flex; align-items: center; gap: 7px; margin-top: auto;
+      border: 2px solid var(--ink); border-radius: 999px; padding: 7px 14px;
+      background: var(--yellow); font-weight: 800; font-size: 14.5px;
+    }
+    .trio-carte[aria-expanded="true"] { background: var(--ink); color: var(--cream); }
+    .trio-carte[aria-expanded="true"] .trio-sous { color: rgba(252,247,232,.75); }
+    .trio-carte[aria-expanded="true"] .trio-etat { background: var(--green); color: var(--ink); }
+    .trio-pli {
+      grid-column: 1 / -1; margin-top: 4px;
+      border: 2px solid var(--ink); border-radius: 26px; padding: 22px clamp(16px, 2.4vw, 28px) 24px;
+      background: var(--cream); box-shadow: var(--shadow);
+    }
+    .trio-pli > .bloc-intro { margin-top: 0; }
+    @media (max-width: 900px) {
+      .trio { grid-template-columns: 1fr; gap: 12px; }
+      .trio-carte { flex-direction: row; align-items: center; flex-wrap: wrap; }
+      .trio-etat { margin-top: 0; margin-left: auto; }
+    }
 
     /* ---------- ATELIER : comment ça marche ---------- */
     .etapes {
@@ -1010,7 +1059,7 @@
 
     @media (max-width: 860px) {
       .hero { grid-template-columns: 1fr; }
-      .hero-side { min-height: 470px; }
+      .hero-side { min-height: 340px; }
       .stat-row { grid-template-columns: repeat(2, 1fr); }
       .align-grid { grid-template-columns: 1fr; }
       .cand-row > summary { display: flex; flex-wrap: wrap; align-items: center; }
@@ -1199,8 +1248,14 @@
       .dock-court { display: inline; }
       .beta-pill, #retours-fab { font-size: 12.5px; box-shadow: 3px 3px 0 var(--ink); }
       #retours-fab { padding: 9px 13px; }
-      #komune-fab { bottom: 104px; }
-      #komune-chat { bottom: 168px; max-height: calc(100vh - 186px); }
+      #komune-fab {
+        left: 8px; right: auto; bottom: 8px;
+        min-height: 44px; padding: 7px 14px 7px 8px; font-size: 12.5px;
+        box-shadow: 3px 3px 0 var(--blue);
+      }
+      #komune-fab .k-logo { width: 44px; height: 28px; border-radius: 10px; }
+      #beta-dock { bottom: 62px; }
+      #komune-chat { left: 8px; right: auto; bottom: 60px; max-height: calc(100vh - 80px); }
     }
     @media (prefers-reduced-motion: reduce) {
       .beta-pill .dot, .modal-box { animation: none !important; }
@@ -1364,7 +1419,7 @@
       <nav class="site-nav" aria-label="Navigation du site">
         <a href="../">Accueil</a>
         <a href="../articles/">Articles</a>
-        <a href="../comparateur-2027/">Comparateur 2027</a>
+        <a href="../comparateur-2027/">Projet citoyen présidentielles 2027</a>
         <a href="../equipe/">L'équipe</a>
         <a href="../soutenir/">Nous soutenir</a>
       </nav>
@@ -1411,6 +1466,68 @@
       <a href="#methode">🧭 La méthode</a>
       <a href="#sources">📚 Les sources</a>
     </nav>
+
+    <!-- ===== LES TROIS OUTILS (dépliables) ===== -->
+    <section class="trio" id="outils" aria-label="Les trois outils du comparateur">
+      <article class="trio-item" id="medef">
+        <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="medef-pli">
+          <span class="trio-emoji" aria-hidden="true">🎤</span>
+          <span class="trio-txt">
+            <span class="trio-titre">Le débat du Medef, citation par citation</span>
+            <span class="trio-sous">53 citations horodatées, 7 candidat·es, 6 thèmes</span>
+          </span>
+          <span class="trio-etat"><span class="quand-ferme">Ouvrir</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+        </button>
+      </article>
+      <article class="trio-item" id="jeu">
+        <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="jeu-pli">
+          <span class="trio-emoji" aria-hidden="true">🎮</span>
+          <span class="trio-txt">
+            <span class="trio-titre">Qui a dit quoi&nbsp;?</span>
+            <span class="trio-sous">10 déclarations réelles, 2 minutes, aucune donnée collectée</span>
+          </span>
+          <span class="trio-etat"><span class="quand-ferme">Jouer</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+        </button>
+      </article>
+      <article class="trio-item" id="debat">
+        <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="debat-pli">
+          <span class="trio-emoji" aria-hidden="true">⚡</span>
+          <span class="trio-txt">
+            <span class="trio-titre">En plein débat&nbsp;? Réponse en 10 secondes</span>
+            <span class="trio-sous">Une réponse en trois phrases, vérifiable dans les votes</span>
+          </span>
+          <span class="trio-etat"><span class="quand-ferme">Ouvrir</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+        </button>
+      </article>
+
+      <div class="bloc-pli trio-pli" id="medef-pli" hidden>
+        <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire - et chaque horodatage ouvre la vidéo au moment exact, pour vérifier par vous-même.</p>
+        <div class="medef-meta" id="medef-meta"></div>
+        <div class="medef-methode" id="medef-methode"></div>
+        <div class="switch" role="group" aria-label="Choisir un thème du débat" id="medef-switch"></div>
+        <div id="medef-corps"></div>
+        <div class="medef-suite">
+          <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants - et pour les <strong>meetings de campagne</strong>.</p>
+          <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent - c'est là qu'on verra si les paroles tiennent.</p>
+        </div>
+        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: leurs fiches et votes sont en cours d'ajout.</p>
+      </div>
+
+      <div class="bloc-pli trio-pli" id="jeu-pli" hidden>
+        <p class="bloc-intro">10 déclarations bien réelles, prononcées ces cinq dernières années. À vous de deviner qui parle - puis on regarde ensemble si les votes suivent les paroles.</p>
+        <div class="jeu-shell">
+          <div class="jeu-card" id="jeu-card" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="bloc-pli trio-pli" id="debat-pli" hidden>
+        <p class="bloc-intro">Au bar, en famille, dans le groupe WhatsApp&nbsp;: touchez une question, la réponse tient en trois phrases - et chaque mot est vérifiable dans les votes juste en dessous.</p>
+        <div class="debat-grid" id="debat-grid"></div>
+        <div class="debat-foot cta-row">
+          <button type="button" class="btn play" data-open-komune>💬 Votre question n'y est pas&nbsp;? Demandez à Komune</button>
+        </div>
+      </div>
+    </section>
 
     <!-- ===== L'ATELIER : chercher, choisir, se reconnaitre ===== -->
     <section class="bloc" id="atelier" aria-labelledby="atelier-titre">
@@ -1468,65 +1585,6 @@
           <p class="route-soustitre">Trié par notre moteur de correspondance&nbsp;: il compare la combinaison cochée aux tags de nos textes et aux mots de nos fiches, et affiche à chaque fois ce qui a déclenché la correspondance. Il ne classe pas les candidat·es, il indique seulement où regarder.</p>
           <div id="route" aria-live="polite"></div>
         </div>
-      </div>
-    </section>
-
-    <!-- ===== LE DÉBAT DU MEDEF (citations sourcées) ===== -->
-    <section class="bloc" id="medef" aria-labelledby="medef-titre">
-      <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">🎤</span>
-        <h2 id="medef-titre">Le débat du Medef, citation par citation</h2>
-      </div>
-      <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire - et chaque horodatage ouvre la vidéo au moment exact, pour vérifier par vous-même.</p>
-      <button type="button" class="plier" aria-expanded="false" aria-controls="medef-pli">
-        <span class="quand-ferme">Ouvrir le débat&nbsp;: 53 citations, 6 thèmes</span>
-        <span class="quand-ouvert">Replier le débat</span>
-        <span class="chev" aria-hidden="true">▼</span>
-      </button>
-      <p class="pli-teaser">3 h 04 de débat, 7 candidat·es, chaque phrase horodatée vers la vidéo.</p>
-      <div class="bloc-pli" id="medef-pli" hidden>
-        <div class="medef-meta" id="medef-meta"></div>
-        <div class="medef-methode" id="medef-methode"></div>
-        <div class="switch" role="group" aria-label="Choisir un thème du débat" id="medef-switch"></div>
-        <div id="medef-corps"></div>
-        <div class="medef-suite">
-          <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants - et pour les <strong>meetings de campagne</strong>.</p>
-          <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent - c'est là qu'on verra si les paroles tiennent.</p>
-        </div>
-        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: leurs fiches et votes sont en cours d'ajout.</p>
-      </div>
-    </section>
-
-    <!-- ===== LE JEU ===== -->
-    <section class="bloc" id="jeu" aria-labelledby="jeu-titre">
-      <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">🎮</span>
-        <h2 id="jeu-titre">Qui a dit quoi&nbsp;?</h2>
-      </div>
-      <p class="bloc-intro">10 déclarations bien réelles, prononcées ces cinq dernières années. À vous de deviner qui parle - puis on regarde ensemble si les votes suivent les paroles.</p>
-      <button type="button" class="plier" aria-expanded="false" aria-controls="jeu-pli">
-        <span class="quand-ferme">Lancer le jeu</span>
-        <span class="quand-ouvert">Replier le jeu</span>
-        <span class="chev" aria-hidden="true">▼</span>
-      </button>
-      <p class="pli-teaser">2 minutes, 10 questions. Aucune donnée collectée.</p>
-      <div class="bloc-pli" id="jeu-pli" hidden>
-        <div class="jeu-shell">
-          <div class="jeu-card" id="jeu-card" aria-live="polite"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== RÉPONSES RAPIDES / MODE DÉBAT ===== -->
-    <section class="bloc" id="debat" aria-labelledby="debat-titre">
-      <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">⚡</span>
-        <h2 id="debat-titre">En plein débat&nbsp;? Réponse en 10 secondes.</h2>
-      </div>
-      <p class="bloc-intro">Au bar, en famille, dans le groupe WhatsApp&nbsp;: touchez une question, la réponse tient en trois phrases - et chaque mot est vérifiable dans les votes juste en dessous.</p>
-      <div class="debat-grid" id="debat-grid"></div>
-      <div class="debat-foot cta-row">
-        <button type="button" class="btn play" data-open-komune>💬 Votre question n'y est pas&nbsp;? Demandez à Komune</button>
       </div>
     </section>
 
@@ -1648,7 +1706,7 @@
     <footer class="site-foot">
       <div class="foot-brand">
         <img class="foot-logo" src="../img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">
-        <span>© Komune Média - comparateur citoyen, indépendant et sourcé.</span>
+        <span>© Komune Média - Le média indépendant qui décrypte la société avec un regard antiraciste</span>
       </div>
       <div class="foot-links">
         <a href="../">Accueil</a>
@@ -2167,14 +2225,6 @@
       visibles.forEach(function (f) {
         var c = CAND[f.cid];
         if (!c) return;
-        if (f.cid === 'primaire-gauche') {
-          fichesGrid.appendChild(el(
-            '<article class="fiche" style="justify-content:center;text-align:center;--card-bg:linear-gradient(150deg,#fff,#ded1ff);--card-shadow:#5423df">' +
-            '<div class="fiche-head" style="justify-content:center">' + avatar(c, 'big') + '<div><h3>Primaire de la gauche</h3><div class="parti">PS · Écologistes · Place publique…</div></div></div>' +
-            '<p class="engros">Candidat·e désigné·e le <strong>11 octobre 2026</strong>. La fiche complète (promesses, votes, alignements) sera publiée dès la désignation - la grille de recherche est déjà prête.</p>' +
-            '</article>'));
-          return;
-        }
         var preuveCls = 'preuve-' + esc((f.preuve || 'flou').toLowerCase().replace(/\s+/g, '-').replace('à', 'a'));
         var srcHtml = f.sources.length
           ? '<div class="fiche-src"><dt>Sources</dt>' + f.sources.map(function (u, i) {
@@ -2416,7 +2466,7 @@
     /* ==================== QUI EST QUI (parcours) ==================== */
     var quiGrid = document.getElementById('qui-grid');
     if (quiGrid && D.PARCOURS) {
-      JOUEURS.concat(['glucksmann', 'tondelier', 'primaire-gauche']).forEach(function (cid) {
+      JOUEURS.concat(['glucksmann', 'tondelier']).forEach(function (cid) {
         var p = D.PARCOURS[cid], c = CAND[cid];
         if (!p || !c) return;
         var puces = (p.cinqAns || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
@@ -2685,7 +2735,7 @@
       var tout = el('<button type="button" class="tout" aria-pressed="' + (!ETAT.cands.length) + '">👥 Tout le monde</button>');
       tout.addEventListener('click', function () { ETAT.cands = []; garde(); renderChoix(); rafraichir(); });
       zoneChoix.appendChild(tout);
-      JOUEURS.concat(['primaire-gauche']).forEach(function (cid) {
+      JOUEURS.forEach(function (cid) {
         var c = CAND[cid];
         if (!c) return;
         var on = ETAT.cands.indexOf(cid) >= 0;
@@ -3219,7 +3269,7 @@
           }
         });
       }, { rootMargin: '-30% 0px -60% 0px' });
-      document.querySelectorAll('section.bloc').forEach(function (s) { obs.observe(s); });
+      document.querySelectorAll('section.bloc, .trio-item').forEach(function (s) { obs.observe(s); });
     }
   })();
   </script>
@@ -3263,7 +3313,8 @@
       ['philippe', 'philippe edouard horizons havre'],
       ['attal', 'attal gabriel renaissance ensemble macron macroniste'],
       ['retailleau', 'retailleau bruno lr republicains droite'],
-      ['primaire-gauche', 'primaire gauche ps socialiste ecologiste ecologistes place publique glucksmann']
+      ['glucksmann', 'glucksmann raphael place publique ps socialiste'],
+      ['tondelier', 'tondelier marine ecologiste ecologistes verts eelv']
     ];
     function findCandidats(q) {
       var n = ' ' + norm(q) + ' ';
@@ -3417,7 +3468,6 @@
       /* sujet clairement hors du champ couvert + correspondances faibles : on le dit franchement */
       if (horsChamp(question) && bq < 4 && bl < 4) { repFallback(question); return; }
       if (cands.length && bestLoi && bl >= 4) {
-        if (cands[0] === 'primaire-gauche') { repCandidat(cands[0]); return; }
         repCandLoi(cands[0], bestLoi);
         if (bestQuick && bq >= 6) repQuick(bestQuick);
         return;
