@@ -112,13 +112,6 @@
         radial-gradient(circle at 8% 98%, rgba(240,153,249,.58), transparent 33%),
         var(--white);
     }
-    .hero-main::after {
-      content: "des faits, des sources";
-      position: absolute; right: -12px; bottom: 16px; transform: rotate(-6deg);
-      padding: 10px 18px 13px; border: 2px solid var(--ink); border-radius: 999px;
-      background: var(--yellow); color: var(--ink); box-shadow: 7px 7px 0 var(--pink);
-      font-size: clamp(18px, 2vw, 30px); font-weight: 800; z-index: 0;
-    }
     .eyebrow { margin: 0 0 12px; font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
     .hero-main h1 { position: relative; z-index: 1; margin: 0; max-width: 12ch; overflow-wrap: normal; word-break: keep-all; }
     .hero .pitch { position: relative; z-index: 1; font-weight: 650; max-width: 52ch; margin-top: 18px; font-size: clamp(16.5px, 1.5vw, 21px); line-height: 1.34; }
@@ -138,7 +131,7 @@
     .btn.pink { background: var(--pink); }
 
     .hero-side {
-      position: relative; min-height: 470px; overflow: hidden; padding: clamp(22px, 3vw, 40px);
+      position: relative; min-height: 540px; overflow: hidden; padding: clamp(22px, 3vw, 40px);
       border: 2px solid var(--ink); border-radius: 30px; box-shadow: 8px 8px 0 var(--blue);
       background: linear-gradient(135deg, var(--pink), var(--yellow));
     }
@@ -146,7 +139,7 @@
     .orbit { position: absolute; inset: 0; }
     .orbit-person {
       position: absolute; display: grid; place-items: center;
-      width: clamp(104px, 12vw, 168px); aspect-ratio: 1;
+      width: clamp(92px, 10.5vw, 148px); aspect-ratio: 1;
       transform: rotate(var(--tilt));
       animation: idleFloat 4.5s ease-in-out infinite; animation-delay: var(--delay);
       transition: transform .26s cubic-bezier(.18, 1.35, .22, 1), filter .18s ease;
@@ -163,12 +156,13 @@
     }
     .orbit-person .emoji-head { display: grid; place-items: center; font-size: clamp(50px, 7vw, 84px); }
     .orbit-person:hover { z-index: 9; transform: rotate(var(--tilt)) scale(1.12); filter: saturate(1.22) drop-shadow(0 0 18px rgba(255,255,146,.65)); }
-    .orbit-person:nth-child(1) { left: 5%; top: 33%; --tilt: -7deg; --delay: 0s; }
-    .orbit-person:nth-child(2) { right: 6%; top: 16%; --tilt: 6deg; --delay: .2s; }
-    .orbit-person:nth-child(3) { left: 15%; bottom: 6%; --tilt: 5deg; --delay: .4s; }
-    .orbit-person:nth-child(4) { right: 5%; bottom: 7%; --tilt: -5deg; --delay: .6s; }
-    .orbit-person:nth-child(5) { left: 40%; top: 42%; --tilt: 4deg; --delay: .8s; }
-    .orbit-person:nth-child(6) { right: 33%; bottom: 0%; --tilt: -4deg; --delay: 1s; }
+    .orbit-person:nth-child(1) { left: 1%;  top: 31%;    --tilt: -7deg; --delay: 0s; }
+    .orbit-person:nth-child(2) { right: 3%; top: 3%;     --tilt: 6deg;  --delay: .15s; }
+    .orbit-person:nth-child(3) { left: 4%;  bottom: 1%;  --tilt: 5deg;  --delay: .3s; }
+    .orbit-person:nth-child(4) { right: 1%; bottom: 2%;  --tilt: -5deg; --delay: .45s; }
+    .orbit-person:nth-child(5) { left: 35%; top: 34%;    --tilt: 4deg;  --delay: .6s; }
+    .orbit-person:nth-child(6) { left: 37%; bottom: -1%; --tilt: -4deg; --delay: .75s; }
+    .orbit-person:nth-child(7) { right: 2%; top: 35%;    --tilt: 7deg;  --delay: .9s; }
     @keyframes idleFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
 
     /* ---------- stats ---------- */
@@ -193,6 +187,26 @@
     }
     .bloc-head h2 { margin: 0; }
     .bloc-intro { color: var(--muted); font-weight: 650; max-width: 72ch; margin: 10px 0 18px; }
+
+    /* ---------- sections qui se déplient ---------- */
+    .plier {
+      display: inline-flex; align-items: center; gap: 10px; min-height: 48px; cursor: pointer;
+      border: 2px solid var(--ink); border-radius: 999px; padding: 10px 20px;
+      font-weight: 800; font-size: 15.5px; background: var(--yellow); color: var(--ink);
+      box-shadow: 5px 5px 0 var(--blue); transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .plier:hover { transform: translateY(-2px) rotate(-.5deg); background: var(--green); }
+    .plier:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--blue); }
+    .plier .chev { font-size: 13px; transition: transform .2s ease; }
+    .plier[aria-expanded="true"] { background: var(--ink); color: var(--cream); }
+    .plier[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    .plier .quand-ferme { display: inline; }
+    .plier .quand-ouvert { display: none; }
+    .plier[aria-expanded="true"] .quand-ferme { display: none; }
+    .plier[aria-expanded="true"] .quand-ouvert { display: inline; }
+    .bloc-pli { margin-top: 22px; }
+    .bloc-pli[hidden] { display: none; }
+    .pli-teaser { font-size: 14px; font-weight: 700; color: var(--muted); margin: 12px 0 0; }
 
     /* ---------- ATELIER : comment ça marche ---------- */
     .etapes {
@@ -996,9 +1010,7 @@
 
     @media (max-width: 860px) {
       .hero { grid-template-columns: 1fr; }
-      .hero-side { min-height: 380px; }
-      .hero-main { padding-bottom: 74px; }
-      .hero-main::after { font-size: 16px; right: -10px; bottom: 12px; box-shadow: 4px 4px 0 var(--pink); }
+      .hero-side { min-height: 470px; }
       .stat-row { grid-template-columns: repeat(2, 1fr); }
       .align-grid { grid-template-columns: 1fr; }
       .cand-row > summary { display: flex; flex-wrap: wrap; align-items: center; }
@@ -1327,6 +1339,12 @@
     .medef-defs dt:first-child { margin-top: 0; }
     .medef-defs dd { margin: 2px 0 0; font-size: 14.5px; color: var(--muted); }
     .medef-note-bas { font-size: 13.5px; color: var(--muted); margin-top: 18px; }
+    .medef-suite {
+      background: var(--white); border: 2px solid var(--ink); border-radius: 18px;
+      padding: 16px 20px; margin: 22px 0 0; box-shadow: 6px 6px 0 var(--green); font-size: 15px;
+    }
+    .medef-suite p { margin: 0 0 10px; }
+    .medef-suite p:last-child { margin-bottom: 0; }
 
   </style>
 </head>
@@ -1460,11 +1478,23 @@
         <h2 id="medef-titre">Le débat du Medef, citation par citation</h2>
       </div>
       <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire - et chaque horodatage ouvre la vidéo au moment exact, pour vérifier par vous-même.</p>
-      <div class="medef-meta" id="medef-meta"></div>
-      <div class="medef-methode" id="medef-methode"></div>
-      <div class="switch" role="group" aria-label="Choisir un thème du débat" id="medef-switch"></div>
-      <div id="medef-corps"></div>
-      <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: leurs fiches et votes sont en cours d'ajout.</p>
+      <button type="button" class="plier" aria-expanded="false" aria-controls="medef-pli">
+        <span class="quand-ferme">Ouvrir le débat&nbsp;: 53 citations, 6 thèmes</span>
+        <span class="quand-ouvert">Replier le débat</span>
+        <span class="chev" aria-hidden="true">▼</span>
+      </button>
+      <p class="pli-teaser">3 h 04 de débat, 7 candidat·es, chaque phrase horodatée vers la vidéo.</p>
+      <div class="bloc-pli" id="medef-pli" hidden>
+        <div class="medef-meta" id="medef-meta"></div>
+        <div class="medef-methode" id="medef-methode"></div>
+        <div class="switch" role="group" aria-label="Choisir un thème du débat" id="medef-switch"></div>
+        <div id="medef-corps"></div>
+        <div class="medef-suite">
+          <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants - et pour les <strong>meetings de campagne</strong>.</p>
+          <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent - c'est là qu'on verra si les paroles tiennent.</p>
+        </div>
+        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: leurs fiches et votes sont en cours d'ajout.</p>
+      </div>
     </section>
 
     <!-- ===== LE JEU ===== -->
@@ -1474,8 +1504,16 @@
         <h2 id="jeu-titre">Qui a dit quoi&nbsp;?</h2>
       </div>
       <p class="bloc-intro">10 déclarations bien réelles, prononcées ces cinq dernières années. À vous de deviner qui parle - puis on regarde ensemble si les votes suivent les paroles.</p>
-      <div class="jeu-shell">
-        <div class="jeu-card" id="jeu-card" aria-live="polite"></div>
+      <button type="button" class="plier" aria-expanded="false" aria-controls="jeu-pli">
+        <span class="quand-ferme">Lancer le jeu</span>
+        <span class="quand-ouvert">Replier le jeu</span>
+        <span class="chev" aria-hidden="true">▼</span>
+      </button>
+      <p class="pli-teaser">2 minutes, 10 questions. Aucune donnée collectée.</p>
+      <div class="bloc-pli" id="jeu-pli" hidden>
+        <div class="jeu-shell">
+          <div class="jeu-card" id="jeu-card" aria-live="polite"></div>
+        </div>
       </div>
     </section>
 
@@ -2042,11 +2080,9 @@
     if (orbit) {
       var bulles = ['#5423df', '#9abdff', '#b0fda4', '#fee075', '#f099f9', '#ffffff'];
       D.CANDIDATS.forEach(function (c, i) {
-        var inner = c.photo
-          ? '<img src="' + esc(c.photo) + '" alt="">'
-          : '<span class="emoji-head">🌹</span>';
+        if (!c.photo) { return; }
         orbit.appendChild(el(
-          '<div class="orbit-person" style="--bubble:' + esc(c.bg && c.id !== 'primaire-gauche' ? bulles[i % bulles.length] : '#ffffff') + '" title="' + esc(c.court) + '">' + inner + '</div>'));
+          '<div class="orbit-person" style="--bubble:' + esc(bulles[i % bulles.length]) + '" title="' + esc(c.court) + '"><img src="' + esc(c.photo) + '" alt=""></div>'));
       });
     }
 
@@ -3128,6 +3164,47 @@
             });
         });
       }
+    })();
+
+    /* ==================== sections qui se déplient ====================
+       Le jeu et le débat du Medef arrivent repliés : la page reste lisible
+       à l'arrivée, et tout s'ouvre au clic (ou via le sommaire et les liens). */
+    (function () {
+      var boutons = document.querySelectorAll('.plier[aria-controls]');
+      if (!boutons.length) { return; }
+
+      function basculer(btn, ouvrir) {
+        var cible = document.getElementById(btn.getAttribute('aria-controls'));
+        if (!cible) { return; }
+        var etat = (typeof ouvrir === 'boolean') ? ouvrir : btn.getAttribute('aria-expanded') !== 'true';
+        btn.setAttribute('aria-expanded', etat ? 'true' : 'false');
+        cible.hidden = !etat;
+      }
+
+      boutons.forEach(function (btn) {
+        btn.addEventListener('click', function () { basculer(btn); });
+      });
+
+      /* ouvrir la bonne section quand on y arrive par une ancre */
+      function ouvrirDepuisAncre(hash, defiler) {
+        if (!hash || hash.length < 2) { return; }
+        var sec = document.getElementById(hash.slice(1));
+        if (!sec) { return; }
+        var btn = sec.querySelector('.plier[aria-controls]');
+        if (btn && btn.getAttribute('aria-expanded') !== 'true') { basculer(btn, true); }
+        if (defiler) {
+          requestAnimationFrame(function () { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+        }
+      }
+
+      document.addEventListener('click', function (ev) {
+        var a = ev.target.closest && ev.target.closest('a[href^="#"]');
+        if (!a) { return; }
+        ouvrirDepuisAncre(a.getAttribute('href'), false);
+      }, true);
+
+      window.addEventListener('hashchange', function () { ouvrirDepuisAncre(location.hash, true); });
+      ouvrirDepuisAncre(location.hash, false);
     })();
 
     /* ==================== sommaire actif ==================== */
