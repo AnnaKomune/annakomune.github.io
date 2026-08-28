@@ -1269,13 +1269,72 @@
     @media (prefers-reduced-motion: reduce) {
       .charte, .charte-art, .charte-tampon, .charte-pied { animation: none !important; }
     }
+    /* ---------- le débat du Medef ---------- */
+    #medef .bloc-intro strong { white-space: nowrap; }
+    .medef-meta { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 14px; }
+    .medef-meta span {
+      background: var(--white); border: 2px solid var(--ink); border-radius: 999px;
+      padding: 7px 14px; font-weight: 600; font-size: 14.5px; box-shadow: 3px 3px 0 var(--ko);
+    }
+    .medef-meta a.btn-video {
+      display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: var(--cream);
+      border: 2px solid var(--ink); border-radius: 999px; padding: 7px 16px; font-weight: 700;
+      font-size: 14.5px; text-decoration: none; box-shadow: 3px 3px 0 var(--ko);
+    }
+    .medef-meta a.btn-video:hover { transform: translateY(-1px); }
+    .medef-methode {
+      background: var(--white); border: 2px solid var(--ink); border-radius: 18px;
+      padding: 16px 18px; margin: 0 0 22px; box-shadow: var(--shadow); font-size: 15px;
+    }
+    .medef-methode b { text-transform: uppercase; font-family: "Oswald", Impact, sans-serif; letter-spacing: .04em; }
+    .medef-question {
+      border-left: 6px solid var(--gold); background: #fffdf3; border: 2px solid var(--ink);
+      border-left-width: 10px; border-radius: 14px; padding: 14px 16px; margin: 18px 0;
+      font-size: 15.5px;
+    }
+    .medef-question .qui-pose { display:block; font-family:"Oswald",Impact,sans-serif; text-transform:uppercase; letter-spacing:.05em; font-size:13px; margin-bottom:4px; }
+    .medef-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px; align-items: start; }
+    .medef-card {
+      background: var(--card-bg, #fff); border: 2px solid var(--ink); border-radius: 20px;
+      padding: 16px 16px 14px; box-shadow: 6px 6px 0 var(--card-shadow, var(--ko));
+    }
+    .medef-card .qui-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .medef-card h3 { margin: 0; font-size: 19px; }
+    .medef-card blockquote {
+      margin: 0 0 6px; padding: 0 0 0 14px; border-left: 4px solid var(--ink);
+      font-size: 15.5px; line-height: 1.45;
+    }
+    .medef-card blockquote::before { content: "« "; font-weight: 800; }
+    .medef-card blockquote::after { content: " »"; font-weight: 800; }
+    .medef-ts {
+      display: inline-flex; align-items: center; gap: 6px; margin: 2px 0 12px;
+      background: var(--white); border: 2px solid var(--ink); border-radius: 999px;
+      padding: 3px 11px; font-size: 12.5px; font-weight: 700; text-decoration: none;
+      font-variant-numeric: tabular-nums; box-shadow: 2px 2px 0 var(--ko);
+    }
+    .medef-ts:hover { background: var(--gold); }
+    .medef-corr { display: block; font-size: 12.5px; color: var(--muted); margin: -8px 0 12px; }
+    .medef-defs { margin: 16px 0 4px; }
+    .medef-defs summary {
+      cursor: pointer; font-weight: 700; font-family: "Oswald", Impact, sans-serif;
+      text-transform: uppercase; letter-spacing: .05em; font-size: 15px;
+      background: var(--white); border: 2px solid var(--ink); border-radius: 999px;
+      display: inline-block; padding: 7px 16px; box-shadow: 3px 3px 0 var(--ko);
+    }
+    .medef-defs[open] summary { background: var(--green); }
+    .medef-defs dl { background: var(--white); border: 2px solid var(--ink); border-radius: 16px; padding: 14px 18px; margin: 12px 0 0; }
+    .medef-defs dt { font-weight: 800; margin-top: 10px; }
+    .medef-defs dt:first-child { margin-top: 0; }
+    .medef-defs dd { margin: 2px 0 0; font-size: 14.5px; color: var(--muted); }
+    .medef-note-bas { font-size: 13.5px; color: var(--muted); margin-top: 18px; }
+
   </style>
 </head>
 <body>
   <!-- ===== bandeau défilant ===== -->
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track" id="ticker-track">
-      <span>Des faits, des sources ✦</span><span>Qui a dit quoi ? ✦</span><span>Les votes, loi par loi ✦</span><span>Réponses rapides pour tes débats ✦</span><span>Média citoyen &amp; indépendant ✦</span><span>Présidentielle 2027 ✦</span>
+      <span>Des faits, des sources ✦</span><span>🎤 Nouveau : le débat du Medef, citation par citation ✦</span><span>Qui a dit quoi ? ✦</span><span>Les votes, loi par loi ✦</span><span>Réponses rapides pour tes débats ✦</span><span>Média citoyen &amp; indépendant ✦</span><span>Présidentielle 2027 ✦</span>
     </div>
   </div>
 
@@ -1324,6 +1383,7 @@
     <!-- ===== Sommaire de la page ===== -->
     <nav class="toc" aria-label="Sommaire du comparateur">
       <a href="#atelier">🎯 Par où entrer</a>
+      <a href="#medef">🎤 Le débat du Medef</a>
       <a href="#jeu">🎮 Le jeu</a>
       <a href="#debat">⚡ Réponses rapides</a>
       <a href="#qui">👤 Qui est qui</a>
@@ -1391,6 +1451,20 @@
           <div id="route" aria-live="polite"></div>
         </div>
       </div>
+    </section>
+
+    <!-- ===== LE DÉBAT DU MEDEF (citations sourcées) ===== -->
+    <section class="bloc" id="medef" aria-labelledby="medef-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🎤</span>
+        <h2 id="medef-titre">Le débat du Medef, citation par citation</h2>
+      </div>
+      <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire - et chaque horodatage ouvre la vidéo au moment exact, pour vérifier par vous-même.</p>
+      <div class="medef-meta" id="medef-meta"></div>
+      <div class="medef-methode" id="medef-methode"></div>
+      <div class="switch" role="group" aria-label="Choisir un thème du débat" id="medef-switch"></div>
+      <div id="medef-corps"></div>
+      <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: leurs fiches et votes sont en cours d'ajout.</p>
     </section>
 
     <!-- ===== LE JEU ===== -->
@@ -1491,7 +1565,7 @@
       </div>
       <div class="soutien-card">
         <h3>Ce projet tient à ses lecteurs.</h3>
-        <p>Chaque sujet, c'est des semaines de lecture de scrutins, de programmes et de comptes rendus de séance, texte par texte, candidat·e par candidat·e. Il n'y a ni annonceur, ni parti, ni argent public derrière ce comparateur&nbsp;: c'est ce qui nous permet de dire les choses telles qu'elles sont. Si vous voulez qu'il aille jusqu'au bout, les sept sujets, les six candidat·es, jusqu'en avril 2027, c'est votre soutien qui le décide.</p>
+        <p>Chaque sujet, c'est des semaines de lecture de scrutins, de programmes et de comptes rendus de séance, texte par texte, candidat·e par candidat·e. Il n'y a ni annonceur, ni parti, ni argent public derrière ce comparateur&nbsp;: c'est ce qui nous permet de dire les choses telles qu'elles sont. Si vous voulez qu'il aille jusqu'au bout, les sept sujets, toutes et tous les candidat·es, jusqu'en avril 2027, c'est votre soutien qui le décide.</p>
         <div class="soutien-row">
           <a class="btn don" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">💛 Soutenir le comparateur</a>
           <a class="btn" href="../soutenir/">Toutes les façons d'aider</a>
@@ -2306,7 +2380,7 @@
     /* ==================== QUI EST QUI (parcours) ==================== */
     var quiGrid = document.getElementById('qui-grid');
     if (quiGrid && D.PARCOURS) {
-      JOUEURS.concat(['primaire-gauche']).forEach(function (cid) {
+      JOUEURS.concat(['glucksmann', 'tondelier', 'primaire-gauche']).forEach(function (cid) {
         var p = D.PARCOURS[cid], c = CAND[cid];
         if (!p || !c) return;
         var puces = (p.cinqAns || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
@@ -3327,6 +3401,80 @@
       addMsg(esc(q), 'user');
       repondre(q);
     });
+  })();
+  </script>
+  <script>
+  /* ==================== LE DÉBAT DU MEDEF ==================== */
+  (function () {
+    'use strict';
+    var H = window.__KOMUNE_HELPERS, D = window.KOMUNE_DATA;
+    if (!H || !D || !D.MEDEF) { return; }
+    var esc = H.esc, el = H.el, CAND = H.CAND, avatar = H.avatar;
+    var M = D.MEDEF;
+
+    /* méta : date, lieu, durée + bouton vidéo */
+    var meta = document.getElementById('medef-meta');
+    if (meta) {
+      meta.innerHTML =
+        '<span>📅 ' + esc(M.date) + '</span>' +
+        '<span>📍 ' + esc(M.lieu) + '</span>' +
+        '<span>⏱️ ' + esc(M.duree) + ' de débat</span>' +
+        '<a class="btn-video" href="' + esc(M.video) + '" target="_blank" rel="noopener noreferrer">▶ Voir la vidéo intégrale</a>';
+    }
+    var meth = document.getElementById('medef-methode');
+    if (meth) {
+      meth.innerHTML = '<b>📌 Méthode.</b> ' + esc(M.methode) + '<br><span style="color:var(--muted);font-size:14px">' + esc(M.animation) + '</span>';
+    }
+
+    /* onglets de thèmes */
+    var sw = document.getElementById('medef-switch');
+    var corps = document.getElementById('medef-corps');
+    var actif = M.themes[0].id;
+
+    function lienTs(c) {
+      return '<a class="medef-ts" href="' + esc(M.video) + '&t=' + c.sec + 's" target="_blank" rel="noopener noreferrer" title="Ouvrir la vidéo à cet instant">▶ ' + esc(c.ts) + '</a>';
+    }
+
+    function renderCorps() {
+      var t = null;
+      M.themes.forEach(function (x) { if (x.id === actif) t = x; });
+      if (!t) return;
+      var html = '';
+      if (t.question) {
+        html += '<div class="medef-question"><span class="qui-pose">🧑‍💼 La question venue de la salle</span>' + esc(t.question) + '</div>';
+      }
+      html += '<div class="medef-grid">';
+      t.prises.forEach(function (p) {
+        var c = CAND[p.cand];
+        if (!c) return;
+        var corps2 = p.citations.map(function (ci) {
+          return '<blockquote>' + esc(ci.texte) + '</blockquote>' + lienTs(ci) +
+            (ci.corr ? '<span class="medef-corr">✏️ Correction : ' + esc(ci.corr) + '</span>' : '');
+        }).join('');
+        html += '<article class="medef-card" style="--card-bg:' + esc(c.bg || '#ffffff') + ';--card-shadow:' + esc(c.shadow || '#332e32') + '">' +
+          '<div class="qui-head">' + avatar(c) + '<h3>' + esc(c.nom) + '</h3></div>' + corps2 + '</article>';
+      });
+      html += '</div>';
+      if (t.defs && t.defs.length) {
+        html += '<details class="medef-defs"><summary>💡 C\'est quoi, au juste ? Le lexique du thème</summary><dl>' +
+          t.defs.map(function (d2) { return '<dt>' + esc(d2[0]) + '</dt><dd>' + esc(d2[1]) + '</dd>'; }).join('') +
+          '</dl></details>';
+      }
+      corps.innerHTML = html;
+    }
+
+    if (sw && corps) {
+      M.themes.forEach(function (t, i) {
+        var b = el('<button type="button" data-theme="' + esc(t.id) + '" aria-pressed="' + (i === 0 ? 'true' : 'false') + '">' + esc(t.emoji) + ' ' + esc(t.titre) + '</button>');
+        b.addEventListener('click', function () {
+          actif = t.id;
+          sw.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.theme === actif ? 'true' : 'false'); });
+          renderCorps();
+        });
+        sw.appendChild(b);
+      });
+      renderCorps();
+    }
   })();
   </script>
 </body>
