@@ -1554,7 +1554,7 @@
           <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants - et pour les <strong>meetings de campagne</strong>.</p>
           <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent - c'est là qu'on verra si les paroles tiennent.</p>
         </div>
-        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: on attend d'avoir relevé leurs votes pour les faire entrer dans le comparateur, plutôt que de les afficher sans bilan.</p>
+        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: leurs fiches et votes sont en cours d'ajout.</p>
       </div>
 
       <div class="bloc-pli trio-pli" id="jeu-pli" hidden>
@@ -2191,7 +2191,7 @@
     var orbit = document.getElementById('orbit');
     if (orbit) {
       var bulles = ['#5423df', '#9abdff', '#b0fda4', '#fee075', '#f099f9', '#ffffff'];
-      D.CANDIDATS.filter(function (c) { return c.actif !== false; }).forEach(function (c, i) {
+      D.CANDIDATS.forEach(function (c, i) {
         if (!c.photo) { return; }
         orbit.appendChild(el(
           '<div class="orbit-person" style="--bubble:' + esc(bulles[i % bulles.length]) + '" title="' + esc(c.court) + '"><img src="' + esc(c.photo) + '" alt=""></div>'));
@@ -2569,7 +2569,7 @@
     /* ==================== QUI EST QUI (parcours) ==================== */
     var quiGrid = document.getElementById('qui-grid');
     if (quiGrid && D.PARCOURS) {
-      JOUEURS.forEach(function (cid) {
+      JOUEURS.concat(['glucksmann', 'tondelier']).forEach(function (cid) {
         var p = D.PARCOURS[cid], c = CAND[cid];
         if (!p || !c) return;
         var puces = (p.cinqAns || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
