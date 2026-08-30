@@ -648,6 +648,8 @@
     .chip.vote-encours { background: repeating-linear-gradient(45deg, var(--white), var(--white) 6px, var(--cream) 6px, var(--cream) 12px); color: var(--muted); }
     .chip.vote-vide { background: transparent; border-style: dotted; color: var(--muted); }
     .chip.vote-autre { background: var(--white); }
+    .chip.vote-npppv { background: #eee9dc; color: var(--muted); }
+    .chip.vote-mixte { background: var(--white); border-style: dashed; }
     .badge-align {
       display: inline-flex; align-items: center; gap: 8px;
       border: 2px solid var(--ink); border-radius: 999px; padding: 7px 14px;
@@ -728,6 +730,9 @@
       border-radius: 18px; box-shadow: 7px 7px 0 var(--gold); transform: rotate(-.6deg);
       padding: clamp(22px, 4vw, 40px) clamp(18px, 4vw, 46px); margin-bottom: 22px;
     }
+    .quote-box.sans-guillemet::before { content: none; }
+    .quote-box .quote-para { font-family: "Oswald", sans-serif; font-size: clamp(20px, 2.6vw, 30px);
+      line-height: 1.25; margin: 0; }
     .quote-box::before {
       content: "«"; position: absolute; top: -20px; left: 14px;
       font-family: "Oswald", sans-serif; font-size: 78px; color: var(--purple); line-height: 1;
@@ -764,6 +769,8 @@
     .align-cell { background: var(--cream); border: 1px solid var(--ink); border-radius: 16px; padding: 14px 16px; }
     .align-cell .who { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
     .align-cell p { margin: 10px 0 0; font-size: 15px; }
+    .src-list li.sans-lien::before { content: none; }
+    .src-list li.sans-lien { color: var(--muted); padding-left: 0; }
     .nuancier { background: linear-gradient(120deg, var(--yellow), var(--white)); border: 1px solid var(--ink); border-radius: 16px; padding: 16px 18px; }
     .nuancier h4 { margin: 0 0 8px; font-size: 13px; letter-spacing: .07em; text-transform: uppercase; }
     .nuancier p { margin: 0; font-size: 15.5px; }
@@ -831,6 +838,8 @@
     .dot.absent { background: #d9d2c4; }
     .dot.divise { background: var(--sky); }
     .dot.autre { background: var(--white); }
+    .dot.npppv { background: #d9d2c4; }
+    .dot.mixte { background: repeating-linear-gradient(45deg, var(--white), var(--white) 3px, var(--sky) 3px, var(--sky) 6px); }
     .dot.encours { background: repeating-linear-gradient(45deg, #fff, #fff 2px, #eee 2px, #eee 4px); }
     .dot.na, .dot.vide { background: transparent; border-style: dashed; }
     .dot.groupe { border-style: solid; box-shadow: inset 0 0 0 2px var(--white); }
@@ -933,7 +942,7 @@
     .cand-row { border-bottom: 1px solid var(--line); }
     .cand-row > summary {
       cursor: pointer; list-style: none; display: grid;
-      grid-template-columns: minmax(130px, 1.1fr) 1fr 1fr 26px; gap: 8px; align-items: center;
+      grid-template-columns: minmax(120px, .95fr) .8fr .8fr 1.15fr 26px; gap: 8px; align-items: center;
       padding: 10px 2px;
     }
     .cand-row > summary::-webkit-details-marker { display: none; }
@@ -942,6 +951,41 @@
     .cand-row > summary .plus { font-family: "Oswald", sans-serif; font-size: 20px; text-align: center; }
     .cand-row[open] > summary .plus::after { content: "-"; }
     .cand-row:not([open]) > summary .plus::after { content: "+"; }
+    .badge-align.mini { font-size: 12.5px; padding: 4px 9px; gap: 5px; box-shadow: 2px 2px 0 rgba(51,46,50,.12); }
+    .badge-align.mini .badge-qui { font-size: 9.5px; padding: 1px 6px 2px; }
+    .col-align .badges { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+    .loi-soustitre { font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .02em;
+      font-size: 15px; margin: 10px 0 2px; color: var(--muted); }
+    .loi-chapo { font-size: 16px; line-height: 1.55; margin: 6px 0 10px; }
+    .attente-card { border: 2px dashed var(--ink); border-radius: 16px; padding: 14px 16px; background: var(--white); }
+    .attente-card h3 { font-size: 17px; margin: 0 0 4px; }
+    .attente-card p { margin: 0; font-size: 13.5px; color: var(--muted); }
+    .attente-head { margin: 26px 0 10px; }
+    .attente-head h3 { font-size: 19px; margin: 0 0 4px; }
+    .attente-head p { margin: 0; font-size: 14px; color: var(--muted); }
+    .attente-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+    .qr-wrap { overflow-x: auto; }
+    .qr-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
+    .qr-table th, .qr-table td { border: 1px solid var(--line); padding: 7px 8px; text-align: left; vertical-align: top; }
+    .qr-table thead th { background: var(--cream); font-family: "Oswald", sans-serif; text-transform: uppercase;
+      letter-spacing: .03em; font-size: 12.5px; }
+    .qr-table th.qr-cand { white-space: nowrap; vertical-align: bottom; }
+    .qr-table th[scope="row"] { background: var(--cream); white-space: nowrap; font-family: "Oswald", sans-serif;
+      text-transform: uppercase; letter-spacing: .03em; font-size: 12px; }
+    .qr-table .qr-nom { display: flex; align-items: center; gap: 7px; font-weight: 800; }
+    .qr-loi { font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .02em;
+      font-size: 14px; margin: 14px 0 6px; }
+    .qr-pill { white-space: normal; }
+    .qr-pill { display: inline-block; border: 2px solid var(--ink); border-radius: 999px; padding: 3px 10px;
+      font-weight: 800; font-size: 12.5px; background: var(--white); white-space: nowrap; }
+    .qr-pill.pour { background: var(--green); }
+    .qr-pill.contre { background: var(--pink); }
+    .qr-pill.abstention { background: var(--gold); }
+    .qr-pill.divise { background: var(--sky); }
+    .qr-pill.npppv { background: #eee9dc; color: var(--muted); }
+    .qr-pill.mixte { background: var(--white); border-style: dashed; }
+    .qr-pill.na { background: transparent; border-style: dashed; color: var(--muted); }
+    .qr-sub { display: block; font-size: 11.5px; color: var(--muted); margin-top: 3px; font-weight: 600; }
     .cell-label { display: block; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 800; margin-bottom: 3px; }
     .cand-detail { padding: 6px 2px 16px; display: grid; gap: 10px; }
     .cand-detail .mini { background: var(--white); border: 1px solid var(--ko); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; white-space: pre-line; }
@@ -1066,6 +1110,7 @@
       .cand-row > summary .nom { flex: 1 1 auto; }
       .cand-row > summary .plus { flex: 0 0 26px; margin-left: auto; }
       .cand-row > summary .col-perso, .cand-row > summary .col-groupe { flex: 1 1 46%; min-width: 140px; }
+      .cand-row > summary .col-align { flex: 1 1 100%; min-width: 0; }
       .vote-line .loi-nom { flex-basis: 100%; }
       .strip { gap: 10px; }
       body { font-size: 16px; }
@@ -1447,9 +1492,8 @@
     </div>
 
     <div class="stat-row" id="stats" aria-label="Le comparateur en chiffres">
-      <div class="stat"><b id="stat-cand">5</b><span>candidat·es suivi·es</span></div>
-      <div class="stat"><b>2</b><span>sujets pour commencer</span></div>
-      <div class="stat"><b id="stat-lois">25</b><span>textes &amp; scrutins décortiqués</span></div>
+      <div class="stat"><b id="stat-cand">5</b><span>candidat·es suivi·es pour commencer</span></div>
+      <div class="stat"><b>2</b><span>sujets : santé et écologie</span></div>
       <div class="stat"><b id="stat-src">60+</b><span>sources, toutes en lien</span></div>
     </div>
 
@@ -1494,7 +1538,7 @@
           <span class="trio-emoji" aria-hidden="true">⚡</span>
           <span class="trio-txt">
             <span class="trio-titre">En plein débat&nbsp;? Réponse en 10 secondes</span>
-            <span class="trio-sous">Une réponse en trois phrases, vérifiable dans les votes</span>
+            <span class="trio-sous">Une réponse courte, puis le tableau des votes candidat·e par candidat·e</span>
           </span>
           <span class="trio-etat"><span class="quand-ferme">Ouvrir</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
         </button>
@@ -1510,7 +1554,7 @@
           <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants - et pour les <strong>meetings de campagne</strong>.</p>
           <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent - c'est là qu'on verra si les paroles tiennent.</p>
         </div>
-        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: leurs fiches et votes sont en cours d'ajout.</p>
+        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: on attend d'avoir relevé leurs votes pour les faire entrer dans le comparateur, plutôt que de les afficher sans bilan.</p>
       </div>
 
       <div class="bloc-pli trio-pli" id="jeu-pli" hidden>
@@ -1592,10 +1636,19 @@
     <section class="bloc" id="qui" aria-labelledby="qui-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">👤</span>
-        <h2 id="qui-titre">Qui est qui, et d'où il parle</h2>
+        <h2 id="qui-titre">Qui est qui, et quel est son parcours ?</h2>
       </div>
       <p class="bloc-intro">Avant de lire des votes, il faut savoir qui pouvait voter. Ces parcours expliquent pourquoi l'une a un vote personnel sur presque tout, et pourquoi un autre n'en a aucun. C'est la clé pour lire le reste de la page sans se tromper.</p>
       <div class="qui-grid" id="qui-grid"></div>
+      <div class="soutien-card" style="margin-top:22px">
+        <h3>On a besoin de vous pour développer la plateforme.</h3>
+        <p>Chaque texte ajouté, c'est des heures de scrutins, de comptes rendus de séance et de programmes lus ligne à ligne. Il n'y a ni annonceur, ni parti, ni argent public derrière ce comparateur&nbsp;: c'est votre soutien qui décide de la vitesse à laquelle il grandit.</p>
+        <div class="soutien-row">
+          <a class="btn don" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">💛 Nous soutenir</a>
+          <a class="btn" href="../soutenir/">Toutes les façons d'aider</a>
+          <button type="button" class="btn play" data-open-retours>✍️ Nous faire un retour</button>
+        </div>
+      </div>
     </section>
 
     <!-- ===== LES VOTES ===== -->
@@ -1604,10 +1657,11 @@
         <span class="bloc-emoji" aria-hidden="true">🗳️</span>
         <h2 id="votes-titre">Les votes, loi par loi</h2>
       </div>
-      <p class="bloc-intro">Chaque texte en une phrase, et les positions d'un coup d'œil. Touchez une carte pour tout le détail&nbsp;: vote <strong>personnel</strong>, vote du <strong>groupe</strong> - deux choses qu'on ne mélange jamais - promesses, actes et alignement.</p>
+      <p class="bloc-intro">Chaque texte en une phrase, et les positions d'un coup d'œil. Touchez une carte pour voir&nbsp;: ce que fait la loi, le vote <strong>personnel</strong>, le vote du <strong>groupe</strong> - deux choses qu'on ne mélange jamais - et l'<strong>alignement entre les promesses et les actes</strong> de chacun·e. Cet alignement compare une personne à sa propre parole, jamais à la loi&nbsp;: il ne dit pas si elle a « bien » voté.</p>
       <div class="filtres" id="filtres" role="group" aria-label="Filtrer les textes"></div>
-      <p class="dots-legende">Pastille pleine&nbsp;: <span class="dot pour"></span> pour · <span class="dot contre"></span> contre · <span class="dot abstention"></span> abstention · <span class="dot divise"></span> divisé · <span class="dot absent"></span> absent·e · <span class="dot na"></span> non concerné·e - cerclée de blanc&nbsp;: vote du <strong>groupe</strong> (pas de vote personnel possible). ⭐ = texte clé.<br><strong>«&nbsp;Non concerné·e&nbsp;» n'est jamais un reproche</strong>&nbsp;: c'est un ministre qui ne peut pas voter, un sénateur sur un scrutin de l'Assemblée, un texte adopté sans vote au 49.3 ou une personne sans mandat. Chaque case dit laquelle de ces raisons s'applique.</p>
+      <p class="dots-legende">Pastille pleine&nbsp;: <span class="dot pour"></span> pour · <span class="dot contre"></span> contre · <span class="dot abstention"></span> abstention · <span class="dot divise"></span> groupe divisé · <span class="dot npppv"></span> n'a pas pris part au vote · <span class="dot mixte"></span> position différente selon la chambre ou le texte · <span class="dot na"></span> non concerné·e - cerclée de blanc&nbsp;: vote du <strong>groupe</strong> (pas de vote personnel possible). ⭐ = texte clé.<br><strong>«&nbsp;Non concerné·e&nbsp;» n'est jamais un reproche</strong>&nbsp;: c'est un ministre qui ne peut pas voter, un sénateur sur un scrutin de l'Assemblée, un texte adopté sans vote au 49.3 ou une personne sans mandat. Chaque case dit laquelle de ces raisons s'applique. <strong>«&nbsp;N'a pas pris part au vote&nbsp;»</strong>, en revanche, veut dire que la personne pouvait voter et ne l'a pas fait&nbsp;: on l'affiche tel quel.</p>
       <div class="lois-grid" id="lois-grid"></div>
+      <div id="attente-zone"></div>
     </section>
 
     <!-- ===== LES FICHES ===== -->
@@ -1640,8 +1694,8 @@
           <p>Parce que ce sont les deux sujets que vous avez le plus demandés dans notre enquête citoyenne&nbsp;: l'écologie chez 84&nbsp;% des répondant·es, la santé chez 68&nbsp;%. On a préféré commencer par ces deux-là sérieusement, plutôt que survoler dix sujets.</p>
         </div>
         <div class="chant-card">
-          <h3>🔍 Même là, ce n'est pas complet</h3>
-          <p><span id="ch-lois">25</span> textes de loi, <span id="ch-pos">250</span> positions vérifiées une par une, <span id="ch-src">22</span> sources documentées&nbsp;: c'est déjà beaucoup, ce n'est pas tout. Il reste des cases «&nbsp;en cours de vérification&nbsp;» et on les laisse visibles. Le comparateur est enrichi presque chaque jour.</p>
+          <h3>🔍 Où en est chaque sujet</h3>
+          <p>L'écologie et le climat, c'est déjà bien avancé&nbsp;: les grands textes du quinquennat y sont, vote par vote. La santé, on a commencé&nbsp;: les autres textes sortent au compte-gouttes à partir du <strong>mercredi 2 septembre</strong>. Ensuite, on se lance sur les autres sujets. Les textes &laquo;&nbsp;en cours de vérification&nbsp;&raquo; restent affichés&nbsp;: on ne maquille pas les trous.</p>
         </div>
         <div class="chant-card">
           <h3>📋 Ça deviendra bien plus fort</h3>
@@ -1889,9 +1943,9 @@
         <summary>4. Nos limites, en toute franchise</summary>
         <div class="art-body">
           <ul>
-            <li><b>Le périmètre est étroit pour l'instant&nbsp;:</b> deux sujets, 25 textes, cinq candidat·es. Ce n'est pas tout le débat public, c'est un début solide.</li>
+            <li><b>Le périmètre est étroit pour l'instant&nbsp;:</b> deux sujets, cinq candidat·es, et seulement les textes dont la vérification est terminée. Ce n'est pas tout le débat public, c'est un début solide.</li>
             <li><b>Les votes du Sénat sont moins couverts que ceux de l'Assemblée.</b> C'est une vraie faiblesse quand un candidat est sénateur&nbsp;: on l'indique au lieu de la masquer.</li>
-            <li><b>Sélectionner 25 textes, c'est déjà un choix.</b> On l'a fait sur des critères affichés&nbsp;: textes clivants, textes clés, textes votés récemment. Un autre choix donnerait une autre photo, et vous pouvez nous proposer les textes qui manquent.</li>
+            <li><b>Sélectionner des textes, c'est déjà un choix.</b> On l'a fait sur des critères affichés&nbsp;: textes clivants, textes clés, textes votés récemment. Un autre choix donnerait une autre photo, et vous pouvez nous proposer les textes qui manquent.</li>
             <li><b>Les programmes 2027 ne sont pas tous publiés.</b> Tant qu'ils ne le sont pas, la colonne «&nbsp;promesses&nbsp;» reste partielle pour certains, et ça n'a rien à voir avec un jugement de notre part.</li>
             <li><b>On est une toute petite équipe.</b> D'où le rythme, et d'où l'importance de vos signalements.</li>
           </ul>
@@ -2137,7 +2191,7 @@
     var orbit = document.getElementById('orbit');
     if (orbit) {
       var bulles = ['#5423df', '#9abdff', '#b0fda4', '#fee075', '#f099f9', '#ffffff'];
-      D.CANDIDATS.forEach(function (c, i) {
+      D.CANDIDATS.filter(function (c) { return c.actif !== false; }).forEach(function (c, i) {
         if (!c.photo) { return; }
         orbit.appendChild(el(
           '<div class="orbit-person" style="--bubble:' + esc(bulles[i % bulles.length]) + '" title="' + esc(c.court) + '"><img src="' + esc(c.photo) + '" alt=""></div>'));
@@ -2145,28 +2199,9 @@
     }
 
     /* ==================== stats ==================== */
-    document.getElementById('stat-lois').textContent = D.LOIS.length;
     var nbLiens = 0;
     D.LOIS.forEach(function (l) { nbLiens += l.liens.length; });
     document.getElementById('stat-src').textContent = (nbLiens + D.SOURCES.length) + '+';
-    /* les chiffres de la section « où on en est » : toujours recalculés */
-    (function () {
-      var nbPos = 0;
-      D.LOIS.forEach(function (l) {
-        JOUEURS.forEach(function (cid) {
-          var v = l.votes[cid];
-          if (!v) return;
-          if (v.perso) nbPos++;
-          if (v.groupe) nbPos++;
-        });
-      });
-      var maj = { 'ch-lois': D.LOIS.length, 'ch-pos': nbPos, 'ch-src': D.SOURCES.length };
-      Object.keys(maj).forEach(function (k) {
-        var n = document.getElementById(k);
-        if (n) n.textContent = maj[k];
-      });
-    })();
-
     /* ==================== navigation : ouvrir une loi depuis n'importe où ==================== */
     function openLoi(id) {
       /* on leve tout ce qui pourrait masquer la carte demandée */
@@ -2192,16 +2227,49 @@
 
     /* ==================== RÉPONSES RAPIDES (mode débat) ==================== */
     var debatGrid = document.getElementById('debat-grid');
-    (D.QUICK || []).forEach(function (q) {
-      var liens = (q.lois || []).map(function (id) {
-        var l = LOI[id];
-        if (!l) return '';
-        return '<button type="button" data-loi="' + esc(id) + '">🗳️ ' + esc(l.nom.length > 42 ? l.nom.slice(0, 40) + '…' : l.nom) + '</button>';
+    /* une pastille coloree par position, pour lire la ligne d'un coup d'oeil */
+    var QR_COURT = { pour: 'Pour', contre: 'Contre', abstention: 'Abstention', divise: 'Divis\u00e9',
+                     npppv: 'N\u2019a pas vot\u00e9', na: 'Non concern\u00e9\u00b7e', mixte: 'Voir le d\u00e9tail' };
+    function qrPill(v) {
+      if (!v) return '<span class="qr-pill na">\u2014</span>';
+      var court = QR_COURT[v.code] || v.label;
+      var t = (v.brut && v.brut !== court) ? ' title="' + esc(v.brut) + '"' : '';
+      return '<span class="qr-pill ' + esc(v.code) + '"' + t + '>' + esc(court) + '</span>' +
+             (v.label && v.label !== court && v.label !== 'Non applicable'
+                ? '<span class="qr-sub">' + esc(v.label) + '</span>' : '');
+    }
+    function tableauQuick(lois) {
+      var entetes = JOUEURS.map(function (cid) {
+        return '<th class="qr-cand"><span class="qr-nom">' + avatar(CAND[cid], 'mini') + esc(CAND[cid].court) + '</span>' +
+          '<span class="qr-sub">' + esc(CAND[cid].parti.replace(/\s*\(.*\)$/, '')) + '</span></th>';
       }).join('');
-      var jeuLien = q.jeu ? '<a href="#jeu">🎮 Vérifier en jouant</a>' : '';
+      var html = '';
+      lois.forEach(function (l) {
+        html += '<div class="qr-wrap">' +
+          (lois.length > 1 ? '<p class="qr-loi">' + esc(l.nom) + '</p>' : '') +
+          '<table class="qr-table"><thead><tr><th></th>' + entetes + '</tr></thead><tbody>';
+        [['Son vote', 'perso'], ['Son groupe', 'groupe']].forEach(function (r) {
+          html += '<tr><th scope="row">' + r[0] + '</th>' +
+            JOUEURS.map(function (cid) {
+              var v = l.votes[cid];
+              return '<td>' + qrPill(v ? v[r[1]] : null) + '</td>';
+            }).join('') + '</tr>';
+        });
+        html += '</tbody></table></div>';
+      });
+      return html;
+    }
+    (D.QUICK || []).forEach(function (q) {
+      var lois = (q.lois || []).map(function (id) { return LOI[id]; }).filter(Boolean);
+      var liens = lois.map(function (l) {
+        return '<button type="button" data-loi="' + esc(l.id) + '">\uD83D\uDDF3\uFE0F ' +
+          esc(l.nom.length > 42 ? l.nom.slice(0, 40) + '\u2026' : l.nom) + ' \u2192</button>';
+      }).join('');
+      var jeuLien = q.jeu ? '<a href="#jeu">\uD83C\uDFAE V\u00e9rifier en jouant</a>' : '';
       var item = el(
         '<details class="q-item"><summary>' + esc(q.q) + '</summary>' +
           '<div class="q-body"><p>' + esc(q.r) + '</p>' +
+          (lois.length ? tableauQuick(lois) : '') +
           (liens || jeuLien ? '<div class="q-links">' + liens + jeuLien + '</div>' : '') +
         '</div></details>');
       item.querySelectorAll('button[data-loi]').forEach(function (b) {
@@ -2355,7 +2423,7 @@
     }
 
     function htmlClair(l) {
-      var r = enClair(l.resume, l.nom || '');
+      var r = enClair(l.detail || l.resume || '', l.nom || '');
       var out = '<div class="clair suj-' + (l.sujet === 'sante' ? 'sante' : 'ecologie') + '">';
       if (r.ligne) out += '<p class="clair-ligne"><b>En une ligne</b>' + esc(r.ligne) + '</p>';
       var pile = [];
@@ -2379,6 +2447,17 @@
       return out + '</div>';
     }
 
+    /* les deux pastilles d'alignement : elles comparent TOUJOURS les promesses
+       et les actes de la personne (ou de son parti), jamais un accord avec la loi. */
+    function badgesAlign(v, petit) {
+      var out = '';
+      [['Candidat·e', v.alignCandidat], ['Parti', v.alignParti]].forEach(function (p) {
+        if (!p[1]) return;
+        out += '<span class="badge-align' + (petit ? ' mini' : '') + '">' +
+          '<b class="badge-qui">' + esc(p[0]) + '</b>' + p[1].icon + ' ' + esc(p[1].label) + '</span>';
+      });
+      return out;
+    }
     function statutChip(l) {
       if (!l.statut) return '';
       var cls = /adopt/i.test(l.statut) ? 'adopte' : /rejet/i.test(l.statut) ? 'rejete' : 'attente';
@@ -2410,24 +2489,19 @@
         var rows = joueurs().map(function (cid) {
           var c = CAND[cid], v = l.votes[cid];
           if (!v) return '';
-          var badges = (v.badges || []).map(function (b) {
-            /* deux pastilles identiques cote a cote n'apprenaient rien :
-               on nomme ce que chacune qualifie */
-            return '<span class="badge-align">' +
-              (b.qui ? '<b class="badge-qui">' + esc(b.qui) + '</b>' : '') +
-              b.icon + ' ' + esc(b.label) + '</span>';
-          }).join(' ');
           return '<details class="cand-row"><summary>' +
               '<span class="nom">' + avatar(c) + esc(c.court) + '</span>' +
               '<span class="col-perso"><span class="cell-label">Vote personnel</span>' + voteChip(v.perso) + '</span>' +
               '<span class="col-groupe"><span class="cell-label">Son groupe</span>' + voteChip(v.groupe) + '</span>' +
+              '<span class="col-align"><span class="cell-label">Promesses \u2194 actes</span>' +
+                '<span class="badges">' + badgesAlign(v, true) + '</span></span>' +
               '<span class="plus" aria-hidden="true"></span>' +
             '</summary><div class="cand-detail">' +
-              (v.perso.brut && v.perso.brut !== v.perso.label ? miniBloc('Vote personnel - détail', v.perso.brut) : '') +
-              miniBloc('Le groupe en chiffres', v.detail) +
               miniBloc('Ce qui était promis', v.promesse) +
               miniBloc('Les actes', v.actes) +
-              (v.alignement ? '<div class="mini"><b class="mini-titre">Alignement promesse ↔ actes</b>' + (badges ? '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 8px">' + badges + '</div>' : '') + esc(v.alignement) + '</div>' : '') +
+              (v.perso && v.perso.brut && v.perso.brut !== v.perso.label ? miniBloc('Vote personnel - précision', v.perso.brut) : '') +
+              (v.groupe && v.groupe.brut && v.groupe.brut !== v.groupe.label ? miniBloc('Vote du groupe - précision', v.groupe.brut) : '') +
+              miniBloc('Le groupe en chiffres', v.detail) +
             '</div></details>';
         }).join('');
         var liens = l.liens.map(function (s) {
@@ -2450,9 +2524,11 @@
             '</summary>' +
             '<div class="loi-body">' +
               '<div class="loi-meta">' + esc(l.date) + (l.chambre ? ' · ' + esc(l.chambre) : '') + (l.initiative ? ' · ' + esc(l.initiative.length > 120 ? l.initiative.slice(0, 119).replace(/\s+\S*$/, '') + '…' : l.initiative) : '') + '</div>' +
-              (l.resume ? '<details class="loi-resume-details suj-' + (l.sujet === 'sante' ? 'sante' : 'ecologie') + '">' +
+              (l.soustitre ? '<p class="loi-soustitre">' + esc(l.soustitre) + '</p>' : '') +
+              (l.chapo ? '<p class="loi-chapo">' + esc(l.chapo) + '</p>' : '') +
+              (l.detail ? '<details class="loi-resume-details suj-' + (l.sujet === 'sante' ? 'sante' : 'ecologie') + '">' +
                  '<summary><span class="sum-emo" aria-hidden="true">\uD83D\uDCA1</span>' +
-                 '<span class="sum-txt">Ce que fait ce texte, en clair</span>' +
+                 '<span class="sum-txt">Lire toute l\u2019explication du texte</span>' +
                  '<span class="sum-fl" aria-hidden="true">\u25BC</span></summary>' +
                  htmlClair(l) + '</details>' : '') +
               '<div class="grille">' + rows + '</div>' +
@@ -2463,10 +2539,37 @@
     }
     renderLois();
 
+    /* ==================== TEXTES RELEVÉS, PAS ENCORE PUBLIÉS ====================
+       Ils sont dans notre tableau de relevé mais la vérification n'est pas
+       terminée : on affiche leur nom et on dit quand ils arrivent, plutôt que
+       de laisser croire que le travail s'arrête aux textes déjà en ligne. */
+    (function () {
+      var zone = document.getElementById('attente-zone');
+      var liste = D.ATTENTE || [];
+      if (!zone || !liste.length) { return; }
+      zone.appendChild(el(
+        '<div class="attente-head">' +
+          '<h3>\u23F3 D\u00e9j\u00e0 relev\u00e9s, en cours de v\u00e9rification</h3>' +
+          '<p>Ces ' + liste.length + ' textes sont d\u00e9pouill\u00e9s scrutin par scrutin, mais la relecture n\u2019est pas termin\u00e9e. ' +
+          'On pr\u00e9f\u00e8re les annoncer plut\u00f4t que de les publier \u00e0 moiti\u00e9\u00a0: ils arrivent \u00e0 partir du ' +
+          '<strong>mercredi 2 septembre</strong>.</p>' +
+        '</div>'));
+      var grid = el('<div class="attente-grid"></div>');
+      liste.forEach(function (a) {
+        grid.appendChild(el(
+          '<article class="attente-card">' +
+            '<h3>' + esc(a.nom) + '</h3>' +
+            '<p>' + (a.sujet === 'sante' ? '\uD83E\uDE7A' : '\uD83C\uDF31') + ' ' + esc(a.sousTheme) +
+            ' \u00b7 en cours de v\u00e9rification</p>' +
+          '</article>'));
+      });
+      zone.appendChild(grid);
+    })();
+
     /* ==================== QUI EST QUI (parcours) ==================== */
     var quiGrid = document.getElementById('qui-grid');
     if (quiGrid && D.PARCOURS) {
-      JOUEURS.concat(['glucksmann', 'tondelier']).forEach(function (cid) {
+      JOUEURS.forEach(function (cid) {
         var p = D.PARCOURS[cid], c = CAND[cid];
         if (!p || !c) return;
         var puces = (p.cinqAns || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
@@ -2534,8 +2637,10 @@
           '<div class="pbar" aria-hidden="true"><i style="width:' + Math.round(idx / D.JEU.length * 100) + '%"></i></div>' +
           '<span class="score">' + score + ' pt' + (score > 1 ? 's' : '') + '</span>' +
         '</div>' +
-        '<div class="quote-box"><blockquote>' + esc(q.citation) + '</blockquote></div>' +
-        '<p class="jeu-q-label">Qui a dit ça&nbsp;?</p>' +
+        '<div class="quote-box' + (q.paraphrase ? ' sans-guillemet' : '') + '">' +
+          (q.paraphrase ? '<p class="quote-para">' + esc(q.citation) + '</p>'
+                        : '<blockquote>' + esc(q.citation) + '</blockquote>') + '</div>' +
+        '<p class="jeu-q-label">' + (q.paraphrase ? 'De qui parle-t-on\u00a0?' : 'Qui a dit \u00e7a\u00a0?') + '</p>' +
         '<div class="answers" id="answers"></div>';
       var zone = document.getElementById('answers');
       choix.forEach(function (cid) {
@@ -2598,24 +2703,27 @@
           '</div>' +
           '<div class="reveal-card"><h4>Le contexte</h4><p>' + esc(q.contexte) + '</p>' +
             '<ul class="src-list">' + q.sources.map(function (s) {
-              return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a></li>';
+              return s.url
+                ? '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a></li>'
+                : '<li class="sans-lien">' + esc(s.label) + '</li>';
             }).join('') + '</ul></div>' +
-          '<div class="reveal-card"><h4>Déclarations VS actes</h4>' +
-            '<div class="align-grid">' +
-              '<div class="align-cell"><div class="who">' + esc(bonne.court) + '</div>' +
-                '<span class="badge-align">' + q.alignCandidat.icon + ' ' + esc(q.alignCandidat.label) + '</span>' +
-                '<p>' + esc(q.alignCandidat.texte) + '</p></div>' +
-              '<div class="align-cell"><div class="who">Son parti (' + esc(bonne.parti.replace(/\s*\(.*\)$/, '')) + ')</div>' +
-                '<span class="badge-align">' + q.alignParti.icon + ' ' + esc(q.alignParti.label) + '</span>' +
-                '<p>' + esc(q.alignParti.texte) + '</p></div>' +
-            '</div>' +
-            '<div class="nuancier" style="margin-top:12px"><h4>Pour aller plus loin que le badge</h4><p>' + esc(q.nuancier) + '</p></div>' +
-            '<h4 style="margin-top:16px">Les votes de ' + esc(bonne.court) + ' sur le sujet</h4>' +
-            '<div class="vote-lines">' + lois.map(function (l) { return ligneVoteJeu(l, q.reponse); }).join('') + '</div>' +
-            '<details class="autres" style="margin-top:12px"><summary>Et les autres candidat·es, ils ont voté quoi&nbsp;?</summary>' +
-              '<div class="autres-body">' + autresHtml +
-                '<p style="margin:0;font-size:13.5px;color:var(--muted)">Le détail complet (chiffres par groupe, promesses, alignements) est dans la section <a href="#votes">Les votes, loi par loi</a>.</p>' +
-              '</div></details>' +
+          '<div class="reveal-card"><h4>D\u00e9claration VS actes</h4>' +
+            '<div class="align-cell"><div class="who">' + esc(bonne.court) + '</div>' +
+              '<span class="badge-align">' + q.alignCandidat.icon + ' ' + esc(q.alignCandidat.label) + '</span>' +
+              '<p>' + esc(q.alignCandidat.texte) + '</p></div>' +
+            (lois.length
+              ? '<h4 style="margin-top:16px">Les votes de ' + esc(bonne.court) + ' sur le sujet</h4>' +
+                '<div class="vote-lines">' + lois.map(function (l) { return ligneVoteJeu(l, q.reponse); }).join('') + '</div>' +
+                '<details class="autres" style="margin-top:12px"><summary>Et les autres candidat\u00b7es, ils ont vot\u00e9 quoi\u00a0?</summary>' +
+                  '<div class="autres-body">' + autresHtml + '</div></details>' +
+                '<div class="cta-row" style="margin-top:14px">' +
+                  lois.map(function (l) {
+                    return '<button type="button" class="btn primary" data-goloi="' + esc(l.id) + '">' +
+                      '\uD83D\uDDF3\uFE0F Tout le d\u00e9tail\u00a0: ' +
+                      esc(l.nom.length > 38 ? l.nom.slice(0, 36) + '\u2026' : l.nom) + ' \u2192</button>';
+                  }).join('') +
+                '</div>'
+              : '') +
           '</div>' +
           '<div class="jeu-next-row">' +
             '<span class="chip" style="align-self:center">Score : ' + score + ' / ' + (idx + 1) + '</span>' +
@@ -2623,6 +2731,11 @@
           '</div>' +
         '</div>');
       jeu.appendChild(reveal);
+      reveal.querySelectorAll('button[data-goloi]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          if (window.__KOMUNE_OPEN_LOI) { window.__KOMUNE_OPEN_LOI(b.dataset.goloi); }
+        });
+      });
       if (ok) confetti(jeu.querySelector('.quote-box'));
       document.getElementById('jeu-next').addEventListener('click', function () {
         idx++;
@@ -2648,8 +2761,9 @@
           '<p>' + texte + '</p>' +
           '<div class="cta-row" style="justify-content:center">' +
             '<button type="button" class="btn play" id="jeu-replay">↺ Rejouer</button>' +
-            '<a class="btn pink" href="#debat">⚡ Réponses rapides</a>' +
+            '<a class="btn pink" href="#debat">\u26A1 R\u00e9ponses rapides</a>' +
             '<a class="btn" href="#votes">Voir les votes</a>' +
+            '<a class="btn don" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">\uD83D\uDC9B Nous soutenir</a>' +
           '</div>' +
         '</div>';
       document.getElementById('jeu-replay').addEventListener('click', startJeu);
@@ -3408,7 +3522,9 @@
       var v = l.votes[cid];
       var c = CAND[cid];
       if (!v) { repLoiComplete(l); return; }
-      var badges = (v.badges || []).map(function (b) { return '<span class="chip">' + b.icon + ' ' + esc(b.label) + '</span>'; }).join(' ');
+      var badges = [['Candidat·e', v.alignCandidat], ['Parti', v.alignParti]].map(function (p) {
+        return p[1] ? '<span class="chip">' + esc(p[0]) + ' : ' + p[1].icon + ' ' + esc(p[1].label) + '</span>' : '';
+      }).join(' ');
       var m = addMsg(
         '<h5>' + esc(c.court) + ' · ' + esc(l.nom) + '</h5>' +
         '<span class="kc-line"><span class="who">Perso</span>' + voteChip(v.perso) + '</span>' +
@@ -3441,11 +3557,11 @@
     function repFallback(question) {
       var sujet = horsChamp(question);
       if (sujet) {
-        addMsg('<p>Bonne question - mais pour l’instant, le comparateur ne couvre que la <strong>santé</strong> et l’<strong>écologie</strong> (25 textes vérifiés). On préfère être solides sujet par sujet que flous sur tout.</p>' +
+        addMsg('<p>Bonne question - mais pour l’instant, le comparateur ne couvre que la <strong>santé</strong> et l’<strong>écologie</strong>, et seulement les textes dont la vérification est terminée. On préfère être solides sujet par sujet que flous sur tout.</p>' +
           '<p>' + esc('Le sujet « ' + sujet + ' » fait partie des prochains chantiers, nourris par le questionnaire citoyen.') + ' Dites-nous qu’il vous intéresse par le bouton « j’ai des retours », en bas à gauche 💌</p>');
         return;
       }
-      addMsg('<p>Je n’ai pas trouvé ça dans les données du comparateur (santé &amp; écologie, 25 textes, 5 candidat·es). Je ne préfère pas inventer 🤷</p>' +
+      addMsg('<p>Je n’ai pas trouvé ça dans les données du comparateur (santé &amp; écologie, 5 candidat·es, textes vérifiés uniquement). Je ne préfère pas inventer 🤷</p>' +
         '<p>Essayez par exemple : «&nbsp;qui a voté la loi Duplomb&nbsp;?&nbsp;», «&nbsp;Le Pen et l’IVG&nbsp;», «&nbsp;c’est quoi la loi Garot&nbsp;?&nbsp;»</p>');
     }
 
