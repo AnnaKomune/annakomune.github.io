@@ -3,9 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Le comparateur politique citoyen de Komune pour 2027 : un jeu pour tester votre flair, des réponses rapides pour vos débats, les parcours des candidat·es et les votes réels, loi par loi, avec toutes les sources.">
-  <title>Komune - Le Comparateur politique citoyen 2027</title>
+  <title>Comparateur présidentielle 2027 : promesses et votes des candidats</title>
+  <meta name="description" content="Comparez les candidats à l'élection présidentielle 2027 sur du concret : ce qu'ils promettent, ce qu'ils votent au Parlement et ce qu'ils font au pouvoir, loi par loi, avec toutes les sources.">
+  <link rel="canonical" href="https://www.komunemedia.fr/comparateur/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="author" content="Komune Média">
+  <meta name="theme-color" content="#fcf7e8">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Komune Média">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://www.komunemedia.fr/comparateur/">
+  <meta property="og:title" content="Comparateur présidentielle 2027 : promesses et votes des candidats">
+  <meta property="og:description" content="Pas de clash, pas de sondage : on compare ce que les candidat·es déclarent, votent et font au pouvoir, loi par loi, avec toutes les sources.">
+  <meta property="og:image" content="https://www.komunemedia.fr/img/og-comparateur.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Comparateur de la présidentielle 2027 - Komune Média">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Comparateur présidentielle 2027 : promesses et votes des candidats">
+  <meta name="twitter:description" content="Ce qu'ils promettent, ce qu'ils votent, ce qu'ils font au pouvoir. Loi par loi, avec les sources.">
+  <meta name="twitter:image" content="https://www.komunemedia.fr/img/og-comparateur.png">
   <link rel="icon" type="image/png" href="../img/favicon.png">
   <link rel="apple-touch-icon" href="../img/favicon.png">
 
@@ -207,7 +226,7 @@
     .plier .quand-ouvert { display: none; }
     .plier[aria-expanded="true"] .quand-ferme { display: none; }
     .plier[aria-expanded="true"] .quand-ouvert { display: inline; }
-    .bloc-pli { margin-top: 22px; }
+    .bloc-pli { margin-top: 22px; scroll-margin-top: 84px; }
     .bloc-pli[hidden] { display: none; }
     .pli-teaser { font-size: 14px; font-weight: 700; color: var(--muted); margin: 12px 0 0; }
 
@@ -258,10 +277,18 @@
       background: var(--cream); box-shadow: var(--shadow);
     }
     .trio-pli > .bloc-intro { margin-top: 0; }
+    #atelier, #votes, #qui { scroll-margin-top: 84px; }
     @media (max-width: 900px) {
       .trio { grid-template-columns: minmax(0, 1fr); gap: 12px; }
       .trio-carte { flex-direction: row; align-items: center; flex-wrap: wrap; }
       .trio-etat { margin-top: 0; margin-left: auto; }
+      /* en une colonne, on intercale : carte, son panneau, carte suivante...
+         sinon on ouvre un outil et le contenu apparait 4 cartes plus bas. */
+      #medef      { order: 1; }  #medef-pli      { order: 2; }
+      #jeu        { order: 3; }  #jeu-pli        { order: 4; }
+      #debat      { order: 5; }  #debat-pli      { order: 6; }
+      #promesses  { order: 7; }  #promesses-pli  { order: 8; }
+      #candidats  { order: 9; }  #candidats-pli  { order: 10; }
     }
 
     /* ---------- ATELIER : comment ça marche ---------- */
@@ -354,7 +381,7 @@
 
     /* ---------- ATELIER : ce que la selection donne, juste sous les commandes ---------- */
     .resultats {
-      margin: 20px 0 0;
+      margin: 20px 0 0; scroll-margin-top: 84px;
       border: 2px solid var(--line);
       border-radius: 20px;
       padding: 14px 16px;
@@ -786,6 +813,7 @@
     /* ---------- mode débat ---------- */
     #debat .debat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 14px; align-items: start; }
     .q-item {
+      scroll-margin-top: 84px;
       border: 2px solid var(--ink); border-radius: 22px; background: var(--white);
       box-shadow: 6px 6px 0 var(--sky); overflow: hidden;
     }
@@ -912,6 +940,7 @@
     details.loi-card {
       background: var(--white); border: 2px solid var(--ink); border-radius: 22px;
       box-shadow: 6px 6px 0 rgba(51,46,50,.12); overflow: hidden;
+      scroll-margin-top: 84px;
     }
     details.loi-card[data-cle="1"] { box-shadow: 6px 6px 0 var(--gold); }
     details.loi-card[open] { box-shadow: 8px 8px 0 var(--blue); }
@@ -1283,14 +1312,17 @@
     }
 
     .lien-retours {
-      border: 0; padding: 0; background: none; color: inherit; cursor: pointer;
+      border: 0; padding: 5px 2px; background: none; color: inherit; cursor: pointer;
       font: inherit; font-weight: 800; text-decoration: underline;
+      min-height: 32px;
     }
     .lien-retours:hover { background: var(--yellow); }
     .foot-charte {
-      border: 0; padding: 0; background: none; color: inherit; cursor: pointer;
+      border: 0; padding: 5px 2px; background: none; color: inherit; cursor: pointer;
       font: inherit; font-weight: 800; text-decoration: underline;
+      min-height: 32px;
     }
+    footer.site-foot .foot-links a { display: inline-flex; align-items: center; min-height: 32px; }
 
     /* ---------- v5 : pourquoi « non concerné·e » ---------- */
     .why {
@@ -1373,7 +1405,7 @@
       50%      { box-shadow: 0 0 0 7px rgba(84,35,223,.06); }
     }
     .beta-pill .beta-why {
-      width: 26px; height: 26px; flex: none; border: 2px solid var(--ink); border-radius: 999px;
+      width: 30px; height: 30px; flex: none; border: 2px solid var(--ink); border-radius: 999px;
       background: var(--white); font: inherit; font-weight: 800; font-size: 14px;
       line-height: 1; cursor: pointer; transition: transform .15s ease, background .15s ease;
     }
@@ -1583,7 +1615,7 @@
     .medef-ts {
       display: inline-flex; align-items: center; gap: 6px; margin: 2px 0 12px;
       background: var(--white); border: 2px solid var(--ink); border-radius: 999px;
-      padding: 3px 11px; font-size: 12.5px; font-weight: 700; text-decoration: none;
+      padding: 6px 13px; min-height: 34px; font-size: 12.5px; font-weight: 700; text-decoration: none;
       font-variant-numeric: tabular-nums; box-shadow: 2px 2px 0 var(--ko);
     }
     .medef-ts:hover { background: var(--gold); }
@@ -1609,6 +1641,234 @@
     .medef-suite p:last-child { margin-bottom: 0; }
 
   </style>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NewsMediaOrganization",
+      "@id": "https://www.komunemedia.fr/#organisation",
+      "name": "Komune Média",
+      "url": "https://www.komunemedia.fr/",
+      "logo": "https://www.komunemedia.fr/img/logo-rose-vert.webp",
+      "description": "Média citoyen indépendant qui décrypte la société avec un regard antiraciste.",
+      "email": "anna@komunemedia.fr",
+      "sameAs": [
+        "https://www.instagram.com/komune.media/"
+      ]
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://www.komunemedia.fr/comparateur/#application",
+      "name": "Comparateur de la présidentielle 2027",
+      "url": "https://www.komunemedia.fr/comparateur/",
+      "applicationCategory": "ReferenceApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "fr-FR",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "publisher": {
+        "@id": "https://www.komunemedia.fr/#organisation"
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Élection présidentielle française de 2027"
+        },
+        {
+          "@type": "Thing",
+          "name": "Comparateur de candidats"
+        },
+        {
+          "@type": "Thing",
+          "name": "Votes au Parlement"
+        }
+      ],
+      "description": "Comparez les candidat·es à l'élection présidentielle 2027 : leurs promesses, leurs votes au Parlement et leurs actes au pouvoir, texte de loi par texte de loi, avec toutes les sources."
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.komunemedia.fr/comparateur/#page",
+      "url": "https://www.komunemedia.fr/comparateur/",
+      "name": "Comparateur présidentielle 2027 : promesses et votes des candidats",
+      "inLanguage": "fr-FR",
+      "isPartOf": {
+        "@id": "https://www.komunemedia.fr/#organisation"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.komunemedia.fr/img/og-comparateur.png"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Accueil",
+            "item": "https://www.komunemedia.fr/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Comparateur présidentielle 2027",
+            "item": "https://www.komunemedia.fr/comparateur/"
+          }
+        ]
+      },
+      "mainEntity": {
+        "@id": "https://www.komunemedia.fr/comparateur/#application"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.komunemedia.fr/comparateur/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qui a voté la grande loi Climat de 2021 ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La grande loi climat de 2021, née de la Convention citoyenne pour le climat. Texte concerné : Loi Climat et Résilience. Positions relevées - Jean-Luc Mélenchon a voté contre ; Marine Le Pen s'est abstenu·e ; Édouard Philippe, pas de vote personnel possible (ne siégeait pas) ; Gabriel Attal, pas de vote personnel possible (membre du gouvernement), et son groupe a voté pour ; Bruno Retailleau a voté pour au Sénat. Chaque position est sourcée sur le comparateur Komune, qui sépare le vote personnel du vote du groupe parlementaire."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Éolien, solaire : qui a voté pour accélérer ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le texte qui devait accélérer l'éolien et le solaire en simplifiant les procédures. Texte concerné : Loi sur l'accélération de la production d’énergies renouvelables (APER). Positions relevées - Jean-Luc Mélenchon, pas de vote personnel possible (ne siégeait pas), et son groupe a voté contre ; Marine Le Pen a voté contre ; Édouard Philippe, pas de vote personnel possible (ne siégeait pas), et son groupe a voté pour ; Gabriel Attal, pas de vote personnel possible (membre du gouvernement), et son groupe a voté pour ; Bruno Retailleau a voté contre au Sénat. Chaque position est sourcée sur le comparateur Komune, qui sépare le vote personnel du vote du groupe parlementaire."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Industrie verte : qui a voté le texte de 2023 ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Réindustrialiser la France sans renoncer au climat : le pari de 2023. Texte concerné : Loi Industrie verte. Positions relevées - Jean-Luc Mélenchon, pas de vote personnel possible (ne siégeait pas), et son groupe a voté contre ; Marine Le Pen n'a pas pris part au vote ; Édouard Philippe, pas de vote personnel possible (ne siégeait pas), et son groupe a voté pour ; Gabriel Attal, pas de vote personnel possible (membre du gouvernement), et son groupe a voté pour ; Bruno Retailleau a voté pour au Sénat. Chaque position est sourcée sur le comparateur Komune, qui sépare le vote personnel du vote du groupe parlementaire."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qui a voté la loi Duplomb (pesticides) ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Deux textes qui reviennent sur des règles pesticides, dont la réautorisation de l'acétamipride. Texte concerné : Loi Duplomb + loi d’urgence agricole (2026). Positions relevées - Jean-Luc Mélenchon, pas de vote personnel possible (ne siégeait pas), et son groupe a voté contre ; Marine Le Pen a voté pour (les deux textes) ; Édouard Philippe, pas de vote personnel possible (ne siégeait pas), et son groupe a voté pour ; Gabriel Attal a voté pour (les deux textes) ; Bruno Retailleau a eu une position différente selon la chambre. Chaque position est sourcée sur le comparateur Komune, qui sépare le vote personnel du vote du groupe parlementaire."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qui est revenu sur les ZFE (vignettes Crit'Air) ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Une loi de simplification devenue le champ de bataille des ZFE et du zéro artificialisation. Texte concerné : Loi de simplification de la vie économique - volets ZFE et ZAN. Positions relevées - Jean-Luc Mélenchon, pas de vote personnel possible (ne siégeait pas), et son groupe a voté contre ; Marine Le Pen a voté pour ; Édouard Philippe, pas de vote personnel possible (ne siégeait pas), et son groupe a voté pour ; Gabriel Attal n'a pas pris part au vote ; Bruno Retailleau a voté pour au Sénat. Chaque position est sourcée sur le comparateur Komune, qui sépare le vote personnel du vote du groupe parlementaire."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Moratoire sur l'éolien et le solaire : qui a voté pour ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La feuille de route énergétique du pays : loi rejetée en 2025, décret en 2026. Texte concerné : Loi Gremillet sur la programmation énergétique. Positions relevées - Jean-Luc Mélenchon, pas de vote personnel possible (non applicable), et son groupe a voté contre ; Marine Le Pen a voté pour ; Édouard Philippe, pas de vote personnel possible (ne siégeait pas), et son groupe a voté contre ; Gabriel Attal a voté contre ; Bruno Retailleau, pas de vote personnel possible (membre du gouvernement), et son groupe était divisé. Chaque position est sourcée sur le comparateur Komune, qui sépare le vote personnel du vote du groupe parlementaire."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Pesticides : qui a défait le plan Écophyto ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le plan de réduction des pesticides, suspendu puis réécrit. Pas de vote : c'est un plan, pas une loi. Texte concerné : Réformes Écophyto 2030 / changement d’indicateur pesticides. Positions relevées - Jean-Luc Mélenchon, pas de vote personnel possible (non applicable) ; Marine Le Pen, pas de vote personnel possible (non applicable) ; Édouard Philippe, pas de vote personnel possible (non applicable) ; Gabriel Attal, pas de vote personnel possible (non applicable) ; Bruno Retailleau, pas de vote personnel possible (non applicable). Chaque position est sourcée sur le comparateur Komune, qui sépare le vote personnel du vote du groupe parlementaire."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qui est pour l'aide à mourir ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le droit à l'aide à mourir, adopté en 2026 après quatre ans de navette. Texte concerné : Loi sur le droit à l'aide à mourir. Positions relevées - Jean-Luc Mélenchon, pas de vote personnel possible (non applicable), et son groupe a voté pour ; Marine Le Pen a voté contre ; Édouard Philippe, pas de vote personnel possible (non applicable), et son groupe était divisé ; Gabriel Attal a voté pour ; Bruno Retailleau a voté contre au Sénat. Chaque position est sourcée sur le comparateur Komune, qui sépare le vote personnel du vote du groupe parlementaire."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mélenchon ne vote plus ? C’est vrai ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vrai : il n'est plus député depuis 2022, donc aucun vote personnel possible depuis. Le comparateur distingue toujours ses votes personnels (2017-2022) de ceux de son groupe LFI : on ne les mélange jamais. L'outil « Les candidat·es » détaille le parcours de chacun·e et ce qu'il change. Chaque position est sourcée sur le comparateur Komune, qui sépare le vote personnel du vote du groupe parlementaire."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Pourquoi certains n’ont pas de vote personnel ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Un ministre en exercice ne vote pas, un maire ne siège pas au Parlement, un sénateur ne prend pas part aux scrutins de l'Assemblée, et un texte passé au 49.3 n'a jamais été voté. Quand aucun vote personnel n'est possible, on affiche celui du groupe, clairement séparé, et chaque case « non concerné·e » dit laquelle de ces raisons s'applique. Chaque position est sourcée sur le comparateur Komune, qui sépare le vote personnel du vote du groupe parlementaire."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Textes de loi documentés dans le comparateur",
+      "numberOfItems": 8,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Loi Climat et Résilience",
+          "description": "La grande loi climat de 2021, née de la Convention citoyenne pour le climat."
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Loi sur l'accélération de la production d’énergies renouvelables (APER)",
+          "description": "Le texte qui devait accélérer l'éolien et le solaire en simplifiant les procédures."
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Loi Industrie verte",
+          "description": "Réindustrialiser la France sans renoncer au climat : le pari de 2023."
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Loi Duplomb + loi d’urgence agricole (2026)",
+          "description": "Deux textes qui reviennent sur des règles pesticides, dont la réautorisation de l'acétamipride."
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Loi de simplification de la vie économique - volets ZFE et ZAN",
+          "description": "Une loi de simplification devenue le champ de bataille des ZFE et du zéro artificialisation."
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Loi Gremillet sur la programmation énergétique",
+          "description": "La feuille de route énergétique du pays : loi rejetée en 2025, décret en 2026."
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Réformes Écophyto 2030 / changement d’indicateur pesticides",
+          "description": "Le plan de réduction des pesticides, suspendu puis réécrit. Pas de vote : c'est un plan, pas une loi."
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "name": "Loi sur le droit à l'aide à mourir",
+          "description": "Le droit à l'aide à mourir, adopté en 2026 après quatre ans de navette."
+        }
+      ]
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <!-- ===== bandeau défilant ===== -->
@@ -1627,7 +1887,7 @@
         <a href="../">Accueil</a>
         <a href="../articles/">Articles</a>
         <a class="est-ici" href="./" aria-current="page">Le comparateur présidentielles 2027</a>
-        <a href="../comparateur-2027/">Projet citoyen présidentielles 2027</a>
+        <a href="../comparateur-2027/">Votre cahier des charges pour le projet de comparateur</a>
         <a href="../equipe/">L'équipe</a>
         <a href="../soutenir/">Nous soutenir</a>
       </nav>
@@ -1637,7 +1897,7 @@
     <div class="hero">
       <div class="hero-main">
         <p class="eyebrow">Le comparateur politique citoyen · Komune</p>
-        <h1>2027 : comparez<br>sur du concret.</h1>
+        <h1>Présidentielle 2027 : comparez<br>sur du concret.</h1>
         <p class="pitch">Pas de clash, pas de sondage : on compare ce que les candidat·es <strong>déclarent</strong>, <strong>votent</strong> et <strong>font au pouvoir</strong> pour voir si leurs paroles et leurs actes correspondent.</p>
         <div class="cta-row">
           <a class="btn primary" href="#jeu">🎮 Jouer au «&nbsp;Qui a dit quoi&nbsp;?&nbsp;»</a>
@@ -1731,7 +1991,11 @@
         </button>
       </article>
 
-      <div class="bloc-pli trio-pli" id="medef-pli" hidden>
+      <div class="bloc-pli trio-pli" id="medef-pli" aria-labelledby="medef-titre" hidden>
+        <div class="bloc-head">
+          <span class="bloc-emoji" aria-hidden="true">🎤</span>
+          <h2 id="medef-titre">Le débat du Medef, citation par citation</h2>
+        </div>
         <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire - et chaque horodatage ouvre la vidéo au moment exact, pour vérifier par vous-même.</p>
         <div class="medef-meta" id="medef-meta"></div>
         <div class="medef-methode" id="medef-methode"></div>
@@ -1750,6 +2014,10 @@
       </div>
 
       <div class="bloc-pli trio-pli" id="jeu-pli" hidden>
+        <div class="bloc-head">
+          <span class="bloc-emoji" aria-hidden="true">🎮</span>
+          <h2 id="jeu-titre">Qui a dit quoi&nbsp;? Le jeu des déclarations</h2>
+        </div>
         <p class="bloc-intro">10 déclarations bien réelles, prononcées ces cinq dernières années. À vous de deviner qui parle - puis on regarde ensemble si les votes suivent les paroles.</p>
         <div class="jeu-shell">
           <div class="jeu-card" id="jeu-card" aria-live="polite"></div>
@@ -1757,6 +2025,10 @@
       </div>
 
       <div class="bloc-pli trio-pli" id="debat-pli" hidden>
+        <div class="bloc-head">
+          <span class="bloc-emoji" aria-hidden="true">⚡</span>
+          <h2 id="debat-titre">Réponses rapides pour vos débats</h2>
+        </div>
         <p class="bloc-intro">Au bar, en famille, dans le groupe WhatsApp&nbsp;: touchez une question, la réponse tient en trois phrases - et chaque mot est vérifiable dans les votes juste en dessous.</p>
         <div class="debat-grid" id="debat-grid"></div>
         <div class="debat-foot cta-row">
@@ -1789,7 +2061,7 @@
           <p class="cbloc-sous">Logement, santé, ruralité, droits LGBT+, coût de la vie&hellip; tapez un mot&nbsp;: la recherche filtre les textes documentés.</p>
           <label class="cherche">
             <span aria-hidden="true">🔍</span>
-            <input type="search" id="recherche" placeholder="Chercher : passoires thermiques, IVG, déserts médicaux, 49.3…"
+            <input type="search" id="recherche" placeholder="Chercher : pesticides, passoires thermiques, ZFE, eau…"
                    autocomplete="off" aria-describedby="atelier-compte">
             <button type="button" id="recherche-vider" hidden>Effacer</button>
           </label>
@@ -2421,6 +2693,40 @@
     var nbLiens = 0;
     D.LOIS.forEach(function (l) { nbLiens += l.liens.length; });
     document.getElementById('stat-src').textContent = (nbLiens + D.SOURCES.length) + '+';
+    /* ==================== navigation : rendre visible AVANT de defiler ====================
+       Depuis la refonte en 5 outils, les cartes de loi vivent dans le panneau
+       « Promesses VS Actes », replie par defaut. Un element replie mesure 0 px :
+       scrollIntoView() ne fait alors rien du tout, et le clic semble mort.
+       On remonte donc la chaine des parents pour rouvrir tout ce qui est replie
+       (panneaux .bloc-pli et balises <details>), puis on defile a la frame suivante,
+       quand la mise en page a ete recalculee. */
+    function revelerElement(el) {
+      var noeud = el;
+      while (noeud && noeud !== document.body) {
+        if (noeud.tagName === 'DETAILS' && !noeud.open) { noeud.open = true; }
+        if (noeud.hasAttribute && noeud.hasAttribute('hidden')) {
+          noeud.hidden = false;
+          if (noeud.id) {
+            var btn = document.querySelector('.plier[aria-controls="' + noeud.id + '"]');
+            if (btn) { btn.setAttribute('aria-expanded', 'true'); }
+          }
+        }
+        noeud = noeud.parentElement;
+      }
+    }
+    /* defile vers un element apres l'avoir rendu visible */
+    function allerA(el, options) {
+      if (!el) { return; }
+      revelerElement(el);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          el.scrollIntoView(options || { behavior: 'smooth', block: 'start' });
+        });
+      });
+    }
+    window.__KOMUNE_REVELER = revelerElement;
+    window.__KOMUNE_ALLER_A = allerA;
+
     /* ==================== navigation : ouvrir une loi depuis n'importe où ==================== */
     function openLoi(id) {
       /* on leve tout ce qui pourrait masquer la carte demandée */
@@ -2437,7 +2743,7 @@
       var carte = document.querySelector('details.loi-card[data-loi="' + id + '"]');
       if (!carte) return;
       carte.open = true;
-      carte.scrollIntoView({ block: 'start' });
+      allerA(carte, { behavior: 'smooth', block: 'start' });
       carte.classList.remove('flash');
       void carte.offsetWidth;
       carte.classList.add('flash');
@@ -3245,8 +3551,7 @@
           });
           renderLois();
           majCompte();
-          var cible = document.getElementById('votes');
-          if (cible) cible.scrollIntoView({ block: 'start' });
+          allerA(document.getElementById('votes'), { behavior: 'smooth', block: 'start' });
         });
         chips.appendChild(b);
       });
@@ -3370,8 +3675,7 @@
     }
 
     function allerVers(id) {
-      var cible = document.getElementById(id);
-      if (cible) cible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      allerA(document.getElementById(id), { behavior: 'smooth', block: 'start' });
     }
 
     function reinitialiserAtelier() {
@@ -3673,8 +3977,43 @@
         cible.hidden = !etat;
       }
 
+      /* un seul outil ouvert a la fois : sinon, sur mobile, on ne sait plus
+         quel panneau appartient a quelle carte. */
+      function fermerLesAutres(btn) {
+        if (!btn.classList.contains('trio-carte')) { return; }
+        boutons.forEach(function (autre) {
+          if (autre !== btn && autre.classList.contains('trio-carte') &&
+              autre.getAttribute('aria-expanded') === 'true') {
+            basculer(autre, false);
+          }
+        });
+      }
+
+      /* apres ouverture, on amene l'ecran sur le panneau s'il est hors de vue */
+      function montrer(btn) {
+        var cible = document.getElementById(btn.getAttribute('aria-controls'));
+        if (!cible || cible.hidden) { return; }
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            var carte = btn.closest('.trio-item') || btn;
+            var r = carte.getBoundingClientRect();
+            var p = cible.getBoundingClientRect();
+            /* si la carte et le debut du panneau ne tiennent pas ensemble a l'ecran,
+               on remonte sur la carte : on voit alors le titre puis le contenu. */
+            if (r.top < 70 || p.top > window.innerHeight - 90) {
+              carte.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        });
+      }
+
       boutons.forEach(function (btn) {
-        btn.addEventListener('click', function () { basculer(btn); });
+        btn.addEventListener('click', function () {
+          var vaSOuvrir = btn.getAttribute('aria-expanded') !== 'true';
+          if (vaSOuvrir) { fermerLesAutres(btn); }
+          basculer(btn);
+          if (vaSOuvrir) { montrer(btn); }
+        });
       });
 
       /* ouvrir la bonne section quand on y arrive par une ancre */
@@ -3682,10 +4021,15 @@
         if (!hash || hash.length < 2) { return; }
         var sec = document.getElementById(hash.slice(1));
         if (!sec) { return; }
+        /* la cible porte elle-meme un bouton (carte d'outil) */
         var btn = sec.querySelector('.plier[aria-controls]');
         if (btn && btn.getAttribute('aria-expanded') !== 'true') { basculer(btn, true); }
+        /* ou bien la cible est A L'INTERIEUR d'un panneau replie */
+        if (window.__KOMUNE_REVELER) { window.__KOMUNE_REVELER(sec); }
         if (defiler) {
-          requestAnimationFrame(function () { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+          });
         }
       }
 
