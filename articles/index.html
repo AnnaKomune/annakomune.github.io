@@ -557,8 +557,8 @@
       .article-card:nth-child(4n + 3):hover, .article-card:nth-child(5n + 4):hover { transform: translateY(-4px); }
       .article-cover { min-height: 145px; }
       .article-card.featured .article-cover { min-height: 184px; }
-      .newsletter { grid-template-columns: 1fr; }
-      .newsletter .button { width: 100%; }
+      .newsletter { grid-template-columns: minmax(0, 1fr); }
+      .newsletter .button { width: 100%; white-space: normal; }
       .contact-grid { grid-template-columns: 1fr; }
     }
   </style>
