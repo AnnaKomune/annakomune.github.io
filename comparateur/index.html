@@ -258,28 +258,40 @@
     }
 
     /* ---------- ATELIER : comment ça marche ---------- */
-    .etapes {
+    /* ---------- ATELIER : les trois portes d'entree ----------
+       Ce ne sont pas trois etapes successives mais trois chemins vers la meme
+       chose : chaque carte est un bouton qui emmene a sa commande. */
+    .portes {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
-      margin: 0 0 20px;
+      margin: 0 0 12px;
     }
 
-    .etape {
+    .porte {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: 9px;
       padding: 18px;
       border: 2px solid var(--ink);
       border-radius: 22px;
       background: var(--white);
       box-shadow: 7px 7px 0 var(--pink);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      position: relative;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
     }
 
-    .etape:nth-child(2) { background: var(--green); box-shadow: 7px 7px 0 var(--ink); }
-    .etape:nth-child(3) { background: var(--sky); box-shadow: 7px 7px 0 var(--pink); }
+    .porte:nth-child(2) { background: var(--green); box-shadow: 7px 7px 0 var(--ink); }
+    .porte:nth-child(3) { background: var(--sky); box-shadow: 7px 7px 0 var(--pink); }
+    .porte:hover { transform: translateY(-3px); box-shadow: 9px 9px 0 var(--blue); }
+    .porte:active { transform: translate(1px, 1px); box-shadow: 3px 3px 0 var(--blue); }
+    .porte:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
 
-    .etape-emoji {
+    .porte-emoji {
       display: grid;
       place-items: center;
       width: 46px;
@@ -291,8 +303,51 @@
       transform: rotate(-4deg);
     }
 
-    .etape h3 { margin: 0; font-size: 16px; letter-spacing: 0; text-transform: none; font-family: inherit; }
-    .etape p { margin: 0; font-size: 14.5px; font-weight: 650; color: rgba(51, 46, 50, .82); }
+    .porte-txt { display: block; }
+    .porte-titre { display: block; font-size: 17px; font-weight: 900; margin-bottom: 5px; }
+    .porte-sous { display: block; font-size: 14.5px; font-weight: 650; color: rgba(51, 46, 50, .82); }
+    .porte-fleche {
+      position: absolute; top: 16px; right: 16px;
+      width: 26px; height: 26px; display: grid; place-items: center;
+      border-radius: 999px; border: 2px solid var(--ink); background: var(--cream);
+      font-size: 14px; font-weight: 900; transition: transform .15s ease;
+    }
+    .porte[aria-expanded="true"] .porte-fleche { transform: rotate(180deg); background: var(--green); }
+    .porte-note { margin: 0 0 20px; font-size: 14px; font-weight: 650; color: var(--muted); }
+
+    /* ---------- ATELIER : ce que la selection donne, juste sous les commandes ---------- */
+    .resultats {
+      margin: 20px 0 0;
+      border: 2px solid var(--line);
+      border-radius: 20px;
+      padding: 14px 16px;
+      background: var(--white);
+      transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .resultats.actif {
+      border-color: var(--ink);
+      background: var(--yellow);
+      box-shadow: 6px 6px 0 rgba(51, 46, 50, .14);
+    }
+    .resultats.vide { background: var(--pink); border-color: var(--ink); }
+    @keyframes res-bouge { from { transform: scale(.994); } to { transform: scale(1); } }
+    .resultats.bouge { animation: res-bouge .22s ease-out; }
+    @media (prefers-reduced-motion: reduce) { .resultats.bouge { animation: none; } }
+    .res-liste { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .res-liste:empty { display: none; }
+    .res-puce {
+      display: inline-flex; align-items: center; gap: 7px;
+      border: 2px solid var(--ink); border-radius: 999px;
+      background: var(--cream); padding: 6px 13px;
+      font: inherit; font-size: 14px; font-weight: 800; cursor: pointer;
+      max-width: 100%;
+    }
+    .res-puce:hover { background: var(--white); }
+    .res-puce .quoi { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+    .res-liste .res-reste { align-self: center; font-size: 13.5px; font-weight: 700; color: var(--muted); }
+    .res-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .res-actions:empty { display: none; }
+    .res-actions .btn { font-size: 14.5px; padding: 9px 16px; }
 
     /* ---------- ATELIER : la recherche ---------- */
     .cherche {
@@ -382,6 +437,9 @@
     .choix-cand button.tout[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
 
     /* ---------- ATELIER : profil + feuille de route ---------- */
+    /* « display: grid » gagne sur le display:none que l'attribut hidden apporte :
+       sans cette regle le panneau replie reste visible. */
+    .profil-duo[hidden] { display: none; }
     .profil-duo {
       display: grid;
       grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
@@ -623,7 +681,7 @@
     .vide-etat p { margin: 0 0 12px; }
 
     @media (max-width: 980px) {
-      .etapes { grid-template-columns: minmax(0, 1fr); }
+      .portes { grid-template-columns: minmax(0, 1fr); }
       .profil-duo { grid-template-columns: minmax(0, 1fr); }
     }
 
@@ -1596,23 +1654,33 @@
       </div>
       <p class="bloc-intro">Un programme ne se lit pas dans le vide&nbsp;: il protège des gens, il en fragilise d'autres. Chercher un sujet, ne garder que quelques candidat·es, ou passer par un profil&nbsp;: trois manières de rendre ça concret. Les profils ne servent pas à ne regarder que ce qui te concerne, mais à voir ce qu'un texte change dans une vie précise - la tienne, et tout autant celle de quelqu'un d'autre.</p>
 
-      <div class="etapes">
-        <article class="etape">
-          <span class="etape-emoji" aria-hidden="true">🔍</span>
-          <h3>1. Tu cherches un sujet</h3>
-          <p>Logement, santé, médias, ruralité, droits LGBT+, coût de la vie… la recherche filtre les lois et les fiches en même temps.</p>
-        </article>
-        <article class="etape">
-          <span class="etape-emoji" aria-hidden="true">🎛️</span>
-          <h3>2. Tu choisis les candidat·es</h3>
-          <p>Tu peux comparer tout le monde, ou garder seulement deux ou trois cartes pour lire tranquille.</p>
-        </article>
-        <article class="etape">
-          <span class="etape-emoji" aria-hidden="true">🧾</span>
-          <h3>3. Tu ouvres les preuves</h3>
-          <p>Chaque carte sépare promesse, vote passé, bilan, flou, contradiction et conséquence concrète.</p>
-        </article>
+      <div class="portes">
+        <button type="button" class="porte" data-porte="sujet">
+          <span class="porte-emoji" aria-hidden="true">🔍</span>
+          <span class="porte-txt">
+            <span class="porte-titre">Par sujet</span>
+            <span class="porte-sous">Logement, santé, médias, ruralité, droits LGBT+, coût de la vie… la recherche filtre les textes et les fiches en même temps.</span>
+          </span>
+          <span class="porte-fleche" aria-hidden="true">↓</span>
+        </button>
+        <button type="button" class="porte" data-porte="candidats">
+          <span class="porte-emoji" aria-hidden="true">🎛️</span>
+          <span class="porte-txt">
+            <span class="porte-titre">Par candidat·e</span>
+            <span class="porte-sous">Compare tout le monde, ou garde seulement deux ou trois cartes pour lire tranquille.</span>
+          </span>
+          <span class="porte-fleche" aria-hidden="true">↓</span>
+        </button>
+        <button type="button" class="porte plier" data-porte="profil" aria-expanded="false" aria-controls="profil-duo">
+          <span class="porte-emoji" aria-hidden="true">🧩</span>
+          <span class="porte-txt">
+            <span class="porte-titre">Par profil</span>
+            <span class="porte-sous">Jeune, rural·e, précaire, parent… coche une combinaison et vois quels textes changent cette vie-là.</span>
+          </span>
+          <span class="porte-fleche" aria-hidden="true">↓</span>
+        </button>
       </div>
+      <p class="porte-note">Quelle que soit la porte, on arrive au même endroit&nbsp;: des cartes qui séparent la promesse, le vote passé, le bilan au pouvoir, ce qui reste flou, les contradictions et la conséquence concrète.</p>
 
       <label class="cherche">
         <span aria-hidden="true">🔍</span>
@@ -1620,12 +1688,10 @@
                autocomplete="off" aria-describedby="atelier-compte">
         <button type="button" id="recherche-vider" hidden>Effacer</button>
       </label>
-      <p class="atelier-compte" id="atelier-compte" role="status" aria-live="polite"></p>
-
       <p class="choix-titre" id="choix-titre">Qui tu veux comparer</p>
       <div class="choix-cand" id="choix-cand" role="group" aria-labelledby="choix-titre"></div>
 
-      <div class="profil-duo">
+      <div class="profil-duo" id="profil-duo" hidden>
         <div class="profil-panneau">
           <h3>Nouveau - profils combinés</h3>
           <p class="gros">Mix ton profil.</p>
@@ -1644,6 +1710,12 @@
           <p class="route-soustitre">Trié par notre moteur de correspondance&nbsp;: il compare la combinaison cochée aux tags de nos textes et aux mots de nos fiches, et affiche à chaque fois ce qui a déclenché la correspondance. Il ne classe pas les candidat·es, il indique seulement où regarder.</p>
           <div id="route" aria-live="polite"></div>
         </div>
+      </div>
+
+      <div class="resultats" id="resultats">
+        <p class="atelier-compte" id="atelier-compte" role="status" aria-live="polite"></p>
+        <div class="res-liste" id="res-liste"></div>
+        <div class="res-actions" id="res-actions"></div>
       </div>
     </section>
 
@@ -3101,19 +3173,108 @@
 
     /* --- le compteur --- */
     var zoneCompte = document.getElementById('atelier-compte');
+    /* Le point noir de l'ancienne version : on agissait en haut de la section et
+       le resultat apparaissait deux sections plus bas, derriere un mur de texte.
+       Cette zone se trouve juste sous les commandes, elle nomme ce qui a bouge,
+       et elle donne le chemin vers le detail. */
+    var zoneListe   = document.getElementById('res-liste');
+    var zoneActions = document.getElementById('res-actions');
+    var zonePanneau = document.getElementById('resultats');
+
+    function filtreActifAtelier() {
+      return !!(ETAT.q || ETAT.cands.length || (ETAT.seul && ETAT.profil.length));
+    }
+
     function majCompte() {
       if (!zoneCompte) return;
-      var nl = loisVisibles().length, nf = fichesVisibles().length;
-      var bouts = ['<b>' + nl + '</b> texte' + (nl > 1 ? 's' : ''),
-                   '<b>' + nf + '</b> fiche' + (nf > 1 ? 's' : '')];
-      var txt = (ETAT.q ? '' : 'À l\'écran&nbsp;: ') + bouts.join(' · ') +
-        (ETAT.q ? ' pour « ' + esc(ETAT.q) + ' »' : '');
-      if (ETAT.q) {
-        var horsFiltre = loisVisibles(true).length;
-        if (horsFiltre > nl) txt += ' · <b>' + (horsFiltre - nl) + '</b> au-delà du filtre en cours';
+      var lois = loisVisibles(), fiches = fichesVisibles();
+      var nl = lois.length, nf = fiches.length;
+      var actif = filtreActifAtelier();
+      /* deux choses differentes : ce qui reduit la liste des textes (recherche,
+         profil) et ce qui restreint seulement la vue (candidat·es retenu·es). */
+      var tri = [];
+      if (ETAT.q) tri.push('« ' + esc(ETAT.q) + ' »');
+      if (ETAT.seul && ETAT.profil.length) tri.push('le profil coché');
+      var vue = ETAT.cands.length
+        ? ETAT.cands.map(function (c) { return esc(CAND[c].court); }).join(' + ')
+        : '';
+
+      var compte = '<b>' + nl + '</b> texte' + (nl > 1 ? 's' : '') +
+                   ' · <b>' + nf + '</b> fiche' + (nf > 1 ? 's' : '');
+      var txt;
+      if (!actif) {
+        txt = 'À l\'écran&nbsp;: ' + compte +
+              '. Cherche un sujet, choisis des candidat·es ou coche un profil&nbsp;: ce cadre te dira ce que ça donne.';
+      } else if (nl + nf === 0) {
+        txt = 'Rien ne correspond à ' + (tri.length ? tri.join(' et ') : 'cette sélection') +
+              '. Essaie un autre mot, ou repars de zéro.';
+      } else {
+        txt = compte;
+        if (tri.length) txt += ' pour ' + tri.join(' et ');
+        if (vue) txt += (tri.length ? ',' : ' ·') + ' affichés pour <b>' + vue + '</b> seulement';
+        if (ETAT.q) {
+          var horsFiltre = loisVisibles(true).length;
+          if (horsFiltre > nl) txt += ' · <b>' + (horsFiltre - nl) + '</b> au-delà du filtre en cours';
+        }
       }
-      if (ETAT.cands.length) txt += ' · ' + ETAT.cands.length + ' candidat·e' + (ETAT.cands.length > 1 ? 's' : '') + ' retenu·e' + (ETAT.cands.length > 1 ? 's' : '');
       zoneCompte.innerHTML = txt;
+
+      if (zonePanneau) {
+        zonePanneau.classList.toggle('actif', actif && nl + nf > 0);
+        zonePanneau.classList.toggle('vide', actif && nl + nf === 0);
+        zonePanneau.classList.remove('bouge');
+        void zonePanneau.offsetWidth;
+        zonePanneau.classList.add('bouge');
+      }
+
+      /* les textes qui correspondent, nommes et cliquables : on voit ce qui a bouge */
+      if (zoneListe) {
+        zoneListe.innerHTML = '';
+        var listeReduite = !!(ETAT.q || (ETAT.seul && ETAT.profil.length));
+        if (listeReduite && nl) {
+          lois.slice(0, 6).forEach(function (l) {
+            var b = el('<button type="button" class="res-puce">' +
+              '<span class="quoi">' + (l.sujet === 'sante' ? '🩺' : '🌱') + '</span>' +
+              esc(l.nom.length > 46 ? l.nom.slice(0, 44) + '…' : l.nom) + '</button>');
+            b.addEventListener('click', function () { openLoi(l.id); });
+            zoneListe.appendChild(b);
+          });
+          if (nl > 6) zoneListe.appendChild(el('<span class="res-reste">+ ' + (nl - 6) + ' autre' + (nl - 6 > 1 ? 's' : '') + '</span>'));
+        }
+      }
+
+      if (zoneActions) {
+        zoneActions.innerHTML = '';
+        if (actif) {
+          if (nl) {
+            var bL = el('<button type="button" class="btn primary">🗳️ Voir ' + (nl > 1 ? 'les ' + nl + ' textes' : 'le texte') + ' ↓</button>');
+            bL.addEventListener('click', function () { allerVers('votes'); });
+            zoneActions.appendChild(bL);
+          }
+          if (nf) {
+            var bF = el('<button type="button" class="btn">🗂️ Voir ' + (nf > 1 ? 'les ' + nf + ' fiches' : 'la fiche') + ' ↓</button>');
+            bF.addEventListener('click', function () { allerVers('fiches'); });
+            zoneActions.appendChild(bF);
+          }
+          var bR = el('<button type="button" class="btn play">↺ Repartir de zéro</button>');
+          bR.addEventListener('click', reinitialiserAtelier);
+          zoneActions.appendChild(bR);
+        }
+      }
+    }
+
+    function allerVers(id) {
+      var cible = document.getElementById(id);
+      if (cible) cible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function reinitialiserAtelier() {
+      ETAT.q = ''; ETAT.cands = []; ETAT.seul = false; garde();
+      var champ = document.getElementById('recherche');
+      if (champ) champ.value = '';
+      renderChoix(); syncAtelier(); rafraichir();
+      var p = document.getElementById('resultats');
+      if (p) p.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     /* --- garder l'interface d'accord avec l'état --- */
@@ -3170,6 +3331,38 @@
         if (!ETAT.profil.length) return;
         ETAT.seul = !ETAT.seul; garde(); syncAtelier(); rafraichir();
       });
+      /* chaque porte emmene a sa commande et lui donne le focus :
+         la carte n'est plus une illustration, c'est le chemin. */
+      function viserPorte(quoi) {
+        if (quoi === 'sujet') {
+          var ch = document.getElementById('recherche');
+          if (!ch) return;
+          ch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(function () { ch.focus({ preventScroll: true }); }, 320);
+        } else if (quoi === 'candidats') {
+          var cc = document.getElementById('choix-titre');
+          if (cc) cc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          var prem = document.querySelector('#choix-cand button');
+          if (prem) setTimeout(function () { prem.focus({ preventScroll: true }); }, 320);
+        } else {
+          var pd = document.getElementById('profil-duo');
+          if (pd) setTimeout(function () {
+            pd.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 60);
+        }
+      }
+      document.querySelectorAll('.porte[data-porte]').forEach(function (p) {
+        p.addEventListener('click', function () { viserPorte(p.dataset.porte); });
+      });
+
+      /* un profil deja coche la derniere fois : on rouvre le panneau,
+         sinon la personne ne comprendrait pas d'ou vient le tri */
+      if (ETAT.profil.length) {
+        var portePro = document.querySelector('.porte[data-porte="profil"]');
+        var duo = document.getElementById('profil-duo');
+        if (portePro && duo) { portePro.setAttribute('aria-expanded', 'true'); duo.hidden = false; }
+      }
+
       renderChoix();
       renderCases();
       syncAtelier();
