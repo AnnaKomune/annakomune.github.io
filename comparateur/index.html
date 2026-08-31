@@ -2718,11 +2718,16 @@
     function allerA(el, options) {
       if (!el) { return; }
       revelerElement(el);
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          el.scrollIntoView(options || { behavior: 'smooth', block: 'start' });
-        });
-      });
+      var opt = options || { behavior: 'smooth', block: 'start' };
+      /* setTimeout plutot que requestAnimationFrame : rAF ne part pas dans un
+         onglet en arriere-plan ni en mode economie d'energie, et le defilement
+         ne se declenchait jamais. 40 ms suffisent pour que la mise en page du
+         panneau qu'on vient d'ouvrir soit recalculee. */
+      setTimeout(function () { el.scrollIntoView(opt); }, 40);
+      setTimeout(function () {
+        var r = el.getBoundingClientRect();
+        if (r.top < -60 || r.top > window.innerHeight) { el.scrollIntoView(opt); }
+      }, 420);
     }
     window.__KOMUNE_REVELER = revelerElement;
     window.__KOMUNE_ALLER_A = allerA;
@@ -3993,18 +3998,16 @@
       function montrer(btn) {
         var cible = document.getElementById(btn.getAttribute('aria-controls'));
         if (!cible || cible.hidden) { return; }
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            var carte = btn.closest('.trio-item') || btn;
-            var r = carte.getBoundingClientRect();
-            var p = cible.getBoundingClientRect();
-            /* si la carte et le debut du panneau ne tiennent pas ensemble a l'ecran,
-               on remonte sur la carte : on voit alors le titre puis le contenu. */
-            if (r.top < 70 || p.top > window.innerHeight - 90) {
-              carte.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          });
-        });
+        setTimeout(function () {
+          var carte = btn.closest('.trio-item') || btn;
+          var r = carte.getBoundingClientRect();
+          var p = cible.getBoundingClientRect();
+          /* si la carte et le debut du panneau ne tiennent pas ensemble a l'ecran,
+             on remonte sur la carte : on voit alors le titre puis le contenu. */
+          if (r.top < 70 || p.top > window.innerHeight - 90) {
+            carte.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 40);
       }
 
       boutons.forEach(function (btn) {
@@ -4027,9 +4030,7 @@
         /* ou bien la cible est A L'INTERIEUR d'un panneau replie */
         if (window.__KOMUNE_REVELER) { window.__KOMUNE_REVELER(sec); }
         if (defiler) {
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-          });
+          setTimeout(function () { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 40);
         }
       }
 
