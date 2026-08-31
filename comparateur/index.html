@@ -246,13 +246,13 @@
     .trio-carte[aria-expanded="true"] .trio-sous { color: rgba(252,247,232,.75); }
     .trio-carte[aria-expanded="true"] .trio-etat { background: var(--green); color: var(--ink); }
     .trio-pli {
-      grid-column: 1 / -1; margin-top: 4px;
+      grid-column: 1 / -1; margin-top: 4px; min-width: 0;
       border: 2px solid var(--ink); border-radius: 26px; padding: 22px clamp(16px, 2.4vw, 28px) 24px;
       background: var(--cream); box-shadow: var(--shadow);
     }
     .trio-pli > .bloc-intro { margin-top: 0; }
     @media (max-width: 900px) {
-      .trio { grid-template-columns: 1fr; gap: 12px; }
+      .trio { grid-template-columns: minmax(0, 1fr); gap: 12px; }
       .trio-carte { flex-direction: row; align-items: center; flex-wrap: wrap; }
       .trio-etat { margin-top: 0; margin-left: auto; }
     }
@@ -964,15 +964,26 @@
     .attente-head h3 { font-size: 19px; margin: 0 0 4px; }
     .attente-head p { margin: 0; font-size: 14px; color: var(--muted); }
     .attente-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 12px; }
-    .qr-wrap { overflow-x: auto; }
-    .qr-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
+    .qr-wrap { overflow-x: auto; min-width: 0; max-width: 100%; }
+    .qr-etroit { display: none; }
+    .qr-ligne {
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 10px;
+      align-items: center; padding: 9px 2px; border-bottom: 1px solid var(--line);
+    }
+    .qr-ligne:last-child { border-bottom: 0; }
+    .qr-ligne .qr-qui { grid-column: 1; }
+    .qr-ligne .qr-sub { margin-top: 2px; }
+    .qr-ligne .qr-duo { grid-column: 2; display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+    .qr-ligne .qr-quoi { font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); font-weight: 800; }
+    .qr-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 440px; }
     .qr-table th, .qr-table td { border: 1px solid var(--line); padding: 7px 8px; text-align: left; vertical-align: top; }
     .qr-table thead th { background: var(--cream); font-family: "Oswald", sans-serif; text-transform: uppercase;
       letter-spacing: .03em; font-size: 12.5px; }
     .qr-table th.qr-cand { white-space: nowrap; vertical-align: bottom; }
     .qr-table th[scope="row"] { background: var(--cream); white-space: nowrap; font-family: "Oswald", sans-serif;
       text-transform: uppercase; letter-spacing: .03em; font-size: 12px; }
-    .qr-table .qr-nom { display: flex; align-items: center; gap: 7px; font-weight: 800; }
+    .qr-nom { display: flex; align-items: center; gap: 7px; font-weight: 800; font-size: 15px; }
+    .qr-qui { display: block; min-width: 0; }
     .qr-loi { font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .02em;
       font-size: 14px; margin: 14px 0 6px; }
     .qr-pill { white-space: normal; }
@@ -997,7 +1008,9 @@
     @keyframes flashCard { 35% { box-shadow: 0 0 0 5px var(--yellow), 10px 10px 0 var(--pink); } }
 
     /* ---------- fiches ---------- */
-    .switch { display: inline-flex; border: 2px solid var(--ink); border-radius: 999px; background: var(--white); padding: 4px; gap: 4px; margin-bottom: 18px; box-shadow: 4px 4px 0 rgba(51,46,50,.12); }
+    /* le selecteur de themes du Medef compte six boutons : sans retour a la ligne
+       il elargissait la page entiere sur mobile. */
+    .switch { display: inline-flex; flex-wrap: wrap; max-width: 100%; border: 2px solid var(--ink); border-radius: 26px; background: var(--white); padding: 4px; gap: 4px; margin-bottom: 18px; box-shadow: 4px 4px 0 rgba(51,46,50,.12); }
     .switch button { border: 0; background: transparent; border-radius: 999px; padding: 9px 18px; font-weight: 800; font-size: 15px; }
     .switch button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
     .fiches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; align-items: start; }
@@ -1106,11 +1119,13 @@
       .hero-side { min-height: 340px; }
       .stat-row { grid-template-columns: repeat(2, 1fr); }
       .align-grid { grid-template-columns: 1fr; }
-      .cand-row > summary { display: flex; flex-wrap: wrap; align-items: center; }
-      .cand-row > summary .nom { flex: 1 1 auto; }
-      .cand-row > summary .plus { flex: 0 0 26px; margin-left: auto; }
+      .cand-row > summary { display: flex; flex-wrap: wrap; align-items: center; position: relative; padding-right: 30px; }
+      .cand-row > summary .nom { flex: 1 1 100%; }
+      .cand-row > summary .plus { position: absolute; top: 10px; right: 0; }
       .cand-row > summary .col-perso, .cand-row > summary .col-groupe { flex: 1 1 46%; min-width: 140px; }
       .cand-row > summary .col-align { flex: 1 1 100%; min-width: 0; }
+      .qr-large { display: none; }
+      .qr-etroit { display: block; }
       .vote-line .loi-nom { flex-basis: 100%; }
       .strip { gap: 10px; }
       body { font-size: 16px; }
@@ -2238,15 +2253,21 @@
              (v.label && v.label !== court && v.label !== 'Non applicable'
                 ? '<span class="qr-sub">' + esc(v.label) + '</span>' : '');
     }
+    function nomQuick(cid) {
+      return '<span class="qr-qui"><span class="qr-nom">' + avatar(CAND[cid], 'mini') + esc(CAND[cid].court) + '</span>' +
+             '<span class="qr-sub">' + esc(CAND[cid].parti.replace(/\s*\(.*\)$/, '')) + '</span></span>';
+    }
+    /* Deux mises en page pour la meme information : en colonnes quand l'ecran
+       le permet (on compare d'un coup d'oeil), en lignes sur telephone (cinq
+       colonnes y seraient illisibles). Une seule est affichee a la fois. */
     function tableauQuick(lois) {
       var entetes = JOUEURS.map(function (cid) {
-        return '<th class="qr-cand"><span class="qr-nom">' + avatar(CAND[cid], 'mini') + esc(CAND[cid].court) + '</span>' +
-          '<span class="qr-sub">' + esc(CAND[cid].parti.replace(/\s*\(.*\)$/, '')) + '</span></th>';
+        return '<th class="qr-cand">' + nomQuick(cid) + '</th>';
       }).join('');
       var html = '';
       lois.forEach(function (l) {
-        html += '<div class="qr-wrap">' +
-          (lois.length > 1 ? '<p class="qr-loi">' + esc(l.nom) + '</p>' : '') +
+        var titre = lois.length > 1 ? '<p class="qr-loi">' + esc(l.nom) + '</p>' : '';
+        html += titre + '<div class="qr-wrap qr-large">' +
           '<table class="qr-table"><thead><tr><th></th>' + entetes + '</tr></thead><tbody>';
         [['Son vote', 'perso'], ['Son groupe', 'groupe']].forEach(function (r) {
           html += '<tr><th scope="row">' + r[0] + '</th>' +
@@ -2256,6 +2277,14 @@
             }).join('') + '</tr>';
         });
         html += '</tbody></table></div>';
+        html += '<div class="qr-etroit">' + JOUEURS.map(function (cid) {
+          var v = l.votes[cid] || {};
+          return '<div class="qr-ligne">' + nomQuick(cid) +
+            '<span class="qr-duo">' +
+              '<span class="qr-quoi">Son vote</span>' + qrPill(v.perso) +
+              '<span class="qr-quoi">Son groupe</span>' + qrPill(v.groupe) +
+            '</span></div>';
+        }).join('') + '</div>';
       });
       return html;
     }
