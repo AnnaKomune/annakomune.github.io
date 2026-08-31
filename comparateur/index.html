@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Le comparateur politique citoyen de Komune pour 2027 : un jeu pour tester votre flair, des réponses rapides pour vos débats, les fiches par candidat·e et les votes réels, loi par loi, avec toutes les sources.">
+  <meta name="description" content="Le comparateur politique citoyen de Komune pour 2027 : un jeu pour tester votre flair, des réponses rapides pour vos débats, les parcours des candidat·es et les votes réels, loi par loi, avec toutes les sources.">
   <title>Komune - Le Comparateur politique citoyen 2027</title>
   <link rel="icon" type="image/png" href="../img/favicon.png">
   <link rel="apple-touch-icon" href="../img/favicon.png">
@@ -209,7 +209,12 @@
     .bloc-pli[hidden] { display: none; }
     .pli-teaser { font-size: 14px; font-weight: 700; color: var(--muted); margin: 12px 0 0; }
 
-    /* ---------- les trois outils, côte à côte et dépliables ---------- */
+    /* ---------- les 5 outils, côte à côte et dépliables ---------- */
+    .outils-head {
+      display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px;
+      align-items: center; margin: 0 0 18px; scroll-margin-top: 84px;
+    }
+    .outils-head h2 { margin: 0; }
     .trio {
       display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px; margin: 0 0 54px; scroll-margin-top: 84px;
@@ -314,6 +319,36 @@
     }
     .porte[aria-expanded="true"] .porte-fleche { transform: rotate(180deg); background: var(--green); }
     .porte-note { margin: 0 0 20px; font-size: 14px; font-weight: 650; color: var(--muted); }
+
+    /* ---------- 3 manières de chercher : une case par manière ---------- */
+    .chercher { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin: 0 0 20px; }
+    .cbloc {
+      min-width: 0; border: 2px solid var(--ink); border-radius: 22px;
+      padding: 16px clamp(14px, 2vw, 20px) 18px; background: var(--white);
+      box-shadow: 6px 6px 0 var(--ko);
+    }
+    .cbloc-2 { background: var(--green); box-shadow: 6px 6px 0 var(--ink); }
+    .cbloc-3 { background: var(--sky); box-shadow: 6px 6px 0 var(--ink); padding: 14px; }
+    .cbloc h3 {
+      display: flex; align-items: center; gap: 10px; margin: 0 0 6px;
+      font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      letter-spacing: .01em; font-size: clamp(17px, 1.6vw, 21px); line-height: 1.1;
+    }
+    .cbloc-num {
+      display: grid; place-items: center; width: 34px; height: 34px; flex: 0 0 auto;
+      border: 2px solid var(--ink); border-radius: 50%; background: var(--yellow);
+      font-size: 17px; font-weight: 900; font-family: "Oswald", Impact, sans-serif;
+    }
+    .cbloc-sous { margin: 0 0 14px; font-size: 14.5px; font-weight: 650; color: var(--muted); }
+    .cbloc-3 .porte { width: 100%; margin: 0; }
+    .cbloc-3 .profil-duo { margin-top: 14px; }
+    .duo-num {
+      position: absolute; top: 12px; right: 16px;
+      font-family: "Oswald", Impact, sans-serif; font-weight: 700;
+      font-size: 54px; line-height: 1; letter-spacing: -.04em;
+      color: rgba(51, 46, 50, .16); pointer-events: none;
+    }
+    .route-panneau .duo-num { color: rgba(252, 247, 232, .28); }
 
     /* ---------- ATELIER : ce que la selection donne, juste sous les commandes ---------- */
     .resultats {
@@ -450,6 +485,7 @@
 
     .profil-panneau,
     .route-panneau {
+      position: relative;
       padding: clamp(20px, 2.6vw, 30px);
       border: 2px solid var(--ink);
       border-radius: 28px;
@@ -559,6 +595,11 @@
     }
 
     /* la feuille de route */
+    .route-etiquette {
+      margin: 18px 0 8px; font-family: "Oswald", Impact, sans-serif;
+      text-transform: uppercase; letter-spacing: .05em; font-size: 13px;
+      color: rgba(252, 247, 232, .68);
+    }
     .route-soustitre {
       margin: 0 0 16px;
       padding-bottom: 14px;
@@ -754,8 +795,13 @@
       font-family: "Oswald", Impact, sans-serif; font-weight: 500; font-size: 20px; line-height: 1.1; letter-spacing: -.02em;
     }
     .q-item > summary::-webkit-details-marker { display: none; }
-    .q-item > summary::after { content: "+"; margin-left: auto; font-size: 26px; font-weight: 700; flex: 0 0 auto; }
-    .q-item[open] > summary::after { content: "-"; }
+    .q-item > summary::after {
+      content: "Ouvrir \25BC"; margin-left: auto; flex: 0 0 auto; align-self: center;
+      display: inline-flex; align-items: center; border: 2px solid var(--ink);
+      border-radius: 999px; padding: 5px 13px; background: var(--yellow);
+      font-size: 13.5px; font-weight: 800; white-space: nowrap;
+    }
+    .q-item[open] > summary::after { content: "Replier \25B2"; background: var(--green); }
     .q-item[open] > summary { background: var(--yellow); border-bottom: 2px solid var(--ink); }
     .q-body { padding: 14px 18px 16px; }
     .q-body p { margin: 0 0 12px; font-weight: 600; font-size: 15.5px; }
@@ -874,9 +920,16 @@
       margin: 0; flex: 1 1 260px; font-family: "Oswald", Impact, sans-serif; font-weight: 500;
       font-size: 22px; line-height: 1.05; letter-spacing: -.02em;
     }
-    .loi-sum-top .plus { font-family: "Oswald", sans-serif; font-size: 24px; font-weight: 700; margin-left: auto; }
-    details.loi-card[open] .loi-sum-top .plus::after { content: "-"; }
-    details.loi-card:not([open]) .loi-sum-top .plus::after { content: "+"; }
+    .loi-sum-top .plus {
+      margin-left: auto; flex: 0 0 auto; align-self: center;
+      display: inline-flex; align-items: center; gap: 7px;
+      border: 2px solid var(--ink); border-radius: 999px; padding: 5px 13px;
+      background: var(--yellow); font-size: 13.5px; font-weight: 800; white-space: nowrap;
+    }
+    details.loi-card:not([open]) .loi-sum-top .plus::after { content: "Ouvrir \25BC"; }
+    details.loi-card[open] .loi-sum-top .plus::after { content: "Replier \25B2"; }
+    details.loi-card[open] .loi-sum-top .plus { background: var(--green); }
+    details.loi-card:hover .loi-sum-top .plus { background: var(--pink); }
     .loi-engros { margin: 0; font-weight: 650; font-size: 15px; max-width: 90ch; }
     .cle-star {
       display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px 4px;
@@ -903,6 +956,8 @@
     .dot.groupe { border-style: solid; box-shadow: inset 0 0 0 2px var(--white); }
     .loi-body { padding: 0 18px 18px; border-top: 2px solid var(--ink); background: var(--cream); }
     .loi-meta { font-size: 13.5px; color: var(--muted); font-weight: 700; padding-top: 12px; }
+    .loi-meta span { display: block; margin-bottom: 3px; white-space: pre-line; }
+    .loi-meta b { color: var(--ink); }
     /* ---- le declencheur : on doit voir tout de suite que ca ouvre l'explication ---- */
     .loi-resume-details { --acc: var(--purple); margin-top: 14px; }
     .loi-resume-details.suj-ecologie { --acc: #2f6b47; }
@@ -1006,9 +1061,14 @@
     .cand-row > summary::-webkit-details-marker { display: none; }
     .cand-row > summary > span { min-width: 0; }
     .cand-row > summary .nom { font-weight: 800; font-size: 15px; display: flex; align-items: center; gap: 8px; }
-    .cand-row > summary .plus { font-family: "Oswald", sans-serif; font-size: 20px; text-align: center; }
-    .cand-row[open] > summary .plus::after { content: "-"; }
-    .cand-row:not([open]) > summary .plus::after { content: "+"; }
+    .cand-row > summary .plus { text-align: center; }
+    .cand-row > summary .plus::after {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border: 2px solid var(--ink); border-radius: 50%;
+      background: var(--yellow); font-size: 11px; font-weight: 800;
+    }
+    .cand-row:not([open]) > summary .plus::after { content: "\25BC"; }
+    .cand-row[open] > summary .plus::after { content: "\25B2"; background: var(--green); }
     .badge-align.mini { font-size: 12.5px; padding: 4px 9px; gap: 5px; box-shadow: 2px 2px 0 rgba(51,46,50,.12); }
     .badge-align.mini .badge-qui { font-size: 9.5px; padding: 1px 6px 2px; }
     .col-align .badges { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
@@ -1105,10 +1165,37 @@
     .legende { display: grid; gap: 10px; margin-top: 18px; }
     .legende .row { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; background: var(--white); border: 2px solid var(--ink); border-radius: 14px; padding: 12px 16px; box-shadow: 4px 4px 0 rgba(51,46,50,.08); }
     .legende .row p { margin: 0; font-size: 14.5px; color: var(--muted); font-weight: 600; flex: 1 1 300px; }
+    .sources-pli { margin-top: 6px; }
+    .sources-pli > summary {
+      cursor: pointer; list-style: none; display: flex; align-items: center; gap: 12px;
+      border: 2px solid var(--ink); border-radius: 999px; padding: 11px 18px;
+      background: var(--white); box-shadow: 5px 5px 0 var(--blue);
+      font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      letter-spacing: .04em; font-size: 16px;
+    }
+    .sources-pli > summary::-webkit-details-marker { display: none; }
+    .sources-pli > summary:hover { background: var(--green); }
+    .sources-pli[open] > summary { background: var(--ink); color: var(--cream); }
+    .sources-etat::after {
+      content: "Ouvrir \25BC"; margin-left: auto; display: inline-flex; align-items: center;
+      border: 2px solid var(--ink); border-radius: 999px; padding: 4px 12px;
+      background: var(--yellow); color: var(--ink); font-family: inherit;
+      font-size: 13px; font-weight: 800; white-space: nowrap;
+    }
+    .sources-pli[open] .sources-etat::after { content: "Replier \25B2"; background: var(--green); }
+    .sources-pli > summary .sources-quoi { min-width: 0; }
+    .sources-pli .sources-list { margin-top: 16px; }
     .sources-list { display: grid; gap: 10px; }
     .source-item { background: var(--white); border: 2px solid var(--ink); border-radius: 14px; padding: 12px 16px; box-shadow: 3px 3px 0 rgba(51,46,50,.08); }
     .source-item a { font-weight: 800; text-decoration-color: var(--blue); }
     .source-item .src-meta { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .retours-encart {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px; margin: 24px 0 0;
+      border: 2px dashed var(--ink); border-radius: 20px;
+      padding: 14px 18px; background: var(--white);
+    }
+    .retours-encart p { margin: 0; font-size: 14.5px; font-weight: 700; min-width: 0; }
     .note-bas { color: var(--muted); font-size: 14px; margin-top: 14px; max-width: 76ch; }
 
     footer.site-foot { border-top: 2px solid var(--ink); margin-top: 30px; padding-top: 22px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between; color: var(--muted); font-size: 14px; }
@@ -1547,15 +1634,15 @@
     <div class="hero">
       <div class="hero-main">
         <p class="eyebrow">Le comparateur politique citoyen · Komune</p>
-        <h1>2027&nbsp;: comparez sur du concret.</h1>
-        <p class="pitch">Pas de clash, pas de sondage, pas de petite phrase&nbsp;: ce qu'ils et elles <strong>promettent</strong>, ce qu'ils <strong>votent</strong>, ce qu'ils <strong>font au pouvoir</strong> - et l'écart entre les trois.</p>
+        <h1>2027 : comparez<br>sur du concret.</h1>
+        <p class="pitch">Pas de clash, pas de sondage : on compare ce que les candidat·es <strong>déclarent</strong>, <strong>votent</strong> et <strong>font au pouvoir</strong> pour voir si leurs paroles et leurs actes correspondent.</p>
         <div class="cta-row">
           <a class="btn primary" href="#jeu">🎮 Jouer au «&nbsp;Qui a dit quoi&nbsp;?&nbsp;»</a>
           <a class="btn pink" href="#debat">⚡ Réponses rapides</a>
           <button type="button" class="btn play" data-open-komune>💬 Demander à Komune</button>
           <button type="button" class="btn" data-open-charte>📜 Notre charte</button>
         </div>
-        <p class="beta"><strong>Chantier ouvert, et on l'assume&nbsp;:</strong> on commence par la <strong>santé</strong> et l'<strong>écologie</strong>, vos deux sujets les plus demandés, avec 5 candidat·es. Les droits des femmes, l'école, les services publics arrivent ensuite. Les cases «&nbsp;en cours de vérification&nbsp;» montrent où la recherche continue&nbsp;: on ne maquille pas les trous. <a href="#chantier">Où on en est exactement →</a></p>
+        <p class="beta"><strong>La plateforme continue de s'enrichir</strong>, et on vous montre aussi ce qui reste à vérifier. On commence avec la <strong>santé</strong> et l'<strong>écologie</strong>, les deux sujets que vous nous avez le plus demandés. La santé est presque complète et arrive très vite. <strong>5 candidat·es</strong> sont déjà comparé·es, et bientôt tous les candidat·es déclaré·es seront ajouté·es. D'autres sujets suivront rapidement. <a href="#chantier">Où on en est exactement →</a></p>
       </div>
       <div class="hero-side">
         <p class="eyebrow">Ils disent, ils votent</p>
@@ -1566,26 +1653,29 @@
 
     <div class="stat-row" id="stats" aria-label="Le comparateur en chiffres">
       <div class="stat"><b id="stat-cand">5</b><span>candidat·es suivi·es pour commencer</span></div>
-      <div class="stat"><b>2</b><span>sujets : santé et écologie</span></div>
+      <div class="stat"><b>5</b><span>outils développés</span></div>
       <div class="stat"><b id="stat-src">60+</b><span>sources, toutes en lien</span></div>
     </div>
 
     <!-- ===== Sommaire de la page ===== -->
     <nav class="toc" aria-label="Sommaire du comparateur">
-      <a href="#atelier">🎯 Par où entrer</a>
+      <a href="#outils">🧰 Les 5 outils</a>
       <a href="#medef">🎤 Le débat du Medef</a>
-      <a href="#jeu">🎮 Le jeu</a>
+      <a href="#jeu">🎮 Qui a dit quoi ?</a>
       <a href="#debat">⚡ Réponses rapides</a>
-      <a href="#qui">👤 Qui est qui</a>
-      <a href="#votes">🗳️ Les votes</a>
-      <a href="#fiches">🗂️ Les fiches</a>
+      <a href="#promesses">🎯 Promesses VS Actes</a>
+      <a href="#candidats">👤 Les candidat·es</a>
       <a href="#chantier">🚧 Où on en est</a>
       <a href="#methode">🧭 La méthode</a>
       <a href="#sources">📚 Les sources</a>
     </nav>
 
-    <!-- ===== LES TROIS OUTILS (dépliables) ===== -->
-    <section class="trio" id="outils" aria-label="Les trois outils du comparateur">
+    <!-- ===== LES 5 OUTILS (dépliables) ===== -->
+    <div class="outils-head" id="outils">
+      <span class="bloc-emoji" aria-hidden="true">🧰</span>
+      <h2 id="outils-titre">Les 5 outils</h2>
+    </div>
+    <section class="trio" aria-labelledby="outils-titre">
       <article class="trio-item" id="medef">
         <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="medef-pli">
           <span class="trio-emoji" aria-hidden="true">🎤</span>
@@ -1601,7 +1691,7 @@
           <span class="trio-emoji" aria-hidden="true">🎮</span>
           <span class="trio-txt">
             <span class="trio-titre">Qui a dit quoi&nbsp;?</span>
-            <span class="trio-sous">10 déclarations réelles, 2 minutes, aucune donnée collectée</span>
+            <span class="trio-sous">10 déclarations de candidat·es : à qui appartiennent-elles, et sont-elles alignées sur leurs actes ?</span>
           </span>
           <span class="trio-etat"><span class="quand-ferme">Jouer</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
         </button>
@@ -1610,8 +1700,29 @@
         <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="debat-pli">
           <span class="trio-emoji" aria-hidden="true">⚡</span>
           <span class="trio-txt">
-            <span class="trio-titre">En plein débat&nbsp;? Réponse en 10 secondes</span>
-            <span class="trio-sous">Une réponse courte, puis le tableau des votes candidat·e par candidat·e</span>
+            <span class="trio-titre">Réponses rapides</span>
+            <span class="trio-sous">En plein débat ? La réponse en 10 secondes : une phrase courte et le détail des votes sur le sujet.</span>
+          </span>
+          <span class="trio-etat"><span class="quand-ferme">Ouvrir</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+        </button>
+      </article>
+
+      <article class="trio-item" id="promesses">
+        <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="promesses-pli">
+          <span class="trio-emoji" aria-hidden="true">🎯</span>
+          <span class="trio-txt">
+            <span class="trio-titre">Promesses VS Actes</span>
+            <span class="trio-sous">Par lois et par thèmes, mesurez l'écart pour chaque candidat·e.</span>
+          </span>
+          <span class="trio-etat"><span class="quand-ferme">Ouvrir</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+        </button>
+      </article>
+      <article class="trio-item" id="candidats">
+        <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="candidats-pli">
+          <span class="trio-emoji" aria-hidden="true">👤</span>
+          <span class="trio-txt">
+            <span class="trio-titre">Les candidat·es</span>
+            <span class="trio-sous">Découvrez les candidat·es : mandats, fonctions et responsabilités.</span>
           </span>
           <span class="trio-etat"><span class="quand-ferme">Ouvrir</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
         </button>
@@ -1627,7 +1738,12 @@
           <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants - et pour les <strong>meetings de campagne</strong>.</p>
           <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent - c'est là qu'on verra si les paroles tiennent.</p>
         </div>
-        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: leurs fiches et votes sont en cours d'ajout.</p>
+
+        <div class="retours-encart">
+          <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
+          <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
+        </div>
+        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: leurs votes sont en cours d'ajout.</p>
       </div>
 
       <div class="bloc-pli trio-pli" id="jeu-pli" hidden>
@@ -1643,73 +1759,79 @@
         <div class="debat-foot cta-row">
           <button type="button" class="btn play" data-open-komune>💬 Votre question n'y est pas&nbsp;? Demandez à Komune</button>
         </div>
+        <div class="retours-encart">
+          <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
+          <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
+        </div>
       </div>
-    </section>
 
-    <!-- ===== L'ATELIER : chercher, choisir, se reconnaitre ===== -->
-    <section class="bloc" id="atelier" aria-labelledby="atelier-titre">
+      <div class="bloc-pli trio-pli" id="promesses-pli" hidden>
+        <div class="bloc-head">
+          <span class="bloc-emoji" aria-hidden="true">🎯</span>
+          <h2 id="promesses-titre">Promesses VS Actes</h2>
+        </div>
+        <p class="bloc-intro">Compare les promesses et les actes de chaque candidat·e&nbsp;: par lois, par thèmes, par profil et par candidat·es.</p>
+
+      <div id="atelier" aria-labelledby="atelier-titre">
       <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">🎯</span>
-        <h2 id="atelier-titre">Trois portes d'entrée</h2>
+        <span class="bloc-emoji" aria-hidden="true">🔎</span>
+        <h2 id="atelier-titre">3 manières de chercher</h2>
       </div>
-      <p class="bloc-intro">Un programme ne se lit pas dans le vide&nbsp;: il protège des gens, il en fragilise d'autres. Chercher un sujet, ne garder que quelques candidat·es, ou passer par un profil&nbsp;: trois manières de rendre ça concret. Les profils ne servent pas à ne regarder que ce qui te concerne, mais à voir ce qu'un texte change dans une vie précise - la tienne, et tout autant celle de quelqu'un d'autre.</p>
+      <p class="bloc-intro">Trois manières d'entrer, et elles mènent toutes au même endroit&nbsp;: des cartes qui séparent la promesse, le vote personnel, le vote du groupe, le bilan au pouvoir et ce qui reste flou. Les profils ne servent pas à ne regarder que ce qui vous concerne, mais à voir ce qu'un texte change dans une vie précise - la vôtre, et tout autant celle de quelqu'un d'autre.</p>
 
-      <div class="portes">
-        <button type="button" class="porte" data-porte="sujet">
-          <span class="porte-emoji" aria-hidden="true">🔍</span>
-          <span class="porte-txt">
-            <span class="porte-titre">Par sujet</span>
-            <span class="porte-sous">Logement, santé, médias, ruralité, droits LGBT+, coût de la vie… la recherche filtre les textes et les fiches en même temps.</span>
-          </span>
-          <span class="porte-fleche" aria-hidden="true">↓</span>
-        </button>
-        <button type="button" class="porte" data-porte="candidats">
-          <span class="porte-emoji" aria-hidden="true">🎛️</span>
-          <span class="porte-txt">
-            <span class="porte-titre">Par candidat·e</span>
-            <span class="porte-sous">Compare tout le monde, ou garde seulement deux ou trois cartes pour lire tranquille.</span>
-          </span>
-          <span class="porte-fleche" aria-hidden="true">↓</span>
-        </button>
-        <button type="button" class="porte plier" data-porte="profil" aria-expanded="false" aria-controls="profil-duo">
-          <span class="porte-emoji" aria-hidden="true">🧩</span>
-          <span class="porte-txt">
-            <span class="porte-titre">Par profil</span>
-            <span class="porte-sous">Jeune, rural·e, précaire, parent… coche une combinaison et vois quels textes changent cette vie-là.</span>
-          </span>
-          <span class="porte-fleche" aria-hidden="true">↓</span>
-        </button>
-      </div>
-      <p class="porte-note">Quelle que soit la porte, on arrive au même endroit&nbsp;: des cartes qui séparent la promesse, le vote passé, le bilan au pouvoir, ce qui reste flou, les contradictions et la conséquence concrète.</p>
+      <div class="chercher">
 
-      <label class="cherche">
-        <span aria-hidden="true">🔍</span>
-        <input type="search" id="recherche" placeholder="Chercher : passoires thermiques, IVG, déserts médicaux, 49.3…"
-               autocomplete="off" aria-describedby="atelier-compte">
-        <button type="button" id="recherche-vider" hidden>Effacer</button>
-      </label>
-      <p class="choix-titre" id="choix-titre">Qui tu veux comparer</p>
-      <div class="choix-cand" id="choix-cand" role="group" aria-labelledby="choix-titre"></div>
+        <section class="cbloc cbloc-1">
+          <h3><span class="cbloc-num" aria-hidden="true">1</span> Tu cherches un sujet</h3>
+          <p class="cbloc-sous">Logement, santé, ruralité, droits LGBT+, coût de la vie&hellip; tapez un mot&nbsp;: la recherche filtre les textes documentés.</p>
+          <label class="cherche">
+            <span aria-hidden="true">🔍</span>
+            <input type="search" id="recherche" placeholder="Chercher : passoires thermiques, IVG, déserts médicaux, 49.3…"
+                   autocomplete="off" aria-describedby="atelier-compte">
+            <button type="button" id="recherche-vider" hidden>Effacer</button>
+          </label>
+        </section>
 
-      <div class="profil-duo" id="profil-duo" hidden>
-        <div class="profil-panneau">
-          <h3>Nouveau - profils combinés</h3>
-          <p class="gros">Mix ton profil.</p>
-          <p>Au départ, une demande qui revenait souvent&nbsp;: ne pas avoir à lire douze fiches séparées quand on est par exemple jeune + rural·e + précaire. Alors on a fait des combinaisons - et elles marchent dans les deux sens. Coche ce qui te ressemble pour t'y retrouver. Coche ce qui ne te ressemble pas pour voir ce qu'un programme change dans une vie qui n'est pas la tienne&nbsp;: c'est souvent là qu'on apprend le plus, et le bouton «&nbsp;au hasard&nbsp;» est là pour ça. Ce qu'on cherche à montrer, ce n'est pas ton intérêt&nbsp;: c'est qui est protégé, qui est fragilisé, et ce que ça produit pour tout le monde.</p>
+        <section class="cbloc cbloc-2">
+          <h3 id="choix-titre"><span class="cbloc-num" aria-hidden="true">2</span> Tu cherches un·e candidat·e</h3>
+          <p class="cbloc-sous">Comparez tout le monde, ou ne gardez que deux ou trois cartes pour lire tranquillement.</p>
+          <div class="choix-cand" id="choix-cand" role="group" aria-labelledby="choix-titre"></div>
+        </section>
+
+        <section class="cbloc cbloc-3">
+          <button type="button" class="porte plier" data-porte="profil" aria-expanded="false" aria-controls="profil-duo">
+            <span class="porte-emoji" aria-hidden="true">🧩</span>
+            <span class="porte-txt">
+              <span class="porte-titre">3. Mix ton profil</span>
+              <span class="porte-sous">Composez un profil, le vôtre ou un autre&nbsp;: les lois qui le concernent, les promesses qui vont avec, les actes qui suivent.</span>
+            </span>
+            <span class="porte-fleche" aria-hidden="true">↓</span>
+          </button>
+
+          <div class="profil-duo" id="profil-duo" hidden>
+            <div class="profil-panneau">
+              <span class="duo-num" aria-hidden="true">1</span>
+              <h3>Nouveau - profils combinés</h3>
+              <p class="gros">Mix ton profil.</p>
+              <p>Une demande qui revenait souvent&nbsp;: ne pas avoir à parcourir toute la liste des votes pour trouver le sujet qui nous intéresse. D'où ces combinaisons&nbsp;: coche ce qui te ressemble pour t'y retrouver. Coche ce qui ne te ressemble pas pour voir ce qu'un programme change dans une vie qui n'est pas la tienne&nbsp;: c'est souvent là qu'on apprend le plus. Le bouton «&nbsp;au hasard&nbsp;» est fait pour ça.</p>
           <div class="profil-cases" id="profil-cases"></div>
           <div class="profil-actions">
             <button type="button" class="btn pink" id="profil-hasard">🎲 Voir un profil au hasard</button>
             <button type="button" class="btn" id="profil-vider">Tout décocher</button>
             <button type="button" class="btn play" id="profil-seul" aria-pressed="false">N'afficher que les textes concernés</button>
           </div>
-          <p class="profil-note">Aucune phrase n'est générée ici. La mise en lumière ne fait que trier et citer ce que nous avons déjà documenté et sourcé&nbsp;: elle affiche toujours le tag ou le mot de nos fiches qui a déclenché la correspondance. Quand nous n'avons rien, elle le dit.</p>
-        </div>
-        <div class="route-panneau">
-          <h3>Les sujets à regarder d'abord</h3>
-          <p class="gros">À lire d'abord</p>
-          <p class="route-soustitre">Trié par notre moteur de correspondance&nbsp;: il compare la combinaison cochée aux tags de nos textes et aux mots de nos fiches, et affiche à chaque fois ce qui a déclenché la correspondance. Il ne classe pas les candidat·es, il indique seulement où regarder.</p>
+          <p class="profil-note"><strong>Méthodologie&nbsp;:</strong> cet outil ne produit pas d'analyse. Il fait une recherche par mots-clés dans les votes que nous avons documentés et sourcés, et ressort ceux qui correspondent. Quand nous n'avons rien sur un profil, il le dit. Aucune donnée n'est enregistrée.</p>
+            </div>
+            <div class="route-panneau">
+              <span class="duo-num" aria-hidden="true">2</span>
+              <h3>Le résultat</h3>
+              <p class="gros">Où regarder</p>
+              <p class="route-soustitre">Les sujets sont classés selon leur correspondance avec le profil coché. Ce classement n'évalue pas les candidat·es&nbsp;: il indique où chercher.</p>
           <div id="route" aria-live="polite"></div>
         </div>
+        </div>
+        </section>
+
       </div>
 
       <div class="resultats" id="resultats">
@@ -1717,54 +1839,46 @@
         <div class="res-liste" id="res-liste"></div>
         <div class="res-actions" id="res-actions"></div>
       </div>
-    </section>
 
-    <!-- ===== QUI EST QUI (parcours) ===== -->
-    <section class="bloc" id="qui" aria-labelledby="qui-titre">
+      </div>
+
+      <div id="votes" aria-labelledby="votes-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🗳️</span>
+        <h2 id="votes-titre">Les votes, loi par loi</h2>
+      </div>
+      <p class="bloc-intro">Chaque texte en une phrase, et les positions de chaque candidat·e d'un coup d'œil. Touchez une carte pour voir ce que fait la loi, le vote <strong>personnel</strong> et le vote du <strong>groupe parlementaire</strong>, deux choses que nous ne mélangeons pas, puis l'<strong>alignement entre les promesses et les actes</strong>. Cet alignement compare le vote d'une personne à sa propre parole&nbsp;: il ne dit pas si elle a «&nbsp;bien&nbsp;» voté.</p>
+      <div class="filtres" id="filtres" role="group" aria-label="Filtrer les textes"></div>
+      <p class="dots-legende">Pastille pleine&nbsp;: <span class="dot pour"></span> pour · <span class="dot contre"></span> contre · <span class="dot abstention"></span> abstention · <span class="dot divise"></span> groupe divisé · <span class="dot npppv"></span> n'a pas pris part au vote · <span class="dot mixte"></span> position différente selon la chambre ou le texte · <span class="dot na"></span> non concerné·e. ⭐ = texte clé.<br><strong>«&nbsp;Non concerné·e&nbsp;» n'est jamais un reproche</strong>&nbsp;: c'est un ministre qui ne peut pas voter, un sénateur sur un scrutin de l'Assemblée, un texte adopté sans vote au 49.3 ou une personne sans mandat. Chaque case dit laquelle de ces raisons s'applique. <strong>«&nbsp;N'a pas pris part au vote&nbsp;»</strong>, en revanche, veut dire que la personne pouvait voter et ne l'a pas fait.</p>
+      <div class="lois-grid" id="lois-grid"></div>
+      <div id="attente-zone"></div>
+        <div class="retours-encart">
+          <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
+          <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
+        </div>
+      </div>
+      </div>
+
+      <div class="bloc-pli trio-pli" id="candidats-pli" hidden>
+      <div id="qui" aria-labelledby="qui-titre">
+
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">👤</span>
-        <h2 id="qui-titre">Qui est qui, et quel est son parcours ?</h2>
+        <h2 id="qui-titre">Les candidat·es</h2>
       </div>
       <p class="bloc-intro">Avant de lire des votes, il faut savoir qui pouvait voter. Ces parcours expliquent pourquoi l'une a un vote personnel sur presque tout, et pourquoi un autre n'en a aucun. C'est la clé pour lire le reste de la page sans se tromper.</p>
       <div class="qui-grid" id="qui-grid"></div>
       <div class="soutien-card" style="margin-top:22px">
         <h3>On a besoin de vous pour développer la plateforme.</h3>
-        <p>Chaque texte ajouté, c'est des heures de scrutins, de comptes rendus de séance et de programmes lus ligne à ligne. Il n'y a ni annonceur, ni parti, ni argent public derrière ce comparateur&nbsp;: c'est votre soutien qui décide de la vitesse à laquelle il grandit.</p>
+        <p>Nous avons besoin de vous pour faire grandir le comparateur. Chaque vote ajouté, ce sont des heures passées à dépouiller des scrutins, des comptes rendus de séance et des programmes, ligne par ligne. Ni annonceur, ni parti, ni argent public derrière ce travail&nbsp;: c'est votre soutien qui fixe le rythme.</p>
         <div class="soutien-row">
           <a class="btn don" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">💛 Nous soutenir</a>
           <a class="btn" href="../soutenir/">Toutes les façons d'aider</a>
           <button type="button" class="btn play" data-open-retours>✍️ Nous faire un retour</button>
         </div>
       </div>
-    </section>
-
-    <!-- ===== LES VOTES ===== -->
-    <section class="bloc" id="votes" aria-labelledby="votes-titre">
-      <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">🗳️</span>
-        <h2 id="votes-titre">Les votes, loi par loi</h2>
       </div>
-      <p class="bloc-intro">Chaque texte en une phrase, et les positions d'un coup d'œil. Touchez une carte pour voir&nbsp;: ce que fait la loi, le vote <strong>personnel</strong>, le vote du <strong>groupe</strong> - deux choses qu'on ne mélange jamais - et l'<strong>alignement entre les promesses et les actes</strong> de chacun·e. Cet alignement compare une personne à sa propre parole, jamais à la loi&nbsp;: il ne dit pas si elle a « bien » voté.</p>
-      <div class="filtres" id="filtres" role="group" aria-label="Filtrer les textes"></div>
-      <p class="dots-legende">Pastille pleine&nbsp;: <span class="dot pour"></span> pour · <span class="dot contre"></span> contre · <span class="dot abstention"></span> abstention · <span class="dot divise"></span> groupe divisé · <span class="dot npppv"></span> n'a pas pris part au vote · <span class="dot mixte"></span> position différente selon la chambre ou le texte · <span class="dot na"></span> non concerné·e - cerclée de blanc&nbsp;: vote du <strong>groupe</strong> (pas de vote personnel possible). ⭐ = texte clé.<br><strong>«&nbsp;Non concerné·e&nbsp;» n'est jamais un reproche</strong>&nbsp;: c'est un ministre qui ne peut pas voter, un sénateur sur un scrutin de l'Assemblée, un texte adopté sans vote au 49.3 ou une personne sans mandat. Chaque case dit laquelle de ces raisons s'applique. <strong>«&nbsp;N'a pas pris part au vote&nbsp;»</strong>, en revanche, veut dire que la personne pouvait voter et ne l'a pas fait&nbsp;: on l'affiche tel quel.</p>
-      <div class="lois-grid" id="lois-grid"></div>
-      <div id="attente-zone"></div>
-    </section>
-
-    <!-- ===== LES FICHES ===== -->
-    <section class="bloc" id="fiches" aria-labelledby="fiches-titre">
-      <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">🗂️</span>
-        <h2 id="fiches-titre">Les fiches, candidat·e par candidat·e</h2>
       </div>
-      <p class="bloc-intro">Pour chaque candidat·e et chaque sujet&nbsp;: la promesse retrouvée, les votes passés, les actes au pouvoir, ce qui reste flou - et le niveau de preuve de notre documentation.</p>
-      <div class="switch" role="group" aria-label="Choisir un sujet">
-        <button type="button" data-sujet="sante" aria-pressed="true">🩺 Santé</button>
-        <button type="button" data-sujet="ecologie" aria-pressed="false">🌱 Écologie &amp; climat</button>
-      </div>
-      <p class="note-bas" id="fiches-switch-note" hidden>Une recherche est en cours&nbsp;: les fiches affichées traversent les deux sujets, le bouton ci-dessus reprend la main dès que vous effacez la recherche.</p>
-      <div class="fiches-grid" id="fiches-grid"></div>
-      <p class="note-bas">Le «&nbsp;niveau de preuve&nbsp;» mesure la solidité de <em>notre documentation</em>, jamais la qualité d'un programme. «&nbsp;Flou&nbsp;» veut dire&nbsp;: pas assez d'éléments vérifiés pour affirmer - pas «&nbsp;pas de position&nbsp;».</p>
     </section>
 
     <!-- ===== LA MÉTHODE ===== -->
@@ -1774,7 +1888,7 @@
         <span class="bloc-emoji" aria-hidden="true">🚧</span>
         <h2 id="chantier-titre">Où on en est</h2>
       </div>
-      <p class="bloc-intro">Ce comparateur n'est pas fini, et ce n'est pas un défaut&nbsp;: il se construit sujet par sujet, sous vos yeux. Voici exactement ce qui est là, ce qui manque, et ce qui arrive.</p>
+      <p class="bloc-intro">Ce comparateur n'est pas fini&nbsp;: il se construit sujet par sujet, candidat·e par candidat·e, sous vos yeux. Voici exactement ce qui est déjà là, ce qui manque, et ce qui arrive.</p>
       <div class="chantier-grid">
         <div class="chant-card">
           <h3>🩺🌱 Pourquoi la santé et l'écologie d'abord</h3>
@@ -1809,6 +1923,11 @@
           <button type="button" class="btn play" data-open-charte>📜 Lire notre charte</button>
         </div>
       </div>
+
+        <div class="retours-encart">
+          <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
+          <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
+        </div>
     </section>
 
     <section class="bloc" id="methode" aria-labelledby="methode-titre">
@@ -1816,12 +1935,12 @@
         <span class="bloc-emoji" aria-hidden="true">🧭</span>
         <h2 id="methode-titre">La méthode</h2>
       </div>
-      <p class="bloc-intro">Quatre niveaux d'information, jamais mélangés - et des badges d'alignement qui mesurent une seule chose&nbsp;: la cohérence entre la parole et les actes.</p>
+      <p class="bloc-intro">Plusieurs niveaux d'information et des badges d'alignement qui mesurent une seule chose&nbsp;: la cohérence entre les promesses et les actes.</p>
       <div class="methode-grid">
-        <div class="meth-card"><h3>1 · Vote personnel</h3><p>La personne siégeait et a voté, nommément. Le seul cas où l'on écrit «&nbsp;il ou elle a voté&nbsp;».</p></div>
-        <div class="meth-card"><h3>2 · Position du groupe</h3><p>Son groupe parlementaire a voté majoritairement dans un sens. Ce n'est pas son vote à elle ou à lui.</p></div>
-        <div class="meth-card"><h3>3 · Ligne du parti</h3><p>Programme, communiqué ou consigne de vote. Utile, mais ça reste du discours.</p></div>
-        <div class="meth-card"><h3>4 · Action au pouvoir</h3><p>Décision prise comme ministre, Premier ministre ou élu·e locale. Des actes, pas des mots.</p></div>
+        <div class="meth-card"><h3>1 · Vote personnel du candidat·e / vote de son parti</h3></div>
+        <div class="meth-card"><h3>2 · Promesses du candidat·e / promesses de son parti</h3><p>Programmes électoraux, déclarations publiques, prises de parole au Parlement...</p></div>
+        <div class="meth-card"><h3>3 · Actes du candidat·e / actes de son parti</h3><p>Votes au Parlement, textes de loi déposés, actions prises dans le cadre d'un mandat local, etc.</p></div>
+        <div class="meth-card"><h3>4 · Évaluation de l'alignement</h3><p>Cohérence entre les promesses et les actes.</p></div>
       </div>
       <div class="legende" id="legende-badges">
         <div class="row"><span class="badge-align">✅ Aligné</span><p>Les votes et les actes suivent la promesse. Ça ne dit pas que la promesse est bonne - juste qu'elle est tenue.</p></div>
@@ -1840,8 +1959,15 @@
         <span class="bloc-emoji" aria-hidden="true">📚</span>
         <h2 id="sources-titre">Les sources</h2>
       </div>
-      <p class="bloc-intro">Deux sources minimum par fiche, dont une primaire (scrutin officiel, programme, texte de loi). En plus des liens présents dans chaque carte, voici la bibliothèque complète.</p>
-      <div class="sources-list" id="sources-list"></div>
+      <p class="bloc-intro">Deux sources minimum par vote documenté, dont une primaire (scrutin officiel, programme, texte de loi). En plus des liens présents dans chaque carte, voici la bibliothèque complète.</p>
+      <details class="sources-pli">
+        <summary><span class="sources-quoi">📚 Voir la bibliothèque complète</span><span class="sources-etat" aria-hidden="true"></span></summary>
+        <div class="sources-list" id="sources-list"></div>
+      </details>
+        <div class="retours-encart">
+          <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
+          <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
+        </div>
     </section>
 
     <footer class="site-foot">
@@ -1983,7 +2109,7 @@
       <h2 id="charte-titre">La charte.</h2>
       <p class="charte-chapo">Un comparateur politique, ça se juge sur sa méthode. Voici la nôtre, en entier, y compris ce qu'elle nous interdit de faire. Dépliez, lisez, et dites-nous où on se trompe&nbsp;: c'est le seul moyen que cet outil reste digne de confiance.</p>
 
-      <details class="charte-art" open>
+      <details class="charte-art">
         <summary>1. Nos huit engagements</summary>
         <div class="art-body">
           <ol>
@@ -2108,7 +2234,7 @@
        données. Elle compare les axes de profil aux tags et sousThemes de nos
        lois, et à des mots relevés dans nos fiches, puis affiche verbatim ce
        qui a matché. Elle ne rédige rien et n'invente rien. */
-    var TAX = {"SUJETS": [{"id": "sante", "label": "Santé", "emoji": "🩺", "etat": "en-ligne"}, {"id": "ecologie", "label": "Écologie & climat", "emoji": "🌱", "etat": "en-ligne"}, {"id": "logement", "label": "Logement", "emoji": "🏡", "etat": "a-venir"}, {"id": "cout-vie", "label": "Coût de la vie", "emoji": "🛒", "etat": "a-venir"}, {"id": "services-publics", "label": "Services publics", "emoji": "🏦", "etat": "a-venir"}, {"id": "travail", "label": "Travail / salaires", "emoji": "💸", "etat": "a-venir"}, {"id": "chomage", "label": "Chômage", "emoji": "📄", "etat": "a-venir"}, {"id": "fiscalite", "label": "Fiscalité", "emoji": "🪙", "etat": "a-venir"}, {"id": "handicap", "label": "Handicap", "emoji": "♿", "etat": "a-venir"}, {"id": "medias", "label": "Médias / démocratie", "emoji": "📰", "etat": "a-venir"}], "PROFILS": [{"id": "jeune", "label": "moins de 26 ans", "emoji": "🎟️", "tags": ["Santé sexuelle & reproductive", "Santé mentale", "IVG", "PMA"], "mots": ["moins de 26 ans", "jeune", "jeunes", "étudiant", "étudiante", "contraception", "dépistage des IST", "IST", "santé mentale", "20-25"], "sujets": ["sante", "logement", "travail", "cout-vie"]}, {"id": "rural", "label": "campagne / sans voiture", "emoji": "🌾", "tags": ["Ruralités", "Déserts médicaux", "Médecine de ville", "Urgences", "Automobile", "Gestion de l'eau", "Sécheresse", "Agriculture"], "mots": ["rural", "rurale", "ruralité", "ruralités", "désert médical", "déserts médicaux", "30 minutes", "maternité", "urgences", "sans voiture", "zone peu dense"], "sujets": ["sante", "ecologie", "services-publics", "cout-vie"]}, {"id": "locataire", "label": "locataire", "emoji": "🏚️", "tags": ["Rénovation énergétique", "Passoires thermiques"], "mots": ["passoire", "passoires thermiques", "rénovation énergétique", "locataire", "locataires", "logement", "logements", "propriétaire bailleur"], "sujets": ["logement", "ecologie", "cout-vie"]}, {"id": "precaire", "label": "précaire / petit salaire", "emoji": "💸", "tags": ["Accès financier aux soins", "Inégalités de santé", "Assurance maladie", "Passoires thermiques", "Inégalités environnementales", "Justice climatique"], "mots": ["faibles revenus", "précaire", "précaires", "ménages modestes", "ménages précaires", "reste à charge", "dépassements d'honoraires", "franchise", "renoncement aux soins", "sans reste à charge", "pouvoir d'achat"], "sujets": ["cout-vie", "sante", "travail", "logement", "fiscalite"]}, {"id": "femme", "label": "femme", "emoji": "♀", "tags": ["Santé des femmes", "IVG", "PMA", "Sexisme", "Santé sexuelle & reproductive", "Inégalités de santé"], "mots": ["femme", "femmes", "IVG", "avortement", "contraception", "gynéco", "endométriose", "sexisme", "maternité"], "sujets": ["sante", "travail", "services-publics"]}, {"id": "lgbt", "label": "LGBTQIA+ / queer", "emoji": "🏳️‍🌈", "tags": ["Santé LGBTQIA+", "PMA", "Droit des patients"], "mots": ["LGBT", "LGBTQIA", "PMA", "personnes trans", "couples de femmes", "orientation sexuelle"], "sujets": ["sante", "services-publics", "medias"]}, {"id": "racisme", "label": "racisé·e / concerné·e par le racisme", "emoji": "✊", "tags": ["Inégalités de santé", "Inégalités environnementales", "Justice climatique"], "mots": ["discrimination", "outre-mer", "ultramarin", "ultramarins", "inégalités territoriales", "quartiers populaires", "drépanocytose"], "sujets": ["sante", "logement", "services-publics", "medias"]}, {"id": "handicap", "label": "handicap", "emoji": "♿", "tags": ["Droit des patients", "Autonomie du patient"], "mots": ["handicap", "handicaps", "autonomie", "aidant", "aidants", "accessibilité", "fin de vie", "soins palliatifs", "invalidité", "AAH", "perte d'autonomie"], "sujets": ["handicap", "sante", "services-publics", "travail"]}, {"id": "parent", "label": "parent / enfant à charge", "emoji": "👶", "tags": ["Santé environnementale", "Pesticides", "PMA"], "mots": ["enfant", "enfants", "nouveau-né", "nouveau-nés", "nourrisson", "école", "pédiatrie", "pédiatrique", "famille", "familles", "parents", "drépanocytose", "congé parental", "crèche"], "sujets": ["sante", "ecologie", "cout-vie", "services-publics"]}, {"id": "medias", "label": "médias / démocratie", "emoji": "💻", "tags": ["Procédures administratives", "Collectivités"], "mots": ["49.3", "sans vote", "ordonnance", "commission mixte paritaire", "niche parlementaire", "transparence", "lobby", "lobbying", "conflit d'intérêts"], "sujets": ["medias", "services-publics"]}]};
+    var TAX = {"SUJETS": [{"id": "sante", "label": "Santé", "emoji": "🩺", "etat": "en-ligne"}, {"id": "ecologie", "label": "Écologie & climat", "emoji": "🌱", "etat": "en-ligne"}, {"id": "logement", "label": "Logement", "emoji": "🏡", "etat": "a-venir"}, {"id": "cout-vie", "label": "Coût de la vie", "emoji": "🛒", "etat": "a-venir"}, {"id": "services-publics", "label": "Services publics", "emoji": "🏦", "etat": "a-venir"}, {"id": "travail", "label": "Travail / salaires", "emoji": "💸", "etat": "a-venir"}, {"id": "chomage", "label": "Chômage", "emoji": "📄", "etat": "a-venir"}, {"id": "fiscalite", "label": "Fiscalité", "emoji": "🪙", "etat": "a-venir"}, {"id": "handicap", "label": "Handicap", "emoji": "♿", "etat": "a-venir"}, {"id": "medias", "label": "Médias / démocratie", "emoji": "📰", "etat": "a-venir"}], "PROFILS": [{"id": "jeune", "label": "moins de 26 ans", "emoji": "🎟️", "tags": ["Santé sexuelle & reproductive", "Santé mentale", "IVG", "PMA"], "mots": ["moins de 26 ans", "jeune", "jeunes", "étudiant", "étudiante", "contraception", "dépistage des IST", "IST", "santé mentale", "20-25"], "sujets": ["sante", "logement", "travail", "cout-vie"]}, {"id": "rural", "label": "campagne / zone rurale", "emoji": "🌾", "tags": ["Ruralités", "Déserts médicaux", "Médecine de ville", "Urgences", "Automobile", "Gestion de l'eau", "Sécheresse", "Agriculture"], "mots": ["rural", "rurale", "ruralité", "ruralités", "désert médical", "déserts médicaux", "30 minutes", "maternité", "urgences", "zone peu dense"], "sujets": ["sante", "ecologie", "services-publics", "cout-vie"]}, {"id": "locataire", "label": "locataire", "emoji": "🏚️", "tags": ["Rénovation énergétique", "Passoires thermiques"], "mots": ["passoire", "passoires thermiques", "rénovation énergétique", "locataire", "locataires", "logement", "logements", "propriétaire bailleur"], "sujets": ["logement", "ecologie", "cout-vie"]}, {"id": "precaire", "label": "précaire / petit salaire", "emoji": "💸", "tags": ["Accès financier aux soins", "Inégalités de santé", "Assurance maladie", "Passoires thermiques", "Inégalités environnementales", "Justice climatique"], "mots": ["faibles revenus", "précaire", "précaires", "ménages modestes", "ménages précaires", "reste à charge", "dépassements d'honoraires", "franchise", "renoncement aux soins", "sans reste à charge", "pouvoir d'achat"], "sujets": ["cout-vie", "sante", "travail", "logement", "fiscalite"]}, {"id": "femme", "label": "femme", "emoji": "♀", "tags": ["Santé des femmes", "IVG", "PMA", "Sexisme", "Santé sexuelle & reproductive", "Inégalités de santé"], "mots": ["femme", "femmes", "IVG", "avortement", "contraception", "gynéco", "endométriose", "sexisme", "maternité"], "sujets": ["sante", "travail", "services-publics"]}, {"id": "lgbt", "label": "LGBTQIA+ / queer", "emoji": "🏳️‍🌈", "tags": ["Santé LGBTQIA+", "PMA", "Droit des patients"], "mots": ["LGBT", "LGBTQIA", "PMA", "personnes trans", "couples de femmes", "orientation sexuelle"], "sujets": ["sante", "services-publics", "medias"]}, {"id": "racisme", "label": "racisé·e / concerné·e par le racisme", "emoji": "✊", "tags": ["Inégalités de santé", "Inégalités environnementales", "Justice climatique"], "mots": ["discrimination", "outre-mer", "ultramarin", "ultramarins", "inégalités territoriales", "quartiers populaires", "drépanocytose"], "sujets": ["sante", "logement", "services-publics", "medias"]}, {"id": "handicap", "label": "handicap", "emoji": "♿", "tags": ["Droit des patients", "Autonomie du patient"], "mots": ["handicap", "handicaps", "autonomie", "aidant", "aidants", "accessibilité", "fin de vie", "soins palliatifs", "invalidité", "AAH", "perte d'autonomie"], "sujets": ["handicap", "sante", "services-publics", "travail"]}, {"id": "parent", "label": "parent / enfant à charge", "emoji": "👶", "tags": ["Santé environnementale", "Pesticides", "PMA"], "mots": ["enfant", "enfants", "nouveau-né", "nouveau-nés", "nourrisson", "école", "pédiatrie", "pédiatrique", "famille", "familles", "parents", "drépanocytose", "congé parental", "crèche"], "sujets": ["sante", "ecologie", "cout-vie", "services-publics"]}, {"id": "qpv", "label": "quartier populaire (QPV)", "emoji": "🏢", "tags": ["Inégalités de santé", "Inégalités environnementales", "Justice climatique"], "mots": ["quartier populaire", "quartiers populaires", "QPV", "politique de la ville", "banlieue", "banlieues", "inégalités territoriales", "désert médical", "déserts médicaux"], "sujets": ["sante", "logement", "services-publics", "cout-vie"]}, {"id": "outremer", "label": "Outre-mer", "emoji": "🌍", "tags": ["Inégalités de santé", "Inégalités environnementales", "Justice climatique"], "mots": ["outre-mer", "ultramarin", "ultramarins", "ultramarine", "Guadeloupe", "Martinique", "Guyane", "La Réunion", "Mayotte", "chlordécone", "inégalités territoriales"], "sujets": ["sante", "ecologie", "services-publics", "cout-vie"]}]};
     var SEUIL_LOI = 3, SEUIL_FICHE = 1;   /* 3 = au moins un vrai tag ; 1 = un mot entier */
     var AXE = {}; TAX.PROFILS.forEach(function (p) { AXE[p.id] = p; });
     /* Points de vue a emprunter. Aucun portrait invente : ce sont les
@@ -2116,7 +2242,7 @@
     var POINTS_DE_VUE = [
       { axes: ['jeune', 'precaire'],              quoi: 'avoir moins de 26 ans et un petit salaire' },
       { axes: ['parent', 'precaire'],             quoi: 'un enfant à charge et un petit salaire' },
-      { axes: ['rural'],                          quoi: 'la campagne, sans voiture' },
+      { axes: ['rural'],                          quoi: 'vivre à la campagne' },
       { axes: ['handicap', 'rural'],              quoi: 'un handicap, à la campagne' },
       { axes: ['femme', 'rural'],                 quoi: 'être une femme, à la campagne' },
       { axes: ['lgbt', 'jeune'],                  quoi: 'être queer et avoir moins de 26 ans' },
@@ -2127,7 +2253,10 @@
       { axes: ['locataire', 'jeune'],             quoi: 'être locataire et avoir moins de 26 ans' },
       { axes: ['lgbt', 'handicap'],               quoi: 'être queer et en situation de handicap' },
       { axes: ['racisme', 'femme'],               quoi: 'être une femme, et concernée par le racisme' },
-      { axes: ['medias'],                         quoi: 'vouloir savoir qui décide, et comment' }
+      { axes: ['qpv', 'jeune'],                   quoi: 'un quartier populaire, moins de 26 ans' },
+      { axes: ['qpv', 'precaire'],                quoi: 'un quartier populaire et un petit salaire' },
+      { axes: ['outremer'],                       quoi: 'vivre en Outre-mer' },
+      { axes: ['outremer', 'parent'],             quoi: 'l\'Outre-mer, avec des enfants à charge' }
     ];
     var SUJ = {}; TAX.SUJETS.forEach(function (x) { SUJ[x.id] = x; });
 
@@ -2388,6 +2517,7 @@
       return '<div><dt>' + esc(titre) + '</dt><dd>' + esc(texte) + '</dd></div>';
     }
     function renderFiches() {
+      if (!fichesGrid) return;
       fichesGrid.innerHTML = '';
       var visibles = fichesVisibles();
       if (!visibles.length) { fichesGrid.appendChild(videEtat('fiche')); return; }
@@ -2431,15 +2561,8 @@
         fichesGrid.appendChild(fiche);
       });
     }
-    document.querySelectorAll('.switch button').forEach(function (b) {
-      b.addEventListener('click', function () {
-        sujetActif = b.dataset.sujet;
-        document.querySelectorAll('.switch button').forEach(function (x) {
-          x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
-        });
-        renderFiches();
-      });
-    });
+    /* Les fiches candidat·es ne sont pas publiees dans cette version :
+       le conteneur n'existe plus, renderFiches() sort immediatement. */
     renderFiches();
 
     /* ==================== LES VOTES, LOI PAR LOI (compact) ==================== */
@@ -2624,7 +2747,11 @@
               stripHtml(l) +
             '</summary>' +
             '<div class="loi-body">' +
-              '<div class="loi-meta">' + esc(l.date) + (l.chambre ? ' · ' + esc(l.chambre) : '') + (l.initiative ? ' · ' + esc(l.initiative.length > 120 ? l.initiative.slice(0, 119).replace(/\s+\S*$/, '') + '…' : l.initiative) : '') + '</div>' +
+              '<div class="loi-meta">' +
+                '<span><b>Date du texte&nbsp;:</b> ' + esc(l.date) + '</span>' +
+                (l.chambre ? '<span><b>Chambre où le vote a eu lieu&nbsp;:</b> ' + esc(l.chambre) + '</span>' : '') +
+                (l.initiative ? '<span><b>À l\'initiative de&nbsp;:</b> ' + esc(l.initiative.length > 220 ? l.initiative.slice(0, 219).replace(/\s+\S*$/, '') + '…' : l.initiative) + '</span>' : '') +
+              '</div>' +
               (l.soustitre ? '<p class="loi-soustitre">' + esc(l.soustitre) + '</p>' : '') +
               (l.chapo ? '<p class="loi-chapo">' + esc(l.chapo) + '</p>' : '') +
               (l.detail ? '<details class="loi-resume-details suj-' + (l.sujet === 'sante' ? 'sante' : 'ecologie') + '">' +
@@ -2670,7 +2797,7 @@
     /* ==================== QUI EST QUI (parcours) ==================== */
     var quiGrid = document.getElementById('qui-grid');
     if (quiGrid && D.PARCOURS) {
-      JOUEURS.concat(['glucksmann', 'tondelier']).forEach(function (cid) {
+      JOUEURS.forEach(function (cid) {
         var p = D.PARCOURS[cid], c = CAND[cid];
         if (!p || !c) return;
         var puces = (p.cinqAns || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
@@ -2852,7 +2979,7 @@
                   score >= 3 ? 'Les apparences sont trompeuses…' :
                   'Les discours se ressemblent, hein ?';
       var texte = score >= 7
-        ? 'Tu connais tes politiques. Prochaine étape : vérifier si leurs votes suivent - c\'est tout l\'objet des fiches ci-dessous.'
+        ? 'Tu connais tes politiques. Prochaine étape : vérifier si leurs votes suivent - c\'est tout l\'objet de « Promesses VS Actes ».'
         : 'C\'est normal : sur la santé et le climat, les promesses se ressemblent beaucoup d\'un camp à l\'autre. Ce qui les distingue vraiment, ce sont les votes - et c\'est exactement ce que montre ce comparateur.';
       jeu.innerHTML =
         '<div class="jeu-fin">' +
@@ -3032,7 +3159,7 @@
       });
       renderFiches();
       majCompte();
-      var carte = document.querySelector('.fiche[data-fiche="' + cid + '-' + sujet + '"]');
+      var carte = null;
       if (!carte) return;
       carte.scrollIntoView({ block: 'center' });
       carte.classList.remove('flash');
@@ -3046,8 +3173,8 @@
       if (!zoneRoute) return;
       zoneRoute.innerHTML = '';
       if (!ETAT.profil.length) {
-        zoneRoute.appendChild(el('<p class="route-vide">Coche une combinaison à gauche pour générer une feuille de route&nbsp;: ' +
-          'les sujets à regarder en premier, et les textes déjà documentés qui concernent ce profil. ' +
+        zoneRoute.appendChild(el('<p class="route-vide">Coche une combinaison dans le bloc 1&nbsp;: on affiche ici les sujets ' +
+          'à regarder en premier, et les votes déjà documentés qui concernent ce profil. ' +
           'Rien n\'oblige à cocher le tien.</p>'));
         return;
       }
@@ -3075,10 +3202,6 @@
         var r = lumiereLoi(l);
         if (r && parSujet[l.sujet]) parSujet[l.sujet].lois.push({ l: l, r: r });
       });
-      D.FICHES.forEach(function (f) {
-        var r = lumiereFiche(f);
-        if (r && parSujet[f.sujet]) parSujet[f.sujet].fiches.push({ f: f, r: r });
-      });
       ETAT.profil.forEach(function (id) {
         (AXE[id].sujets || []).forEach(function (sid) { if (parSujet[sid]) parSujet[sid].axes++; });
       });
@@ -3099,6 +3222,7 @@
         return B.axes - A.axes;
       });
 
+      zoneRoute.appendChild(el('<p class="route-etiquette">Les sujets concernés</p>'));
       var chips = el('<div class="route-sujets"></div>');
       ordre.forEach(function (x) {
         var p = parSujet[x.id];
@@ -3135,10 +3259,10 @@
       lois.sort(function (a, b) { return b.r.score - a.r.score; });
       fiches.sort(function (a, b) { return b.r.score - a.r.score; });
 
-      var bl = el('<div class="route-bloc"><b>Les textes concernés</b></div>');
+      var bl = el('<div class="route-bloc"><b>Les votes concernés</b></div>');
       if (!lois.length) {
-        bl.appendChild(el('<p class="route-rien">Aucun texte documenté ne correspond à ce profil pour l\'instant. ' +
-          'Ce n\'est pas un vide de position&nbsp;: c\'est un vide dans notre documentation, et on le comble sujet par sujet.</p>'));
+        bl.appendChild(el('<p class="route-rien">Rien pour ce profil pour l\'instant. ' +
+          'C\'est un manque dans notre documentation, pas une absence de position&nbsp;: nous complétons sujet par sujet.</p>'));
       } else {
         lois.slice(0, 5).forEach(function (o) {
           var b = el('<button type="button" class="route-item"><span class="titre">🗳️ ' + esc(o.l.nom) +
@@ -3154,21 +3278,6 @@
       }
       zoneRoute.appendChild(bl);
 
-      var bf = el('<div class="route-bloc"><b>Les fiches candidat·es concernées</b></div>');
-      if (!fiches.length) {
-        bf.appendChild(el('<p class="route-rien">Aucune fiche de candidat·e ne mentionne encore ces points. ' +
-          'On ne comble pas ce trou en devinant&nbsp;: il faut la source.</p>'));
-      } else {
-        fiches.slice(0, 4).forEach(function (o) {
-          var c = CAND[o.f.cid];
-          var b = el('<button type="button" class="route-item"><span class="titre">🗂️ ' +
-            esc((c ? c.court : o.f.cid) + ' - ' + (o.f.sujet === 'sante' ? 'santé' : 'écologie')) +
-            '</span><span class="pourquoi">Repéré via&nbsp;: ' + esc(pourquoi(o.r, 4)) + '</span></button>');
-          b.addEventListener('click', function () { openFiche(o.f.cid, o.f.sujet); });
-          bf.appendChild(b);
-        });
-      }
-      zoneRoute.appendChild(bf);
     }
 
     /* --- le compteur --- */
@@ -3187,8 +3296,8 @@
 
     function majCompte() {
       if (!zoneCompte) return;
-      var lois = loisVisibles(), fiches = fichesVisibles();
-      var nl = lois.length, nf = fiches.length;
+      var lois = loisVisibles();
+      var nl = lois.length, nf = 0;
       var actif = filtreActifAtelier();
       /* deux choses differentes : ce qui reduit la liste des textes (recherche,
          profil) et ce qui restreint seulement la vue (candidat·es retenu·es). */
@@ -3199,8 +3308,7 @@
         ? ETAT.cands.map(function (c) { return esc(CAND[c].court); }).join(' + ')
         : '';
 
-      var compte = '<b>' + nl + '</b> texte' + (nl > 1 ? 's' : '') +
-                   ' · <b>' + nf + '</b> fiche' + (nf > 1 ? 's' : '');
+      var compte = '<b>' + nl + '</b> texte' + (nl > 1 ? 's' : '');
       var txt;
       if (!actif) {
         txt = 'À l\'écran&nbsp;: ' + compte +
@@ -3250,11 +3358,6 @@
             var bL = el('<button type="button" class="btn primary">🗳️ Voir ' + (nl > 1 ? 'les ' + nl + ' textes' : 'le texte') + ' ↓</button>');
             bL.addEventListener('click', function () { allerVers('votes'); });
             zoneActions.appendChild(bL);
-          }
-          if (nf) {
-            var bF = el('<button type="button" class="btn">🗂️ Voir ' + (nf > 1 ? 'les ' + nf + ' fiches' : 'la fiche') + ' ↓</button>');
-            bF.addEventListener('click', function () { allerVers('fiches'); });
-            zoneActions.appendChild(bF);
           }
           var bR = el('<button type="button" class="btn play">↺ Repartir de zéro</button>');
           bR.addEventListener('click', reinitialiserAtelier);
@@ -3763,9 +3866,9 @@
       fiches.forEach(function (f) {
         html += '<p><strong>' + (f.sujet === 'sante' ? '🩺 Santé' : '🌱 Écologie') + ' :</strong> ' + esc(f.engros) + '</p>';
       });
-      html += '<p style="margin-top:6px"><a href="#fiches">Voir sa fiche complète ↓</a></p>';
+      html += '<p style="margin-top:6px"><a href="#candidats">Voir son parcours ↓</a></p>';
       var m = addMsg(html);
-      m.querySelectorAll('a[href="#fiches"]').forEach(function (a) {
+      m.querySelectorAll('a[href="#candidats"]').forEach(function (a) {
         a.addEventListener('click', function () { fermer(); });
       });
     }
