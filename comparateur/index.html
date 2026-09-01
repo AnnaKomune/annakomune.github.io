@@ -1459,6 +1459,7 @@
     .champ > span.lab { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 800;
       letter-spacing: .04em; text-transform: uppercase; }
     .champ > span.aide { display: block; margin: -2px 0 6px; font-size: 12.5px; font-weight: 650; color: var(--muted); }
+    .champ > span.aide b { font-weight: 800; color: var(--ink); }
     .champ input[type=text], .champ input[type=email], .champ textarea, .champ select {
       width: 100%; box-sizing: border-box; padding: 11px 13px; font: inherit; font-weight: 650;
       border: 2px solid var(--ink); border-radius: 14px; background: var(--white); color: var(--ink);
@@ -2311,7 +2312,7 @@
       <button type="button" class="modal-close" aria-label="Fermer">✕</button>
       <p class="eyebrow">Vos retours · Komune</p>
       <h2 id="retours-titre">Dites-nous où on se trompe.</h2>
-      <p>Une erreur dans un vote, une source qui manque, un désaccord avec notre méthode, un bug&nbsp;: tout nous intéresse. On lit tout, et les corrections passent avant les nouveautés.</p>
+      <p>Une erreur dans un vote, un contexte qui manque pour comprendre une position, un désaccord avec notre méthode, un passage illisible, un bug&nbsp;: tout nous intéresse. On lit tout, et les corrections passent avant les nouveautés.</p>
 
       <div class="retours-etat" id="retours-etat" role="status" hidden></div>
 
@@ -2319,13 +2320,15 @@
         <label class="champ">
           <span class="lab">Sur quoi porte votre retour&nbsp;?</span>
           <select id="r-sujet" name="sujet">
-            <option>Une erreur dans les données ou les votes</option>
-            <option>Une source manquante ou contestable</option>
-            <option>La charte et la méthode</option>
-            <option>Un bug ou un problème d'affichage</option>
-            <option>Une suggestion de sujet à traiter</option>
-            <option>Autre</option>
+            <option value="1. Contexte manquant">Il manque du contexte</option>
+            <option value="2. Erreur ou imprécision factuelle">Une erreur ou une source qui manque</option>
+            <option value="3. Méthode et périmètre">Notre méthode ou notre périmètre</option>
+            <option value="4. Navigation et lisibilité">On s'y perd dans la page</option>
+            <option value="5. Bug ou problème d'affichage">Un bug ou un problème d'affichage</option>
+            <option value="6. Sujet ou thème à traiter">Un sujet qu'on ne traite pas encore</option>
+            <option value="7. Autre">Autre</option>
           </select>
+          <span class="aide"><b>Le contexte</b>, c'est le pourquoi d'un vote, ce que contient vraiment une loi, ce que dit vraiment une citation. <b>La méthode</b>, c'est ce qu'on choisit de juger ou pas, et quels outils garder. Si vous hésitez, prenez le plus proche&nbsp;: on relit tout de toute façon.</span>
         </label>
 
         <label class="champ">
@@ -3894,10 +3897,13 @@
             return;
           }
 
-          var sujet = document.getElementById('r-sujet').value;
+          var champSujet = document.getElementById('r-sujet');
+          var sujet = champSujet.value;
+          var libelle = champSujet.options[champSujet.selectedIndex].textContent.replace(/\u00a0/g, ' ').trim();
           var nom = (document.getElementById('r-nom').value || '').trim();
           var corps =
             'Sujet : ' + sujet + '\n' +
+            'Ce que la personne a choisi : ' + libelle + '\n' +
             'Section : ' + sectionCourante() + '\n' +
             (nom ? 'De : ' + nom + '\n' : '') +
             (mail ? 'Email : ' + mail + '\n' : '') +
