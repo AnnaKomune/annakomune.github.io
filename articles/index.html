@@ -239,7 +239,7 @@
       line-height: 1.2;
     }
 
-    .search-input::placeholder { color: rgba(51, 46, 50, .62); }
+    .search-input::placeholder { color: var(--muted); opacity: 1; }
     .search-input:focus { box-shadow: 0 0 0 3px rgba(0, 0, 255, .20); }
 
     .search-icon {
@@ -414,7 +414,8 @@
 
     .article-date {
       margin-bottom: 14px;
-      color: rgba(51, 46, 50, .65);
+      /* .65 donnait 4.42:1 sur blanc a 12px : sous le seuil AA de 4.5:1 */
+      color: var(--muted);
       font-size: 12px;
       font-weight: 800;
       letter-spacing: .07em;
@@ -573,6 +574,9 @@
       .contact-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <style>
+    .site-foot-brand span { color: var(--muted); }
+  </style>
   <!-- ===== Navigation commune du site (ajout : supprimable / modifiable librement) ===== -->
   <style>
     .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 4px 4px 16px; }
@@ -596,10 +600,123 @@
     .site-nav a.site-link:hover { transform: translateY(-1px); background: var(--yellow); }
     .site-nav a.site-link.is-current { background: var(--ink); color: var(--cream); }
   </style>
+
+  <!-- ===== Accessibilite - WCAG 2.1 niveau AA ===== -->
+  <style id="a11y-komune">
+    :root {
+      /* gris secondaire : .72 donnait 4.42:1 sur blanc et 3.76:1 sur rose (echec).
+         .82 donne 7.48:1 sur blanc, 7.15:1 sur creme, 4.66:1 sur rose, 4.79:1 sur ciel. */
+      --muted: rgba(51, 46, 50, .82);
+      /* le bleu Komune assombri, pour le petit texte sur rose et ciel :
+         #0000ff donnait 4.35:1 sur rose (echec), #0000d6 donne 5.39:1. */
+      --bleu-texte: #0000d6;
+      --focus-anneau: var(--ink);
+      --focus-halo: var(--gold);
+    }
+
+    /* --- 2.4.1 Contournement de blocs : lien d'evitement --- */
+    .saut-contenu {
+      position: fixed; left: 10px; top: -120px; z-index: 99999;
+      display: inline-flex; align-items: center; min-height: 44px;
+      padding: 10px 20px; box-sizing: border-box;
+      border: 3px solid var(--ink); border-radius: 999px;
+      background: var(--gold); color: var(--ink);
+      font-family: inherit; font-size: 15px; font-weight: 800; text-decoration: none;
+      box-shadow: 4px 4px 0 var(--ink); transition: top .16s ease;
+    }
+    .saut-contenu:focus { top: 12px; }
+    [id="contenu"]:focus { outline: none; }
+
+    /* --- 2.4.7 Focus visible + 1.4.11 contraste des elements d'interface ---
+       Double anneau encre + or : l'un des deux garde toujours au moins 3:1
+       avec ce qui l'entoure, sur fond clair comme sur fond sombre.
+       encre/or = 10.23:1, donc l'indicateur reste lisible en lui-meme. */
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    label:focus-visible,
+    [tabindex]:focus-visible,
+    [role="button"]:focus-visible,
+    [role="tab"]:focus-visible {
+      outline: 3px solid var(--focus-anneau);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 6px var(--focus-halo);
+      border-radius: 8px;
+    }
+    /* elements deja poses sur l'encre ou sur le bleu : on inverse les anneaux */
+    .site-nav a.is-current:focus-visible,
+    .site-nav a.est-ici:focus-visible,
+    .contact-card.dark a:focus-visible,
+    .contact-card.dark button:focus-visible,
+    .route-panneau a:focus-visible,
+    .route-panneau button:focus-visible,
+    .route-panneau summary:focus-visible,
+    .loi-resume-details[open] > summary:focus-visible,
+    .meter-reveal-button:focus-visible,
+    .cta-sombre:focus-visible {
+      outline-color: var(--focus-halo);
+      box-shadow: 0 0 0 6px var(--focus-anneau);
+    }
+    /* on ne montre pas l'anneau a la souris, mais on ne le supprime jamais au clavier */
+    :focus:not(:focus-visible) { outline: none; }
+
+    /* --- 2.5.5 Taille des cibles : 44x44 px minimum --- */
+    .site-nav a,
+    .site-nav a.site-link,
+    .dock a, .dock button,
+    .lien-retours,
+    .chip-nav, .onglet, .pill,
+    footer a, .foot-links a, .site-foot a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .saut-contenu, .lien-retours { min-width: 44px; justify-content: center; }
+    /* cases a cocher et radios : la cible utile, c'est le label entier */
+    label:has(> input[type="checkbox"]), label:has(> input[type="radio"]),
+    .case, .case-profil {
+      min-height: 44px; display: inline-flex; align-items: center;
+    }
+    input[type="checkbox"], input[type="radio"] { min-width: 22px; min-height: 22px; }
+
+    /* cibles restantes reperees par l audit */
+    .contact-card a { min-height: 44px; display: inline-flex; align-items: center; }
+
+    /* --- 2.3.3 / 2.2.2 Mouvement : on respecte le reglage systeme --- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+      }
+      .ticker-track { animation: none !important; transform: none !important; }
+    }
+
+    /* --- 1.3.1 texte reserve aux lecteurs d'ecran --- */
+    .lecteur-seul {
+      position: absolute !important; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0 0 0 0); clip-path: inset(50%);
+      white-space: nowrap; border: 0;
+    }
+
+    /* --- 1.4.12 Espacement du texte : on ne casse rien si l'utilisateur
+           force sa propre feuille de style --- */
+    p, li, dd, .clair-p, .clair-point span { overflow-wrap: break-word; }
+
+    /* --- 1.4.4 Redimensionnement : rien en dessous de 12px --- */
+    body { text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+  </style>
 </head>
 
 <body>
-  <main class="page">
+  <a class="saut-contenu" href="#contenu">Aller au contenu principal</a>
+  <div class="page">
+    <header class="site-entete">
     <!-- ===== Navigation commune du site ===== -->
     <nav class="site-nav" aria-label="Navigation du site">
       <a class="site-brand" href="../" aria-label="Komune Média - retour à l'accueil"><img src="../img/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>
@@ -610,6 +727,9 @@
       <a class="site-link" href="../equipe/">L'équipe</a>
       <a class="site-link" href="../soutenir/">Nous soutenir</a>
     </nav>
+    </header>
+
+    <main id="contenu" tabindex="-1">
     <article class="page-frame">
       <section class="hero" aria-labelledby="page-title">
         <div class="hero-main">
@@ -680,7 +800,8 @@
         </article>
       </section>
     </article>
-  </main>
+    </main>
+  </div>
 
   <script>
     (() => {
@@ -772,9 +893,11 @@ ${coverHtml}
         .catch(() => { status.textContent = 'Impossible de charger les articles - recharge la page.'; });
     })();
   </script>
+  <footer class="site-pied">
   <div class="site-foot-brand">
     <img src="../img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">
     <span>© Komune Média - Le média indépendant qui décrypte la société avec un regard antiraciste</span>
   </div>
+  </footer>
 </body>
 </html>
