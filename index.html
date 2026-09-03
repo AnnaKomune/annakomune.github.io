@@ -257,13 +257,13 @@
       letter-spacing: -.055em;
       text-align: center;
       text-decoration: underline;
-      transform: rotate(-3deg);
+      transform: rotate(-1.5deg);
       transition: transform .18s ease, background .18s ease;
     }
 
     .support-cta:hover {
       background: var(--yellow);
-      transform: rotate(-3deg) translateY(-4px);
+      transform: rotate(-1.5deg) translateY(-4px);
     }
 
     /* RESEAUX */
@@ -495,7 +495,6 @@
       color: var(--ink);
       font-size: 14px;
       font-weight: 800;
-      box-shadow: 3px 3px 0 rgba(51,46,50,.12);
     }
 
     .comparator-pill:nth-child(2n) { background: var(--yellow); }
@@ -586,13 +585,13 @@
       text-decoration: underline;
       text-decoration-thickness: 2px;
       text-underline-offset: 3px;
-      transform: rotate(2deg);
+      transform: rotate(1deg);
       transition: transform .18s ease, background .18s ease;
     }
 
     .articles-link:hover {
       background: var(--yellow);
-      transform: rotate(-3deg) translateY(-4px) scale(1.04);
+      transform: rotate(-1.5deg) translateY(-4px) scale(1.04);
     }
 
     .carousel {
@@ -723,7 +722,7 @@
       border: 2px solid var(--ink);
       border-radius: var(--radius-xl);
       background: var(--white);
-      box-shadow: 12px 12px 0 var(--purple);
+      box-shadow: 6px 6px 0 var(--purple);
     }
 
     .yt-intro { margin-bottom: 18px; color: var(--muted); }
@@ -806,12 +805,12 @@
     .yt-play:hover .yt-badge { background: var(--yellow); transform: translate(-50%, -50%) scale(1.12); }
     .yt-play:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
 
-    .yt-card.sh-pink .yt-play { box-shadow: 6px 6px 0 var(--pink); }
-    .yt-card.sh-sky .yt-play { box-shadow: 6px 6px 0 var(--sky); }
-    .yt-card.sh-gold .yt-play { box-shadow: 6px 6px 0 var(--gold); }
-    .yt-card.sh-green .yt-play { box-shadow: 6px 6px 0 var(--green); }
-    .yt-card.sh-purple .yt-play { box-shadow: 6px 6px 0 var(--purple); }
-    .yt-card.sh-blue .yt-play { box-shadow: 6px 6px 0 var(--sky); }
+    .yt-card.sh-pink .yt-play { box-shadow: 3px 3px 0 var(--pink); }
+    .yt-card.sh-sky .yt-play { box-shadow: 3px 3px 0 var(--sky); }
+    .yt-card.sh-gold .yt-play { box-shadow: 3px 3px 0 var(--gold); }
+    .yt-card.sh-green .yt-play { box-shadow: 3px 3px 0 var(--green); }
+    .yt-card.sh-purple .yt-play { box-shadow: 3px 3px 0 var(--purple); }
+    .yt-card.sh-blue .yt-play { box-shadow: 3px 3px 0 var(--sky); }
 
     .yt-frame { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
     .yt-lecture { cursor: default; }
@@ -881,13 +880,13 @@
       transition: transform .16s ease;
     }
 
-    .ig-card.sh-pink .ig-btn { box-shadow: 7px 7px 0 var(--pink); }
-    .ig-card.sh-sky .ig-btn { box-shadow: 7px 7px 0 var(--sky); }
-    .ig-card.sh-green .ig-btn { box-shadow: 7px 7px 0 var(--green); }
-    .ig-card.sh-gold .ig-btn { box-shadow: 7px 7px 0 var(--gold); }
-    .ig-card.sh-purple .ig-btn { box-shadow: 7px 7px 0 var(--pink); }
-    .ig-card.sh-yellow .ig-btn { box-shadow: 7px 7px 0 var(--yellow); }
-    .ig-card.sh-blue .ig-btn { box-shadow: 7px 7px 0 var(--sky); }
+    .ig-card.sh-pink .ig-btn { box-shadow: 4px 4px 0 var(--pink); }
+    .ig-card.sh-sky .ig-btn { box-shadow: 4px 4px 0 var(--sky); }
+    .ig-card.sh-green .ig-btn { box-shadow: 4px 4px 0 var(--green); }
+    .ig-card.sh-gold .ig-btn { box-shadow: 4px 4px 0 var(--gold); }
+    .ig-card.sh-purple .ig-btn { box-shadow: 4px 4px 0 var(--pink); }
+    .ig-card.sh-yellow .ig-btn { box-shadow: 4px 4px 0 var(--yellow); }
+    .ig-card.sh-blue .ig-btn { box-shadow: 4px 4px 0 var(--sky); }
 
     .ig-btn:hover { transform: translateY(-3px); }
     .ig-btn:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
@@ -965,7 +964,7 @@
       border: 2px solid var(--ink);
       border-radius: 24px;
       background: var(--cream);
-      box-shadow: 12px 12px 0 var(--purple);
+      box-shadow: 6px 6px 0 var(--purple);
     }
 
     /* le conteneur doit porter une hauteur, sinon le « height: 100% » de
@@ -998,7 +997,7 @@
 
     @media (max-width: 640px) {
       .yt-grid { grid-template-columns: minmax(0, 1fr); }
-      .yt-section { box-shadow: 7px 7px 0 var(--purple); }
+      .yt-section { box-shadow: 4px 4px 0 var(--purple); }
       .ig-row { grid-auto-columns: 198px; }
     }
 
@@ -1097,7 +1096,7 @@
     .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 4px 4px 16px; }
     .site-nav .site-brand { margin-right: auto; display: inline-flex; align-items: center; text-decoration: none; }
     .site-nav .site-brand img { display: block; height: 46px; width: auto; transition: transform .15s ease; }
-    .site-nav .site-brand:hover img { transform: rotate(-2deg) scale(1.04); }
+    .site-nav .site-brand:hover img { transform: rotate(-1deg) scale(1.04); }
     .site-foot-brand { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; justify-content: center;
       border-top: 2px solid var(--ink); margin: 40px auto 0; padding: 20px 0 6px; }
     .site-foot-brand img { display: block; height: 34px; width: auto; }
@@ -1109,7 +1108,7 @@
     .site-nav a.site-link {
       display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px;
       border: 2px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
-      font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 3px 3px 0 rgba(51,46,50,.12);
+      font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 2px 2px 0 rgba(51,46,50,.12);
       transition: transform .15s ease, background .15s ease;
     }
     .site-nav a.site-link:hover { transform: translateY(-1px); background: var(--yellow); }
@@ -1137,7 +1136,7 @@
       border: 3px solid var(--ink); border-radius: 999px;
       background: var(--gold); color: var(--ink);
       font-family: inherit; font-size: 15px; font-weight: 800; text-decoration: none;
-      box-shadow: 4px 4px 0 var(--ink); transition: top .16s ease;
+      box-shadow: 2px 2px 0 var(--ink); transition: top .16s ease;
     }
     .saut-contenu:focus { top: 12px; }
     [id="contenu"]:focus { outline: none; }
@@ -1295,7 +1294,7 @@
           <p>À travers des décryptages, des analyses et des récits de personnes concernées, nous documentons des réalités souvent invisibilisées et éclairons des sujets instrumentalisés dans le débat politico-médiatique, comme <span class="mark">l’immigration</span>.</p>
         </article>
 
-        <article class="manifest-card dark" style="transform: rotate(-3deg);">
+        <article class="manifest-card dark" style="transform: rotate(-1.5deg);">
           <p>Parce qu’aujourd’hui, ces questions sont partout : dans les médias, dans les discours politiques, dans les conversations du quotidien.</p>
         </article>
 

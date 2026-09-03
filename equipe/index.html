@@ -125,7 +125,7 @@
     .button:hover {
       background: var(--pink);
       color: var(--ink);
-      transform: translateY(-2px) rotate(-1deg);
+      transform: translateY(-2px) rotate(-0.5deg);
     }
 
     .mark {
@@ -167,11 +167,11 @@
       min-height: 100%;
       padding: clamp(26px, 3vw, 42px);
       background: var(--yellow);
-      transform: rotate(1deg);
+      transform: rotate(0.5deg);
     }
 
-    .hero-actions .button { transform: rotate(-2deg); }
-    .hero-actions .button:hover { transform: translateY(-2px) rotate(-3deg); }
+    .hero-actions .button { transform: rotate(-1deg); }
+    .hero-actions .button:hover { transform: translateY(-2px) rotate(-1.5deg); }
 
     /* Fonctionnement */
     .section-heading { margin: 74px 0 18px; }
@@ -201,7 +201,7 @@
     .functioning-photo {
       width: min(100%, 440px);
       justify-self: center;
-      transform: rotate(2.1deg);
+      transform: rotate(1.05deg);
     }
 
     .functioning-photo img {
@@ -248,9 +248,9 @@
       box-shadow: var(--shadow);
     }
 
-    .person:nth-child(2) { transform: rotate(.6deg); }
-    .person:nth-child(3) { transform: rotate(-.45deg); }
-    .person:nth-child(4) { transform: rotate(.5deg); }
+    .person:nth-child(2) { transform: rotate(0.3deg); }
+    .person:nth-child(3) { transform: rotate(-0.225deg); }
+    .person:nth-child(4) { transform: rotate(0.25deg); }
 
     .person-photo {
       height: clamp(340px, 38vw, 510px);
@@ -379,7 +379,7 @@
       .section-heading,
       .contact-heading { margin-top: 54px; }
       .functioning-top { padding: 30px 24px; }
-      .functioning-photo { width: min(86%, 420px); transform: rotate(1.5deg); }
+      .functioning-photo { width: min(86%, 420px); transform: rotate(0.75deg); }
       .functioning-followup { padding: 30px 24px; }
       .team-grid,
       .contact-grid { grid-template-columns: 1fr; }
@@ -398,7 +398,7 @@
     .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 4px 4px 16px; }
     .site-nav .site-brand { margin-right: auto; display: inline-flex; align-items: center; text-decoration: none; }
     .site-nav .site-brand img { display: block; height: 46px; width: auto; transition: transform .15s ease; }
-    .site-nav .site-brand:hover img { transform: rotate(-2deg) scale(1.04); }
+    .site-nav .site-brand:hover img { transform: rotate(-1deg) scale(1.04); }
     .site-foot-brand { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; justify-content: center;
       border-top: 2px solid var(--ink); margin: 40px auto 0; padding: 20px 0 6px; }
     .site-foot-brand img { display: block; height: 34px; width: auto; }
@@ -410,7 +410,7 @@
     .site-nav a.site-link {
       display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px;
       border: 2px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
-      font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 3px 3px 0 rgba(51,46,50,.12);
+      font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 2px 2px 0 rgba(51,46,50,.12);
       transition: transform .15s ease, background .15s ease;
     }
     .site-nav a.site-link:hover { transform: translateY(-1px); background: var(--yellow); }
@@ -438,7 +438,7 @@
       border: 3px solid var(--ink); border-radius: 999px;
       background: var(--gold); color: var(--ink);
       font-family: inherit; font-size: 15px; font-weight: 800; text-decoration: none;
-      box-shadow: 4px 4px 0 var(--ink); transition: top .16s ease;
+      box-shadow: 2px 2px 0 var(--ink); transition: top .16s ease;
     }
     .saut-contenu:focus { top: 12px; }
     [id="contenu"]:focus { outline: none; }

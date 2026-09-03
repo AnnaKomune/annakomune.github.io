@@ -56,10 +56,10 @@
     h2{font-size:clamp(36px,5vw,72px); margin:0 0 16px; font-weight:700}
     h3{font-size:clamp(22px,2vw,30px); line-height:1; margin:0 0 10px; font-weight:900; letter-spacing:-.04em}
     .lead{font-size:clamp(18px,1.5vw,22px); font-weight:720; color:var(--muted)}
-    .button{display:inline-flex; min-height:50px; align-items:center; justify-content:center; padding:12px 17px; border:2px solid var(--ink); border-radius:14px; background:var(--ink); color:var(--cream); text-decoration:none; font-weight:950; box-shadow:5px 5px 0 var(--pink); transition:.18s ease}
-    .button:hover{transform:translateY(-2px) rotate(-.5deg); background:var(--yellow); color:var(--ink); box-shadow:6px 6px 0 var(--blue)}
-    .button.alt{background:var(--pink); color:var(--ink); box-shadow:5px 5px 0 var(--blue)}
-    .button.light{background:var(--cream); color:var(--ink); box-shadow:5px 5px 0 var(--blue)}
+    .button{display:inline-flex; min-height:50px; align-items:center; justify-content:center; padding:12px 17px; border:2px solid var(--ink); border-radius:14px; background:var(--ink); color:var(--cream); text-decoration:none; font-weight:950; box-shadow: 2px 2px 0 var(--pink); transition:.18s ease}
+    .button:hover{transform:translateY(-2px) rotate(-0.25deg); background:var(--yellow); color:var(--ink); box-shadow: 3px 3px 0 var(--blue)}
+    .button.alt{background:var(--pink); color:var(--ink); box-shadow: 2px 2px 0 var(--blue)}
+    .button.light{background:var(--cream); color:var(--ink); box-shadow: 2px 2px 0 var(--blue)}
     .hero{display:grid; grid-template-columns:1.04fr .96fr; gap:18px; padding-top:24px}
     .hero-main{position:relative; overflow:hidden; min-height:690px; padding:clamp(34px,5vw,62px); background:
       radial-gradient(circle at 88% 14%, rgba(254,224,117,.86), transparent 22%),
@@ -80,11 +80,11 @@
     .float-note:nth-child(4){--r:-.7deg; background:var(--yellow)}
     .float-note:nth-child(5){--r:1.1deg; background:var(--cream)}
     .float-note:nth-child(6){--r:-1.2deg; background:var(--pink)}
-    .bubble-person{position:absolute; z-index:1; width:132px; aspect-ratio:1; border:2px solid var(--ink); border-radius:999px; display:grid; place-items:center; background:var(--blue); color:var(--cream); font-size:52px; box-shadow:7px 7px 0 var(--ink); animation:wiggle 4s ease-in-out infinite; opacity:.72}
+    .bubble-person{position:absolute; z-index:1; width:132px; aspect-ratio:1; border:2px solid var(--ink); border-radius:999px; display:grid; place-items:center; background:var(--blue); color:var(--cream); font-size:52px; box-shadow: 4px 4px 0 var(--ink); animation:wiggle 4s ease-in-out infinite; opacity:.72}
     .bubble-person.one{left:24px; bottom:24px; background:var(--purple); animation-delay:.2s}
     .bubble-person.two{right:34px; bottom:74px; background:var(--forest); animation-delay:.9s}
     .bubble-person.three{left:46%; bottom:10px; background:var(--blue); animation-delay:1.4s}
-    @keyframes wiggle{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(5deg)}}
+    @keyframes wiggle{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(5deg)}}
     .big-numbers{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
     .big-number{position:relative; min-height:260px; padding:22px; overflow:hidden}
     .big-number:nth-child(1){background:var(--pink)} .big-number:nth-child(2){background:var(--yellow)} .big-number:nth-child(3){background:var(--green)} .big-number:nth-child(4){background:var(--sky)}
@@ -119,7 +119,7 @@
     .panel.dark .bar-fill{background:linear-gradient(90deg,var(--green),var(--yellow))}
     .bar-value{font-family:"Oswald"; font-size:26px; line-height:1; letter-spacing:-.04em}
     .tag-cloud{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
-    .tag{display:inline-flex; align-items:center; gap:7px; padding:10px 12px; border:1.5px solid var(--ink); border-radius:999px; background:var(--cream); font-weight:850; box-shadow:3px 3px 0 rgba(51,46,50,.14)}
+    .tag{display:inline-flex; align-items:center; gap:7px; padding:10px 12px; border:1.5px solid var(--ink); border-radius:999px; background:var(--cream); font-weight:850;}
     .tag b{font-family:"Oswald"; font-size:24px; line-height:.8; color:var(--blue)}
     .signal-card{margin-top:16px; padding:16px; border:2px dashed var(--blue); border-radius:20px; background:var(--yellow)}
     .signal-card h3{font-size:22px}
@@ -143,7 +143,7 @@
     .comment-card p{font-weight:710; color:var(--muted)}
     .quotes-wrap{background:var(--pink); overflow:hidden; padding:0}
     .quotes-track{display:flex; gap:14px; width:max-content; animation:ticker 82s linear infinite; padding:22px}
-    .quote{width:380px; min-height:154px; padding:18px; border:2px solid var(--ink); border-radius:20px; background:var(--white); box-shadow:6px 6px 0 var(--ink); font-size:18px; font-weight:850; transform:rotate(var(--r))}
+    .quote{width:380px; min-height:154px; padding:18px; border:2px solid var(--ink); border-radius:20px; background:var(--white); box-shadow: 3px 3px 0 var(--ink); font-size:18px; font-weight:850; transform:rotate(var(--r))}
     .quote:nth-child(odd){--r:-2deg} .quote:nth-child(even){--r:2deg}
     .quote-wall{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px}
     .quote-static{padding:20px; min-height:172px; background:var(--white); font-size:18px; font-weight:850; line-height:1.16}
@@ -154,9 +154,9 @@
     .help-card h2{max-width:12ch}
     .help-card p{position:relative; z-index:2; max-width:82ch; font-size:clamp(18px,1.5vw,22px); font-weight:740; color:rgba(252,247,232,.84)}
     .help-card .hero-actions{margin-top:22px}
-    .help-card .button{background:var(--yellow); color:var(--ink); box-shadow:5px 5px 0 var(--pink)}
+    .help-card .button{background:var(--yellow); color:var(--ink); box-shadow: 2px 2px 0 var(--pink)}
     .pill-cloud{position:relative; z-index:2; display:flex; flex-wrap:wrap; gap:10px; margin-top:22px}
-    .pill{display:inline-flex; align-items:center; gap:7px; padding:9px 12px; border:1.5px solid var(--ink); border-radius:999px; background:var(--cream); color:var(--ink); font-weight:900; box-shadow:3px 3px 0 rgba(51,46,50,.18)}
+    .pill{display:inline-flex; align-items:center; gap:7px; padding:9px 12px; border:1.5px solid var(--ink); border-radius:999px; background:var(--cream); color:var(--ink); font-weight:900;}
     .help-card .pill{background:rgba(252,247,232,.95)}
     .principles{display:grid; grid-template-columns:.75fr 1.25fr; gap:16px}
     .principles-head{padding:clamp(26px,4vw,46px); background:var(--ink); color:var(--cream)}
@@ -177,15 +177,15 @@
     .method .card{padding:clamp(24px,3vw,38px)}
     .steps{display:grid; gap:12px}
     .step{display:grid; grid-template-columns:52px 1fr; gap:12px; align-items:start; padding:14px; border:1px solid var(--line); border-radius:18px; background:var(--cream)}
-    .step span{display:grid; place-items:center; width:52px; aspect-ratio:1; border:2px solid var(--ink); border-radius:16px; background:var(--green); font-family:"Oswald"; font-size:34px; box-shadow:4px 4px 0 var(--pink)}
+    .step span{display:grid; place-items:center; width:52px; aspect-ratio:1; border:2px solid var(--ink); border-radius:16px; background:var(--green); font-family:"Oswald"; font-size:34px;}
     .step strong{display:block; font-size:18px}
     .step p{color:var(--muted); font-weight:650}
     .cta{padding:clamp(28px,4vw,54px); text-align:center; background:var(--ink); color:var(--cream)}
     .cta .eyebrow{color:var(--pink)}
     .cta h2{max-width:12ch; margin:0 auto 14px}
     .cta p{max-width:850px; margin:0 auto 24px; font-size:19px; font-weight:700; color:rgba(252,247,232,.78)}
-    .cta .button{background:var(--yellow); color:var(--ink); box-shadow:5px 5px 0 var(--pink)}
-    .cta .button.alt{background:var(--cream); color:var(--ink); box-shadow:5px 5px 0 var(--blue)}
+    .cta .button{background:var(--yellow); color:var(--ink); box-shadow: 2px 2px 0 var(--pink)}
+    .cta .button.alt{background:var(--cream); color:var(--ink); box-shadow: 2px 2px 0 var(--blue)}
     .footer-note{padding:18px 30px 24px; color:var(--muted); font-size:13px; font-weight:700; text-align:center}
     .reveal{opacity:0; transform:translateY(18px); transition:opacity .55s ease, transform .55s ease}
     .reveal.is-visible{opacity:1; transform:none}
@@ -231,7 +231,7 @@
     .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 4px 4px 16px; }
     .site-nav .site-brand { margin-right: auto; display: inline-flex; align-items: center; text-decoration: none; }
     .site-nav .site-brand img { display: block; height: 46px; width: auto; transition: transform .15s ease; }
-    .site-nav .site-brand:hover img { transform: rotate(-2deg) scale(1.04); }
+    .site-nav .site-brand:hover img { transform: rotate(-1deg) scale(1.04); }
     .site-foot-brand { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; justify-content: center;
       border-top: 2px solid var(--ink); margin: 40px auto 0; padding: 20px 0 6px; }
     .site-foot-brand img { display: block; height: 34px; width: auto; }
@@ -243,7 +243,7 @@
     .site-nav a.site-link {
       display: inline-flex; align-items: center; min-height: 40px; padding: 8px 14px;
       border: 2px solid var(--ink); border-radius: 999px; background: var(--white); color: var(--ink);
-      font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 3px 3px 0 rgba(51,46,50,.12);
+      font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 2px 2px 0 rgba(51,46,50,.12);
       transition: transform .15s ease, background .15s ease;
     }
     .site-nav a.site-link:hover { transform: translateY(-1px); background: var(--yellow); }
@@ -272,7 +272,7 @@
       border: 3px solid var(--ink); border-radius: 999px;
       background: var(--gold); color: var(--ink);
       font-family: inherit; font-size: 15px; font-weight: 800; text-decoration: none;
-      box-shadow: 4px 4px 0 var(--ink); transition: top .16s ease;
+      box-shadow: 2px 2px 0 var(--ink); transition: top .16s ease;
     }
     .saut-contenu:focus { top: 12px; }
     [id="contenu"]:focus { outline: none; }
