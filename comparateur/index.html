@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Comparateur présidentielle 2027 : promesses et votes des candidats</title>
-  <meta name="description" content="Comparez les candidats à l'élection présidentielle 2027 sur du concret : ce qu'ils promettent, ce qu'ils votent au Parlement et ce qu'ils font au pouvoir, loi par loi, avec toutes les sources.">
+  <meta name="description" content="Ils promettent, ils votent, on compare. Présidentielle 2027 : promesses et votes des candidats sur la santé et l'écologie, texte par texte, avec toutes les sources. Trois niveaux de lecture, du plus court au plus complet.">
   <link rel="canonical" href="https://www.komunemedia.fr/comparateur/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="author" content="Komune Média">
@@ -2234,13 +2234,363 @@
     .hero-main h1 { font-size: min(clamp(38px, 5.2vw, 66px), 9.4vw); }
   }
   </style>
+
+  <style>
+    /* ======================================================================
+       v14b - REFONTE : un seul outil, trois niveaux de lecture
+       (les regles ci-dessous s'ajoutent a la feuille existante et la
+       precedent en priorite quand elles portent sur les memes elements)
+       ====================================================================== */
+
+    /* ---------- le heros, compact ---------- */
+    .hero2 { padding: 26px 0 8px; display: grid; gap: 14px; }
+    .hero2 .eyebrow { margin: 0; }
+    .hero2 h1 { margin: 0; font-size: min(clamp(40px, 7vw, 92px), 11vw); line-height: .9; }
+    .hero2 h1 .h1-ligne { display: block; }
+    .hero2 h1 .h1-accent { color: var(--purple); }
+    .hero2 .pitch { max-width: 62ch; margin: 0; font-size: clamp(17px, 1.6vw, 20px); }
+    .hero2 .pitch strong { background: var(--yellow); padding: 0 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    .hero2 .beta { margin: 0; font-size: 14.5px; color: var(--muted); max-width: 70ch; }
+    .hero2 .beta a { color: var(--bleu-texte, #0000d6); }
+
+    /* ---------- la barre collante : chercher + niveau de detail ---------- */
+    .barre {
+      position: sticky; top: 0; z-index: 40;
+      background: var(--cream);
+      border-bottom: 2px solid var(--ink);
+      padding: 8px 0;
+      margin: 14px 0 0;
+      display: grid; gap: 8px;
+    }
+    @supports (backdrop-filter: blur(6px)) {
+      .barre { background: rgba(252, 247, 232, .94); backdrop-filter: blur(6px); }
+    }
+    .barre .cherche2 {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--white); border: 2px solid var(--ink); border-radius: 999px;
+      padding: 4px 6px 4px 14px; box-shadow: 3px 3px 0 var(--ink);
+    }
+    .barre .cherche2:focus-within { box-shadow: 3px 3px 0 var(--purple); border-color: var(--purple); }
+    .barre .cherche2 > span[aria-hidden] { font-size: 18px; }
+    .barre .cherche2 input {
+      flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 16px;
+      padding: 8px 0; outline: none; color: var(--ink);
+    }
+    .barre .cherche2 input::placeholder { color: rgba(51, 46, 50, .55); }
+    .barre .cherche2 button {
+      border: 2px solid var(--ink); background: var(--white); border-radius: 999px;
+      padding: 6px 12px; font-size: 13.5px; font-weight: 700; min-height: 36px;
+    }
+    .barre .cherche2 button:hover { background: var(--yellow); }
+    .niveau {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .niveau .niveau-lab {
+      font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; letter-spacing: .02em;
+      font-size: 13px; font-weight: 700; color: var(--ink);
+    }
+    .niveau .seg {
+      display: inline-flex; border: 2px solid var(--ink); border-radius: 999px; background: var(--white);
+      padding: 2px; box-shadow: 3px 3px 0 var(--ink);
+    }
+    .niveau .seg button {
+      border: 0; background: transparent; border-radius: 999px; padding: 6px 12px; min-height: 34px;
+      font-size: 13.5px; font-weight: 700; line-height: 1.1; color: var(--ink);
+    }
+    .niveau .seg button[aria-checked="true"] { background: var(--ink); color: var(--white); }
+    .niveau .seg button:not([aria-checked="true"]):hover { background: var(--yellow); }
+    .niveau .niveau-aide { font-size: 13px; color: var(--muted); margin: 0; flex-basis: 100%; }
+    .niveau .niveau-aide[hidden] { display: none; }
+    @media (min-width: 720px) {
+      .barre { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+      .niveau .niveau-aide { position: absolute; right: 0; top: 100%; background: var(--ink); color: var(--white); padding: 6px 10px; border-radius: 10px; max-width: 34ch; }
+      .niveau { position: relative; }
+    }
+
+    /* ---------- l'outil : en-tete de section ---------- */
+    .outil { margin-top: 26px; }
+    .outil .bloc-head { margin-bottom: 8px; }
+    .outil .bloc-intro { margin-bottom: 14px; }
+
+    /* ---------- les tetes ---------- */
+    .tetes {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 6px 0 12px;
+    }
+    @media (min-width: 560px) { .tetes { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+    .tete {
+      display: grid; justify-items: center; gap: 4px; padding: 10px 6px 10px;
+      border: 2px solid var(--ink); border-radius: 18px; background: var(--white);
+      box-shadow: 4px 4px 0 var(--ink); transition: transform .12s ease, box-shadow .12s ease;
+      text-align: center; min-height: 44px;
+    }
+    .tete:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+    .tete[aria-pressed="true"] { background: var(--card-bg, var(--yellow)); box-shadow: 4px 4px 0 var(--card-shadow, var(--purple)); border-color: var(--card-shadow, var(--ink)); }
+    .tete .avatar { width: 56px; height: 56px; }
+    .tete .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .tete-nom { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 15px; line-height: 1; margin-top: 4px; }
+    .tete-parti { font-size: 11.5px; color: var(--muted); line-height: 1.15; }
+    .tete-tous .tete-ico { width: 56px; height: 56px; display: grid; place-items: center; font-size: 30px; border-radius: 50%; background: var(--sky); border: 2px solid var(--ink); }
+    .tete-tous[aria-pressed="true"] { --card-bg: var(--sky); --card-shadow: var(--blue); }
+    .tete.bientot { opacity: .62; box-shadow: none; border-style: dashed; cursor: not-allowed; }
+    .tete.bientot .tete-parti { font-weight: 700; color: var(--ink); }
+    .tete-check { position: absolute; }
+    .tete { position: relative; }
+    .tete[aria-pressed="true"]::after {
+      content: "✓"; position: absolute; top: -8px; right: -8px; width: 26px; height: 26px; border-radius: 50%;
+      background: var(--ink); color: var(--white); font-weight: 900; display: grid; place-items: center; font-size: 15px;
+      border: 2px solid var(--cream);
+    }
+
+    /* ---------- le bilan d'un·e candidat·e ---------- */
+    .bilan {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+      border: 2px solid var(--ink); background: var(--white); border-radius: 14px; padding: 10px 14px;
+      box-shadow: 4px 4px 0 var(--ink); margin: 0 0 12px;
+    }
+    .bilan .bilan-titre { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 16px; }
+    .bilan .bilan-n { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; font-size: 14.5px; }
+    .bilan .bilan-n b { font-size: 20px; font-family: "Oswald", Impact, sans-serif; }
+    .bilan .bilan-note { flex-basis: 100%; margin: 0; font-size: 13px; color: var(--muted); }
+
+    /* ---------- les filtres ---------- */
+    .filtres2 { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+    .fchip {
+      border: 2px solid var(--ink); background: var(--white); border-radius: 999px; padding: 7px 13px;
+      font-weight: 700; font-size: 14px; min-height: 40px; line-height: 1.1;
+    }
+    .fchip:hover { background: var(--yellow); }
+    .fchip[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+    .fchip .n { opacity: .75; font-weight: 600; margin-left: 4px; }
+
+    /* ---------- les profils (situations de vie) ---------- */
+    .profils2 summary {
+      cursor: pointer; font-weight: 700; font-size: 14.5px; padding: 8px 0; list-style: none; display: inline-flex; gap: 8px; align-items: center;
+    }
+    .profils2 summary::-webkit-details-marker { display: none; }
+    .profils2 summary .fl { transition: transform .15s; display: inline-block; }
+    .profils2[open] summary .fl { transform: rotate(180deg); }
+    .profils2 .pchips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 10px; }
+    .pchip { border: 2px solid var(--ink); background: var(--white); border-radius: 999px; padding: 6px 12px; font-size: 14px; min-height: 40px; font-weight: 600; }
+    .pchip[aria-pressed="true"] { background: var(--green); }
+    .profils2 .pnote { margin: 0 0 8px; font-size: 13px; color: var(--muted); max-width: 80ch; }
+
+    /* ---------- resultat de recherche ---------- */
+    .res2 { margin: 0 0 12px; }
+    .res2 .res2-compte { margin: 0 0 8px; font-weight: 700; font-size: 15px; }
+    .res2 .res2-compte b { background: var(--yellow); padding: 0 4px; }
+    .res2 .res2-liste { display: grid; gap: 8px; }
+    .res2 .res2-rapide {
+      border: 2px solid var(--ink); border-radius: 14px; background: var(--gold); padding: 10px 14px; box-shadow: 3px 3px 0 var(--ink);
+    }
+    .res2 .res2-rapide summary { cursor: pointer; font-weight: 800; list-style: none; display: flex; gap: 8px; align-items: baseline; }
+    .res2 .res2-rapide summary::-webkit-details-marker { display: none; }
+    .res2 .res2-rapide .q-body { margin-top: 8px; }
+    .res2 .res2-lex { display: flex; flex-wrap: wrap; gap: 8px; }
+    .res2 .res2-lex button {
+      border: 2px dashed var(--ink); background: var(--white); border-radius: 999px; padding: 6px 12px; font-size: 14px; min-height: 40px;
+    }
+    .res2 .res2-lex button:hover { background: var(--yellow); }
+    .res2 .res2-vide { border: 2px dashed var(--ink); border-radius: 14px; padding: 14px; background: var(--white); }
+    .res2 .res2-vide p { margin: 0 0 8px; }
+    .res2 .res2-vide .cta-row { margin: 0; }
+
+    /* ---------- la vue « tout le monde » : la grille ---------- */
+    .mx { display: grid; gap: 10px; }
+    .mx-legende { margin: 0 0 6px; font-size: 13.5px; color: var(--muted); }
+    .mx-head { display: none; }
+    @media (min-width: 900px) {
+      .mx-head { display: grid; grid-template-columns: minmax(0, 1fr) repeat(5, 64px); gap: 6px; align-items: end; padding: 0 14px 4px; }
+      .mx-head span { display: grid; justify-items: center; gap: 2px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; text-align: center; }
+      .mx-head .avatar { width: 34px; height: 34px; }
+    }
+    .mx-row { border: 2px solid var(--ink); border-radius: 16px; background: var(--white); box-shadow: 4px 4px 0 var(--ink); overflow: hidden; }
+    .mx-row.est-ouvert { box-shadow: 4px 4px 0 var(--purple); border-color: var(--purple); }
+    .mx-btn {
+      display: grid; width: 100%; text-align: left; border: 0; background: transparent; padding: 12px 14px; gap: 8px;
+      grid-template-columns: minmax(0, 1fr); align-items: center;
+    }
+    .mx-btn:hover { background: rgba(254, 224, 117, .35); }
+    @media (min-width: 900px) { .mx-btn { grid-template-columns: minmax(0, 1fr) repeat(5, 64px); gap: 6px; } }
+    .mx-txt { display: grid; gap: 2px; min-width: 0; }
+    .mx-sujet { font-size: 12.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .02em; }
+    .mx-titre { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 18px; line-height: 1.05; }
+    .mx-engros { font-size: 14.5px; color: var(--ink); }
+    .mx-cells { display: flex; gap: 6px; flex-wrap: wrap; }
+    @media (min-width: 900px) { .mx-cells { display: contents; } }
+    .mx-cell {
+      position: relative; display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 14px;
+      border: 2px solid var(--ink); background: var(--white);
+    }
+    @media (min-width: 900px) { .mx-cell { width: 56px; height: 56px; justify-self: center; } }
+    .mx-cell .avatar { width: 34px; height: 34px; }
+    .mx-cell .mx-ico {
+      position: absolute; right: -7px; bottom: -7px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+      font-size: 12px; font-style: normal; background: var(--white); border: 2px solid var(--ink); line-height: 1;
+    }
+    .mx-cell.v-aligne { background: var(--green); }
+    .mx-cell.v-partiel { background: var(--gold); }
+    .mx-cell.v-contradictoire { background: var(--pink); }
+    .mx-cell.v-non-testable { background: #eeeae0; border-style: dashed; }
+    .mx-cell.v-heterogene { background: var(--sky); }
+    .mx-cell.v-inconnu { background: var(--white); border-style: dotted; }
+    .mx-panel { border-top: 2px solid var(--ink); padding: 12px 12px 14px; background: var(--cream); display: grid; gap: 12px; }
+    @media (min-width: 900px) { .mx-panel { grid-template-columns: 1fr 1fr; } .mx-panel > .mx-panel-full { grid-column: 1 / -1; } }
+    .mx-dossier { border: 2px solid var(--ink); background: var(--sky); border-radius: 18px; padding: 10px 10px 12px; box-shadow: 4px 4px 0 var(--purple); display: grid; gap: 10px; }
+    .mx-dossier .dossier-tete { margin: 0 0 0 4px; }
+    .mx-dossier .dossier-eti { display: inline-block; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; background: var(--ink); color: var(--white); border-radius: 999px; padding: 3px 9px; }
+    .mx-dossier h3 { margin: 6px 0 0; font-size: 22px; }
+    .mx-dossier .dossier-compte { margin: 0; font-size: 13.5px; color: var(--muted); }
+    .mx-dossier .mx-row { box-shadow: none; }
+
+    /* ---------- la carte face-a-face ---------- */
+    .duels { display: grid; gap: 12px; }
+    @media (min-width: 900px) { .duels.deux { grid-template-columns: 1fr 1fr; } }
+    .duel {
+      border: 2px solid var(--ink); border-radius: 18px; background: var(--white); box-shadow: 4px 4px 0 var(--ink);
+      overflow: hidden; scroll-margin-top: 120px;
+    }
+    .duel.flash { animation: duelflash 1.4s ease-out 1; }
+    @keyframes duelflash { 0% { box-shadow: 0 0 0 6px var(--yellow); } 100% { box-shadow: 4px 4px 0 var(--ink); } }
+    .duel-tete {
+      display: grid; width: 100%; text-align: left; border: 0; background: transparent; padding: 12px 14px 10px; gap: 6px;
+      grid-template-columns: minmax(0, 1fr) auto; align-items: start;
+    }
+    .duel-tete:hover { background: rgba(254, 224, 117, .35); }
+    .duel-qui { margin: 0; font-family: inherit; text-transform: none; letter-spacing: 0; display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 14px; grid-column: 1; }
+    .duel-qui .avatar { width: 26px; height: 26px; }
+    .duel-sujet { grid-column: 1; font-size: 12.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .02em; display: flex; flex-wrap: wrap; gap: 6px 10px; }
+    .duel-sujet .statut { text-transform: none; letter-spacing: 0; }
+    .duel-titre { margin: 0; grid-column: 1; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 20px; line-height: 1.05; }
+    .duel-engros { margin: 0; font-size: 15px; grid-column: 1; }
+    .duel-chev { align-self: center; grid-row: 1 / -1; grid-column: 2; font-size: 14px; transition: transform .15s; padding: 6px; }
+    .duel-tete[aria-expanded="true"] .duel-chev { transform: rotate(180deg); }
+    .verdict {
+      display: inline-flex; align-items: center; gap: 6px; border: 2px solid var(--ink); border-radius: 999px; padding: 4px 10px 4px 6px;
+      font-weight: 800; font-size: 13.5px; line-height: 1.1; white-space: normal; grid-column: 1; justify-self: start;
+    }
+    .verdict i { font-style: normal; font-size: 15px; }
+    .verdict small { font-weight: 600; opacity: .8; }
+    .verdict.v-aligne { background: var(--green); }
+    .verdict.v-partiel { background: var(--gold); }
+    .verdict.v-contradictoire { background: var(--pink); }
+    .verdict.v-non-testable { background: #eeeae0; border-style: dashed; }
+    .verdict.v-heterogene { background: var(--sky); }
+    .verdict.v-inconnu { background: var(--white); border-style: dotted; }
+    .duel-votes { grid-column: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 13px; }
+    .duel-votes .dv-lab { font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+    .duel-corps { padding: 0 14px 14px; display: grid; gap: 10px; border-top: 2px dashed var(--line); padding-top: 12px; }
+    .duel-corps[hidden] { display: none; }
+    .faces { display: grid; gap: 10px; }
+    @media (min-width: 640px) { .faces { grid-template-columns: 1fr 1fr; } }
+    .face { border: 2px solid var(--ink); border-radius: 14px; padding: 10px 12px 12px; background: var(--cream); display: grid; gap: 8px; align-content: start; }
+    .face.promis { background: #fff6cf; }
+    .face.fait { background: #edf9ea; }
+    .face h4 { margin: 0; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-size: 15px; letter-spacing: .03em; display: flex; align-items: center; gap: 6px; }
+    .face .rien { margin: 0; font-size: 14px; color: var(--muted); font-style: italic; }
+    .votes-ligne { display: grid; gap: 6px; font-size: 14px; }
+    .votes-ligne .vl { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .votes-ligne .vl-lab { font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: .03em; min-width: 92px; }
+    .votes-ligne .why { flex-basis: 100%; }
+    .tete-bloc { display: grid; gap: 4px; }
+    .tete-qui { display: inline-block; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+    .tete-txt { margin: 0; font-size: 15.5px; line-height: 1.35; font-weight: 700; }
+    .tete-txt.excerpt { font-weight: 600; }
+    .suite { border-top: 1px dashed var(--line); padding-top: 4px; }
+    .suite summary {
+      cursor: pointer; list-style: none; font-size: 13.5px; font-weight: 700; color: var(--bleu-texte, #0000d6);
+      padding: 6px 0; display: inline-flex; gap: 6px; align-items: center; min-height: 36px;
+    }
+    .suite summary::-webkit-details-marker { display: none; }
+    .suite summary .fl { display: inline-block; transition: transform .15s; font-size: 11px; }
+    .suite[open] summary .fl { transform: rotate(180deg); }
+    .suite .suite-corps { white-space: pre-line; font-size: 14.5px; line-height: 1.5; padding: 4px 0 6px; }
+    .duel-parti { margin: 0; font-size: 13.5px; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .duel-parti .verdict { font-size: 12.5px; padding: 2px 8px 2px 5px; }
+    .duel-plus { border: 2px solid var(--ink); border-radius: 14px; background: var(--white); }
+    .duel-plus > summary {
+      cursor: pointer; list-style: none; padding: 10px 12px; font-weight: 800; display: flex; align-items: center; gap: 8px; min-height: 44px;
+    }
+    .duel-plus > summary::-webkit-details-marker { display: none; }
+    .duel-plus > summary .fl { margin-left: auto; transition: transform .15s; font-size: 12px; }
+    .duel-plus[open] > summary .fl { transform: rotate(180deg); }
+    .duel-plus .plus-corps { padding: 0 12px 12px; display: grid; gap: 10px; border-top: 2px dashed var(--line); padding-top: 10px; }
+    .duel-plus .loi-meta { display: grid; gap: 4px; font-size: 14px; }
+    .duel-plus .loi-chapo { margin: 0; font-size: 15px; }
+    .duel-plus .clair { margin: 0; }
+    .duel-plus .loi-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .duel-plus .loi-links a {
+      display: inline-block; border: 2px solid var(--ink); border-radius: 999px; padding: 6px 12px; font-size: 13.5px; font-weight: 700;
+      background: var(--white); text-decoration: none; min-height: 40px; line-height: 1.6;
+    }
+    .duel-plus .loi-links a:hover { background: var(--yellow); }
+    .duel-plus .chiffres { white-space: pre-line; font-size: 14px; margin: 0; }
+    .duel-plus .chiffres b { display: block; font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 2px; }
+    .duel-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .duel-actions .btn { font-size: 14px; padding: 8px 14px; }
+
+    /* niveau « en gros » : la carte se resume a sa tete + son verdict */
+    .niv-gros .duel-engros { font-size: 15.5px; }
+    /* niveau « tout » : rien n'est replie */
+    .niv-tout .suite summary { display: none; }
+    .niv-tout .suite .suite-corps { padding-top: 0; }
+
+    /* ---------- reponses rapides ---------- */
+    #rapide .q-item { background: var(--white); }
+    .rapide-grid { display: grid; gap: 10px; }
+    @media (min-width: 900px) { .rapide-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* ---------- les jeux ---------- */
+    .jeux-choix { display: grid; gap: 10px; margin: 0 0 14px; }
+    @media (min-width: 640px) { .jeux-choix { grid-template-columns: 1fr 1fr; } }
+    .jeu-btn {
+      display: grid; gap: 4px; text-align: left; border: 2px solid var(--ink); border-radius: 18px; background: var(--white);
+      padding: 14px 16px; box-shadow: 4px 4px 0 var(--ink);
+    }
+    .jeu-btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+    .jeu-btn[aria-pressed="true"] { background: var(--gold); box-shadow: 4px 4px 0 var(--purple); border-color: var(--purple); }
+    .jeu-btn .jb-emoji { font-size: 30px; }
+    .jeu-btn .jb-titre { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 22px; line-height: 1; }
+    .jeu-btn .jb-sous { font-size: 14px; color: var(--muted); }
+    .jeu-zone[hidden] { display: none; }
+    /* devine le vote */
+    .dv-card { border: 2px solid var(--ink); border-radius: 18px; background: var(--white); padding: 18px; box-shadow: 4px 4px 0 var(--ink); display: grid; gap: 14px; }
+    .dv-qui { display: flex; align-items: center; gap: 12px; }
+    .dv-qui .avatar { width: 64px; height: 64px; }
+    .dv-qui b { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-size: 22px; line-height: 1; display: block; }
+    .dv-qui small { color: var(--muted); }
+    .dv-texte { border: 2px solid var(--ink); border-radius: 14px; padding: 12px 14px; background: var(--cream); }
+    .dv-texte .dv-sujet { font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); }
+    .dv-texte h4 { margin: 4px 0 4px; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-size: 20px; line-height: 1.05; }
+    .dv-texte p { margin: 0; font-size: 15px; }
+    .dv-q { margin: 0; font-size: 20px; font-weight: 800; }
+    .dv-choix { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; }
+    .dv-choix button {
+      border: 2px solid var(--ink); border-radius: 14px; background: var(--white); padding: 12px 10px; font-weight: 800; font-size: 15px; min-height: 52px;
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .dv-choix button:hover:not(:disabled) { background: var(--yellow); }
+    .dv-choix button:disabled { opacity: .55; box-shadow: none; }
+    .dv-choix button.good { background: var(--green); opacity: 1; }
+    .dv-choix button.bad { background: var(--pink); opacity: 1; }
+    .dv-reveal { display: grid; gap: 10px; }
+    .dv-verdict { font-size: 18px; font-weight: 800; margin: 0; }
+    .dv-progress { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+    .dv-fin { text-align: center; display: grid; gap: 10px; justify-items: center; }
+    .dv-fin .score-big { font-family: "Oswald", Impact, sans-serif; font-size: 72px; line-height: 1; font-weight: 700; }
+
+    /* ---------- l'etat « bientot » des deux autres candidat·es ---------- */
+    .bientot-note { margin: 0 0 12px; font-size: 13.5px; color: var(--muted); }
+
+    /* ---------- les docks flottants : ils ne recouvrent plus la fin de page ---------- */
+    main#contenu { padding-bottom: 96px; }
+  </style>
 </head>
 <body>
   <a class="saut-contenu" href="#contenu">Aller au contenu principal</a>
   <!-- ===== bandeau défilant ===== -->
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track" id="ticker-track">
-      <span>Des faits, des sources ✦</span><span>🎤 Nouveau : le débat du Medef, citation par citation ✦</span><span>Qui a dit quoi ? ✦</span><span>Les votes, loi par loi ✦</span><span>Réponses rapides pour tes débats ✦</span><span>Média citoyen &amp; indépendant ✦</span><span>Présidentielle 2027 ✦</span>
+      <span>Des faits, des sources ✦</span><span>🎯 Promesses VS Actes ✦</span><span>🗳️ Nouveau : Devine le vote ✦</span><span>🎤 Le débat du Medef, citation par citation ✦</span><span>⚡ Réponses rapides pour tes débats ✦</span><span>Trois niveaux de lecture ✦</span><span>Média citoyen &amp; indépendant ✦</span><span>Présidentielle 2027 ✦</span>
     </div>
   </div>
 
@@ -2260,243 +2610,133 @@
     </header>
 
     <main id="contenu" tabindex="-1">
+    <!-- ===== Héros, compact ===== -->
+    <div class="hero2">
+      <p class="eyebrow">Le comparateur politique citoyen · Komune</p>
+      <h1><span class="h1-ligne">Ils promettent.</span><span class="h1-ligne">Ils votent.</span><span class="h1-ligne h1-accent">On compare.</span></h1>
+      <p class="pitch">Santé et écologie, <strong>15 textes de loi</strong>, <strong>5 candidat·es</strong>. Ce qu'ils et elles ont promis, ce qu'ils et elles ont voté, et si les deux collent. Chaque ligne a sa source.</p>
+      <p class="beta">Version beta&nbsp;: la plateforme s'enrichit plusieurs fois par semaine, et on montre aussi ce qui reste à vérifier. Raphaël Glucksmann et Marine Tondelier viennent de se déclarer&nbsp;: leurs votes sont en cours d'ajout. <a href="#chantier">Où on en est exactement →</a></p>
+    </div>
 
-    <!-- ===== Héros ===== -->
-    <div class="hero">
-      <div class="hero-main">
-        <p class="eyebrow">Le comparateur politique citoyen · Komune</p>
-        <h1>Présidentielle 2027 : comparez<br>sur du concret.</h1>
-        <p class="pitch">Pas de clash, pas de sondage : on compare ce que les candidat·es <strong>déclarent</strong>, <strong>votent</strong> et <strong>font au pouvoir</strong> pour voir si leurs paroles et leurs actes correspondent.</p>
-        <div class="cta-row">
-          <a class="btn primary" href="#jeu">🎮 Jouer au «&nbsp;Qui a dit quoi&nbsp;?&nbsp;»</a>
-          <a class="btn pink" href="#debat">⚡ Réponses rapides</a>
-          <button type="button" class="btn play" data-open-komune>💬 Demander à Komune</button>
-          <button type="button" class="btn" data-open-charte>📜 Notre charte</button>
+    <!-- ===== La barre collante : chercher + choisir son niveau de detail ===== -->
+    <div class="barre" id="barre">
+      <label class="cherche2">
+        <span aria-hidden="true">🔍</span>
+        <span class="lecteur-seul">Chercher un sujet, un texte, un·e candidat·e ou un mot</span>
+        <input type="search" id="recherche" placeholder="IVG, pesticides, déserts médicaux, Le Pen…" autocomplete="off" aria-describedby="res2-compte">
+        <button type="button" id="recherche-vider" hidden>Effacer</button>
+      </label>
+      <div class="niveau">
+        <span class="niveau-lab" id="niveau-lab">Détail&nbsp;:</span>
+        <div class="seg" role="radiogroup" aria-labelledby="niveau-lab" id="niveau">
+          <button type="button" role="radio" aria-checked="false" data-niv="gros">En gros</button>
+          <button type="button" role="radio" aria-checked="true" data-niv="essentiel">L'essentiel</button>
+          <button type="button" role="radio" aria-checked="false" data-niv="tout">Tout</button>
         </div>
-        <p class="beta"><strong>La plateforme continue de s'enrichir</strong>, et on vous montre aussi ce qui reste à vérifier. On commence avec la <strong>santé</strong> et l'<strong>écologie</strong>, les deux sujets que vous nous avez le plus demandés. La santé est presque complète et arrive très vite. <strong>5 candidat·es</strong> sont déjà comparé·es, et bientôt tous les candidat·es déclaré·es seront ajouté·es. D'autres sujets suivront rapidement. <a href="#chantier">Où on en est exactement →</a></p>
-      </div>
-      <div class="hero-side">
-        <p class="eyebrow">Ils disent, ils votent</p>
-        <h2>On compare.</h2>
-        <div class="orbit" id="orbit" aria-hidden="true"></div>
+        <p class="niveau-aide" id="niveau-aide" role="status" hidden></p>
       </div>
     </div>
 
-    <div class="stat-row" id="stats" aria-label="Le comparateur en chiffres">
-      <div class="stat"><b id="stat-cand">5</b><span>candidat·es suivi·es pour commencer</span></div>
-      <div class="stat"><b>5</b><span>outils développés</span></div>
-      <div class="stat"><b id="stat-src">60+</b><span>sources, toutes en lien</span></div>
-    </div>
+    <!-- ===== L'OUTIL : Promesses VS Actes ===== -->
+    <section class="outil" id="promesses" aria-labelledby="promesses-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🎯</span>
+        <h2 id="promesses-titre">Promesses VS Actes</h2>
+      </div>
+      <p class="bloc-intro">Touchez une tête pour son face-à-face, texte par texte&nbsp;: à gauche ce qui a été <strong>promis</strong>, à droite ce qui a été <strong>fait</strong>, et un verdict qui mesure une seule chose&nbsp;: si les actes suivent la parole. Jamais si le vote est «&nbsp;bon&nbsp;». Avec tout le monde, touchez un texte pour comparer les cinq d'un coup.</p>
 
-    <!-- ===== Sommaire de la page ===== -->
-    <nav class="toc" aria-label="Sommaire du comparateur">
-      <a href="#outils">🧰 Les 4 outils</a>
-      <a href="#medef">🎤 Le débat du Medef</a>
-      <a href="#jeu">🎮 Qui a dit quoi ?</a>
-      <a href="#debat">⚡ Réponses rapides</a>
-      <a href="#promesses">🎯 Promesses VS Actes</a>
-      <a href="#candidats">👤 Les candidat·es</a>
-      <a href="#chantier">🚧 Où on en est</a>
-      <a href="#methode">🧭 La méthode</a>
-      <a href="#lexique">💡 Le lexique</a>
-      <a href="#sources">📚 Les sources</a>
-    </nav>
+      <div class="tetes" id="tetes" role="group" aria-label="Choisir qui comparer"></div>
+      <p class="bientot-note" id="bientot-note"></p>
 
-    <!-- ===== LES 4 OUTILS (dépliables) ===== -->
-    <div class="outils-head" id="outils">
-      <span class="bloc-emoji" aria-hidden="true">🧰</span>
-      <h2 id="outils-titre">Les 4 outils</h2>
-    </div>
-    <section class="trio" aria-labelledby="outils-titre">
-      <article class="trio-item" id="medef">
-        <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="medef-pli">
-          <span class="trio-emoji" aria-hidden="true">🎤</span>
-          <span class="trio-txt">
-            <span class="trio-titre">Le débat du Medef, citation par citation</span>
-            <span class="trio-sous">53 citations horodatées, 7 candidat·es, 6 thèmes</span>
-          </span>
-          <span class="trio-etat"><span class="quand-ferme">Ouvrir le débat</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
-        </button>
-      </article>
-      <article class="trio-item" id="jeu">
-        <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="jeu-pli">
-          <span class="trio-emoji" aria-hidden="true">🎮</span>
-          <span class="trio-txt">
-            <span class="trio-titre">Qui a dit quoi&nbsp;?</span>
-            <span class="trio-sous">10 déclarations de candidat·es : à qui appartiennent-elles, et sont-elles alignées sur leurs actes ?</span>
-          </span>
-          <span class="trio-etat"><span class="quand-ferme">Lancer le jeu</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
-        </button>
-      </article>
-      <article class="trio-item" id="debat">
-        <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="debat-pli">
-          <span class="trio-emoji" aria-hidden="true">⚡</span>
-          <span class="trio-txt">
-            <span class="trio-titre">Réponses rapides</span>
-            <span class="trio-sous">En plein débat ? La réponse en 10 secondes : une phrase courte et le détail des votes sur le sujet.</span>
-          </span>
-          <span class="trio-etat"><span class="quand-ferme">Ouvrir les réponses</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
-        </button>
-      </article>
+      <div id="bilan"></div>
 
-      <article class="trio-item" id="promesses">
-        <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="promesses-pli">
-          <span class="trio-emoji" aria-hidden="true">🎯</span>
-          <span class="trio-txt">
-            <span class="trio-titre">Promesses VS Actes</span>
-            <span class="trio-sous">Par lois et par thèmes, mesurez l'écart pour chaque candidat·e.</span>
-          </span>
-          <span class="trio-etat"><span class="quand-ferme">Ouvrir la comparaison</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
-        </button>
-      </article>
+      <div class="filtres2" id="filtres2" role="group" aria-label="Filtrer les textes"></div>
 
-      <div class="bloc-pli trio-pli" id="medef-pli" aria-labelledby="medef-titre" hidden>
-        <div class="bloc-head">
-          <span class="bloc-emoji" aria-hidden="true">🎤</span>
-          <h2 id="medef-titre">Le débat du Medef, citation par citation</h2>
+      <details class="profils2" id="profils2">
+        <summary><span aria-hidden="true">🧩</span> Partir d'une situation de vie <span class="fl" aria-hidden="true">▼</span></summary>
+        <p class="pnote">Cochez ce qui vous ressemble, ou ce qui ne vous ressemble pas&nbsp;: on ne garde que les textes qui concernent cette vie-là, en disant pourquoi. Recherche par mots-clés dans nos données, rien n'est enregistré.</p>
+        <div class="pchips" id="pchips" role="group" aria-label="Situations de vie"></div>
+      </details>
+
+      <div class="res2" id="res2" aria-live="polite">
+        <p class="res2-compte" id="res2-compte" role="status"></p>
+        <div class="res2-liste" id="res2-liste"></div>
+      </div>
+
+      <div id="liste"></div>
+
+      <div class="retours-encart">
+        <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
+        <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
+      </div>
+    </section>
+
+    <!-- ===== Réponses rapides ===== -->
+    <section class="bloc" id="rapide" aria-labelledby="rapide-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">⚡</span>
+        <h2 id="rapide-titre">Réponses rapides</h2>
+      </div>
+      <p class="bloc-intro">Au bar, en famille, dans le groupe WhatsApp&nbsp;: touchez une question, la réponse tient en trois phrases, et chaque mot se vérifie dans les votes.</p>
+      <div class="rapide-grid" id="debat-grid"></div>
+      <div class="cta-row" style="margin-top:12px">
+        <button type="button" class="btn play" data-open-komune>💬 Votre question n'y est pas&nbsp;? Demandez à Komune</button>
+      </div>
+    </section>
+
+    <!-- ===== Les jeux ===== -->
+    <section class="bloc" id="jouer" aria-labelledby="jouer-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🎮</span>
+        <h2 id="jouer-titre">À jouer entre amis</h2>
+      </div>
+      <p class="bloc-intro">Deux minutes, sur canapé ou dans le métro. On parie, on retourne la carte, et on regarde ensemble si les paroles tiennent. Aucune donnée collectée.</p>
+      <div class="jeux-choix" role="group" aria-label="Choisir un jeu">
+        <button type="button" class="jeu-btn" id="jeu-btn-vote" aria-pressed="false" aria-controls="jeu-vote">
+          <span class="jb-emoji" aria-hidden="true">🗳️</span>
+          <span class="jb-titre">Devine le vote</span>
+          <span class="jb-sous">Un texte, un·e candidat·e&nbsp;: pour, contre, abstention ou absent·e&nbsp;? 5 manches.</span>
+        </button>
+        <button type="button" class="jeu-btn" id="jeu-btn-dit" aria-pressed="false" aria-controls="jeu-pli">
+          <span class="jb-emoji" aria-hidden="true">🎤</span>
+          <span class="jb-titre">Qui a dit quoi&nbsp;?</span>
+          <span class="jb-sous">10 déclarations bien réelles&nbsp;: à qui appartiennent-elles, et les votes suivent-ils&nbsp;?</span>
+        </button>
+      </div>
+      <div class="jeu-zone" id="jeu-vote" hidden>
+        <div class="jeu-shell"><div class="dv-card" id="dv-card" aria-live="polite"></div></div>
+      </div>
+      <div class="jeu-zone" id="jeu-pli" hidden>
+        <div class="jeu-shell" id="jeu">
+          <div class="jeu-card" id="jeu-card" aria-live="polite"></div>
         </div>
-        <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire - et chaque horodatage ouvre la vidéo au moment exact, pour vérifier par vous-même.</p>
+      </div>
+    </section>
+
+    <!-- ===== Le débat du Medef ===== -->
+    <section class="bloc" id="medef" aria-labelledby="medef-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🎤</span>
+        <h2 id="medef-titre">Le débat du Medef, citation par citation</h2>
+      </div>
+      <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire, et chaque horodatage ouvre la vidéo au moment exact.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="medef-pli">
+        <span class="trio-etat"><span class="quand-ferme">Ouvrir le débat (53 citations, 6 thèmes)</span><span class="quand-ouvert">Replier le débat</span> <span class="chev" aria-hidden="true">▼</span></span>
+      </button>
+      <div class="bloc-pli" id="medef-pli" hidden>
         <div class="medef-meta" id="medef-meta"></div>
         <div class="medef-methode" id="medef-methode"></div>
         <div class="switch" role="group" aria-label="Choisir un thème du débat" id="medef-switch"></div>
         <div id="medef-corps"></div>
         <div class="medef-suite">
-          <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants - et pour les <strong>meetings de campagne</strong>.</p>
-          <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent - c'est là qu'on verra si les paroles tiennent.</p>
+          <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants, et pour les <strong>meetings de campagne</strong>.</p>
+          <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent.</p>
         </div>
-
-        <div class="retours-encart">
-          <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
-          <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
-        </div>
-        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes - c'est tout l'objet du reste du comparateur. Raphaël Glucksmann et Marine Tondelier viennent de déclarer leur candidature&nbsp;: leurs votes sont en cours d'ajout.</p>
+        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes, c'est tout l'objet du reste du comparateur.</p>
       </div>
-
-      <div class="bloc-pli trio-pli" id="jeu-pli" hidden>
-        <div class="bloc-head">
-          <span class="bloc-emoji" aria-hidden="true">🎮</span>
-          <h2 id="jeu-titre">Qui a dit quoi&nbsp;? Le jeu des déclarations</h2>
-        </div>
-        <p class="bloc-intro">10 déclarations bien réelles, prononcées ces cinq dernières années. À vous de deviner qui parle - puis on regarde ensemble si les votes suivent les paroles.</p>
-        <div class="jeu-shell">
-          <div class="jeu-card" id="jeu-card" aria-live="polite"></div>
-        </div>
-      </div>
-
-      <div class="bloc-pli trio-pli" id="debat-pli" hidden>
-        <div class="bloc-head">
-          <span class="bloc-emoji" aria-hidden="true">⚡</span>
-          <h2 id="debat-titre">Réponses rapides pour vos débats</h2>
-        </div>
-        <p class="bloc-intro">Au bar, en famille, dans le groupe WhatsApp&nbsp;: touchez une question, la réponse tient en trois phrases - et chaque mot est vérifiable dans les votes juste en dessous.</p>
-        <div class="debat-grid" id="debat-grid"></div>
-        <div class="debat-foot cta-row">
-          <button type="button" class="btn play" data-open-komune>💬 Votre question n'y est pas&nbsp;? Demandez à Komune</button>
-        </div>
-        <div class="retours-encart">
-          <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
-          <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
-        </div>
-      </div>
-
-      <div class="bloc-pli trio-pli" id="promesses-pli" hidden>
-        <div class="bloc-head">
-          <span class="bloc-emoji" aria-hidden="true">🎯</span>
-          <h2 id="promesses-titre">Promesses VS Actes</h2>
-        </div>
-        <p class="bloc-intro">Compare les promesses et les actes de chaque candidat·e&nbsp;: par lois, par thèmes, par profil et par candidat·es.</p>
-
-      <div id="atelier" aria-labelledby="atelier-titre">
-      <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">🔎</span>
-        <h2 id="atelier-titre">3 manières de chercher</h2>
-      </div>
-      <p class="bloc-intro">Trois manières d'entrer, et elles mènent toutes au même endroit&nbsp;: des cartes qui séparent la promesse, le vote personnel, le vote du groupe, le bilan au pouvoir et ce qui reste flou. Les profils ne servent pas à ne regarder que ce qui vous concerne, mais à voir ce qu'un texte change dans une vie précise - la vôtre, et tout autant celle de quelqu'un d'autre.</p>
-
-      <div class="chercher">
-
-        <section class="cbloc cbloc-1">
-          <h3><span class="cbloc-num" aria-hidden="true">1</span> Tu cherches un sujet</h3>
-          <p class="cbloc-sous">Logement, santé, ruralité, droits LGBT+, coût de la vie&hellip; tapez un mot&nbsp;: la recherche filtre les textes documentés.</p>
-          <label class="cherche">
-            <span aria-hidden="true">🔍</span>
-            <input type="search" id="recherche" placeholder="Chercher : pesticides, passoires thermiques, ZFE, eau…"
-                   autocomplete="off" aria-describedby="atelier-compte">
-            <button type="button" id="recherche-vider" hidden>Effacer</button>
-          </label>
-        </section>
-
-        <section class="cbloc cbloc-2">
-          <h3 id="choix-titre"><span class="cbloc-num" aria-hidden="true">2</span> Tu cherches un·e candidat·e</h3>
-          <p class="cbloc-sous">Comparez tout le monde, ou ne gardez que deux ou trois cartes pour lire tranquillement.</p>
-          <div class="choix-cand" id="choix-cand" role="group" aria-labelledby="choix-titre"></div>
-        </section>
-
-        <section class="cbloc cbloc-3">
-          <button type="button" class="porte plier" data-porte="profil" aria-expanded="false" aria-controls="profil-duo">
-            <span class="porte-emoji" aria-hidden="true">🧩</span>
-            <span class="porte-txt">
-              <span class="porte-titre">3. Mix ton profil</span>
-              <span class="porte-sous">Composez un profil, le vôtre ou un autre&nbsp;: les lois qui le concernent, les promesses qui vont avec, les actes qui suivent.</span>
-            </span>
-            <span class="porte-fleche" aria-hidden="true">↓</span>
-          </button>
-
-          <div class="profil-duo" id="profil-duo" hidden>
-            <div class="profil-panneau">
-              <span class="duo-num" aria-hidden="true">1</span>
-              <h3>Nouveau - profils combinés</h3>
-              <p class="gros">Mix ton profil.</p>
-              <p>Une demande qui revenait souvent&nbsp;: ne pas avoir à parcourir toute la liste des votes pour trouver le sujet qui nous intéresse. D'où ces combinaisons&nbsp;: coche ce qui te ressemble pour t'y retrouver. Coche ce qui ne te ressemble pas pour voir ce qu'un programme change dans une vie qui n'est pas la tienne&nbsp;: c'est souvent là qu'on apprend le plus. Le bouton «&nbsp;au hasard&nbsp;» est fait pour ça.</p>
-          <div class="profil-cases" id="profil-cases"></div>
-          <div class="profil-actions">
-            <button type="button" class="btn pink" id="profil-hasard">🎲 Voir un profil au hasard</button>
-            <button type="button" class="btn" id="profil-vider">Tout décocher</button>
-            <button type="button" class="btn play" id="profil-seul" aria-pressed="false">N'afficher que les textes concernés</button>
-          </div>
-          <p class="profil-note"><strong>Méthodologie&nbsp;:</strong> cet outil ne produit pas d'analyse. Il fait une recherche par mots-clés dans les votes que nous avons documentés et sourcés, et ressort ceux qui correspondent. Quand nous n'avons rien sur un profil, il le dit. Aucune donnée n'est enregistrée.</p>
-            </div>
-            <div class="route-panneau">
-              <span class="duo-num" aria-hidden="true">2</span>
-              <h3>Le résultat</h3>
-              <p class="gros">Où regarder</p>
-              <p class="route-soustitre">Les sujets sont classés selon leur correspondance avec le profil coché. Ce classement n'évalue pas les candidat·es&nbsp;: il indique où chercher.</p>
-          <div id="route" aria-live="polite"></div>
-        </div>
-        </div>
-        </section>
-
-      </div>
-
-      <div class="resultats" id="resultats">
-        <p class="atelier-compte" id="atelier-compte" role="status" aria-live="polite"></p>
-        <div class="res-liste" id="res-liste"></div>
-        <div class="res-actions" id="res-actions"></div>
-      </div>
-
-      </div>
-
-      <div id="votes" aria-labelledby="votes-titre">
-      <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">🗳️</span>
-        <h2 id="votes-titre">Les votes, loi par loi</h2>
-      </div>
-      <p class="bloc-intro">Chaque texte en une phrase, et les positions de chaque candidat·e d'un coup d'œil. Touchez une carte pour voir ce que fait la loi, le vote <strong>personnel</strong> et le vote du <strong>groupe parlementaire</strong>, deux choses que nous ne mélangeons pas, puis l'<strong>alignement entre les promesses et les actes</strong>. Cet alignement compare le vote d'une personne à sa propre parole&nbsp;: il ne dit pas si elle a «&nbsp;bien&nbsp;» voté.</p>
-      <div class="filtres" id="filtres" role="group" aria-label="Filtrer les textes"></div>
-      <p class="dots-legende">Pastille pleine&nbsp;: <span class="dot pour"></span> pour · <span class="dot contre"></span> contre · <span class="dot abstention"></span> abstention · <span class="dot divise"></span> groupe divisé · <span class="dot npppv"></span> n'a pas pris part au vote · <span class="dot mixte"></span> position différente selon la chambre ou le texte · <span class="dot na"></span> non concerné·e. ⭐ = texte clé.<br><strong>«&nbsp;Non concerné·e&nbsp;» n'est jamais un reproche</strong>&nbsp;: c'est un ministre qui ne peut pas voter, un sénateur sur un scrutin de l'Assemblée, un texte adopté sans vote au 49.3 ou une personne sans mandat. Chaque case dit laquelle de ces raisons s'applique. <strong>«&nbsp;N'a pas pris part au vote&nbsp;»</strong>, en revanche, veut dire que la personne pouvait voter et ne l'a pas fait.</p>
-      <div class="lois-grid" id="lois-grid"></div>
-      <div id="attente-zone"></div>
-        <div class="retours-encart">
-          <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
-          <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
-        </div>
-      </div>
-      </div>
-
     </section>
 
-
-    <!-- ===== LES CANDIDAT·ES : rubrique a part, plus un des outils ===== -->
+<!-- ===== LES CANDIDAT·ES : rubrique a part, plus un des outils ===== -->
     <section class="bloc" id="candidats" aria-labelledby="qui-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">👤</span>
@@ -2543,7 +2783,6 @@
       </div>
     </section>
 
-    <!-- ===== LA MÉTHODE ===== -->
     <!-- ===== OÙ ON EN EST ===== -->
     <section class="bloc" id="chantier" aria-labelledby="chantier-titre">
       <div class="bloc-head">
@@ -2551,6 +2790,10 @@
         <h2 id="chantier-titre">Où on en est</h2>
       </div>
       <p class="bloc-intro">Ce comparateur n'est pas fini&nbsp;: il se construit sujet par sujet, candidat·e par candidat·e, sous vos yeux. Voici exactement ce qui est déjà là, ce qui manque, et ce qui arrive.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="chantier-pli">
+        <span class="trio-etat"><span class="quand-ferme">Voir où on en est, sujet par sujet</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+      </button>
+      <div class="bloc-pli" id="chantier-pli" hidden>
       <div class="chantier-grid">
         <div class="chant-card">
           <h3>🩺🌱 Pourquoi la santé et l'écologie d'abord</h3>
@@ -2558,7 +2801,7 @@
         </div>
         <div class="chant-card">
           <h3>🔍 Où en est chaque sujet</h3>
-          <p>L'écologie et le climat, c'est déjà bien avancé&nbsp;: les grands textes du quinquennat y sont, vote par vote. La santé, on a commencé&nbsp;: les autres textes sortent au compte-gouttes à partir du <strong>mercredi 2 septembre</strong>. Ensuite, on se lance sur les autres sujets. Les textes &laquo;&nbsp;en cours de vérification&nbsp;&raquo; restent affichés&nbsp;: on ne maquille pas les trous.</p>
+          <p>L'écologie et le climat, c'est déjà bien avancé&nbsp;: les grands textes du quinquennat y sont, vote par vote. La santé avance vite&nbsp;: <strong>8 textes</strong> sont en ligne, dont le dossier «&nbsp;Accès aux soins &amp; déserts médicaux&nbsp;», et les suivants sortent au fil des vérifications. Ensuite, on se lance sur les autres sujets. Les textes &laquo;&nbsp;en cours de vérification&nbsp;&raquo; restent affichés&nbsp;: on ne maquille pas les trous.</p>
         </div>
         <div class="chant-card">
           <h3>📋 Ça deviendra bien plus fort</h3>
@@ -2576,6 +2819,7 @@
           </ul>
         </div>
       </div>
+      <div id="attente-zone"></div>
       <div class="soutien-card">
         <h3>Ce projet tient à ses lecteurs.</h3>
         <p>Chaque sujet, c'est des semaines de lecture de scrutins, de programmes et de comptes rendus de séance, texte par texte, candidat·e par candidat·e. Il n'y a ni annonceur, ni parti, ni argent public derrière ce comparateur&nbsp;: c'est ce qui nous permet de dire les choses telles qu'elles sont. Si vous voulez qu'il aille jusqu'au bout, les sept sujets, toutes et tous les candidat·es, jusqu'en avril 2027, c'est votre soutien qui le décide.</p>
@@ -2590,6 +2834,7 @@
           <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
           <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
         </div>
+          </div>
     </section>
 
     <section class="bloc" id="methode" aria-labelledby="methode-titre">
@@ -2598,6 +2843,10 @@
         <h2 id="methode-titre">La méthode</h2>
       </div>
       <p class="bloc-intro">Plusieurs niveaux d'information et des badges d'alignement qui mesurent une seule chose&nbsp;: la cohérence entre les promesses et les actes.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="methode-pli">
+        <span class="trio-etat"><span class="quand-ferme">Lire la méthode et les verdicts</span><span class="quand-ouvert">Replier la méthode</span> <span class="chev" aria-hidden="true">▼</span></span>
+      </button>
+      <div class="bloc-pli" id="methode-pli" hidden>
       <div class="methode-grid">
         <div class="meth-card"><h3>1 · Vote personnel du candidat·e / vote de son parti</h3></div>
         <div class="meth-card"><h3>2 · Promesses du candidat·e / promesses de son parti</h3><p>Programmes électoraux, déclarations publiques, prises de parole au Parlement...</p></div>
@@ -2613,6 +2862,7 @@
         <div class="row"><span class="badge-align"><b class="badge-qui">Candidat·e</b>✅ Aligné</span><p>Chaque texte porte deux pastilles&nbsp;: la première juge la <strong>personne</strong>, la seconde son <strong>parti</strong>. Elles peuvent diverger, et c'est souvent là que la lecture devient intéressante.</p></div>
       </div>
       <p class="note-bas">Ce comparateur est un travail journalistique citoyen, en cours et daté. Une case «&nbsp;en cours de vérification&nbsp;» signifie que la recherche continue, pas qu'une position n'existe pas. Vous repérez une erreur&nbsp;? <button type="button" class="lien-retours" data-open-retours>Dites-le-nous</button>, on corrige et on le dit.</p>
+          </div>
     </section>
 
     <!-- ===== LES SOURCES ===== -->
@@ -2622,6 +2872,10 @@
         <h2 id="sources-titre">Les sources</h2>
       </div>
       <p class="bloc-intro">Deux sources minimum par vote documenté, dont une primaire (scrutin officiel, programme, texte de loi). En plus des liens présents dans chaque carte, voici la bibliothèque complète.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="sources-pli">
+        <span class="trio-etat"><span class="quand-ferme">Ouvrir la bibliothèque des sources</span><span class="quand-ouvert">Replier les sources</span> <span class="chev" aria-hidden="true">▼</span></span>
+      </button>
+      <div class="bloc-pli" id="sources-pli" hidden>
       <details class="sources-pli">
         <summary><span class="sources-quoi">📚 Voir la bibliothèque complète</span><span class="sources-etat" aria-hidden="true"></span></summary>
         <div class="sources-list" id="sources-list"></div>
@@ -2630,6 +2884,7 @@
           <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
           <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
         </div>
+          </div>
     </section>
 
     </main>
@@ -2887,6 +3142,10 @@
   })();
   </script>
   <script>
+  /* ==================== L'OUTIL : Promesses VS Actes en trois niveaux ====================
+     Refonte du 8 septembre 2026. Une seule entree : les tetes des candidat·es.
+     Trois niveaux de lecture (en gros / l'essentiel / tout) qui changent
+     combien on lit, jamais ce qu'on compare : toutes les donnees restent la. */
   (function () {
     'use strict';
     var H = window.__KOMUNE_HELPERS;
@@ -2895,42 +3154,14 @@
     var esc = H.esc, el = H.el, CAND = H.CAND, JOUEURS = H.JOUEURS, LOI = H.LOI,
         avatar = H.avatar, voteChip = H.voteChip, voteGlance = H.voteGlance;
 
-    /* ==================== L'ATELIER : recherche, candidat·es, profil ====================
-       La « mise en lumière » est un moteur de correspondance sur nos seules
-       données. Elle compare les axes de profil aux tags et sousThemes de nos
-       lois, et à des mots relevés dans nos fiches, puis affiche verbatim ce
-       qui a matché. Elle ne rédige rien et n'invente rien. */
+    /* ---------- les situations de vie (moteur de correspondance sur nos seules donnees) ---------- */
     var TAX = {"SUJETS": [{"id": "sante", "label": "Santé", "emoji": "🩺", "etat": "en-ligne"}, {"id": "ecologie", "label": "Écologie & climat", "emoji": "🌱", "etat": "en-ligne"}, {"id": "logement", "label": "Logement", "emoji": "🏡", "etat": "a-venir"}, {"id": "cout-vie", "label": "Coût de la vie", "emoji": "🛒", "etat": "a-venir"}, {"id": "services-publics", "label": "Services publics", "emoji": "🏦", "etat": "a-venir"}, {"id": "travail", "label": "Travail / salaires", "emoji": "💸", "etat": "a-venir"}, {"id": "chomage", "label": "Chômage", "emoji": "📄", "etat": "a-venir"}, {"id": "fiscalite", "label": "Fiscalité", "emoji": "🪙", "etat": "a-venir"}, {"id": "handicap", "label": "Handicap", "emoji": "♿", "etat": "a-venir"}, {"id": "medias", "label": "Médias / démocratie", "emoji": "📰", "etat": "a-venir"}], "PROFILS": [{"id": "jeune", "label": "moins de 26 ans", "emoji": "🎟️", "tags": ["Santé sexuelle & reproductive", "Santé mentale", "IVG", "PMA"], "mots": ["moins de 26 ans", "jeune", "jeunes", "étudiant", "étudiante", "contraception", "dépistage des IST", "IST", "santé mentale", "20-25"], "sujets": ["sante", "logement", "travail", "cout-vie"]}, {"id": "rural", "label": "campagne / zone rurale", "emoji": "🌾", "tags": ["Ruralités", "Déserts médicaux", "Médecine de ville", "Urgences", "Automobile", "Gestion de l'eau", "Sécheresse", "Agriculture"], "mots": ["rural", "rurale", "ruralité", "ruralités", "désert médical", "déserts médicaux", "30 minutes", "maternité", "urgences", "zone peu dense"], "sujets": ["sante", "ecologie", "services-publics", "cout-vie"]}, {"id": "locataire", "label": "locataire", "emoji": "🏚️", "tags": ["Rénovation énergétique", "Passoires thermiques"], "mots": ["passoire", "passoires thermiques", "rénovation énergétique", "locataire", "locataires", "logement", "logements", "propriétaire bailleur"], "sujets": ["logement", "ecologie", "cout-vie"]}, {"id": "precaire", "label": "précaire / petit salaire", "emoji": "💸", "tags": ["Accès financier aux soins", "Inégalités de santé", "Assurance maladie", "Passoires thermiques", "Inégalités environnementales", "Justice climatique"], "mots": ["faibles revenus", "précaire", "précaires", "ménages modestes", "ménages précaires", "reste à charge", "dépassements d'honoraires", "franchise", "renoncement aux soins", "sans reste à charge", "pouvoir d'achat"], "sujets": ["cout-vie", "sante", "travail", "logement", "fiscalite"]}, {"id": "femme", "label": "femme", "emoji": "♀", "tags": ["Santé des femmes", "IVG", "PMA", "Sexisme", "Santé sexuelle & reproductive", "Inégalités de santé"], "mots": ["femme", "femmes", "IVG", "avortement", "contraception", "gynéco", "endométriose", "sexisme", "maternité"], "sujets": ["sante", "travail", "services-publics"]}, {"id": "lgbt", "label": "LGBTQIA+ / queer", "emoji": "🏳️‍🌈", "tags": ["Santé LGBTQIA+", "PMA", "Droit des patients"], "mots": ["LGBT", "LGBTQIA", "PMA", "personnes trans", "couples de femmes", "orientation sexuelle"], "sujets": ["sante", "services-publics", "medias"]}, {"id": "racisme", "label": "racisé·e / concerné·e par le racisme", "emoji": "✊", "tags": ["Inégalités de santé", "Inégalités environnementales", "Justice climatique"], "mots": ["discrimination", "outre-mer", "ultramarin", "ultramarins", "inégalités territoriales", "quartiers populaires", "drépanocytose"], "sujets": ["sante", "logement", "services-publics", "medias"]}, {"id": "handicap", "label": "handicap", "emoji": "♿", "tags": ["Droit des patients", "Autonomie du patient"], "mots": ["handicap", "handicaps", "autonomie", "aidant", "aidants", "accessibilité", "fin de vie", "soins palliatifs", "invalidité", "AAH", "perte d'autonomie"], "sujets": ["handicap", "sante", "services-publics", "travail"]}, {"id": "parent", "label": "parent / enfant à charge", "emoji": "👶", "tags": ["Santé environnementale", "Pesticides", "PMA"], "mots": ["enfant", "enfants", "nouveau-né", "nouveau-nés", "nourrisson", "école", "pédiatrie", "pédiatrique", "famille", "familles", "parents", "drépanocytose", "congé parental", "crèche"], "sujets": ["sante", "ecologie", "cout-vie", "services-publics"]}, {"id": "qpv", "label": "quartier populaire (QPV)", "emoji": "🏢", "tags": ["Inégalités de santé", "Inégalités environnementales", "Justice climatique"], "mots": ["quartier populaire", "quartiers populaires", "QPV", "politique de la ville", "banlieue", "banlieues", "inégalités territoriales", "désert médical", "déserts médicaux"], "sujets": ["sante", "logement", "services-publics", "cout-vie"]}, {"id": "outremer", "label": "Outre-mer", "emoji": "🌍", "tags": ["Inégalités de santé", "Inégalités environnementales", "Justice climatique"], "mots": ["outre-mer", "ultramarin", "ultramarins", "ultramarine", "Guadeloupe", "Martinique", "Guyane", "La Réunion", "Mayotte", "chlordécone", "inégalités territoriales"], "sujets": ["sante", "ecologie", "services-publics", "cout-vie"]}]};
-    var SEUIL_LOI = 3, SEUIL_FICHE = 1;   /* 3 = au moins un vrai tag ; 1 = un mot entier */
+    var SEUIL_LOI = 3;   /* 3 = au moins un vrai tag */
     var AXE = {}; TAX.PROFILS.forEach(function (p) { AXE[p.id] = p; });
-    /* Points de vue a emprunter. Aucun portrait invente : ce sont les
-       libelles des axes ci-dessus, recombines. */
-    var POINTS_DE_VUE = [
-      { axes: ['jeune', 'precaire'],              quoi: 'avoir moins de 26 ans et un petit salaire' },
-      { axes: ['parent', 'precaire'],             quoi: 'un enfant à charge et un petit salaire' },
-      { axes: ['rural'],                          quoi: 'vivre à la campagne' },
-      { axes: ['handicap', 'rural'],              quoi: 'un handicap, à la campagne' },
-      { axes: ['femme', 'rural'],                 quoi: 'être une femme, à la campagne' },
-      { axes: ['lgbt', 'jeune'],                  quoi: 'être queer et avoir moins de 26 ans' },
-      { axes: ['racisme', 'locataire'],           quoi: 'être concerné·e par le racisme, et locataire' },
-      { axes: ['handicap', 'precaire'],           quoi: 'un handicap et un petit salaire' },
-      { axes: ['parent', 'rural'],                quoi: 'des enfants à charge, à la campagne' },
-      { axes: ['femme', 'parent', 'precaire'],    quoi: 'une femme, un enfant à charge, un petit salaire' },
-      { axes: ['locataire', 'jeune'],             quoi: 'être locataire et avoir moins de 26 ans' },
-      { axes: ['lgbt', 'handicap'],               quoi: 'être queer et en situation de handicap' },
-      { axes: ['racisme', 'femme'],               quoi: 'être une femme, et concernée par le racisme' },
-      { axes: ['qpv', 'jeune'],                   quoi: 'un quartier populaire, moins de 26 ans' },
-      { axes: ['qpv', 'precaire'],                quoi: 'un quartier populaire et un petit salaire' },
-      { axes: ['outremer'],                       quoi: 'vivre en Outre-mer' },
-      { axes: ['outremer', 'parent'],             quoi: 'l\'Outre-mer, avec des enfants à charge' }
-    ];
-    var SUJ = {}; TAX.SUJETS.forEach(function (x) { SUJ[x.id] = x; });
 
     function norm(v) {
-      return String(v == null ? '' : v).toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      return String(v == null ? '' : v).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
     }
-    /* mot entier, pas sous-chaine : sinon « IST » matche « ministre », « existe »… */
     function motEntier(texte, mot) {
       var m = norm(mot).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       return new RegExp('(?:^|[^a-z0-9])' + m + '(?![a-z0-9])').test(texte);
@@ -2938,40 +3169,38 @@
     function tagsLoi(l) {
       var brut = l.tags, plats = [];
       (Array.isArray(brut) ? brut : [brut]).forEach(function (x) {
-        String(x == null ? '' : x).split('·').forEach(function (y) {
-          y = y.trim(); if (y) plats.push(y);
-        });
+        String(x == null ? '' : x).split('·').forEach(function (y) { y = y.trim(); if (y) plats.push(y); });
       });
       if (l.sousTheme) plats.push(String(l.sousTheme).trim());
+      if (l.dossier) plats.push(String(l.dossier).trim());
       return plats;
     }
     var CACHE_TXT = {};
-    function texteDe(cle, champs, obj) {
-      if (CACHE_TXT[cle] != null) return CACHE_TXT[cle];
-      var t = norm(champs.map(function (k) { return obj[k] || ''; }).join(' '));
-      CACHE_TXT[cle] = t;
-      return t;
+    var CH_LOI = ['nom', 'sousTheme', 'dossier', 'intitule', 'resume', 'synthese', 'engros', 'initiative', 'statut', 'date', 'chapo', 'soustitre'];
+    function texteLoi(l) {
+      if (CACHE_TXT[l.id] == null) {
+        var t = norm(CH_LOI.map(function (k) { return l[k] || ''; }).join(' ')) + ' ' + norm(tagsLoi(l).join(' '));
+        /* on cherche aussi dans les noms des candidat·es qui y ont une position : « Le Pen IVG » doit marcher */
+        JOUEURS.forEach(function (cid) {
+          if (l.votes[cid]) { t += ' ' + norm(CAND[cid].nom + ' ' + CAND[cid].court + ' ' + CAND[cid].parti); }
+        });
+        CACHE_TXT[l.id] = t;
+      }
+      return CACHE_TXT[l.id];
     }
-    var CH_LOI = ['nom', 'sousTheme', 'intitule', 'resume', 'synthese', 'engros', 'initiative', 'statut', 'date'];
-    var CH_FICHE = ['proposition', 'impact', 'concernes', 'flou', 'contradiction', 'engros', 'votePasse', 'actionPassee', 'voteGroupe'];
-    function texteLoi(l) { return texteDe('L' + l.id, CH_LOI, l) + ' ' + norm(tagsLoi(l).join(' ')); }
-    function texteFiche(f) { return texteDe('F' + f.cid + f.sujet, CH_FICHE, f); }
-
-    /* -> {score, raisons:[{axe, type, valeur}]} ; raisons = extraits verbatim */
     function evalue(axes, tags, texte) {
       var score = 0, raisons = [], vus = {};
       axes.forEach(function (id) {
-        var p = AXE[id];
-        if (!p) return;
+        var p = AXE[id]; if (!p) return;
         (p.tags || []).forEach(function (tg) {
           tags.forEach(function (reel) {
             var k = norm(reel);
-            if (norm(tg) === k && !vus[k]) { vus[k] = 1; raisons.push({ axe: id, type: 'tag', valeur: reel }); score += 3; }
+            if (norm(tg) === k && !vus[k]) { vus[k] = 1; raisons.push({ type: 'tag', valeur: reel }); score += 3; }
           });
         });
         (p.mots || []).forEach(function (m) {
           var k = norm(m);
-          if (!vus[k] && motEntier(texte, m)) { vus[k] = 1; raisons.push({ axe: id, type: 'mot', valeur: m }); score += 1; }
+          if (!vus[k] && motEntier(texte, m)) { vus[k] = 1; raisons.push({ type: 'mot', valeur: m }); score += 1; }
         });
       });
       return { score: score, raisons: raisons };
@@ -2981,311 +3210,136 @@
       var r = evalue(ETAT.profil, tagsLoi(l), texteLoi(l));
       return r.score >= SEUIL_LOI ? r : null;
     }
-    function lumiereFiche(f) {
-      if (!ETAT.profil.length) return null;
-      var r = evalue(ETAT.profil, [], texteFiche(f));
-      return r.score >= SEUIL_FICHE ? r : null;
-    }
     function pourquoi(r, max) {
-      return r.raisons.slice(0, max || 3).map(function (x) {
-        return x.type === 'tag' ? x.valeur : '« ' + x.valeur + ' »';
-      }).join(' · ');
+      return r.raisons.slice(0, max || 3).map(function (x) { return x.type === 'tag' ? x.valeur : '« ' + x.valeur + ' »'; }).join(' · ');
     }
 
-    /* ---------- l'état, gardé d'une visite à l'autre ---------- */
-    var CLE_ETAT = 'komune.comparateur.atelier';
-    var ETAT = { q: '', cands: [], profil: [], seul: false, emprunt: null, mien: [] };
+    /* ---------- le niveau de detail ---------- */
+    var NIVEAUX = ['gros', 'essentiel', 'tout'];
+    var CLE_NIV = 'komune.comparateur.niveau';
+    var niveau = 'essentiel';
+    try { var n0 = localStorage.getItem(CLE_NIV); if (NIVEAUX.indexOf(n0) >= 0) niveau = n0; } catch (e) { /* sans memoire */ }
+
+    /* ---------- l'etat ---------- */
+    var CLE_ETAT = 'komune.comparateur.v2';
+    var ETAT = { cid: null, q: '', filtre: 'tous', profil: [], ouverts: {} };
     try {
       var brut = localStorage.getItem(CLE_ETAT);
       if (brut) {
         var o = JSON.parse(brut);
         if (o && typeof o === 'object') {
-          ETAT.cands = (o.cands || []).filter(function (x) { return CAND[x]; });
+          if (o.cid && CAND[o.cid] && JOUEURS.indexOf(o.cid) >= 0) ETAT.cid = o.cid;
           ETAT.profil = (o.profil || []).filter(function (x) { return AXE[x]; });
-          ETAT.mien = (o.mien || []).filter(function (x) { return AXE[x]; });
-          ETAT.emprunt = typeof o.emprunt === 'number' ? o.emprunt : null;
-          ETAT.seul = !!o.seul;
         }
       }
-    } catch (e) { /* navigation privée, stockage bloqué : on continue sans mémoire */ }
+    } catch (e) { /* navigation privee : on continue sans memoire */ }
     function garde() {
       try {
-        localStorage.setItem(CLE_ETAT, JSON.stringify(
-          { cands: ETAT.cands, profil: ETAT.profil, seul: ETAT.seul,
-            emprunt: ETAT.emprunt, mien: ETAT.mien }));
-      } catch (e) { /* rien à faire : l'outil marche sans */ }
+        localStorage.setItem(CLE_ETAT, JSON.stringify({ cid: ETAT.cid, profil: ETAT.profil }));
+        localStorage.setItem(CLE_NIV, niveau);
+      } catch (e) { /* rien a faire */ }
     }
 
-    function joueurs() {
-      if (!ETAT.cands.length) return JOUEURS;
-      var s = JOUEURS.filter(function (c) { return ETAT.cands.indexOf(c) >= 0; });
-      return s.length ? s : JOUEURS;
+    /* ---------- le verdict : il compare TOUJOURS la promesse et les actes de la personne
+       (ou de son parti), jamais un accord avec la loi ---------- */
+    var VERDICT_EXPL = {
+      'aligne': 'Les actes suivent la promesse. Pas un jugement sur la promesse : juste qu\'elle est tenue.',
+      'partiel': 'Une partie des actes suit, une partie s\'en écarte.',
+      'contradictoire': 'Les actes vont à l\'encontre de la promesse, de façon documentée.',
+      'non-testable': 'Pas de vote ni d\'acte possible (pas de mandat, ministre qui ne vote pas, texte sans scrutin). Ce n\'est pas une mauvaise note.',
+      'heterogene': 'Le parti ou le groupe se divise : pas de ligne unique.'
+    };
+    function verdict(v, parti) {
+      var a = v ? (parti ? v.alignParti : v.alignCandidat) : null;
+      if (!a || !a.code) return { code: 'inconnu', icon: '?', label: 'Pas encore évalué' };
+      return { code: a.code, icon: a.icon || '', label: a.label || a.code };
+    }
+    function verdictHtml(v, parti, petit) {
+      var d = verdict(v, parti);
+      return '<span class="verdict v-' + esc(d.code) + '" title="' + esc(VERDICT_EXPL[d.code] || '') + '">' +
+        '<i aria-hidden="true">' + esc(d.icon) + '</i>' + (petit ? '' : '<small>' + (parti ? 'Son parti : ' : 'Promesse ↔ actes : ') + '</small>') + esc(d.label) + '</span>';
     }
 
-    /* ---------- la recherche ---------- */
-    function colle(texte) {
-      if (!ETAT.q) return true;
-      var mots = norm(ETAT.q).split(/\s+/).filter(Boolean);
-      /* tous les mots doivent être là, mais « passoires thermiques » doit
-         retrouver « passoire thermique » : on retire un s final sur les mots
-         assez longs pour que ce soit sans risque. */
-      return mots.every(function (m) {
-        if (texte.indexOf(m) >= 0) return true;
-        return m.length >= 5 && m.charAt(m.length - 1) === 's' && texte.indexOf(m.slice(0, -1)) >= 0;
-      });
-    }
-    function loiColle(l) {
-      /* on cherche dans le texte de la loi et dans les noms des candidat·es
-         qui y ont une position : « Le Pen IVG » doit marcher. */
-      var t = texteLoi(l) + ' ' + JOUEURS.filter(function (cid) { return l.votes[cid]; })
-        .map(function (cid) { return norm(CAND[cid].nom + ' ' + CAND[cid].court + ' ' + CAND[cid].parti); }).join(' ');
-      return colle(t);
-    }
-    function ficheColle(f) { return colle(texteFiche(f) + ' ' + norm(CAND[f.cid] ? CAND[f.cid].nom + ' ' + CAND[f.cid].parti : '')); }
-
-    function loisVisibles(ignorerFiltre) {
-      return D.LOIS.filter(function (l) {
-        if (!ignorerFiltre) {
-          if (filtreActif === 'cle' && !l.cle) return false;
-          if (filtreActif !== 'tous' && filtreActif !== 'cle' && l.sujet !== filtreActif) return false;
-        }
-        if (!loiColle(l)) return false;
-        if (ETAT.seul && ETAT.profil.length && !lumiereLoi(l)) return false;
-        return true;
-      });
-    }
-    function fichesVisibles(ignorerSujet) {
-      var libre = ignorerSujet || !!ETAT.q;   /* la recherche traverse les deux sujets */
-      return D.FICHES.filter(function (f) {
-        if (!libre && f.sujet !== sujetActif) return false;
-        if (ETAT.cands.length && ETAT.cands.indexOf(f.cid) < 0) return false;
-        if (!ficheColle(f)) return false;
-        if (ETAT.seul && ETAT.profil.length && !lumiereFiche(f)) return false;
-        return true;
-      });
-    }
-
-    /* ==================== ticker : doubler la piste pour la boucle ==================== */
-    var tick = document.getElementById('ticker-track');
-    if (tick) { tick.innerHTML += tick.innerHTML; }
-
-    /* ==================== héros : les têtes qui flottent ==================== */
-    var orbit = document.getElementById('orbit');
-    if (orbit) {
-      var bulles = ['#5423df', '#9abdff', '#b0fda4', '#fee075', '#f099f9', '#ffffff'];
-      D.CANDIDATS.forEach(function (c, i) {
-        if (!c.photo) { return; }
-        orbit.appendChild(el(
-          '<div class="orbit-person" style="--bubble:' + esc(bulles[i % bulles.length]) + '" title="' + esc(c.court) + '"><img src="' + esc(c.photo) + '" alt=""></div>'));
-      });
-    }
-
-    /* ==================== stats ==================== */
-    var nbLiens = 0;
-    D.LOIS.forEach(function (l) { nbLiens += l.liens.length; });
-    document.getElementById('stat-src').textContent = (nbLiens + D.SOURCES.length) + '+';
-    /* ==================== navigation : rendre visible AVANT de defiler ====================
-       Depuis la refonte en 5 outils, les cartes de loi vivent dans le panneau
-       « Promesses VS Actes », replie par defaut. Un element replie mesure 0 px :
-       scrollIntoView() ne fait alors rien du tout, et le clic semble mort.
-       On remonte donc la chaine des parents pour rouvrir tout ce qui est replie
-       (panneaux .bloc-pli et balises <details>), puis on defile a la frame suivante,
-       quand la mise en page a ete recalculee. */
-    function revelerElement(el) {
-      var noeud = el;
-      while (noeud && noeud !== document.body) {
-        if (noeud.tagName === 'DETAILS' && !noeud.open) { noeud.open = true; }
-        if (noeud.hasAttribute && noeud.hasAttribute('hidden')) {
-          noeud.hidden = false;
-          if (noeud.id) {
-            var btn = document.querySelector('.plier[aria-controls="' + noeud.id + '"]');
-            if (btn) { btn.setAttribute('aria-expanded', 'true'); }
-          }
-        }
-        noeud = noeud.parentElement;
-      }
-    }
-    /* defile vers un element apres l'avoir rendu visible */
-    function allerA(el, options) {
-      if (!el) { return; }
-      revelerElement(el);
-      var opt = options || { behavior: 'smooth', block: 'start' };
-      /* setTimeout plutot que requestAnimationFrame : rAF ne part pas dans un
-         onglet en arriere-plan ni en mode economie d'energie, et le defilement
-         ne se declenchait jamais. 40 ms suffisent pour que la mise en page du
-         panneau qu'on vient d'ouvrir soit recalculee. */
-      setTimeout(function () { el.scrollIntoView(opt); }, 40);
-      setTimeout(function () {
-        var r = el.getBoundingClientRect();
-        if (r.top < -60 || r.top > window.innerHeight) { el.scrollIntoView(opt); }
-      }, 420);
-    }
-    window.__KOMUNE_REVELER = revelerElement;
-    window.__KOMUNE_ALLER_A = allerA;
-
-    /* ==================== navigation : ouvrir une loi depuis n'importe où ==================== */
-    function openLoi(id) {
-      /* on leve tout ce qui pourrait masquer la carte demandée */
-      if (ETAT.q || ETAT.seul) {
-        ETAT.q = ''; ETAT.seul = false; garde();
-        var champ = document.getElementById('recherche');
-        if (champ) { champ.value = ''; }
-        syncAtelier();
-      }
-      filtreActif = 'tous';
-      var boutons = document.querySelectorAll('#filtres button');
-      boutons.forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.f === 'tous' ? 'true' : 'false'); });
-      renderLois();
-      var carte = document.querySelector('details.loi-card[data-loi="' + id + '"]');
-      if (!carte) return;
-      carte.open = true;
-      allerA(carte, { behavior: 'smooth', block: 'start' });
-      carte.classList.remove('flash');
-      void carte.offsetWidth;
-      carte.classList.add('flash');
-    }
-    window.__KOMUNE_OPEN_LOI = openLoi;
-
-    /* ==================== RÉPONSES RAPIDES (mode débat) ==================== */
-    var debatGrid = document.getElementById('debat-grid');
-    /* une pastille coloree par position, pour lire la ligne d'un coup d'oeil */
-    var QR_COURT = { pour: 'Pour', contre: 'Contre', abstention: 'Abstention', divise: 'Divis\u00e9',
-                     npppv: 'N\u2019a pas vot\u00e9', na: 'Non concern\u00e9\u00b7e', mixte: 'Voir le d\u00e9tail' };
-    function qrPill(v) {
-      if (!v) return '<span class="qr-pill na">\u2014</span>';
-      var court = QR_COURT[v.code] || v.label;
-      var t = (v.brut && v.brut !== court) ? ' title="' + esc(v.brut) + '"' : '';
-      return '<span class="qr-pill ' + esc(v.code) + '"' + t + '>' + esc(court) + '</span>' +
-             (v.label && v.label !== court && v.label !== 'Non applicable'
-                ? '<span class="qr-sub">' + esc(v.label) + '</span>' : '');
-    }
-    function nomQuick(cid) {
-      return '<span class="qr-qui"><span class="qr-nom">' + avatar(CAND[cid], 'mini') + esc(CAND[cid].court) + '</span>' +
-             '<span class="qr-sub">' + esc(CAND[cid].parti.replace(/\s*\(.*\)$/, '')) + '</span></span>';
-    }
-    /* Deux mises en page pour la meme information : en colonnes quand l'ecran
-       le permet (on compare d'un coup d'oeil), en lignes sur telephone (cinq
-       colonnes y seraient illisibles). Une seule est affichee a la fois. */
-    function tableauQuick(lois) {
-      var entetes = JOUEURS.map(function (cid) {
-        return '<th class="qr-cand" scope="col">' + nomQuick(cid) + '</th>';
-      }).join('');
-      var html = '';
-      lois.forEach(function (l) {
-        var titre = lois.length > 1 ? '<p class="qr-loi">' + esc(l.nom) + '</p>' : '';
-        html += titre + '<div class="qr-wrap qr-large">' +
-          '<table class="qr-table"><thead><tr><th scope="col"><span class="lecteur-seul">Question</span></th>' + entetes + '</tr></thead><tbody>';
-        [['Son vote', 'perso'], ['Son groupe', 'groupe']].forEach(function (r) {
-          html += '<tr><th scope="row">' + r[0] + '</th>' +
-            JOUEURS.map(function (cid) {
-              var v = l.votes[cid];
-              return '<td>' + qrPill(v ? v[r[1]] : null) + '</td>';
-            }).join('') + '</tr>';
+    /* ---------- lecture des textes « promesse » et « actes » ----------
+       Le classeur met en gras la phrase a lire au premier coup d'oeil, et
+       la citation + la source suivent. Pour les textes plus anciens sans
+       gras, la tete est le debut du paragraphe, mot pour mot : un extrait,
+       jamais une reformulation. */
+    function gras(t) { return t.replace(/\*\*([\s\S]+?)\*\*/g, '<strong>$1</strong>'); }
+    /* qui peut ouvrir un bloc : les candidat·es et leurs partis, rien d'autre.
+       « Mathilde Panot, en commission : » n'est pas une etiquette de bloc, c'est
+       la suite du bloc precedent. */
+    var PORTEURS = {};
+    (function () {
+      var extra = ['lfi', 'rn', 'lr', 'horizons', 'renaissance', 'epr', 'lrem', 'les republicains', 'marine le pen', 'melenchon', 'le groupe', 'son groupe', 'le parti'];
+      extra.forEach(function (x) { PORTEURS[x] = 1; });
+      D.CANDIDATS.forEach(function (c) {
+        [c.court, c.nom, c.parti, c.groupeAN, c.groupeSenat].forEach(function (x) {
+          if (!x) return;
+          PORTEURS[norm(x).replace(/\s*\(.*\)\s*$/, '').trim()] = 1;
+          var m = /\(([^)]+)\)/.exec(x); if (m) PORTEURS[norm(m[1]).trim()] = 1;
         });
-        html += '</tbody></table></div>';
-        html += '<div class="qr-etroit">' + JOUEURS.map(function (cid) {
-          var v = l.votes[cid] || {};
-          return '<div class="qr-ligne">' + nomQuick(cid) +
-            '<span class="qr-duo">' +
-              '<span class="qr-quoi">Son vote</span>' + qrPill(v.perso) +
-              '<span class="qr-quoi">Son groupe</span>' + qrPill(v.groupe) +
-            '</span></div>';
-        }).join('') + '</div>';
       });
-      return html;
+    })();
+    function porteur(lab) { return !!PORTEURS[norm(lab).trim()]; }
+    function decoupe(texte) {
+      if (!texte) return [];
+      var t = String(texte).replace(/\r\n/g, '\n');
+      /* un passage en gras peut enjamber une ligne vide : on le recolle */
+      t = t.replace(/\*\*([\s\S]+?)\*\*/g, function (m0, x) { return '**' + x.replace(/\n\s*\n/g, '\n') + '**'; });
+      var paras = t.split(/\n\s*\n/).map(function (x) { return x.trim(); }).filter(Boolean);
+      var blocs = [];
+      function suite(bloc) {
+        var d = blocs[blocs.length - 1];
+        d.suite = (d.suite ? d.suite + '\n' : '') + bloc;
+      }
+      paras.forEach(function (bloc) {
+        var m = /^([\s\S]*?)\*\*([\s\S]+?)\*\*([\s\S]*)$/.exec(bloc);
+        if (m) {
+          var avant = m[1].trim();
+          var etq = avant.replace(/\s*:\s*$/, '');
+          if (!avant || (avant.length <= 40 && porteur(etq))) {
+            blocs.push({ qui: etq, tete: m[2].trim(), suite: m[3].trim(), excerpt: false });
+            return;
+          }
+          /* un gras au milieu d'un paragraphe : de l'emphase, pas une tete */
+          if (blocs.length && blocs[blocs.length - 1].tete) { suite(bloc); return; }
+          blocs.push({ qui: '', tete: bloc.replace(/\*\*/g, ''), suite: '', excerpt: true });
+          return;
+        }
+        var e = /^([A-ZÀ-Ü][^:\n]{1,28})\s*:\s+([\s\S]+)$/.exec(bloc);
+        var ok = !!(e && porteur(e[1]));
+        if (!ok && blocs.length && blocs[blocs.length - 1].tete) { suite(bloc); return; }
+        var qui = ok ? e[1].trim() : '', corps = ok ? e[2].trim() : bloc;
+        /* la tete : la premiere phrase, ou les premiers 180 caracteres, mot pour mot */
+        var lignes = corps.split('\n');
+        var premiere = lignes[0].trim();
+        var coupe = premiere.search(/[.!?]\s/);
+        var tete2 = premiere, reste = lignes.slice(1).join('\n');
+        if (coupe >= 40 && coupe < premiere.length - 1) { tete2 = premiere.slice(0, coupe + 1); reste = (premiere.slice(coupe + 1).trim() + '\n' + reste).trim(); }
+        else if (premiere.length > 190) {
+          var c2 = premiere.lastIndexOf(' ', 180);
+          tete2 = premiere.slice(0, c2) + '…'; reste = ('…' + premiere.slice(c2 + 1) + '\n' + reste).trim();
+        }
+        blocs.push({ qui: qui, tete: tete2, suite: reste.trim(), excerpt: true });
+      });
+      return blocs;
     }
-    (D.QUICK || []).forEach(function (q) {
-      var lois = (q.lois || []).map(function (id) { return LOI[id]; }).filter(Boolean);
-      var liens = lois.map(function (l) {
-        return '<button type="button" data-loi="' + esc(l.id) + '">\uD83D\uDDF3\uFE0F ' +
-          esc(l.nom.length > 42 ? l.nom.slice(0, 40) + '\u2026' : l.nom) + ' \u2192</button>';
+    function blocsHtml(blocs, ouvert) {
+      return blocs.map(function (d) {
+        var out = '<div class="tete-bloc">';
+        if (d.qui) out += '<span class="tete-qui">' + esc(d.qui) + '</span>';
+        out += '<p class="tete-txt' + (d.excerpt ? ' excerpt' : '') + '">' + gras(esc(d.tete)) + '</p>';
+        if (d.suite) {
+          out += '<details class="suite"' + (ouvert ? ' open' : '') + '><summary>' +
+            '<span>' + (d.excerpt ? 'Lire la suite' : 'Lire la citation et la source') + '</span><span class="fl" aria-hidden="true">▼</span></summary>' +
+            '<div class="suite-corps">' + gras(esc(d.suite)) + '</div></details>';
+        }
+        return out + '</div>';
       }).join('');
-      var jeuLien = q.jeu ? '<a href="#jeu">\uD83C\uDFAE V\u00e9rifier en jouant</a>' : '';
-      var item = el(
-        '<details class="q-item"><summary>' + esc(q.q) + '</summary>' +
-          '<div class="q-body"><p>' + esc(q.r) + '</p>' +
-          (lois.length ? tableauQuick(lois) : '') +
-          (liens || jeuLien ? '<div class="q-links">' + liens + jeuLien + '</div>' : '') +
-        '</div></details>');
-      item.querySelectorAll('button[data-loi]').forEach(function (b) {
-        b.addEventListener('click', function () { openLoi(b.dataset.loi); });
-      });
-      debatGrid.appendChild(item);
-    });
-
-    /* ==================== LES FICHES ==================== */
-    var fichesGrid = document.getElementById('fiches-grid');
-    var sujetActif = 'sante';
-
-    function blocFiche(titre, texte) {
-      if (!texte) return '';
-      return '<div><dt>' + esc(titre) + '</dt><dd>' + esc(texte) + '</dd></div>';
     }
-    function renderFiches() {
-      if (!fichesGrid) return;
-      fichesGrid.innerHTML = '';
-      var visibles = fichesVisibles();
-      if (!visibles.length) { fichesGrid.appendChild(videEtat('fiche')); return; }
-      visibles.forEach(function (f) {
-        var c = CAND[f.cid];
-        if (!c) return;
-        var preuveCls = 'preuve-' + esc((f.preuve || 'flou').toLowerCase().replace(/\s+/g, '-').replace('à', 'a'));
-        var srcHtml = f.sources.length
-          ? '<div class="fiche-src"><dt>Sources</dt>' + f.sources.map(function (u, i) {
-              return '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">Source ' + (i + 1) + ' ↗</a>';
-            }).join(' · ') + '</div>'
-          : '';
-        var lum = lumiereFiche(f);
-        var fiche = el(
-          '<article class="fiche' + (lum ? ' est-lumiere' : '') + '" data-fiche="' + esc(f.cid + '-' + f.sujet) + '"'
-            + ' style="--card-bg:' + esc(c.bg) + ';--card-shadow:' + esc(c.shadow) + '">' +
-            '<div class="fiche-head">' + avatar(c, 'big') +
-              '<div><h3>' + esc(c.court) + '</h3><div class="parti">' + esc(c.parti) + '</div></div>' +
-              '<div class="preuve"><span class="chip ' + preuveCls + '">Preuve : ' + esc(f.preuve || 'à documenter') + '</span></div>' +
-            '</div>' +
-            '<div class="loi-sum-top" style="gap:8px">' +
-              '<span class="chip">' + (f.sujet === 'sante' ? '🩺 Santé' : '🌱 Écologie & climat') + '</span>' +
-              (lum ? '<span class="chip lumiere" title="Repéré via : ' + esc(pourquoi(lum, 6)) + '">🔎 concerne ce profil</span>' : '') +
-            '</div>' +
-            (lum ? '<p class="lumiere-pourquoi">Repéré via&nbsp;: ' + esc(pourquoi(lum, 4)) + '</p>' : '') +
-            (f.engros ? '<p class="engros">' + esc(f.engros) + '</p>' : '') +
-            '<dl>' +
-              blocFiche('La promesse retrouvée', f.proposition) +
-              blocFiche('Ses votes passés', f.votePasse) +
-              blocFiche('Au pouvoir', f.actionPassee) +
-              blocFiche('Le groupe parlementaire', f.voteGroupe) +
-            '</dl>' +
-            (f.contradiction ? '<div class="contradiction"><strong>Contradiction relevée :</strong> ' + esc(f.contradiction) + '</div>' : '') +
-            (f.flou ? '<div class="flou"><strong>Ce qui reste flou :</strong> ' + esc(f.flou) + '</div>' : '') +
-            '<details><summary>Ce que ça changerait, et pour qui</summary><dl style="margin-top:8px">' +
-              blocFiche('Ce que ça changerait', f.impact) +
-              blocFiche('Qui serait concerné·e', f.concernes) +
-            '</dl></details>' +
-            srcHtml +
-          '</article>');
-        fichesGrid.appendChild(fiche);
-      });
-    }
-    /* Les fiches candidat·es ne sont pas publiees dans cette version :
-       le conteneur n'existe plus, renderFiches() sort immediatement. */
-    renderFiches();
 
-    /* ==================== LES VOTES, LOI PAR LOI (compact) ==================== */
-    var loisGrid = document.getElementById('lois-grid');
-    var filtres = document.getElementById('filtres');
-    var filtreActif = 'tous';
-    [['tous', 'Tout voir'], ['cle', '⭐ Textes clés'], ['sante', '🩺 Santé'], ['ecologie', '🌱 Écologie & climat']].forEach(function (f, i) {
-      var b = el('<button type="button" class="chip" data-f="' + esc(f[0]) + '" aria-pressed="' + (f[0] === filtreActif) + '">' + esc(f[1]) + '</button>');
-      b.addEventListener('click', function () {
-        filtreActif = f[0];
-        filtres.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
-        b.setAttribute('aria-pressed', 'true');
-        renderLois();
-      });
-      filtres.appendChild(b);
-    });
-
-    /* ---------- lecture du champ resume (texte brut du classeur) ---------- */
+    /* ---------- lecture du champ « detail » (texte brut du classeur) ---------- */
     var C_PUCE    = /^[-•·*]\s+/;
     var C_ENTETE  = /^(objets? cl[ée]s?|dans le d[ée]tail|points? cl[ée]s?|mesures?|en d[ée]tail)\s*:?\s*$/i;
     var C_COURTE  = /(version\s+(tr[èe]s\s+)?courte|pour\s+ton\s+tableau|r[ée]sum[ée]\s+court)/i;
@@ -3381,235 +3435,674 @@
       return out + '</div>';
     }
 
-    /* les deux pastilles d'alignement : elles comparent TOUJOURS les promesses
-       et les actes de la personne (ou de son parti), jamais un accord avec la loi. */
-    function badgesAlign(v, petit) {
-      var out = '';
-      [['Candidat·e', v.alignCandidat], ['Parti', v.alignParti]].forEach(function (p) {
-        if (!p[1]) return;
-        out += '<span class="badge-align' + (petit ? ' mini' : '') + '">' +
-          '<b class="badge-qui">' + esc(p[0]) + '</b>' + p[1].icon + ' ' + esc(p[1].label) + '</span>';
-      });
-      return out;
+    /* la pastille de vote sans sa raison (elle est dans le corps de la carte) */
+    function voteChipCourt(v) {
+      if (!v) return '';
+      return '<span class="chip vote-' + esc(v.code) + '"' + (v.brut && v.brut !== v.label ? ' title="' + esc(v.brut) + '"' : '') + '>' + esc(v.label) + '</span>';
     }
     function statutChip(l) {
       if (!l.statut) return '';
       var cls = /adopt/i.test(l.statut) ? 'adopte' : /rejet/i.test(l.statut) ? 'rejete' : 'attente';
       return '<span class="chip statut ' + cls + '">' + esc(l.statut) + '</span>';
     }
-    function gras(t) { return t.replace(/\*\*([\s\S]+?)\*\*/g, '<strong>$1</strong>'); }
-    function miniBloc(titre, texte) {
-      if (!texte) return '';
-      if (texte.indexOf('**') < 0) {
-        return '<div class="mini"><b class="mini-titre">' + esc(titre) + '</b>' + esc(texte) + '</div>';
-      }
-      /* Demande d'Anna : la phrase en gras (celle du classeur) doit se lire au
-         premier coup d'oeil, la citation et la source se deplient en dessous.
-         Un bloc = un paragraphe (ligne vide entre deux). Dans chaque bloc, le
-         premier passage en gras est la tete ; ce qui le precede est l'etiquette
-         (« Mélenchon : », « LFI : »), ce qui le suit est la suite repliee. */
-      /* 1. on decoupe en paragraphes ; un paragraphe sans gras qui suit un
-            paragraphe a tete lui appartient (c'est sa citation, sa source) */
-      var paras = texte.split(/\n\s*\n/).map(function (t) { return t.trim(); }).filter(Boolean);
-      var blocs = [];
-      paras.forEach(function (bloc) {
-        var m = /^([\s\S]*?)\*\*([\s\S]+?)\*\*([\s\S]*)$/.exec(bloc);
-        if (!m) {
-          if (blocs.length && blocs[blocs.length - 1].tete) {
-            var d = blocs[blocs.length - 1];
-            d.suite = (d.suite ? d.suite + '\n' : '') + bloc;
-          } else {
-            blocs.push({ tete: '', suite: bloc, avant: '' });
-          }
-          return;
-        }
-        var avant = m[1].trim(), tete = m[2].trim(), suite = m[3].trim();
-        if (avant.length > 40) { suite = avant + '\n' + suite; avant = ''; }   /* pas une etiquette : du texte */
-        blocs.push({ avant: avant, tete: tete, suite: suite });
-      });
-      /* 2. rendu : la tete toujours visible, la suite repliee */
-      var html = blocs.map(function (d) {
-        if (!d.tete) return '<div class="mini-bloc"><p class="mini-p">' + gras(esc(d.suite)) + '</p></div>';
-        var etq = d.avant ? '<span class="mini-qui">' + esc(d.avant.replace(/\s*:\s*$/, '')) + '</span> ' : '';
-        var out = '<p class="mini-tete">' + etq + '<strong>' + gras(esc(d.tete)) + '</strong></p>';
-        if (d.suite) {
-          out += '<details class="mini-suite"><summary><span class="mini-suite-eti">Lire la citation et la source</span>' +
-                 '<span class="mini-suite-fl" aria-hidden="true">\u25BC</span></summary>' +
-                 '<div class="mini-suite-corps">' + gras(esc(d.suite)) + '</div></details>';
-        }
-        return '<div class="mini-bloc">' + out + '</div>';
-      }).join('');
-      return '<div class="mini mini-riche"><b class="mini-titre">' + esc(titre) + '</b>' + html + '</div>';
-    }
-    function stripHtml(l) {
-      return '<div class="strip" aria-label="Les positions d’un coup d’œil">' + joueurs().map(function (cid) {
-        var v = l.votes[cid];
-        if (!v) return '';
-        var g = voteGlance(v);
-        var t = CAND[cid].court + ' - ' + (g.groupe ? 'groupe : ' : '') + g.label;
-        var pourquoi = (v.perso && v.perso.raison) || (v.groupe && v.groupe.raison) || '';
-        if (g.code === 'na' && pourquoi) { t += ' (' + pourquoi + ')'; }
-        return '<span class="strip-item" title="' + esc(t) + '">' + avatar(CAND[cid], 'mini') +
-          '<span class="dot ' + esc(g.code) + (g.groupe ? ' groupe' : '') + '"></span></span>';
-      }).join('') + '</div>';
-    }
-    function renderLois() {
-      loisGrid.innerHTML = '';
-      var liste = loisVisibles();
-      if (!liste.length) { loisGrid.appendChild(videEtat('loi')); return; }
-      /* textes clés d'abord, dans l'ordre d'origine ensuite */
-      var ordonnee = liste.filter(function (l) { return l.cle; }).concat(liste.filter(function (l) { return !l.cle; }));
-      /* Un dossier (plusieurs textes sur un meme probleme, ex. deserts medicaux)
-         se lit d'un bloc : on regroupe ses textes la ou le premier apparait,
-         dans l'ordre de ses tableaux. Un texte sans dossier reste une carte seule. */
-      var dejaDossier = {};
-      ordonnee.forEach(function (l) {
-        if (l.dossier) {
-          if (dejaDossier[l.dossier]) return;
-          dejaDossier[l.dossier] = true;
-          var membres = ordonnee.filter(function (x) { return x.dossier === l.dossier; })
-            .sort(function (x, y) { return (x.dossierOrdre || 0) - (y.dossierOrdre || 0); });
-          var boite = el(
-            '<section class="dossier" aria-labelledby="dossier-' + esc(slug(l.dossier)) + '">' +
-              '<header class="dossier-tete">' +
-                '<span class="dossier-eti">\uD83D\uDCC1 Dossier</span>' +
-                '<h3 id="dossier-' + esc(slug(l.dossier)) + '">' + esc(l.dossier) + '</h3>' +
-                '<p class="dossier-compte">' + membres.length + ' textes sur le m\u00EAme sujet, \u00E0 lire ensemble</p>' +
-              '</header>' +
-              '<div class="dossier-corps"></div>' +
-            '</section>');
-          var corps = boite.querySelector('.dossier-corps');
-          membres.forEach(function (m) { corps.appendChild(carteLoi(m)); });
-          loisGrid.appendChild(boite);
-          return;
-        }
-        loisGrid.appendChild(carteLoi(l));
-      });
-    }
-    function slug(t) { return String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
-    function carteLoi(l) {
-      {
-        var rows = joueurs().map(function (cid) {
-          var c = CAND[cid], v = l.votes[cid];
-          if (!v) return '';
-          return '<details class="cand-row"><summary>' +
-              '<span class="nom">' + avatar(c) + esc(c.court) + '</span>' +
-              '<span class="col-perso"><span class="cell-label">Vote personnel</span>' + voteChip(v.perso) + '</span>' +
-              '<span class="col-groupe"><span class="cell-label">Son groupe</span>' + voteChip(v.groupe) + '</span>' +
-              '<span class="col-align"><span class="cell-label">Promesses \u2194 actes</span>' +
-                '<span class="badges">' + badgesAlign(v, true) + '</span></span>' +
-              '<span class="plus" aria-hidden="true"></span>' +
-            '</summary><div class="cand-detail">' +
-              miniBloc('Ce qui était promis', v.promesse) +
-              miniBloc('Les actes', v.actes) +
-              (v.perso && v.perso.brut && v.perso.brut !== v.perso.label ? miniBloc('Vote personnel - précision', v.perso.brut) : '') +
-              (v.groupe && v.groupe.brut && v.groupe.brut !== v.groupe.label ? miniBloc('Vote du groupe - précision', v.groupe.brut) : '') +
-              miniBloc('Le groupe en chiffres', v.detail) +
-            '</div></details>';
-        }).join('');
-        var liens = l.liens.map(function (s) {
-          return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a>';
-        }).join('');
-        var lum = lumiereLoi(l);
-        return el(
-          '<details class="loi-card' + (lum ? ' est-lumiere' : '') + '" data-loi="' + esc(l.id) + '"' + (l.cle ? ' data-cle="1"' : '') + '>' +
-            '<summary class="loi-sum">' +
-              '<div class="loi-sum-top">' +
-                (l.cle ? '<span class="cle-star">⭐ texte clé</span>' : '') +
-                '<h3>' + esc(l.nom) + '</h3>' + statutChip(l) +
-                (l.dossier && l.dossier === l.sousTheme ? '' :
-                  '<span class="chip">' + (l.sujet === 'sante' ? '🩺' : '🌱') + ' ' + esc(l.sousTheme) + '</span>') +
-                (lum ? '<span class="chip lumiere" title="Repéré via : ' + esc(pourquoi(lum, 6)) + '">🔎 concerne ce profil</span>' : '') +
-                '<span class="plus" aria-hidden="true"></span>' +
-              '</div>' +
-              (l.engros ? '<p class="loi-engros">' + esc(l.engros) + '</p>' : '') +
-              (lum ? '<p class="lumiere-pourquoi">Repéré via&nbsp;: ' + esc(pourquoi(lum, 4)) + '</p>' : '') +
-              stripHtml(l) +
-            '</summary>' +
-            '<div class="loi-body">' +
-              '<div class="loi-meta">' +
-                '<span><b>Date du texte&nbsp;:</b> ' + esc(l.date) + '</span>' +
-                (l.chambre ? '<span><b>Chambre où le vote a eu lieu&nbsp;:</b> ' + esc(l.chambre) + '</span>' : '') +
-                (l.initiative ? '<span><b>À l\'initiative de&nbsp;:</b> ' + esc(l.initiative.length > 220 ? l.initiative.slice(0, 219).replace(/\s+\S*$/, '') + '…' : l.initiative) + '</span>' : '') +
-              '</div>' +
-              (l.soustitre ? '<p class="loi-soustitre">' + esc(l.soustitre) + '</p>' : '') +
-              (l.chapo ? '<p class="loi-chapo">' + esc(l.chapo) + '</p>' : '') +
-              (l.detail ? '<details class="loi-resume-details suj-' + (l.sujet === 'sante' ? 'sante' : 'ecologie') + '">' +
-                 '<summary><span class="sum-emo" aria-hidden="true">\uD83D\uDCA1</span>' +
-                 '<span class="sum-txt">Lire toute l\u2019explication du texte</span>' +
-                 '<span class="sum-fl" aria-hidden="true">\u25BC</span></summary>' +
-                 htmlClair(l) + '</details>' : '') +
-              '<div class="grille">' + rows + '</div>' +
-              (liens ? '<div class="loi-links">' + liens + '</div>' : '') +
-            '</div>' +
-          '</details>');
-      }
-    }
-    renderLois();
+    function emojiSujet(l) { return l.sujet === 'sante' ? '🩺' : '🌱'; }
+    function slug(t) { return String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
 
-    /* ==================== TEXTES RELEVÉS, PAS ENCORE PUBLIÉS ====================
-       Ils sont dans notre tableau de relevé mais la vérification n'est pas
-       terminée : on affiche leur nom et on dit quand ils arrivent, plutôt que
-       de laisser croire que le travail s'arrête aux textes déjà en ligne. */
-    (function () {
-      var zone = document.getElementById('attente-zone');
-      var liste = D.ATTENTE || [];
-      if (!zone || !liste.length) { return; }
-      zone.appendChild(el(
-        '<div class="attente-head">' +
-          '<h3>\u23F3 D\u00e9j\u00e0 relev\u00e9s, en cours de v\u00e9rification</h3>' +
-          '<p>Ces ' + liste.length + ' textes sont d\u00e9pouill\u00e9s scrutin par scrutin, mais la relecture n\u2019est pas termin\u00e9e. ' +
-          'On pr\u00e9f\u00e8re les annoncer plut\u00f4t que de les publier \u00e0 moiti\u00e9\u00a0: ils arrivent \u00e0 partir du ' +
-          '<strong>mercredi 2 septembre</strong>.</p>' +
-        '</div>'));
-      var grid = el('<div class="attente-grid"></div>');
-      liste.forEach(function (a) {
-        grid.appendChild(el(
-          '<article class="attente-card">' +
-            '<h3>' + esc(a.nom) + '</h3>' +
-            '<p>' + (a.sujet === 'sante' ? '\uD83E\uDE7A' : '\uD83C\uDF31') + ' ' + esc(a.sousTheme) +
-            ' \u00b7 en cours de v\u00e9rification</p>' +
-          '</article>'));
+    /* ---------- la carte face-a-face : un texte x une personne ---------- */
+    function duelCard(l, cid, opts) {
+      opts = opts || {};
+      var c = CAND[cid], v = l.votes[cid];
+      if (!c || !v) return null;
+      var tout = niveau === 'tout';
+      var ouvert = opts.ouvert != null ? opts.ouvert : niveau !== 'gros';
+      var idCorps = 'duel-corps-' + l.id + '-' + cid;
+      var promis = decoupe(v.promesse), actes = decoupe(v.actes);
+      var lum = opts.lum;
+      var liens = (l.liens || []).map(function (s) {
+        return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + ' ↗</a>';
+      }).join('');
+      var perso = v.perso, groupe = v.groupe;
+      var votesLigne = '<div class="votes-ligne">' +
+        '<div class="vl"><span class="vl-lab">Son vote</span>' + voteChip(perso) + '</div>' +
+        '<div class="vl"><span class="vl-lab">Son groupe</span>' + voteChip(groupe) + '</div>' +
+        '</div>';
+      var html =
+        '<article class="duel v-' + esc(verdict(v).code) + '" id="duel-' + esc(l.id) + '-' + esc(cid) + '" data-loi="' + esc(l.id) + '" data-cid="' + esc(cid) + '"' +
+          ' style="--card-bg:' + esc(c.bg || '#ffffff') + ';--card-shadow:' + esc(c.shadow || '#332e32') + '">' +
+          '<button type="button" class="duel-tete" aria-expanded="' + (ouvert ? 'true' : 'false') + '" aria-controls="' + idCorps + '">' +
+            (opts.montrerQui ? (opts.montrerTexte === false ? '<h3 class="duel-qui">' : '<span class="duel-qui">') + avatar(c, 'mini') + esc(c.court) + (opts.montrerTexte === false ? '</h3>' : '</span>') : '') +
+            (opts.montrerTexte !== false ?
+              '<span class="duel-sujet"><span>' + emojiSujet(l) + ' ' + esc(l.dossier || l.sousTheme) + '</span>' + statutChip(l) + (l.cle ? '<span>⭐ texte clé</span>' : '') + '</span>' +
+              '<h3 class="duel-titre">' + esc(l.nom) + '</h3>' +
+              (l.engros ? '<p class="duel-engros">' + esc(l.engros) + '</p>' : '')
+              : '') +
+            (lum ? '<p class="duel-engros lumiere-pourquoi">🔎 Repéré via : ' + esc(pourquoi(lum, 4)) + '</p>' : '') +
+            verdictHtml(v, false) +
+            (niveau === 'gros' ? '<span class="duel-votes"><span class="dv-lab">Son vote</span>' + voteChipCourt(perso) + '<span class="dv-lab">Son groupe</span>' + voteChipCourt(groupe) + '</span>' : '') +
+            '<span class="duel-chev" aria-hidden="true">▼</span>' +
+          '</button>' +
+          '<div class="duel-corps" id="' + idCorps + '"' + (ouvert ? '' : ' hidden') + '>' +
+            '<div class="faces">' +
+              '<div class="face promis"><h4><span aria-hidden="true">🗣️</span> Promis</h4>' +
+                (promis.length ? blocsHtml(promis, tout) : '<p class="rien">Aucune promesse retrouvée sur ce texte : on l\'écrit plutôt que de l\'inventer.</p>') +
+              '</div>' +
+              '<div class="face fait"><h4><span aria-hidden="true">🗳️</span> Fait</h4>' +
+                votesLigne +
+                (actes.length ? blocsHtml(actes, tout) : '') +
+              '</div>' +
+            '</div>' +
+            '<p class="duel-parti"><span>Et son parti ?</span> ' + verdictHtml(v, true, true) +
+              ' <a href="#methode" class="lien-methode">Comment on juge →</a></p>' +
+            '<details class="duel-plus"' + (tout ? ' open' : '') + '><summary><span aria-hidden="true">📖</span> Le texte, les chiffres et les sources<span class="fl" aria-hidden="true">▼</span></summary>' +
+              '<div class="plus-corps">' +
+                '<div class="loi-meta">' +
+                  '<span><b>Date du texte :</b> ' + esc(l.date) + '</span>' +
+                  (l.chambre ? '<span><b>Chambre où le vote a eu lieu :</b> ' + esc(l.chambre) + '</span>' : '') +
+                  (l.initiative ? '<span><b>À l\'initiative de :</b> ' + esc(l.initiative.length > 220 ? l.initiative.slice(0, 219).replace(/\s+\S*$/, '') + '…' : l.initiative) + '</span>' : '') +
+                '</div>' +
+                (l.soustitre ? '<p class="loi-soustitre">' + esc(l.soustitre) + '</p>' : '') +
+                (l.chapo ? '<p class="loi-chapo">' + esc(l.chapo) + '</p>' : '') +
+                (l.detail ? htmlClair(l) : '') +
+                (v.detail ? '<p class="chiffres"><b>Le groupe en chiffres</b>' + esc(v.detail) + '</p>' : '') +
+                (perso && perso.brut && perso.brut !== perso.label ? '<p class="chiffres"><b>Vote personnel, précision</b>' + esc(perso.brut) + '</p>' : '') +
+                (groupe && groupe.brut && groupe.brut !== groupe.label ? '<p class="chiffres"><b>Vote du groupe, précision</b>' + esc(groupe.brut) + '</p>' : '') +
+                (liens ? '<div class="loi-links">' + liens + '</div>' : '<p class="chiffres"><b>Sources</b>Lien source en cours d\'ajout pour ce texte.</p>') +
+              '</div>' +
+            '</details>' +
+            (opts.actions !== false ?
+              '<div class="duel-actions">' +
+                (ETAT.cid ? '<button type="button" class="btn" data-comparer="' + esc(l.id) + '">👥 Comparer les 5 sur ce texte</button>' : '') +
+                (!ETAT.cid ? '<button type="button" class="btn" data-voir-cand="' + esc(cid) + '">' + esc(c.court) + ' sur tous les textes →</button>' : '') +
+              '</div>' : '') +
+          '</div>' +
+        '</article>';
+      var node = el(html);
+      var btn = node.querySelector('.duel-tete'), corps = node.querySelector('.duel-corps');
+      btn.addEventListener('click', function () {
+        var va = btn.getAttribute('aria-expanded') !== 'true';
+        btn.setAttribute('aria-expanded', va ? 'true' : 'false');
+        corps.hidden = !va;
       });
-      zone.appendChild(grid);
+      node.querySelectorAll('[data-comparer]').forEach(function (b) {
+        b.addEventListener('click', function () { openLoi(b.dataset.comparer, null); });
+      });
+      node.querySelectorAll('[data-voir-cand]').forEach(function (b) {
+        b.addEventListener('click', function () { choisir(b.dataset.voirCand); openLoi(l.id, b.dataset.voirCand); });
+      });
+      return node;
+    }
+
+    /* ---------- quels textes sont visibles ---------- */
+    function colle(texte) {
+      if (!ETAT.q) return true;
+      var mots = norm(ETAT.q).split(/\s+/).filter(Boolean);
+      return mots.every(function (m) {
+        if (texte.indexOf(m) >= 0) return true;
+        return m.length >= 5 && m.charAt(m.length - 1) === 's' && texte.indexOf(m.slice(0, -1)) >= 0;
+      });
+    }
+    function loisVisibles(sansFiltre) {
+      return D.LOIS.filter(function (l) {
+        if (!sansFiltre) {
+          if (ETAT.filtre === 'cle' && !l.cle) return false;
+          if (ETAT.filtre.indexOf('dossier:') === 0 && l.dossier !== ETAT.filtre.slice(8)) return false;
+          if ((ETAT.filtre === 'sante' || ETAT.filtre === 'ecologie') && l.sujet !== ETAT.filtre) return false;
+        }
+        if (!colle(texteLoi(l))) return false;
+        if (ETAT.profil.length && !lumiereLoi(l)) return false;
+        return true;
+      });
+    }
+    /* textes cles d'abord, puis l'ordre d'origine ; un dossier se lit d'un bloc */
+    function grouper(liste) {
+      var ordonnee = liste.filter(function (l) { return l.cle; }).concat(liste.filter(function (l) { return !l.cle; }));
+      var out = [], vus = {};
+      ordonnee.forEach(function (l) {
+        if (!l.dossier) { out.push({ loi: l }); return; }
+        if (vus[l.dossier]) return;
+        vus[l.dossier] = true;
+        out.push({ dossier: l.dossier, membres: ordonnee.filter(function (x) { return x.dossier === l.dossier; })
+          .sort(function (x, y) { return (x.dossierOrdre || 0) - (y.dossierOrdre || 0); }) });
+      });
+      return out;
+    }
+
+    /* ---------- les tetes ---------- */
+    var zoneTetes = document.getElementById('tetes');
+    function renderTetes() {
+      if (!zoneTetes) return;
+      zoneTetes.innerHTML = '';
+      var tous = el('<button type="button" class="tete tete-tous" aria-pressed="' + (!ETAT.cid) + '">' +
+        '<span class="tete-ico" aria-hidden="true">👥</span><span class="tete-nom">Tout le monde</span><span class="tete-parti">les 5 côte à côte</span></button>');
+      tous.addEventListener('click', function () { choisir(null); });
+      zoneTetes.appendChild(tous);
+      JOUEURS.forEach(function (cid) {
+        var c = CAND[cid]; if (!c) return;
+        var b = el('<button type="button" class="tete" aria-pressed="' + (ETAT.cid === cid) + '" data-cid="' + esc(cid) + '"' +
+          ' style="--card-bg:' + esc(c.bg || '#ffffff') + ';--card-shadow:' + esc(c.shadow || '#332e32') + '">' +
+          avatar(c, 'big') + '<span class="tete-nom">' + esc(c.court) + '</span>' +
+          '<span class="tete-parti">' + esc(c.parti.replace(/\s*\(.*\)$/, '')) + '</span></button>');
+        b.addEventListener('click', function () { choisir(ETAT.cid === cid ? null : cid); });
+        zoneTetes.appendChild(b);
+      });
+      var note = document.getElementById('bientot-note');
+      if (note) {
+        var autres = D.CANDIDATS.filter(function (c) { return JOUEURS.indexOf(c.id) < 0; }).map(function (c) { return c.nom; });
+        note.textContent = autres.length ? 'Bientôt : ' + autres.join(' et ') + '. Leurs votes sont en cours de relevé, texte par texte.' : '';
+      }
+    }
+    function choisir(cid) {
+      ETAT.cid = cid;
+      garde();
+      renderTetes();
+      renderBilan();
+      renderListe();
+    }
+
+    /* ---------- le bilan d'une personne : des comptes, pas une note ---------- */
+    var zoneBilan = document.getElementById('bilan');
+    function renderBilan() {
+      if (!zoneBilan) return;
+      zoneBilan.innerHTML = '';
+      if (!ETAT.cid) return;
+      var c = CAND[ETAT.cid];
+      var n = { aligne: 0, partiel: 0, contradictoire: 0, 'non-testable': 0, heterogene: 0, inconnu: 0 }, total = 0, persoOk = 0;
+      D.LOIS.forEach(function (l) {
+        var v = l.votes[ETAT.cid]; if (!v) return;
+        total++;
+        n[verdict(v).code] = (n[verdict(v).code] || 0) + 1;
+        if (v.perso && ['na', 'vide', 'encours'].indexOf(v.perso.code) < 0) persoOk++;
+      });
+      var items = [['aligne', '✅', 'aligné' + (n.aligne > 1 ? 's' : '')], ['partiel', '⚠️', 'partiellement'], ['contradictoire', '❌', 'contradictoire' + (n.contradictoire > 1 ? 's' : '')], ['non-testable', '➖', 'non testable' + (n['non-testable'] > 1 ? 's' : '')], ['heterogene', '🔀', 'hétérogène' + (n.heterogene > 1 ? 's' : '')]];
+      zoneBilan.appendChild(el('<div class="bilan" role="status">' +
+        '<span class="bilan-titre">' + esc(c.court) + ' sur ' + total + ' textes</span>' +
+        items.filter(function (it) { return n[it[0]] > 0; }).map(function (it) {
+          return '<span class="bilan-n" title="' + esc(VERDICT_EXPL[it[0]] || '') + '"><b>' + n[it[0]] + '</b><span aria-hidden="true">' + it[1] + '</span> ' + esc(it[2]) + '</span>';
+        }).join('') +
+        '<p class="bilan-note">Vote personnel possible sur <b>' + persoOk + '</b> texte' + (persoOk > 1 ? 's' : '') + (c.vigilance ? ' · ' + esc(c.vigilance) : '') +
+        ' · Ces comptes disent si les actes suivent les promesses, pas si elles sont bonnes. <a href="#methode">La méthode →</a></p>' +
+        '</div>'));
+    }
+
+    /* ---------- les filtres ---------- */
+    var zoneFiltres = document.getElementById('filtres2');
+    function renderFiltres() {
+      if (!zoneFiltres) return;
+      zoneFiltres.innerHTML = '';
+      var defs = [['tous', 'Tout voir'], ['sante', '🩺 Santé'], ['ecologie', '🌱 Écologie'], ['cle', '⭐ Textes clés']];
+      var dossiers = {};
+      D.LOIS.forEach(function (l) { if (l.dossier) dossiers[l.dossier] = (dossiers[l.dossier] || 0) + 1; });
+      Object.keys(dossiers).forEach(function (d) { defs.push(['dossier:' + d, '📁 ' + d]); });
+      defs.forEach(function (f) {
+        var n = D.LOIS.filter(function (l) {
+          if (f[0] === 'tous') return true;
+          if (f[0] === 'cle') return l.cle;
+          if (f[0].indexOf('dossier:') === 0) return l.dossier === f[0].slice(8);
+          return l.sujet === f[0];
+        }).length;
+        var b = el('<button type="button" class="fchip" aria-pressed="' + (ETAT.filtre === f[0]) + '" data-f="' + esc(f[0]) + '">' + esc(f[1]) + '<span class="n">' + n + '</span></button>');
+        b.addEventListener('click', function () {
+          ETAT.filtre = f[0];
+          zoneFiltres.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.f === f[0] ? 'true' : 'false'); });
+          renderListe();
+        });
+        zoneFiltres.appendChild(b);
+      });
+    }
+
+    /* ---------- les situations de vie ---------- */
+    var zoneProfils = document.getElementById('pchips');
+    function renderProfils() {
+      if (!zoneProfils) return;
+      zoneProfils.innerHTML = '';
+      TAX.PROFILS.forEach(function (p) {
+        var on = ETAT.profil.indexOf(p.id) >= 0;
+        var b = el('<button type="button" class="pchip" aria-pressed="' + on + '">' + p.emoji + ' ' + esc(p.label) + '</button>');
+        b.addEventListener('click', function () {
+          var i = ETAT.profil.indexOf(p.id);
+          if (i >= 0) ETAT.profil.splice(i, 1); else ETAT.profil.push(p.id);
+          garde(); renderProfils(); renderListe();
+        });
+        zoneProfils.appendChild(b);
+      });
+      var det = document.getElementById('profils2');
+      if (det && ETAT.profil.length) det.open = true;
+    }
+
+    /* ---------- ce que la recherche donne, nomme juste sous la barre ---------- */
+    var zoneCompte = document.getElementById('res2-compte');
+    var zoneRes = document.getElementById('res2-liste');
+    function quickColle(q) {
+      var t = norm([q.q, q.r].concat(q.tags || []).join(' '));
+      return colle(t);
+    }
+    function lexColle(e) {
+      var t = norm([e.t, e.d || ''].concat(e.a || []).join(' '));
+      return colle(t);
+    }
+    function renderRes(nl) {
+      if (!zoneCompte || !zoneRes) return;
+      zoneRes.innerHTML = '';
+      var actif = !!(ETAT.q || ETAT.profil.length);
+      if (!actif) { zoneCompte.textContent = ''; return; }
+      var quicks = ETAT.q ? (D.QUICK || []).filter(quickColle).slice(0, 3) : [];
+      var lex = ETAT.q ? (window.KOMUNE_LEXIQUE || []).filter(lexColle).slice(0, 5) : [];
+      var morceaux = ['<b>' + nl + '</b> texte' + (nl > 1 ? 's' : '')];
+      if (quicks.length) morceaux.push(quicks.length + ' réponse' + (quicks.length > 1 ? 's' : '') + ' rapide' + (quicks.length > 1 ? 's' : ''));
+      if (lex.length) morceaux.push(lex.length + ' mot' + (lex.length > 1 ? 's' : '') + ' du lexique');
+      var pour = [];
+      if (ETAT.q) pour.push('« ' + esc(ETAT.q) + ' »');
+      if (ETAT.profil.length) pour.push(ETAT.profil.map(function (id) { return esc(AXE[id].label); }).join(' + '));
+      zoneCompte.innerHTML = morceaux.join(' · ') + ' pour ' + pour.join(' et ') + (ETAT.filtre !== 'tous' && nl < loisVisibles(true).length ? ' · <b>' + (loisVisibles(true).length - nl) + '</b> de plus au-delà du filtre' : '');
+      quicks.forEach(function (q) { zoneRes.appendChild(quickItem(q, 'res2-rapide')); });
+      if (lex.length) {
+        var box = el('<div class="res2-lex"><span class="lecteur-seul">Dans le lexique :</span></div>');
+        lex.forEach(function (e) {
+          var b = el('<button type="button">💡 ' + esc(e.t) + (e.d ? ' <span class="lecteur-seul">(' + esc(e.d) + ')</span>' : '') + '</button>');
+          b.addEventListener('click', function () { if (window.__LEX_OUVRIR) window.__LEX_OUVRIR(e.id); });
+          box.appendChild(b);
+        });
+        zoneRes.appendChild(box);
+      }
+      if (nl === 0 && !quicks.length && !lex.length) {
+        var vide = el('<div class="res2-vide"><p>Rien dans nos données pour ça. Ce n\'est pas forcément une absence de position : le comparateur ne couvre encore que la santé et l\'écologie, textes vérifiés seulement.</p>' +
+          '<div class="cta-row"><button type="button" class="btn" id="res2-effacer">↺ Tout réafficher</button>' +
+          '<button type="button" class="btn play" data-open-komune>💬 Demander à Komune</button>' +
+          '<button type="button" class="btn pink" data-open-retours>✍️ Proposer ce sujet</button></div></div>');
+        vide.querySelector('#res2-effacer').addEventListener('click', toutReafficher);
+        zoneRes.appendChild(vide);
+      }
+    }
+    function toutReafficher() {
+      ETAT.q = ''; ETAT.profil = []; ETAT.filtre = 'tous';
+      var ch = document.getElementById('recherche'); if (ch) ch.value = '';
+      garde(); renderFiltres(); renderProfils(); syncRecherche(); renderListe();
+    }
+
+    /* ---------- la liste : grille « tout le monde » ou face-a-face d'une personne ---------- */
+    var zoneListe = document.getElementById('liste');
+    function renderListe() {
+      if (!zoneListe) return;
+      zoneListe.innerHTML = '';
+      zoneListe.className = 'niv-' + niveau;
+      var liste = loisVisibles();
+      renderRes(liste.length);
+      if (!liste.length) return;
+      var groupes = grouper(liste);
+      if (ETAT.cid) renderDuels(groupes); else renderGrille(groupes);
+      window.__KOMUNE_LOIS_RENDUES = true;
+    }
+
+    /* -- vue d'une personne : une carte par texte -- */
+    function renderDuels(groupes) {
+      var cid = ETAT.cid;
+      var conteneur = el('<div class="duels' + (niveau !== 'tout' ? ' deux' : '') + '"></div>');
+      groupes.forEach(function (g) {
+        if (g.loi) {
+          var d = duelCard(g.loi, cid, { lum: lumiereLoi(g.loi) });
+          if (d) conteneur.appendChild(d);
+          return;
+        }
+        var boite = el('<section class="mx-dossier" aria-labelledby="dossier-' + esc(slug(g.dossier)) + '">' +
+          '<header class="dossier-tete"><span class="dossier-eti">📁 Dossier</span>' +
+          '<h3 id="dossier-' + esc(slug(g.dossier)) + '">' + esc(g.dossier) + '</h3>' +
+          '<p class="dossier-compte">' + g.membres.length + ' textes sur le même sujet, à lire ensemble</p></header></section>');
+        g.membres.forEach(function (l) { var d = duelCard(l, cid, { lum: lumiereLoi(l) }); if (d) boite.appendChild(d); });
+        conteneur.appendChild(boite);
+      });
+      zoneListe.appendChild(conteneur);
+    }
+
+    /* -- vue « tout le monde » : une ligne par texte, une case par personne -- */
+    function renderGrille(groupes) {
+      var mx = el('<div class="mx"></div>');
+      mx.appendChild(el('<p class="mx-legende">Une case par personne : ✅ aligné · ⚠️ partiellement · ❌ contradictoire · ➖ non testable · 🔀 groupe divisé. Touchez un texte pour lire les cinq face-à-face.</p>'));
+      mx.appendChild(el('<div class="mx-head" aria-hidden="true"><span></span>' + JOUEURS.map(function (cid) {
+        return '<span>' + avatar(CAND[cid], 'mini') + esc(CAND[cid].court) + '</span>';
+      }).join('') + '</div>'));
+      groupes.forEach(function (g) {
+        if (g.loi) { mx.appendChild(mxRow(g.loi)); return; }
+        var boite = el('<section class="mx-dossier" aria-labelledby="dossier-' + esc(slug(g.dossier)) + '">' +
+          '<header class="dossier-tete"><span class="dossier-eti">📁 Dossier</span>' +
+          '<h3 id="dossier-' + esc(slug(g.dossier)) + '">' + esc(g.dossier) + '</h3>' +
+          '<p class="dossier-compte">' + g.membres.length + ' textes sur le même sujet, à lire ensemble</p></header></section>');
+        g.membres.forEach(function (l) { boite.appendChild(mxRow(l)); });
+        mx.appendChild(boite);
+      });
+      zoneListe.appendChild(mx);
+    }
+    function mxRow(l) {
+      var ouvert = !!ETAT.ouverts[l.id];
+      var lum = lumiereLoi(l);
+      var cells = JOUEURS.map(function (cid) {
+        var v = l.votes[cid], c = CAND[cid];
+        if (!v) return '<span class="mx-cell v-inconnu" title="' + esc(c.court) + ' : pas encore relevé">' + avatar(c, 'mini') + '<i class="mx-ico" aria-hidden="true">?</i></span>';
+        var d = verdict(v), g = voteGlance(v);
+        var t = c.court + ' : ' + d.label + ' · ' + (g.groupe ? 'son groupe a voté ' : 'a voté ') + g.label;
+        return '<span class="mx-cell v-' + esc(d.code) + '" title="' + esc(t) + '">' + avatar(c, 'mini') + '<i class="mx-ico" aria-hidden="true">' + esc(d.icon) + '</i><span class="lecteur-seul">' + esc(t) + '</span></span>';
+      }).join('');
+      var row = el('<div class="mx-row' + (ouvert ? ' est-ouvert' : '') + '" data-loi="' + esc(l.id) + '">' +
+        '<button type="button" class="mx-btn" aria-expanded="' + ouvert + '" aria-controls="mxp-' + esc(l.id) + '">' +
+          '<span class="mx-txt">' +
+            '<span class="mx-sujet">' + emojiSujet(l) + ' ' + esc(l.dossier || l.sousTheme) + (l.cle ? ' · ⭐ texte clé' : '') + (l.statut ? ' · ' + esc(l.statut) : '') + '</span>' +
+            '<span class="mx-titre">' + esc(l.nom) + '</span>' +
+            (l.engros ? '<span class="mx-engros">' + esc(l.engros) + '</span>' : '') +
+            (lum ? '<span class="mx-engros lumiere-pourquoi">🔎 Repéré via : ' + esc(pourquoi(lum, 4)) + '</span>' : '') +
+          '</span>' +
+          '<span class="mx-cells">' + cells + '</span>' +
+        '</button>' +
+        '<div class="mx-panel" id="mxp-' + esc(l.id) + '"' + (ouvert ? '' : ' hidden') + '></div>' +
+      '</div>');
+      var btn = row.querySelector('.mx-btn'), panel = row.querySelector('.mx-panel');
+      function remplir() {
+        if (panel.childElementCount) return;
+        JOUEURS.forEach(function (cid) {
+          var d = duelCard(l, cid, { montrerQui: true, montrerTexte: false, lum: null });
+          if (d) panel.appendChild(d);
+        });
+      }
+      if (ouvert) remplir();
+      btn.addEventListener('click', function () {
+        var va = btn.getAttribute('aria-expanded') !== 'true';
+        btn.setAttribute('aria-expanded', va ? 'true' : 'false');
+        panel.hidden = !va;
+        row.classList.toggle('est-ouvert', va);
+        if (va) { remplir(); ETAT.ouverts[l.id] = true; } else { delete ETAT.ouverts[l.id]; }
+      });
+      return row;
+    }
+
+    /* ---------- ouvrir un texte depuis n'importe ou (chat, jeux, reponses rapides, ancre) ---------- */
+    function openLoi(id, cid) {
+      var l = LOI[id]; if (!l) return;
+      /* on leve ce qui pourrait masquer le texte demande */
+      var change = false;
+      if (ETAT.q || ETAT.profil.length) { ETAT.q = ''; ETAT.profil = []; var ch = document.getElementById('recherche'); if (ch) ch.value = ''; renderProfils(); syncRecherche(); change = true; }
+      if (ETAT.filtre !== 'tous') { ETAT.filtre = 'tous'; renderFiltres(); change = true; }
+      if (cid !== undefined && ETAT.cid !== cid) { ETAT.cid = cid; renderTetes(); renderBilan(); change = true; }
+      if (!ETAT.cid) ETAT.ouverts[id] = true;
+      garde();
+      renderListe();
+      var cible = ETAT.cid
+        ? document.getElementById('duel-' + id + '-' + ETAT.cid)
+        : document.querySelector('.mx-row[data-loi="' + id + '"]');
+      if (!cible) return;
+      if (ETAT.cid) {
+        var b = cible.querySelector('.duel-tete'), c = cible.querySelector('.duel-corps');
+        if (b && c) { b.setAttribute('aria-expanded', 'true'); c.hidden = false; }
+      }
+      setTimeout(function () {
+        cible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        cible.classList.remove('flash'); void cible.offsetWidth; cible.classList.add('flash');
+      }, 60);
+    }
+    window.__KOMUNE_OPEN_LOI = function (id) { openLoi(id, null); };
+    window.__KOMUNE_DECOUPE = decoupe;
+    window.__KOMUNE_OPEN_DUEL = openLoi;
+
+    /* ---------- le niveau de detail ---------- */
+    var segNiv = document.getElementById('niveau');
+    function appliquerNiveau(n, annoncer) {
+      niveau = n; garde();
+      if (segNiv) segNiv.querySelectorAll('button').forEach(function (b) {
+        b.setAttribute('aria-checked', b.dataset.niv === n ? 'true' : 'false');
+        b.tabIndex = b.dataset.niv === n ? 0 : -1;
+      });
+      var aide = document.getElementById('niveau-aide');
+      if (aide && annoncer) {
+        aide.textContent = n === 'gros' ? 'En gros : la phrase et le verdict. Touchez une carte pour le reste.'
+          : n === 'tout' ? 'Tout : citations, sources, chiffres et texte de loi, dépliés d\'office.'
+          : 'L\'essentiel : promis, fait, verdict. Les citations et les sources sont à un clic.';
+        aide.hidden = false;
+        clearTimeout(aide.__minuteur);
+        aide.__minuteur = setTimeout(function () { aide.hidden = true; }, 4500);
+      }
+      renderListe();
+    }
+    if (segNiv) {
+      segNiv.querySelectorAll('button').forEach(function (b) {
+        b.addEventListener('click', function () { appliquerNiveau(b.dataset.niv, true); });
+      });
+      segNiv.addEventListener('keydown', function (e) {
+        var i = NIVEAUX.indexOf(niveau);
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); appliquerNiveau(NIVEAUX[(i + 1) % 3], true); segNiv.querySelector('[aria-checked="true"]').focus(); }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); appliquerNiveau(NIVEAUX[(i + 2) % 3], true); segNiv.querySelector('[aria-checked="true"]').focus(); }
+      });
+      appliquerNiveau(niveau, false);
+    }
+
+    /* ---------- la recherche ---------- */
+    function syncRecherche() {
+      var vider = document.getElementById('recherche-vider');
+      if (vider) vider.hidden = !ETAT.q;
+    }
+    (function () {
+      var champ = document.getElementById('recherche');
+      if (!champ) return;
+      var minuteur = null;
+      champ.addEventListener('input', function () {
+        clearTimeout(minuteur);
+        minuteur = setTimeout(function () { ETAT.q = champ.value.trim(); syncRecherche(); renderListe(); }, 160);
+      });
+      var vider = document.getElementById('recherche-vider');
+      if (vider) vider.addEventListener('click', function () { ETAT.q = ''; champ.value = ''; champ.focus(); syncRecherche(); renderListe(); });
     })();
 
-    /* ==================== QUI EST QUI (parcours) ==================== */
-    var quiGrid = document.getElementById('qui-grid');
-    if (quiGrid && D.PARCOURS) {
+    /* ---------- rendre visible ce qui est replie avant d'y defiler ---------- */
+    window.__KOMUNE_REVELER = function (cible) {
+      var noeud = cible;
+      while (noeud && noeud !== document.body) {
+        if (noeud.tagName === 'DETAILS' && !noeud.open) { noeud.open = true; }
+        if (noeud.hasAttribute && noeud.hasAttribute('hidden')) {
+          noeud.hidden = false;
+          if (noeud.id) {
+            var btn = document.querySelector('[aria-controls="' + noeud.id + '"]');
+            if (btn) { btn.setAttribute(btn.hasAttribute('aria-pressed') ? 'aria-pressed' : 'aria-expanded', 'true'); }
+            if (noeud.id === 'jeu-vote' && !noeud.dataset.pret) { noeud.dataset.pret = '1'; dvIntro(); }
+          }
+        }
+        noeud = noeud.parentElement;
+      }
+    };
+
+    /* ---------- ticker : doubler la piste pour la boucle ---------- */
+    var tick = document.getElementById('ticker-track');
+    if (tick) { tick.innerHTML += tick.innerHTML; }
+
+    /* ---------- premier rendu ---------- */
+    renderTetes(); renderBilan(); renderFiltres(); renderProfils(); renderListe();
+
+    /* ==================== REPONSES RAPIDES ==================== */
+    var debatGrid = document.getElementById('debat-grid');
+    var QR_COURT = { pour: 'Pour', contre: 'Contre', abstention: 'Abstention', divise: 'Divisé',
+                     npppv: 'N’a pas voté', na: 'Non concerné·e', mixte: 'Voir le détail' };
+    function qrPill(v) {
+      if (!v) return '<span class="qr-pill na">-</span>';
+      var court = QR_COURT[v.code] || v.label;
+      var t = (v.brut && v.brut !== court) ? ' title="' + esc(v.brut) + '"' : '';
+      return '<span class="qr-pill ' + esc(v.code) + '"' + t + '>' + esc(court) + '</span>' +
+             (v.label && v.label !== court && v.label !== 'Non applicable' ? '<span class="qr-sub">' + esc(v.label) + '</span>' : '');
+    }
+    function nomQuick(cid) {
+      return '<span class="qr-qui"><span class="qr-nom">' + avatar(CAND[cid], 'mini') + esc(CAND[cid].court) + '</span>' +
+             '<span class="qr-sub">' + esc(CAND[cid].parti.replace(/\s*\(.*\)$/, '')) + '</span></span>';
+    }
+    function tableauQuick(lois) {
+      var entetes = JOUEURS.map(function (cid) { return '<th class="qr-cand" scope="col">' + nomQuick(cid) + '</th>'; }).join('');
+      var html = '';
+      lois.forEach(function (l) {
+        var titre = lois.length > 1 ? '<p class="qr-loi">' + esc(l.nom) + '</p>' : '';
+        html += titre + '<div class="qr-wrap qr-large" tabindex="0"><table class="qr-table"><thead><tr><th scope="col"><span class="lecteur-seul">Question</span></th>' + entetes + '</tr></thead><tbody>';
+        [['Son vote', 'perso'], ['Son groupe', 'groupe']].forEach(function (r) {
+          html += '<tr><th scope="row">' + r[0] + '</th>' + JOUEURS.map(function (cid) {
+            var v = l.votes[cid]; return '<td>' + qrPill(v ? v[r[1]] : null) + '</td>';
+          }).join('') + '</tr>';
+        });
+        html += '</tbody></table></div>';
+        html += '<div class="qr-etroit">' + JOUEURS.map(function (cid) {
+          var v = l.votes[cid] || {};
+          return '<div class="qr-ligne">' + nomQuick(cid) + '<span class="qr-duo"><span class="qr-quoi">Son vote</span>' + qrPill(v.perso) +
+            '<span class="qr-quoi">Son groupe</span>' + qrPill(v.groupe) + '</span></div>';
+        }).join('') + '</div>';
+      });
+      return html;
+    }
+    function quickItem(q, classe) {
+      var lois = (q.lois || []).map(function (id) { return LOI[id]; }).filter(Boolean);
+      var liens = lois.map(function (l) {
+        return '<button type="button" data-loi="' + esc(l.id) + '">🗳️ ' + esc(l.nom.length > 42 ? l.nom.slice(0, 40) + '…' : l.nom) + ' →</button>';
+      }).join('');
+      var item = el('<details class="q-item ' + (classe || '') + '"><summary>' + (classe ? '<span aria-hidden="true">⚡</span> ' : '') + esc(q.q) + '</summary>' +
+          '<div class="q-body"><p>' + esc(q.r) + '</p>' + (lois.length ? tableauQuick(lois) : '') +
+          (liens ? '<div class="q-links">' + liens + '</div>' : '') + '</div></details>');
+      item.querySelectorAll('button[data-loi]').forEach(function (b) {
+        b.addEventListener('click', function () { openLoi(b.dataset.loi, null); });
+      });
+      return item;
+    }
+    if (debatGrid) (D.QUICK || []).forEach(function (q) { debatGrid.appendChild(quickItem(q)); });
+
+    /* ==================== LES JEUX ==================== */
+    function shuffle(a) {
+      for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; }
+      return a;
+    }
+    /* le choix du jeu : un seul ouvert a la fois */
+    (function () {
+      var boutons = [document.getElementById('jeu-btn-vote'), document.getElementById('jeu-btn-dit')].filter(Boolean);
+      boutons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var zone = document.getElementById(b.getAttribute('aria-controls'));
+          var va = b.getAttribute('aria-pressed') !== 'true';
+          boutons.forEach(function (x) {
+            x.setAttribute('aria-pressed', 'false');
+            var z = document.getElementById(x.getAttribute('aria-controls')); if (z) z.hidden = true;
+          });
+          if (va && zone) {
+            b.setAttribute('aria-pressed', 'true'); zone.hidden = false;
+            if (zone.id === 'jeu-vote' && !zone.dataset.pret) { zone.dataset.pret = '1'; dvIntro(); }
+            setTimeout(function () { zone.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 40);
+          }
+        });
+      });
+    })();
+
+    /* ---- Devine le vote : que des votes personnels reels, au scrutin de reference ---- */
+    var dv = document.getElementById('dv-card');
+    var DV_CODES = ['pour', 'contre', 'abstention', 'npppv'];
+    var DV_CHOIX = [['pour', '👍 Pour'], ['contre', '👎 Contre'], ['abstention', '🤷 Abstention'], ['npppv', '🚪 N’a pas pris part au vote']];
+    var PAIRES = [];
+    D.LOIS.forEach(function (l) {
       JOUEURS.forEach(function (cid) {
-        var p = D.PARCOURS[cid], c = CAND[cid];
-        if (!p || !c) return;
-        var puces = (p.cinqAns || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
-        var srcs = (p.sources || []).map(function (x) {
-          return '<a href="' + esc(x.url) + '" target="_blank" rel="noopener noreferrer">' + esc(x.label) + '</a>';
-        }).join('');
-        quiGrid.appendChild(el(
-          '<article class="qui-card" style="--card-bg:' + esc(c.bg || '#ffffff') + ';--card-shadow:' + esc(c.shadow || '#332e32') + '">' +
-            '<div class="qui-head">' + avatar(c, 'big') +
-              '<div><h3>' + esc(c.nom) + '</h3><span class="qui-role">' + esc(p.role || '') + '</span></div>' +
-            '</div>' +
-            (p.candidature ? '<span class="qui-cand">🗳️ ' + esc(p.candidature) + '</span>' : '') +
-            (puces ? '<ul class="qui-list">' + puces + '</ul>' : '') +
-            (p.lecture ? '<p class="qui-lecture"><b>Ce que ça change pour lire ses votes&nbsp;:</b> ' + esc(p.lecture) + '</p>' : '') +
-            (srcs ? '<div class="qui-src">' + srcs + '</div>' : '') +
-          '</article>'));
+        var v = l.votes[cid];
+        if (v && v.perso && DV_CODES.indexOf(v.perso.code) >= 0) PAIRES.push({ l: l, cid: cid });
+      });
+    });
+    var dvManches = [], dvI = 0, dvScore = 0;
+    function dvIntro() {
+      if (!dv) return;
+      dv.innerHTML = '<div class="jeu-intro">' +
+        '<div class="mega">Qui a voté quoi ?<br>À vous de parier.</div>' +
+        '<p>5 manches. À chaque fois un texte de loi et une personne qui siégeait ce jour-là : pour, contre, abstention ou pas de vote ? Puis on retourne la carte : le vrai vote, sa source, et ce qui avait été promis.</p>' +
+        '<p class="note">' + PAIRES.length + ' votes personnels documentés dans le jeu. On ne fait jamais deviner un vote de groupe à la place d\'un vote personnel.</p>' +
+        '<p style="margin-top:22px"><button type="button" class="btn primary" id="dv-start" style="font-size:18px;padding:14px 28px">C\'est parti ! →</button></p></div>';
+      dv.querySelector('#dv-start').addEventListener('click', dvStart);
+    }
+    function dvStart() {
+      /* cinq manches, des personnes differentes tant que c'est possible */
+      var pool = shuffle(PAIRES.slice()), pris = [], vus = {};
+      pool.forEach(function (p) { if (pris.length < 5 && !vus[p.cid]) { pris.push(p); vus[p.cid] = 1; } });
+      pool.forEach(function (p) { if (pris.length < 5 && pris.indexOf(p) < 0) pris.push(p); });
+      dvManches = pris; dvI = 0; dvScore = 0;
+      dvQuestion();
+    }
+    function dvQuestion() {
+      var m = dvManches[dvI], l = m.l, c = CAND[m.cid];
+      dv.innerHTML =
+        '<div class="dv-progress"><span class="chip">Manche ' + (dvI + 1) + ' / ' + dvManches.length + '</span>' +
+          '<span class="chip">' + emojiSujet(l) + ' ' + esc(l.sousTheme) + '</span><span class="score">' + dvScore + ' pt' + (dvScore > 1 ? 's' : '') + '</span></div>' +
+        '<div class="dv-qui">' + avatar(c, 'big') + '<div><b>' + esc(c.nom) + '</b><small>' + esc(c.parti) + '</small></div></div>' +
+        '<div class="dv-texte"><span class="dv-sujet">' + esc(l.statut || '') + (l.date ? ' · ' + esc(l.date) : '') + '</span><h4>' + esc(l.nom) + '</h4>' + (l.engros ? '<p>' + esc(l.engros) + '</p>' : '') + '</div>' +
+        '<p class="dv-q">Sur ce texte, ' + esc(c.court) + ' a voté…</p>' +
+        '<div class="dv-choix" id="dv-choix"></div>';
+      var zone = dv.querySelector('#dv-choix');
+      DV_CHOIX.forEach(function (ch) {
+        var b = el('<button type="button" data-code="' + ch[0] + '">' + ch[1] + '</button>');
+        b.addEventListener('click', function () { dvRepondre(ch[0], b); });
+        zone.appendChild(b);
       });
     }
+    function dvRepondre(code, bouton) {
+      var m = dvManches[dvI], l = m.l, c = CAND[m.cid], v = l.votes[m.cid];
+      var ok = code === v.perso.code;
+      if (ok) dvScore++;
+      dv.querySelectorAll('#dv-choix button').forEach(function (b) {
+        b.disabled = true;
+        if (b.dataset.code === v.perso.code) b.classList.add('good');
+      });
+      if (!ok) bouton.classList.add('bad');
+      var promis = decoupe(v.promesse);
+      var tete = promis.length ? promis[0] : null;
+      var lien = (l.liens || [])[0];
+      var PHRASE = { pour: 'a voté <b>pour</b>', contre: 'a voté <b>contre</b>', abstention: 's\'est <b>abstenu·e</b>', npppv: '<b>n\'a pas pris part au vote</b>' };
+      var SIMPLE = { pour: 'pour', contre: 'contre', abstention: 'abstention', npppv: "n'a pas pris part au vote" };
+      var precision = [];
+      if (v.perso.label && norm(v.perso.label).replace(/[’]/g, "'") !== SIMPLE[v.perso.code]) precision.push(v.perso.label);
+      if (v.perso.brut && norm(v.perso.brut) !== norm(v.perso.label)) precision.push(v.perso.brut);
+      var reveal = el('<div class="dv-reveal">' +
+        '<p class="dv-verdict" role="status">' + (ok ? '✅ Exact ! ' : '❌ Raté. ') + esc(c.court) + ' ' + PHRASE[v.perso.code] +
+          '.' + (precision.length ? '<br><small style="font-weight:600;font-size:14px;color:var(--muted)">' + esc(precision.join(' · ')) + '</small>' : '') + '</p>' +
+        (tete ? '<div class="reveal-card"><h4>Ce qui était promis</h4>' + (tete.qui ? '<span class="tete-qui">' + esc(tete.qui) + '</span>' : '') + '<p>' + gras(esc(tete.tete)) + '</p></div>' : '') +
+        '<div class="reveal-card"><h4>Promesse VS actes</h4>' + verdictHtml(v, false) + '<p style="margin:8px 0 0;font-size:14px;color:var(--muted)">' + esc(VERDICT_EXPL[verdict(v).code] || '') + '</p></div>' +
+        '<div class="cta-row">' +
+          '<button type="button" class="btn primary" id="dv-voir">🎯 Voir le face-à-face complet →</button>' +
+          (lien ? '<a class="btn" href="' + esc(lien.url) + '" target="_blank" rel="noopener noreferrer">📄 ' + esc(lien.label) + ' ↗</a>' : '') +
+        '</div>' +
+        '<div class="jeu-next-row"><span class="chip" style="align-self:center">Score : ' + dvScore + ' / ' + (dvI + 1) + '</span>' +
+          '<button type="button" class="btn primary" id="dv-next">' + (dvI + 1 < dvManches.length ? 'Manche suivante →' : 'Voir mon score →') + '</button></div>' +
+        '</div>');
+      dv.appendChild(reveal);
+      reveal.querySelector('#dv-voir').addEventListener('click', function () { openLoi(l.id, m.cid); });
+      reveal.querySelector('#dv-next').addEventListener('click', function () {
+        dvI++;
+        if (dvI < dvManches.length) dvQuestion(); else dvFin();
+        document.getElementById('jeu-vote').scrollIntoView({ block: 'start' });
+      });
+      if (ok) confetti(dv.querySelector('.dv-texte'));
+      reveal.scrollIntoView({ block: 'nearest' });
+    }
+    function dvFin() {
+      var titre = dvScore === 5 ? 'Vous lisez les scrutins comme un livre ouvert 🏆' :
+                  dvScore >= 4 ? 'Sacré flair 👀' :
+                  dvScore >= 3 ? 'Pas mal du tout !' :
+                  dvScore >= 2 ? 'Les votes surprennent, hein ?' : 'Les discours ne disent pas tout…';
+      dv.innerHTML = '<div class="dv-fin"><p class="eyebrow">Votre score</p><div class="score-big">' + dvScore + '<span style="font-size:.45em"> / ' + dvManches.length + '</span></div>' +
+        '<h3 style="font-size:26px;margin:0">' + esc(titre) + '</h3>' +
+        '<p>Ce qui distingue vraiment les candidat·es, ce ne sont pas les discours, ce sont les votes. C\'est exactement ce que montre le face-à-face.</p>' +
+        '<div class="cta-row" style="justify-content:center"><button type="button" class="btn play" id="dv-replay">↺ Rejouer</button>' +
+        '<a class="btn pink" href="#promesses">🎯 Promesses VS Actes</a>' +
+        '<a class="btn don" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">💛 Nous soutenir</a></div></div>';
+      dv.querySelector('#dv-replay').addEventListener('click', dvStart);
+    }
+    function confetti(container) {
+      if (!container) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var couleurs = ['#5423df', '#f099f9', '#b0fda4', '#fee075', '#9abdff'];
+      var boite = el('<div class="confetti" aria-hidden="true"></div>');
+      for (var i = 0; i < 26; i++) {
+        var f = document.createElement('i');
+        f.style.left = Math.random() * 100 + '%';
+        f.style.background = couleurs[i % couleurs.length];
+        f.style.animationDelay = (Math.random() * .3) + 's';
+        f.style.transform = 'rotate(' + Math.random() * 180 + 'deg)';
+        boite.appendChild(f);
+      }
+      container.style.position = container.style.position || 'relative';
+      container.appendChild(boite);
+      setTimeout(function () { boite.remove(); }, 1800);
+    }
 
-    /* ==================== LES SOURCES ==================== */
-    var srcList = document.getElementById('sources-list');
-    D.SOURCES.forEach(function (s) {
-      if (!s.url) return;
-      srcList.appendChild(el(
-        '<div class="source-item">' +
-          '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.titre) + ' ↗</a>' +
-          '<div class="src-meta">' + esc(s.type) + (s.niveau ? ' · ' + esc(s.niveau) : '') + (s.date ? ' · ' + esc(s.date) : '') +
-          (s.preuve ? ' - ' + esc(s.preuve) : '') + '</div>' +
-        '</div>'));
-    });
-
-    /* ==================== LE JEU « QUI A DIT QUOI ? » ==================== */
+    /* ---- Qui a dit quoi ? (jeu des declarations, inchange) ---- */
     var jeu = document.getElementById('jeu-card');
     var ordre = [], idx = 0, score = 0;
 
@@ -3658,21 +4151,6 @@
         b.addEventListener('click', function () { repondre(cid, b); });
         zone.appendChild(b);
       });
-    }
-    function confetti(container) {
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var couleurs = ['#5423df', '#f099f9', '#b0fda4', '#fee075', '#9abdff'];
-      var boite = el('<div class="confetti" aria-hidden="true"></div>');
-      for (var i = 0; i < 26; i++) {
-        var f = document.createElement('i');
-        f.style.left = Math.random() * 100 + '%';
-        f.style.background = couleurs[i % couleurs.length];
-        f.style.animationDelay = (Math.random() * .3) + 's';
-        f.style.transform = 'rotate(' + Math.random() * 180 + 'deg)';
-        boite.appendChild(f);
-      }
-      container.appendChild(boite);
-      setTimeout(function () { boite.remove(); }, 1800);
     }
     function ligneVoteJeu(l, cid) {
       var v = l.votes[cid];
@@ -3759,7 +4237,7 @@
                   score >= 3 ? 'Les apparences sont trompeuses…' :
                   'Les discours se ressemblent, hein ?';
       var texte = score >= 7
-        ? 'Tu connais tes politiques. Prochaine étape : vérifier si leurs votes suivent - c\'est tout l\'objet de « Promesses VS Actes ».'
+        ? 'Tu connais tes politiques. Prochaine étape : vérifier si leurs votes suivent, c\'est tout l\'objet de « Promesses VS Actes ».'
         : 'C\'est normal : sur la santé et le climat, les promesses se ressemblent beaucoup d\'un camp à l\'autre. Ce qui les distingue vraiment, ce sont les votes - et c\'est exactement ce que montre ce comparateur.';
       jeu.innerHTML =
         '<div class="jeu-fin">' +
@@ -3769,8 +4247,8 @@
           '<p>' + texte + '</p>' +
           '<div class="cta-row" style="justify-content:center">' +
             '<button type="button" class="btn play" id="jeu-replay">↺ Rejouer</button>' +
-            '<a class="btn pink" href="#debat">\u26A1 R\u00e9ponses rapides</a>' +
-            '<a class="btn" href="#votes">Voir les votes</a>' +
+            '<a class="btn pink" href="#rapide">\u26A1 R\u00e9ponses rapides</a>' +
+            '<a class="btn" href="#promesses">\uD83C\uDFAF Promesses VS Actes</a>' +
             '<a class="btn don" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">\uD83D\uDC9B Nous soutenir</a>' +
           '</div>' +
         '</div>';
@@ -3778,7 +4256,61 @@
     }
     renderIntro();
 
-    /* ==================== LA CHARTE QUI SE DÉPLIE ==================== */
+    /* ==================== QUI EST QUI (parcours) ==================== */
+    var quiGrid = document.getElementById('qui-grid');
+    if (quiGrid && D.PARCOURS) {
+      JOUEURS.forEach(function (cid) {
+        var p = D.PARCOURS[cid], c = CAND[cid];
+        if (!p || !c) return;
+        var puces = (p.cinqAns || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+        var srcs = (p.sources || []).map(function (x) {
+          return '<a href="' + esc(x.url) + '" target="_blank" rel="noopener noreferrer">' + esc(x.label) + '</a>';
+        }).join('');
+        quiGrid.appendChild(el(
+          '<article class="qui-card" style="--card-bg:' + esc(c.bg || '#ffffff') + ';--card-shadow:' + esc(c.shadow || '#332e32') + '">' +
+            '<div class="qui-head">' + avatar(c, 'big') +
+              '<div><h3>' + esc(c.nom) + '</h3><span class="qui-role">' + esc(p.role || '') + '</span></div>' +
+            '</div>' +
+            (p.candidature ? '<span class="qui-cand">🗳️ ' + esc(p.candidature) + '</span>' : '') +
+            (puces ? '<ul class="qui-list">' + puces + '</ul>' : '') +
+            (p.lecture ? '<p class="qui-lecture"><b>Ce que ça change pour lire ses votes&nbsp;:</b> ' + esc(p.lecture) + '</p>' : '') +
+            (srcs ? '<div class="qui-src">' + srcs + '</div>' : '') +
+          '</article>'));
+      });
+    }
+
+    /* ==================== LES SOURCES ==================== */
+    var srcList = document.getElementById('sources-list');
+    D.SOURCES.forEach(function (s) {
+      if (!s.url) return;
+      srcList.appendChild(el(
+        '<div class="source-item">' +
+          '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.titre) + ' ↗</a>' +
+          '<div class="src-meta">' + esc(s.type) + (s.niveau ? ' · ' + esc(s.niveau) : '') + (s.date ? ' · ' + esc(s.date) : '') +
+          (s.preuve ? ' - ' + esc(s.preuve) : '') + '</div>' +
+        '</div>'));
+    });
+
+    /* ==================== TEXTES RELEVES, PAS ENCORE PUBLIES ==================== */
+    (function () {
+      var zone = document.getElementById('attente-zone');
+      var liste = (D.ATTENTE || []).filter(function (a) { return !LOI[a.id]; });
+      if (!zone || !liste.length) { return; }
+      zone.appendChild(el(
+        '<div class="attente-head">' +
+          '<h3>⏳ Déjà relevés, en cours de vérification</h3>' +
+          '<p>Ces ' + liste.length + ' textes sont dépouillés scrutin par scrutin, mais la relecture n’est pas terminée. ' +
+          'On préfère les annoncer plutôt que de les publier à moitié : ils arrivent au fil des vérifications.</p>' +
+        '</div>'));
+      var grid = el('<div class="attente-grid"></div>');
+      liste.forEach(function (a) {
+        grid.appendChild(el('<article class="attente-card"><h3>' + esc(a.nom) + '</h3>' +
+          '<p>' + (a.sujet === 'sante' ? '🩺' : '🌱') + ' ' + esc(a.sousTheme) + ' · en cours de vérification</p></article>'));
+      });
+      zone.appendChild(grid);
+    })();
+
+    /* ==================== LA CHARTE QUI SE DEPLIE ==================== */
     (function () {
       var wrap = document.getElementById('charte-wrap');
       if (!wrap) return;
@@ -3811,446 +4343,7 @@
       });
     })();
 
-    /* ==================== L'ATELIER : l'interface ==================== */
-
-    /* --- un état vide qui explique et propose une sortie --- */
-    function videEtat(quoi) {
-      var raisons = [];
-      if (ETAT.q) raisons.push('la recherche « ' + ETAT.q + ' »');
-      if (ETAT.seul && ETAT.profil.length) raisons.push('le filtre « n\'afficher que les textes concernés »');
-      if (quoi === 'fiche' && ETAT.cands.length) raisons.push('les candidat·es retenu·es');
-      if (quoi === 'loi' && filtreActif !== 'tous') raisons.push('le filtre en cours');
-      var n = quoi === 'loi' ? loisVisibles(true).length : fichesVisibles(true).length;
-      var box = el('<div class="vide-etat"><p>Rien ici avec ' +
-        (raisons.length ? esc(raisons.join(' et ')) : 'les réglages actuels') + '.</p></div>');
-      if (quoi === 'loi' && n > 0) {
-        var b1 = el('<button type="button" class="btn">Voir les ' + n + ' texte' + (n > 1 ? 's' : '') + ' au-delà de ce filtre</button>');
-        b1.addEventListener('click', function () {
-          filtreActif = 'tous';
-          filtres.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.f === 'tous' ? 'true' : 'false'); });
-          renderLois();
-        });
-        box.appendChild(b1);
-      }
-      var b2 = el('<button type="button" class="btn primary">Tout réafficher</button>');
-      b2.addEventListener('click', toutReafficher);
-      box.appendChild(b2);
-      return box;
-    }
-
-    function toutReafficher() {
-      ETAT.q = ''; ETAT.seul = false; ETAT.cands = [];
-      filtreActif = 'tous';
-      filtres.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.f === 'tous' ? 'true' : 'false'); });
-      var champ = document.getElementById('recherche');
-      if (champ) champ.value = '';
-      garde();
-      syncAtelier();
-      rafraichir();
-    }
-
-    /* --- le choix des candidat·es --- */
-    var zoneChoix = document.getElementById('choix-cand');
-    function renderChoix() {
-      if (!zoneChoix) return;
-      zoneChoix.innerHTML = '';
-      var tout = el('<button type="button" class="tout" aria-pressed="' + (!ETAT.cands.length) + '">👥 Tout le monde</button>');
-      tout.addEventListener('click', function () { ETAT.cands = []; garde(); renderChoix(); rafraichir(); });
-      zoneChoix.appendChild(tout);
-      JOUEURS.forEach(function (cid) {
-        var c = CAND[cid];
-        if (!c) return;
-        var on = ETAT.cands.indexOf(cid) >= 0;
-        var b = el('<button type="button" aria-pressed="' + on + '">' + avatar(c, 'mini') + esc(c.court) + '</button>');
-        b.addEventListener('click', function () {
-          var i = ETAT.cands.indexOf(cid);
-          if (i >= 0) { ETAT.cands.splice(i, 1); } else { ETAT.cands.push(cid); }
-          garde(); renderChoix(); rafraichir();
-        });
-        zoneChoix.appendChild(b);
-      });
-    }
-
-    /* --- les cases du profil --- */
-    var zoneCases = document.getElementById('profil-cases');
-    function renderCases() {
-      if (!zoneCases) return;
-      zoneCases.innerHTML = '';
-      TAX.PROFILS.forEach(function (p) {
-        var on = ETAT.profil.indexOf(p.id) >= 0;
-        var lab = el('<label class="profil-case"><input type="checkbox"' + (on ? ' checked' : '') +
-          '><span>' + p.emoji + ' ' + esc(p.label) + '</span></label>');
-        lab.querySelector('input').addEventListener('change', function (e) {
-          var i = ETAT.profil.indexOf(p.id);
-          if (e.target.checked && i < 0) ETAT.profil.push(p.id);
-          if (!e.target.checked && i >= 0) ETAT.profil.splice(i, 1);
-          /* dès qu'on coche soi-même, ce n'est plus un point de vue emprunté */
-          ETAT.emprunt = null;
-          ETAT.mien = ETAT.profil.slice();
-          garde(); syncAtelier(); rafraichir();
-        });
-        zoneCases.appendChild(lab);
-      });
-    }
-
-    /* --- emprunter le point de vue de quelqu'un d'autre --- */
-    function memeJeu(a, b) {
-      if (a.length !== b.length) return false;
-      return a.every(function (x) { return b.indexOf(x) >= 0; });
-    }
-    function emprunter() {
-      /* on ne retombe pas sur la combinaison déjà affichée */
-      var libres = [];
-      POINTS_DE_VUE.forEach(function (v, i) {
-        if (!memeJeu(v.axes, ETAT.profil)) libres.push(i);
-      });
-      if (!libres.length) libres = POINTS_DE_VUE.map(function (_, i) { return i; });
-      var choix = libres[Math.floor(Math.random() * libres.length)];
-      ETAT.emprunt = choix;
-      ETAT.profil = POINTS_DE_VUE[choix].axes.slice();
-      garde();
-      renderCases();
-      syncAtelier();
-      rafraichir();
-      var panneau = document.getElementById('route');
-      if (panneau) panneau.scrollIntoView({ block: 'center' });
-    }
-    function rendreLePointDeVue() {
-      ETAT.emprunt = null;
-      ETAT.profil = ETAT.mien.slice();
-      garde();
-      renderCases();
-      syncAtelier();
-      rafraichir();
-    }
-
-    /* --- ouvrir une fiche depuis la feuille de route --- */
-    function openFiche(cid, sujet) {
-      if (ETAT.q || ETAT.seul) {
-        ETAT.q = ''; ETAT.seul = false; garde();
-        var champ = document.getElementById('recherche');
-        if (champ) champ.value = '';
-        syncAtelier();
-      }
-      if (ETAT.cands.length && ETAT.cands.indexOf(cid) < 0) { ETAT.cands = []; garde(); renderChoix(); }
-      sujetActif = sujet;
-      document.querySelectorAll('.switch button').forEach(function (x) {
-        x.setAttribute('aria-pressed', x.dataset.sujet === sujet ? 'true' : 'false');
-      });
-      renderFiches();
-      majCompte();
-      var carte = null;
-      if (!carte) return;
-      carte.scrollIntoView({ block: 'center' });
-      carte.classList.remove('flash');
-      void carte.offsetWidth;
-      carte.classList.add('flash');
-    }
-
-    /* --- la feuille de route --- */
-    var zoneRoute = document.getElementById('route');
-    function renderRoute() {
-      if (!zoneRoute) return;
-      zoneRoute.innerHTML = '';
-      if (!ETAT.profil.length) {
-        zoneRoute.appendChild(el('<p class="route-vide">Coche une combinaison dans le bloc 1&nbsp;: on affiche ici les sujets ' +
-          'à regarder en premier, et les votes déjà documentés qui concernent ce profil. ' +
-          'Rien n\'oblige à cocher le tien.</p>'));
-        return;
-      }
-
-      /* point de vue emprunté : on dit lequel, et on offre de le rendre */
-      if (ETAT.emprunt != null && POINTS_DE_VUE[ETAT.emprunt]) {
-        var v = POINTS_DE_VUE[ETAT.emprunt];
-        var band = el('<div class="emprunt"><span class="quoi">Point de vue emprunté&nbsp;: ' +
-          esc(v.quoi) + '<small>Même moteur, mêmes sources. Seul le point de vue change.</small></span></div>');
-        var bAutre = el('<button type="button" class="autre">🎲 Un autre</button>');
-        bAutre.addEventListener('click', emprunter);
-        band.appendChild(bAutre);
-        if (ETAT.mien.length) {
-          var bMien = el('<button type="button">Revenir à ma sélection</button>');
-          bMien.addEventListener('click', rendreLePointDeVue);
-          band.appendChild(bMien);
-        }
-        zoneRoute.appendChild(band);
-      }
-
-      /* ce qui matche vraiment, sujet par sujet */
-      var parSujet = {};
-      TAX.SUJETS.forEach(function (x) { parSujet[x.id] = { lois: [], fiches: [], axes: 0 }; });
-      D.LOIS.forEach(function (l) {
-        var r = lumiereLoi(l);
-        if (r && parSujet[l.sujet]) parSujet[l.sujet].lois.push({ l: l, r: r });
-      });
-      ETAT.profil.forEach(function (id) {
-        (AXE[id].sujets || []).forEach(function (sid) { if (parSujet[sid]) parSujet[sid].axes++; });
-      });
-      Object.keys(parSujet).forEach(function (k) {
-        parSujet[k].lois.sort(function (a, b) { return b.r.score - a.r.score; });
-        parSujet[k].fiches.sort(function (a, b) { return b.r.score - a.r.score; });
-      });
-
-      /* ordre : les sujets en ligne qui matchent, puis les sujets attendus, puis le reste */
-      var ordre = TAX.SUJETS.slice().sort(function (a, b) {
-        var A = parSujet[a.id], B = parSujet[b.id];
-        var na = A.lois.length + A.fiches.length, nb = B.lois.length + B.fiches.length;
-        /* rang 0 : en ligne et ça matche · 1 : à venir · 2 : en ligne mais rien */
-        var ra = a.etat === 'en-ligne' ? (na > 0 ? 0 : 2) : 1;
-        var rb = b.etat === 'en-ligne' ? (nb > 0 ? 0 : 2) : 1;
-        if (ra !== rb) return ra - rb;
-        if (ra === 0) return nb - na;
-        return B.axes - A.axes;
-      });
-
-      zoneRoute.appendChild(el('<p class="route-etiquette">Les sujets concernés</p>'));
-      var chips = el('<div class="route-sujets"></div>');
-      ordre.forEach(function (x) {
-        var p = parSujet[x.id];
-        var n = p.lois.length + p.fiches.length;
-        if (x.etat === 'a-venir') {
-          if (!p.axes) return;
-          chips.appendChild(el('<span class="route-sujet a-venir">' + x.emoji + ' ' + esc(x.label) +
-            '<span class="compte">pas encore en ligne</span></span>'));
-          return;
-        }
-        var b = el('<button type="button" class="route-sujet">' + x.emoji + ' ' + esc(x.label) +
-          '<span class="compte">' + n + '</span></button>');
-        b.addEventListener('click', function () {
-          filtreActif = x.id;
-          filtres.querySelectorAll('button').forEach(function (y) {
-            y.setAttribute('aria-pressed', y.dataset.f === x.id ? 'true' : 'false');
-          });
-          renderLois();
-          majCompte();
-          allerA(document.getElementById('votes'), { behavior: 'smooth', block: 'start' });
-        });
-        chips.appendChild(b);
-      });
-      zoneRoute.appendChild(chips);
-
-      /* les textes et les fiches, avec le motif de la correspondance */
-      var lois = [], fiches = [];
-      ordre.forEach(function (x) {
-        if (x.etat !== 'en-ligne') return;
-        lois = lois.concat(parSujet[x.id].lois);
-        fiches = fiches.concat(parSujet[x.id].fiches);
-      });
-      lois.sort(function (a, b) { return b.r.score - a.r.score; });
-      fiches.sort(function (a, b) { return b.r.score - a.r.score; });
-
-      var bl = el('<div class="route-bloc"><b>Les votes concernés</b></div>');
-      if (!lois.length) {
-        bl.appendChild(el('<p class="route-rien">Rien pour ce profil pour l\'instant. ' +
-          'C\'est un manque dans notre documentation, pas une absence de position&nbsp;: nous complétons sujet par sujet.</p>'));
-      } else {
-        lois.slice(0, 5).forEach(function (o) {
-          var b = el('<button type="button" class="route-item"><span class="titre">🗳️ ' + esc(o.l.nom) +
-            '</span><span class="pourquoi">Repéré via&nbsp;: ' + esc(pourquoi(o.r, 4)) + '</span></button>');
-          b.addEventListener('click', function () { openLoi(o.l.id); });
-          bl.appendChild(b);
-        });
-        if (lois.length > 5) {
-          bl.appendChild(el('<p class="route-rien">' + (lois.length - 5) + ' autre' + (lois.length - 5 > 1 ? 's' : '') +
-            ' texte' + (lois.length - 5 > 1 ? 's' : '') + ' concerné' + (lois.length - 5 > 1 ? 's' : '') +
-            '. Le bouton « n\'afficher que les textes concernés » les montre tous.</p>'));
-        }
-      }
-      zoneRoute.appendChild(bl);
-
-    }
-
-    /* --- le compteur --- */
-    var zoneCompte = document.getElementById('atelier-compte');
-    /* Le point noir de l'ancienne version : on agissait en haut de la section et
-       le resultat apparaissait deux sections plus bas, derriere un mur de texte.
-       Cette zone se trouve juste sous les commandes, elle nomme ce qui a bouge,
-       et elle donne le chemin vers le detail. */
-    var zoneListe   = document.getElementById('res-liste');
-    var zoneActions = document.getElementById('res-actions');
-    var zonePanneau = document.getElementById('resultats');
-
-    function filtreActifAtelier() {
-      return !!(ETAT.q || ETAT.cands.length || (ETAT.seul && ETAT.profil.length));
-    }
-
-    function majCompte() {
-      if (!zoneCompte) return;
-      var lois = loisVisibles();
-      var nl = lois.length, nf = 0;
-      var actif = filtreActifAtelier();
-      /* deux choses differentes : ce qui reduit la liste des textes (recherche,
-         profil) et ce qui restreint seulement la vue (candidat·es retenu·es). */
-      var tri = [];
-      if (ETAT.q) tri.push('« ' + esc(ETAT.q) + ' »');
-      if (ETAT.seul && ETAT.profil.length) tri.push('le profil coché');
-      var vue = ETAT.cands.length
-        ? ETAT.cands.map(function (c) { return esc(CAND[c].court); }).join(' + ')
-        : '';
-
-      var compte = '<b>' + nl + '</b> texte' + (nl > 1 ? 's' : '');
-      var txt;
-      if (!actif) {
-        txt = 'À l\'écran&nbsp;: ' + compte +
-              '. Cherche un sujet, choisis des candidat·es ou coche un profil&nbsp;: ce cadre te dira ce que ça donne.';
-      } else if (nl + nf === 0) {
-        txt = 'Rien ne correspond à ' + (tri.length ? tri.join(' et ') : 'cette sélection') +
-              '. Essaie un autre mot, ou repars de zéro.';
-      } else {
-        txt = compte;
-        if (tri.length) txt += ' pour ' + tri.join(' et ');
-        if (vue) txt += (tri.length ? ',' : ' ·') + ' affichés pour <b>' + vue + '</b> seulement';
-        if (ETAT.q) {
-          var horsFiltre = loisVisibles(true).length;
-          if (horsFiltre > nl) txt += ' · <b>' + (horsFiltre - nl) + '</b> au-delà du filtre en cours';
-        }
-      }
-      zoneCompte.innerHTML = txt;
-
-      if (zonePanneau) {
-        zonePanneau.classList.toggle('actif', actif && nl + nf > 0);
-        zonePanneau.classList.toggle('vide', actif && nl + nf === 0);
-        zonePanneau.classList.remove('bouge');
-        void zonePanneau.offsetWidth;
-        zonePanneau.classList.add('bouge');
-      }
-
-      /* les textes qui correspondent, nommes et cliquables : on voit ce qui a bouge */
-      if (zoneListe) {
-        zoneListe.innerHTML = '';
-        var listeReduite = !!(ETAT.q || (ETAT.seul && ETAT.profil.length));
-        if (listeReduite && nl) {
-          lois.slice(0, 6).forEach(function (l) {
-            var b = el('<button type="button" class="res-puce">' +
-              '<span class="quoi">' + (l.sujet === 'sante' ? '🩺' : '🌱') + '</span>' +
-              esc(l.nom.length > 46 ? l.nom.slice(0, 44) + '…' : l.nom) + '</button>');
-            b.addEventListener('click', function () { openLoi(l.id); });
-            zoneListe.appendChild(b);
-          });
-          if (nl > 6) zoneListe.appendChild(el('<span class="res-reste">+ ' + (nl - 6) + ' autre' + (nl - 6 > 1 ? 's' : '') + '</span>'));
-        }
-      }
-
-      if (zoneActions) {
-        zoneActions.innerHTML = '';
-        if (actif) {
-          if (nl) {
-            var bL = el('<button type="button" class="btn primary">🗳️ Voir ' + (nl > 1 ? 'les ' + nl + ' textes' : 'le texte') + ' ↓</button>');
-            bL.addEventListener('click', function () { allerVers('votes'); });
-            zoneActions.appendChild(bL);
-          }
-          var bR = el('<button type="button" class="btn play">↺ Repartir de zéro</button>');
-          bR.addEventListener('click', reinitialiserAtelier);
-          zoneActions.appendChild(bR);
-        }
-      }
-    }
-
-    function allerVers(id) {
-      allerA(document.getElementById(id), { behavior: 'smooth', block: 'start' });
-    }
-
-    function reinitialiserAtelier() {
-      ETAT.q = ''; ETAT.cands = []; ETAT.seul = false; garde();
-      var champ = document.getElementById('recherche');
-      if (champ) champ.value = '';
-      renderChoix(); syncAtelier(); rafraichir();
-      var p = document.getElementById('resultats');
-      if (p) p.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    /* --- garder l'interface d'accord avec l'état --- */
-    function syncAtelier() {
-      var vider = document.getElementById('recherche-vider');
-      if (vider) vider.hidden = !ETAT.q;
-      var seul = document.getElementById('profil-seul');
-      if (seul) {
-        var possible = ETAT.profil.length > 0;
-        seul.disabled = !possible;
-        if (!possible) ETAT.seul = false;
-        seul.setAttribute('aria-pressed', String(!!ETAT.seul));
-        seul.textContent = ETAT.seul ? '✓ Seuls les textes concernés' : 'N\'afficher que les textes concernés';
-      }
-      var sw = document.getElementById('fiches-switch-note');
-      if (sw) sw.hidden = !ETAT.q;
-    }
-
-    function rafraichir() {
-      renderLois();
-      renderFiches();
-      renderRoute();
-      majCompte();
-    }
-
-    /* --- les branchements --- */
-    (function () {
-      var champ = document.getElementById('recherche');
-      if (champ) {
-        var minuteur = null;
-        champ.addEventListener('input', function () {
-          clearTimeout(minuteur);
-          minuteur = setTimeout(function () {
-            ETAT.q = champ.value.trim();
-            syncAtelier();
-            rafraichir();
-          }, 180);
-        });
-      }
-      var vider = document.getElementById('recherche-vider');
-      if (vider) vider.addEventListener('click', function () {
-        ETAT.q = ''; if (champ) { champ.value = ''; champ.focus(); }
-        syncAtelier(); rafraichir();
-      });
-      var ph = document.getElementById('profil-hasard');
-      if (ph) ph.addEventListener('click', emprunter);
-      var pv = document.getElementById('profil-vider');
-      if (pv) pv.addEventListener('click', function () {
-        ETAT.profil = []; ETAT.seul = false; ETAT.emprunt = null; ETAT.mien = []; garde();
-        renderCases(); syncAtelier(); rafraichir();
-      });
-      var ps = document.getElementById('profil-seul');
-      if (ps) ps.addEventListener('click', function () {
-        if (!ETAT.profil.length) return;
-        ETAT.seul = !ETAT.seul; garde(); syncAtelier(); rafraichir();
-      });
-      /* chaque porte emmene a sa commande et lui donne le focus :
-         la carte n'est plus une illustration, c'est le chemin. */
-      function viserPorte(quoi) {
-        if (quoi === 'sujet') {
-          var ch = document.getElementById('recherche');
-          if (!ch) return;
-          ch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          setTimeout(function () { ch.focus({ preventScroll: true }); }, 320);
-        } else if (quoi === 'candidats') {
-          var cc = document.getElementById('choix-titre');
-          if (cc) cc.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          var prem = document.querySelector('#choix-cand button');
-          if (prem) setTimeout(function () { prem.focus({ preventScroll: true }); }, 320);
-        } else {
-          var pd = document.getElementById('profil-duo');
-          if (pd) setTimeout(function () {
-            pd.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 60);
-        }
-      }
-      document.querySelectorAll('.porte[data-porte]').forEach(function (p) {
-        p.addEventListener('click', function () { viserPorte(p.dataset.porte); });
-      });
-
-      /* un profil deja coche la derniere fois : on rouvre le panneau,
-         sinon la personne ne comprendrait pas d'ou vient le tri */
-      if (ETAT.profil.length) {
-        var portePro = document.querySelector('.porte[data-porte="profil"]');
-        var duo = document.getElementById('profil-duo');
-        if (portePro && duo) { portePro.setAttribute('aria-expanded', 'true'); duo.hidden = false; }
-      }
-
-      renderChoix();
-      renderCases();
-      syncAtelier();
-      rafraichir();
-    })();
-
-    /* ==================== v8 : PASTILLE BETA + RETOURS ==================== */
+    /* ==================== PASTILLE BETA + RETOURS ==================== */
     (function () {
       /* ---------------------------------------------------------------
          COLLECTE DES RETOURS
@@ -4436,9 +4529,7 @@
       }
     })();
 
-    /* ==================== sections qui se déplient ====================
-       Le jeu et le débat du Medef arrivent repliés : la page reste lisible
-       à l'arrivée, et tout s'ouvre au clic (ou via le sommaire et les liens). */
+    /* ==================== sections qui se deplient + ancres ==================== */
     (function () {
       var boutons = document.querySelectorAll('.plier[aria-controls]');
       if (!boutons.length) { return; }
@@ -4513,23 +4604,21 @@
       ouvrirDepuisAncre(location.hash, false);
     })();
 
-    /* ==================== sommaire actif ==================== */
-    var liensToc = document.querySelectorAll('.toc a');
-    if ('IntersectionObserver' in window) {
-      var obs = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            liensToc.forEach(function (a) {
-              a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
-            });
-          }
-        });
-      }, { rootMargin: '-30% 0px -60% 0px' });
-      document.querySelectorAll('section.bloc, .trio-item').forEach(function (s) { obs.observe(s); });
-    }
+    /* une adresse #loi-xxx ouvre le texte ; #duel-xxx-cid ouvre le face-a-face d'une personne */
+    (function () {
+      function depuisHash() {
+        var h = location.hash || '';
+        var m = /^#duel-([a-z0-9-]+?)-(melenchon|le-pen|philippe|attal|retailleau)$/.exec(h);
+        if (m && LOI[m[1]]) { openLoi(m[1], m[2]); return; }
+        m = /^#loi-([a-z0-9-]+)$/.exec(h);
+        if (m && LOI[m[1]]) { openLoi(m[1], null); }
+      }
+      window.addEventListener('hashchange', depuisHash);
+      depuisHash();
+    })();
   })();
   </script>
-  <script>
+<script>
   /* ==================== KOMUNE, l'assistant du comparateur ====================
      Pas d'IA générative, pas de serveur, pas de données collectées :
      une recherche honnête dans les données vérifiées de la page. */
@@ -4886,7 +4975,7 @@
        vaut : on arrete de le replier au defilement. */
     var oeil = null;
     function hautSommaire() {
-      var t = document.querySelector('.toc');
+      var t = document.querySelector('.barre');
       if (!t) { return 74; }
       var r = t.getBoundingClientRect();
       return Math.round(r.height) + 20;
@@ -5265,11 +5354,12 @@
       '.toc,.site-nav,.site-entete,#lexique,.lex-bulle,.mot-lex,.chip,.badge-align,' +
       '.badge-qui,.mini,.cell-label,.qr-pill,.medef-ts,.dot,.statut,.avatar,' +
       '.trio-etat,.plier,.switch,.bloc-emoji,.mq-etq,.loi-sum,.sum-txt,.strip,' +
+      '.tete,.verdict,.niveau,.barre,.mx-btn,.duel-tete,.fchip,.pchip,.jeu-btn,.dv-choix,.mx-cell,.bilan-titre,.bilan-n,.tete-qui,.dossier-eti,' +
       '.medef-defs,' +
       'h1,h2,h3,h4,h5,h6,[aria-hidden="true"]';
     var BLOCS = '.loi-card,.medef-card,.medef-question,.attente-card,.q-item,' +
       '.cand-detail,.qr-cand,.source-item,.clair,.bloc-intro,.hero-main,' +
-      '.orbit-person,.profil-case,.trio-pli,section.bloc';
+      '.duel,.mx-row,.face,.dv-card,.res2,.bilan,.plus-corps,section.bloc,section.outil';
 
     /* Un sigle ne se reconnait qu'a la casse exacte : « PS » oui, « ps »
        non. Un mot ordinaire se reconnait quelle que soit la casse, mais
