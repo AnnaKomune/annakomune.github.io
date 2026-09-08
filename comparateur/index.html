@@ -1058,6 +1058,26 @@
     .dots-legende { color: var(--muted); font-size: 13px; font-weight: 700; margin: 0 0 16px; }
     .dots-legende .dot { vertical-align: -2px; }
     .lois-grid { display: grid; gap: 14px; }
+    /* un dossier : plusieurs textes sur un meme probleme, lus ensemble */
+    .dossier {
+      border: 2px solid var(--ink); border-radius: 26px; padding: 16px 16px 14px;
+      background: var(--sky); box-shadow: 4px 4px 0 var(--purple);
+    }
+    .dossier-tete { display: grid; gap: 4px; margin: 0 4px 14px; }
+    .dossier-eti {
+      justify-self: start; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      letter-spacing: .06em; font-size: 12.5px; padding: 3px 10px; border: 2px solid var(--ink);
+      border-radius: 999px; background: var(--white);
+    }
+    .dossier-tete h3 {
+      margin: 2px 0 0; font-family: "Oswald", Impact, sans-serif; font-weight: 700; text-transform: uppercase;
+      font-size: clamp(22px, 2.6vw, 30px); line-height: 1; letter-spacing: -.01em;
+    }
+    .dossier-compte { margin: 0; font-size: 14px; font-weight: 700; color: var(--muted); }
+    .dossier-corps { display: grid; gap: 12px; }
+    .dossier-corps details.loi-card { box-shadow: 3px 3px 0 rgba(51,46,50,.16); }
+    .dossier-corps details.loi-card + details.loi-card { margin-top: 0; }
+    @media (max-width: 640px) { .dossier { padding: 12px 10px 10px; border-radius: 20px; } }
     details.loi-card {
       background: var(--white); border: 2px solid var(--ink); border-radius: 22px;
       box-shadow: 3px 3px 0 rgba(51,46,50,.12); overflow: hidden;
@@ -1271,6 +1291,26 @@
     .cand-detail { padding: 6px 2px 16px; display: grid; gap: 10px; }
     .cand-detail .mini { background: var(--white); border: 1px solid var(--ko); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; white-space: pre-line; }
     .cand-detail .mini b.mini-titre { display: block; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+    /* la phrase en gras d'abord, la citation et la source se deplient */
+    .mini-riche { white-space: normal; }
+    .mini-bloc + .mini-bloc { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(51,46,50,.14); }
+    .mini-tete { margin: 0; font-size: 14.5px; line-height: 1.45; }
+    .mini-tete strong { font-weight: 800; }
+    .mini-qui { font-weight: 700; color: var(--muted); }
+    .mini-qui::after { content: " :"; }
+    .mini-p { margin: 0; white-space: pre-line; }
+    .mini-suite { margin-top: 6px; }
+    .mini-suite > summary {
+      list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+      min-height: 44px; padding: 6px 12px 6px 0; font-size: 13px; font-weight: 800; color: var(--bleu-texte);
+    }
+    .mini-suite > summary::-webkit-details-marker { display: none; }
+    .mini-suite-eti { text-decoration: underline; text-underline-offset: 2px; }
+    .mini-suite-fl { font-size: 10px; transition: transform .15s ease; }
+    .mini-suite[open] .mini-suite-fl { transform: rotate(180deg); }
+    .mini-suite[open] .mini-suite-eti { text-decoration: none; }
+    .mini-suite-corps { white-space: pre-line; padding: 4px 0 2px 12px; border-left: 3px solid var(--gold); font-size: 14px; line-height: 1.5; }
+    @media (prefers-reduced-motion: reduce) { .mini-suite-fl { transition: none; } }
     .loi-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; font-size: 14px; }
     .loi-links a { font-weight: 700; text-decoration-color: var(--blue); }
     .loi-links a::before { content: "↗ "; color: var(--blue); }
@@ -3357,9 +3397,49 @@
       var cls = /adopt/i.test(l.statut) ? 'adopte' : /rejet/i.test(l.statut) ? 'rejete' : 'attente';
       return '<span class="chip statut ' + cls + '">' + esc(l.statut) + '</span>';
     }
+    function gras(t) { return t.replace(/\*\*([\s\S]+?)\*\*/g, '<strong>$1</strong>'); }
     function miniBloc(titre, texte) {
       if (!texte) return '';
-      return '<div class="mini"><b class="mini-titre">' + esc(titre) + '</b>' + esc(texte) + '</div>';
+      if (texte.indexOf('**') < 0) {
+        return '<div class="mini"><b class="mini-titre">' + esc(titre) + '</b>' + esc(texte) + '</div>';
+      }
+      /* Demande d'Anna : la phrase en gras (celle du classeur) doit se lire au
+         premier coup d'oeil, la citation et la source se deplient en dessous.
+         Un bloc = un paragraphe (ligne vide entre deux). Dans chaque bloc, le
+         premier passage en gras est la tete ; ce qui le precede est l'etiquette
+         (« Mélenchon : », « LFI : »), ce qui le suit est la suite repliee. */
+      /* 1. on decoupe en paragraphes ; un paragraphe sans gras qui suit un
+            paragraphe a tete lui appartient (c'est sa citation, sa source) */
+      var paras = texte.split(/\n\s*\n/).map(function (t) { return t.trim(); }).filter(Boolean);
+      var blocs = [];
+      paras.forEach(function (bloc) {
+        var m = /^([\s\S]*?)\*\*([\s\S]+?)\*\*([\s\S]*)$/.exec(bloc);
+        if (!m) {
+          if (blocs.length && blocs[blocs.length - 1].tete) {
+            var d = blocs[blocs.length - 1];
+            d.suite = (d.suite ? d.suite + '\n' : '') + bloc;
+          } else {
+            blocs.push({ tete: '', suite: bloc, avant: '' });
+          }
+          return;
+        }
+        var avant = m[1].trim(), tete = m[2].trim(), suite = m[3].trim();
+        if (avant.length > 40) { suite = avant + '\n' + suite; avant = ''; }   /* pas une etiquette : du texte */
+        blocs.push({ avant: avant, tete: tete, suite: suite });
+      });
+      /* 2. rendu : la tete toujours visible, la suite repliee */
+      var html = blocs.map(function (d) {
+        if (!d.tete) return '<div class="mini-bloc"><p class="mini-p">' + gras(esc(d.suite)) + '</p></div>';
+        var etq = d.avant ? '<span class="mini-qui">' + esc(d.avant.replace(/\s*:\s*$/, '')) + '</span> ' : '';
+        var out = '<p class="mini-tete">' + etq + '<strong>' + gras(esc(d.tete)) + '</strong></p>';
+        if (d.suite) {
+          out += '<details class="mini-suite"><summary><span class="mini-suite-eti">Lire la citation et la source</span>' +
+                 '<span class="mini-suite-fl" aria-hidden="true">\u25BC</span></summary>' +
+                 '<div class="mini-suite-corps">' + gras(esc(d.suite)) + '</div></details>';
+        }
+        return '<div class="mini-bloc">' + out + '</div>';
+      }).join('');
+      return '<div class="mini mini-riche"><b class="mini-titre">' + esc(titre) + '</b>' + html + '</div>';
     }
     function stripHtml(l) {
       return '<div class="strip" aria-label="Les positions d’un coup d’œil">' + joueurs().map(function (cid) {
@@ -3379,7 +3459,36 @@
       if (!liste.length) { loisGrid.appendChild(videEtat('loi')); return; }
       /* textes clés d'abord, dans l'ordre d'origine ensuite */
       var ordonnee = liste.filter(function (l) { return l.cle; }).concat(liste.filter(function (l) { return !l.cle; }));
+      /* Un dossier (plusieurs textes sur un meme probleme, ex. deserts medicaux)
+         se lit d'un bloc : on regroupe ses textes la ou le premier apparait,
+         dans l'ordre de ses tableaux. Un texte sans dossier reste une carte seule. */
+      var dejaDossier = {};
       ordonnee.forEach(function (l) {
+        if (l.dossier) {
+          if (dejaDossier[l.dossier]) return;
+          dejaDossier[l.dossier] = true;
+          var membres = ordonnee.filter(function (x) { return x.dossier === l.dossier; })
+            .sort(function (x, y) { return (x.dossierOrdre || 0) - (y.dossierOrdre || 0); });
+          var boite = el(
+            '<section class="dossier" aria-labelledby="dossier-' + esc(slug(l.dossier)) + '">' +
+              '<header class="dossier-tete">' +
+                '<span class="dossier-eti">\uD83D\uDCC1 Dossier</span>' +
+                '<h3 id="dossier-' + esc(slug(l.dossier)) + '">' + esc(l.dossier) + '</h3>' +
+                '<p class="dossier-compte">' + membres.length + ' textes sur le m\u00EAme sujet, \u00E0 lire ensemble</p>' +
+              '</header>' +
+              '<div class="dossier-corps"></div>' +
+            '</section>');
+          var corps = boite.querySelector('.dossier-corps');
+          membres.forEach(function (m) { corps.appendChild(carteLoi(m)); });
+          loisGrid.appendChild(boite);
+          return;
+        }
+        loisGrid.appendChild(carteLoi(l));
+      });
+    }
+    function slug(t) { return String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+    function carteLoi(l) {
+      {
         var rows = joueurs().map(function (cid) {
           var c = CAND[cid], v = l.votes[cid];
           if (!v) return '';
@@ -3402,13 +3511,14 @@
           return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a>';
         }).join('');
         var lum = lumiereLoi(l);
-        loisGrid.appendChild(el(
+        return el(
           '<details class="loi-card' + (lum ? ' est-lumiere' : '') + '" data-loi="' + esc(l.id) + '"' + (l.cle ? ' data-cle="1"' : '') + '>' +
             '<summary class="loi-sum">' +
               '<div class="loi-sum-top">' +
                 (l.cle ? '<span class="cle-star">⭐ texte clé</span>' : '') +
                 '<h3>' + esc(l.nom) + '</h3>' + statutChip(l) +
-                '<span class="chip">' + (l.sujet === 'sante' ? '🩺' : '🌱') + ' ' + esc(l.sousTheme) + '</span>' +
+                (l.dossier && l.dossier === l.sousTheme ? '' :
+                  '<span class="chip">' + (l.sujet === 'sante' ? '🩺' : '🌱') + ' ' + esc(l.sousTheme) + '</span>') +
                 (lum ? '<span class="chip lumiere" title="Repéré via : ' + esc(pourquoi(lum, 6)) + '">🔎 concerne ce profil</span>' : '') +
                 '<span class="plus" aria-hidden="true"></span>' +
               '</div>' +
@@ -3432,8 +3542,8 @@
               '<div class="grille">' + rows + '</div>' +
               (liens ? '<div class="loi-links">' + liens + '</div>' : '') +
             '</div>' +
-          '</details>'));
-      });
+          '</details>');
+      }
     }
     renderLois();
 
