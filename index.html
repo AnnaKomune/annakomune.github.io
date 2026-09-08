@@ -1225,6 +1225,37 @@
 
     /* --- 1.4.4 Redimensionnement : rien en dessous de 12px --- */
     body { text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+  
+  /* ---------- Retour 9 : plus un seul mot qui deborde de sa boite ----------
+     Un lecteur developpeur a signale des textes qui debordent sur un ecran
+     de 408 px (Fairphone 5). La cause est mecanique : nos titres XXL sont
+     dimensionnes en vw, et sur un ecran etroit un mot long ("Bienvenue",
+     "presidentielle", "fonctionne") devient plus large que sa colonne.
+     Le correctif est un plafond en min() : la taille ne peut que DESCENDRE
+     par rapport a l'existant, jamais monter, et la courbe reste continue
+     (pas de saut a un point de rupture). Les valeurs de plafond sont
+     calculees a partir du mot le plus long mesure sur chaque page a 320 px.
+     On laisse aussi la cesure francaise possible (lang="fr"), et la coupure
+     brute uniquement sur les petits textes, ou elle ne choque pas. */
+  @media (max-width: 700px) {
+    .qr-nom, .qr-sub, .qr-qui, .cell-label {
+      overflow-wrap: break-word;
+    }
+    h1, h2, h3, .mega, .meter-title, .meter-reveal-main {
+      -webkit-hyphens: auto;
+      hyphens: auto;
+    }
+    /* Deux contraintes se cumulaient ici : une boite bridee a 7.6ch, et une
+       police en 20vw. On elargit la boite ET on plafonne la police pour que
+       « Bienvenue » tienne dans la colonne du hero. */
+    h1 { max-width: 9.2ch; font-size: min(clamp(62px, 20vw, 96px), 15.2vw); }
+    h2 { font-size: min(clamp(44px, 14vw, 72px), 12.2vw); }
+    /* Ces lignes du hero sont coupees a la main et tenues en white-space:
+       nowrap. A 408 px, « avec un regard antiraciste. » sortait de la carte
+       et la fin du mot etait rognee. Sur ecran etroit on laisse le texte
+       couler normalement : la coupure manuelle n'a plus de sens. */
+    .baseline .hero-copy-line { display: inline; white-space: normal; }
+  }
   </style>
 </head>
 

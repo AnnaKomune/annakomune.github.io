@@ -230,14 +230,16 @@
     .bloc-pli[hidden] { display: none; }
     .pli-teaser { font-size: 14px; font-weight: 700; color: var(--muted); margin: 12px 0 0; }
 
-    /* ---------- les 5 outils, côte à côte et dépliables ---------- */
+    /* ---------- les 4 outils, côte à côte et dépliables ---------- */
     .outils-head {
       display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px;
       align-items: center; margin: 0 0 18px; scroll-margin-top: 84px;
     }
     .outils-head h2 { margin: 0; }
+    /* Quatre outils : une grille 2 x 2 les repartit sans laisser de carte
+       seule en bout de ligne (c'etait le cas en trois colonnes). */
     .trio {
-      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px; margin: 0 0 54px; scroll-margin-top: 84px;
     }
     .trio-item { min-width: 0; scroll-margin-top: 84px; }
@@ -252,6 +254,7 @@
     .trio-carte:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--blue); }
     .trio-item:nth-child(2) .trio-carte { box-shadow: 3px 3px 0 var(--green); }
     .trio-item:nth-child(3) .trio-carte { box-shadow: 3px 3px 0 var(--gold); }
+    .trio-item:nth-child(4) .trio-carte { box-shadow: 3px 3px 0 var(--pink); }
     .trio-emoji {
       display: grid; place-items: center; width: 54px; aspect-ratio: 1; flex: 0 0 auto;
       border: 2px solid var(--ink); border-radius: 16px; background: var(--yellow);
@@ -263,20 +266,40 @@
       letter-spacing: .01em; font-size: clamp(18px, 1.7vw, 22px); line-height: 1.08;
     }
     .trio-sous { display: block; margin-top: 6px; font-size: 14px; font-weight: 650; color: var(--muted); }
+    /* Cette pastille etait jaune et petite, comme les etiquettes du site :
+       elle se lisait comme un libelle et pas comme une commande. Elle prend
+       maintenant le style d'un vrai bouton, sur toute la largeur de la carte. */
     .trio-etat {
-      display: inline-flex; align-items: center; gap: 7px; margin-top: auto;
-      border: 2px solid var(--ink); border-radius: 999px; padding: 7px 14px;
-      background: var(--yellow); font-weight: 800; font-size: 14.5px;
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      width: 100%; margin-top: auto; min-height: 44px; box-sizing: border-box;
+      border: 2px solid var(--ink); border-radius: 14px; padding: 10px 16px;
+      background: var(--ink); color: var(--cream);
+      font-weight: 800; font-size: 15px; letter-spacing: .01em;
+      box-shadow: 2px 2px 0 var(--blue);
+      transition: background .15s ease, box-shadow .15s ease, transform .15s ease;
     }
+    .trio-carte:hover .trio-etat { background: var(--blue); box-shadow: 2px 2px 0 var(--pink); }
+    .trio-carte:active .trio-etat { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--blue); }
     .trio-carte[aria-expanded="true"] { background: var(--ink); color: var(--cream); }
-    .trio-carte[aria-expanded="true"] .trio-sous { color: rgba(252,247,232,.75); }
-    .trio-carte[aria-expanded="true"] .trio-etat { background: var(--green); color: var(--ink); }
+    .trio-carte[aria-expanded="true"] .trio-sous { color: rgba(252,247,232,.82); }
+    .trio-carte[aria-expanded="true"] .trio-etat {
+      background: var(--green); color: var(--ink); box-shadow: 2px 2px 0 var(--cream);
+    }
+    .trio-carte[aria-expanded="true"]:hover .trio-etat { background: var(--green); }
     .trio-pli {
       grid-column: 1 / -1; margin-top: 4px; min-width: 0;
       border: 2px solid var(--ink); border-radius: 26px; padding: 22px clamp(16px, 2.4vw, 28px) 24px;
       background: var(--cream); box-shadow: var(--shadow);
     }
     .trio-pli > .bloc-intro { margin-top: 0; }
+    /* le depliement d'une rubrique autonome : meme bouton que dans les outils,
+       mais sans la carte autour. */
+    .bloc-plier {
+      display: block; width: 100%; max-width: 420px; margin: 14px 0 0;
+      background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit;
+    }
+    .bloc-plier .trio-etat { width: 100%; }
+    #candidats > .bloc-pli { margin-top: 18px; }
     #atelier, #votes, #qui { scroll-margin-top: 84px; }
     @media (max-width: 900px) {
       .trio { grid-template-columns: minmax(0, 1fr); gap: 12px; }
@@ -288,8 +311,100 @@
       #jeu        { order: 3; }  #jeu-pli        { order: 4; }
       #debat      { order: 5; }  #debat-pli      { order: 6; }
       #promesses  { order: 7; }  #promesses-pli  { order: 8; }
-      #candidats  { order: 9; }  #candidats-pli  { order: 10; }
     }
+
+    /* ---------- LE LEXIQUE (retours 16 et 17) ----------
+       Deux lecteurs demandaient la meme chose : un lexique plus etoffe,
+       et pouvoir cliquer un mot dans le texte pour en avoir la definition
+       sans quitter sa lecture. */
+    .lex-outils { display: grid; gap: 12px; margin: 0 0 18px; }
+    #lex-recherche {
+      width: 100%; box-sizing: border-box; min-height: 48px;
+      border: 2px solid var(--ink); border-radius: 14px; padding: 11px 16px;
+      background: var(--white); color: var(--ink);
+      font: inherit; font-size: 16px; box-shadow: 2px 2px 0 var(--blue);
+    }
+    #lex-recherche::placeholder { color: var(--muted); }
+    .lex-filtres { display: flex; flex-wrap: wrap; gap: 8px; }
+    .lex-chip {
+      min-height: 44px; border: 2px solid var(--ink); border-radius: 999px;
+      padding: 8px 15px; background: var(--white); color: var(--ink);
+      font: inherit; font-weight: 700; font-size: 14px; cursor: pointer;
+    }
+    .lex-chip:hover { background: var(--yellow); }
+    .lex-chip.est-actif { background: var(--ink); color: var(--cream); }
+    .lex-compte { margin: 0; font-size: 14px; color: var(--muted); }
+    .lex-liste { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .lex-entree {
+      border: 2px solid var(--ink); border-radius: 16px; padding: 14px 16px;
+      background: var(--white); scroll-margin-top: 96px;
+    }
+    .lex-entree.est-vise { background: var(--yellow); box-shadow: 3px 3px 0 var(--blue); }
+    .lex-entree dt { margin: 0 0 6px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+    .lex-terme {
+      font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      letter-spacing: .02em; font-size: 17px; line-height: 1.15;
+    }
+    .lex-dev { font-size: 13.5px; font-weight: 700; color: var(--bleu-texte); }
+    .lex-cat {
+      flex: 0 0 auto; margin-left: auto; font-size: 11.5px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .04em; color: var(--muted);
+    }
+    .lex-entree dd { margin: 0; font-size: 15px; line-height: 1.5; }
+    /* la source, discrete mais toujours la */
+    .lex-src {
+      /* sur sa propre ligne : en inline-block elle se collait a la fin de la
+         definition, sans espace. */
+      display: block; width: fit-content; margin-top: 8px;
+      font-size: 12.5px; font-weight: 700; color: var(--bleu-texte);
+      text-decoration: underline; text-underline-offset: 2px;
+    }
+    .lex-src:hover { background: var(--gold); border-radius: 4px; }
+    .lex-bulle-src { margin: 10px 0 0; }
+    .lex-bulle-src .lex-src { margin-top: 0; }
+    @media (max-width: 760px) { .lex-liste { grid-template-columns: minmax(0, 1fr); } }
+
+    /* le mot cliquable au fil du texte : un pointille discret, pas un lien
+       de plus. Il ne prend que la premiere occurrence dans chaque carte. */
+    .mot-lex {
+      display: inline; margin: 0; padding: 0; border: 0; background: none;
+      font: inherit; color: inherit; text-align: inherit; cursor: pointer;
+      /* un <button> ne herite ni de la casse ni de l'interlettrage : sans
+         ces trois lignes, un mot marque dans un intertitre en capitales
+         redescendait en minuscules. */
+      text-transform: inherit; letter-spacing: inherit; font-variant: inherit;
+      text-decoration: underline; text-decoration-style: dotted;
+      text-decoration-thickness: 2px; text-underline-offset: 3px;
+    }
+    .mot-lex:hover, .mot-lex[aria-expanded="true"] {
+      background: var(--gold); border-radius: 4px; text-decoration-style: solid;
+    }
+    /* le meme pointille, montre en exemple dans le chapeau du lexique */
+    .lex-demo {
+      text-decoration: underline; text-decoration-style: dotted;
+      text-decoration-thickness: 2px; text-underline-offset: 3px;
+    }
+
+    /* la bulle de definition */
+    .lex-bulle {
+      position: fixed; z-index: 90; width: min(340px, calc(100vw - 24px));
+      border: 2px solid var(--ink); border-radius: 18px; padding: 14px 16px 12px;
+      background: var(--cream); box-shadow: 5px 5px 0 var(--blue);
+    }
+    .lex-bulle-haut { display: flex; align-items: flex-start; gap: 10px; }
+    .lex-bulle-titre {
+      margin: 0; flex: 1 1 auto; font-family: "Oswald", Impact, sans-serif;
+      text-transform: uppercase; font-size: 17px; line-height: 1.15;
+    }
+    .lex-bulle-x {
+      flex: 0 0 auto; width: 44px; height: 44px; display: grid; place-items: center;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--white);
+      font: inherit; font-size: 14px; cursor: pointer;
+    }
+    .lex-bulle-x:hover { background: var(--pink); }
+    .lex-bulle-dev { margin: 6px 0 0; font-size: 13.5px; font-weight: 700; color: var(--bleu-texte); }
+    .lex-bulle-txt { margin: 8px 0 0; font-size: 15px; line-height: 1.5; }
+    .lex-bulle-lien { display: inline-block; margin-top: 10px; font-size: 13.5px; font-weight: 800; }
 
     /* ---------- ATELIER : comment ça marche ---------- */
     /* ---------- ATELIER : les trois portes d'entree ----------
@@ -862,14 +977,20 @@
     .quote-box {
       position: relative; background: var(--white); border: 2px solid var(--ink);
       border-radius: 18px; box-shadow: 4px 4px 0 var(--gold); transform: rotate(-0.3deg);
-      padding: clamp(22px, 4vw, 40px) clamp(18px, 4vw, 46px); margin-bottom: 22px;
+      /* Le padding haut doit degager le guillemet decoratif : a 390 px il ne
+         faisait que 22 px alors que l'encre du guillemet descendait a 44 px,
+         d'ou le chevauchement signale sur mobile (retour 18). */
+      padding: clamp(48px, 7.5vw, 54px) clamp(18px, 4vw, 46px) clamp(22px, 4vw, 40px);
+      margin-bottom: 22px;
     }
+    .quote-box.sans-guillemet { padding-top: clamp(22px, 4vw, 40px); }
     .quote-box.sans-guillemet::before { content: none; }
     .quote-box .quote-para { font-family: "Oswald", sans-serif; font-size: clamp(20px, 2.6vw, 30px);
       line-height: 1.25; margin: 0; }
     .quote-box::before {
-      content: "«"; position: absolute; top: -20px; left: 14px;
-      font-family: "Oswald", sans-serif; font-size: 78px; color: var(--purple); line-height: 1;
+      content: "«"; position: absolute; top: 7px; left: 16px;
+      font-family: "Oswald", sans-serif; font-size: clamp(38px, 6vw, 54px);
+      color: var(--purple); line-height: 1;
     }
     .quote-box blockquote {
       margin: 0; font-family: "Oswald", sans-serif; font-weight: 500;
@@ -1599,11 +1720,40 @@
       padding: 16px 18px; margin: 0 0 22px; box-shadow: var(--shadow); font-size: 15px;
     }
     .medef-methode b { text-transform: uppercase; font-family: "Oswald", Impact, sans-serif; letter-spacing: .04em; }
+    /* Retour 3 : en descendant dans les sept cartes de reponses, on ne savait
+       plus a quelle question les candidat·es repondent. Le bandeau de la
+       question reste donc colle sous le sommaire, et se reduit a une seule
+       ligne (le nom et le metier de la personne qui pose) des qu'on entre
+       dans les reponses. Un clic le redeplie ; a partir de ce clic c'est le
+       choix du lecteur qui commande, plus le defilement. */
     .medef-question {
-      border-left: 6px solid var(--gold); background: #fffdf3; border: 2px solid var(--ink);
-      border-left-width: 10px; border-radius: 14px; padding: 14px 16px; margin: 18px 0;
-      font-size: 15.5px;
+      position: sticky; top: var(--mq-haut, 74px); z-index: 30;
+      background: #fffdf3; border: 2px solid var(--ink);
+      border-left-width: 10px; border-radius: 14px; padding: 0; margin: 18px 0;
+      font-size: 15.5px; box-shadow: 3px 3px 0 rgba(51, 46, 50, .10);
     }
+    .mq-bandeau {
+      display: flex; align-items: center; gap: 10px;
+      width: 100%; min-height: 44px; box-sizing: border-box;
+      padding: 10px 14px; background: none; border: 0; border-radius: 12px;
+      font: inherit; color: inherit; text-align: left; cursor: pointer;
+    }
+    .mq-picto { flex: 0 0 auto; font-size: 17px; }
+    /* deux lignes maximum : sur un ecran de 408 px, une seule ligne coupait
+       le metier de la personne qui pose la question, or c'est justement ce
+       qui donne le contexte. */
+    .mq-etq {
+      flex: 1 1 auto; min-width: 0;
+      font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      letter-spacing: .04em; font-size: 13.5px; line-height: 1.25;
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+      max-height: 2.5em; overflow: hidden;
+    }
+    .mq-fl { flex: 0 0 auto; font-size: 12px; transition: transform .15s ease; }
+    .medef-question.replie .mq-fl { transform: rotate(180deg); }
+    .mq-corps { padding: 0 16px 14px; line-height: 1.5; }
+    .medef-question.replie .mq-corps { display: none; }
+    @media (prefers-reduced-motion: reduce) { .mq-fl { transition: none; } }
     .medef-question .qui-pose { display:block; font-family:"Oswald",Impact,sans-serif; text-transform:uppercase; letter-spacing:.05em; font-size:13px; margin-bottom:4px; }
     .medef-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px; align-items: start; }
     .medef-card {
@@ -1638,6 +1788,18 @@
     .medef-defs dt { font-weight: 800; margin-top: 10px; }
     .medef-defs dt:first-child { margin-top: 0; }
     .medef-defs dd { margin: 2px 0 0; font-size: 14.5px; color: var(--muted); }
+    /* Retours 4 et 14 : deux lecteurs contestent une citation du debat.
+       La methode du site promet de marquer les coupes par […] et de dire
+       les corrections plutot que de les faire en silence. Ce bandeau tient
+       cette promesse : il colle le signalement a la citation concernee,
+       tant que la verification n'est pas faite. */
+    .medef-signal {
+      display: block; margin: -4px 0 12px; padding: 10px 12px;
+      border: 2px solid var(--ink); border-left-width: 8px; border-radius: 12px;
+      background: var(--yellow); font-size: 13.5px; line-height: 1.45;
+    }
+    .medef-signal b { text-transform: uppercase; font-family: "Oswald", Impact, sans-serif; letter-spacing: .04em; }
+    .medef-signal .signal-date { display: block; margin-top: 4px; color: var(--muted); font-size: 12.5px; }
     .medef-note-bas { font-size: 13.5px; color: var(--muted); margin-top: 18px; }
     .medef-suite {
       background: var(--white); border: 2px solid var(--ink); border-radius: 18px;
@@ -2007,6 +2169,30 @@
 
     /* --- 1.4.4 Redimensionnement : rien en dessous de 12px --- */
     body { text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+  
+  /* ---------- Retour 9 : plus un seul mot qui deborde de sa boite ----------
+     Un lecteur developpeur a signale des textes qui debordent sur un ecran
+     de 408 px (Fairphone 5). La cause est mecanique : nos titres XXL sont
+     dimensionnes en vw, et sur un ecran etroit un mot long ("Bienvenue",
+     "presidentielle", "fonctionne") devient plus large que sa colonne.
+     Le correctif est un plafond en min() : la taille ne peut que DESCENDRE
+     par rapport a l'existant, jamais monter, et la courbe reste continue
+     (pas de saut a un point de rupture). Les valeurs de plafond sont
+     calculees a partir du mot le plus long mesure sur chaque page a 320 px.
+     On laisse aussi la cesure francaise possible (lang="fr"), et la coupure
+     brute uniquement sur les petits textes, ou elle ne choque pas. */
+  @media (max-width: 700px) {
+    .qr-nom, .qr-sub, .qr-qui, .cell-label {
+      overflow-wrap: break-word;
+    }
+    h1, h2, h3, .mega, .meter-title, .meter-reveal-main {
+      -webkit-hyphens: auto;
+      hyphens: auto;
+    }
+    /* ce titre porte word-break: keep-all (choix assume : aucune coupure
+       de mot). Il ne peut donc que rapetisser. */
+    .hero-main h1 { font-size: min(clamp(38px, 5.2vw, 66px), 9.4vw); }
+  }
   </style>
 </head>
 <body>
@@ -2064,7 +2250,7 @@
 
     <!-- ===== Sommaire de la page ===== -->
     <nav class="toc" aria-label="Sommaire du comparateur">
-      <a href="#outils">🧰 Les 5 outils</a>
+      <a href="#outils">🧰 Les 4 outils</a>
       <a href="#medef">🎤 Le débat du Medef</a>
       <a href="#jeu">🎮 Qui a dit quoi ?</a>
       <a href="#debat">⚡ Réponses rapides</a>
@@ -2072,13 +2258,14 @@
       <a href="#candidats">👤 Les candidat·es</a>
       <a href="#chantier">🚧 Où on en est</a>
       <a href="#methode">🧭 La méthode</a>
+      <a href="#lexique">💡 Le lexique</a>
       <a href="#sources">📚 Les sources</a>
     </nav>
 
-    <!-- ===== LES 5 OUTILS (dépliables) ===== -->
+    <!-- ===== LES 4 OUTILS (dépliables) ===== -->
     <div class="outils-head" id="outils">
       <span class="bloc-emoji" aria-hidden="true">🧰</span>
-      <h2 id="outils-titre">Les 5 outils</h2>
+      <h2 id="outils-titre">Les 4 outils</h2>
     </div>
     <section class="trio" aria-labelledby="outils-titre">
       <article class="trio-item" id="medef">
@@ -2088,7 +2275,7 @@
             <span class="trio-titre">Le débat du Medef, citation par citation</span>
             <span class="trio-sous">53 citations horodatées, 7 candidat·es, 6 thèmes</span>
           </span>
-          <span class="trio-etat"><span class="quand-ferme">Ouvrir</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+          <span class="trio-etat"><span class="quand-ferme">Ouvrir le débat</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
         </button>
       </article>
       <article class="trio-item" id="jeu">
@@ -2098,7 +2285,7 @@
             <span class="trio-titre">Qui a dit quoi&nbsp;?</span>
             <span class="trio-sous">10 déclarations de candidat·es : à qui appartiennent-elles, et sont-elles alignées sur leurs actes ?</span>
           </span>
-          <span class="trio-etat"><span class="quand-ferme">Jouer</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+          <span class="trio-etat"><span class="quand-ferme">Lancer le jeu</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
         </button>
       </article>
       <article class="trio-item" id="debat">
@@ -2108,7 +2295,7 @@
             <span class="trio-titre">Réponses rapides</span>
             <span class="trio-sous">En plein débat ? La réponse en 10 secondes : une phrase courte et le détail des votes sur le sujet.</span>
           </span>
-          <span class="trio-etat"><span class="quand-ferme">Ouvrir</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+          <span class="trio-etat"><span class="quand-ferme">Ouvrir les réponses</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
         </button>
       </article>
 
@@ -2119,17 +2306,7 @@
             <span class="trio-titre">Promesses VS Actes</span>
             <span class="trio-sous">Par lois et par thèmes, mesurez l'écart pour chaque candidat·e.</span>
           </span>
-          <span class="trio-etat"><span class="quand-ferme">Ouvrir</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
-        </button>
-      </article>
-      <article class="trio-item" id="candidats">
-        <button type="button" class="plier trio-carte" aria-expanded="false" aria-controls="candidats-pli">
-          <span class="trio-emoji" aria-hidden="true">👤</span>
-          <span class="trio-txt">
-            <span class="trio-titre">Les candidat·es</span>
-            <span class="trio-sous">Découvrez les candidat·es : mandats, fonctions et responsabilités.</span>
-          </span>
-          <span class="trio-etat"><span class="quand-ferme">Ouvrir</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+          <span class="trio-etat"><span class="quand-ferme">Ouvrir la comparaison</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
         </button>
       </article>
 
@@ -2276,14 +2453,21 @@
       </div>
       </div>
 
-      <div class="bloc-pli trio-pli" id="candidats-pli" hidden>
-      <div id="qui" aria-labelledby="qui-titre">
+    </section>
 
+
+    <!-- ===== LES CANDIDAT·ES : rubrique a part, plus un des outils ===== -->
+    <section class="bloc" id="candidats" aria-labelledby="qui-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">👤</span>
         <h2 id="qui-titre">Les candidat·es</h2>
       </div>
-      <p class="bloc-intro">Avant de lire des votes, il faut savoir qui pouvait voter. Ces parcours expliquent pourquoi l'une a un vote personnel sur presque tout, et pourquoi un autre n'en a aucun. C'est la clé pour lire le reste de la page sans se tromper.</p>
+      <p class="bloc-intro">Cette rubrique répond à deux questions. D'abord&nbsp;: <strong>qui sont les sept candidat·es</strong>, quels mandats et quelles fonctions ils et elles ont exercés. Ensuite&nbsp;: <strong>quels actes le comparateur retient pour chacun·e, et pourquoi</strong>. Une personne qui siégeait au Parlement a des votes personnels&nbsp;; une personne sans mandat, ou au gouvernement, n'en a aucun - dans ce cas nous regardons les votes de son groupe parlementaire, et nous l'écrivons à chaque fois. C'est la clé pour lire le reste de la page sans se tromper.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="candidats-pli">
+        <span class="trio-etat"><span class="quand-ferme">Voir les parcours des 7 candidat·es</span><span class="quand-ouvert">Replier les parcours</span> <span class="chev" aria-hidden="true">▼</span></span>
+      </button>
+      <div class="bloc-pli" id="candidats-pli" hidden>
+      <div id="qui">
       <div class="qui-grid" id="qui-grid"></div>
       <div class="soutien-card" style="margin-top:22px">
         <h3>On a besoin de vous pour développer la plateforme.</h3>
@@ -2295,6 +2479,27 @@
         </div>
       </div>
       </div>
+      </div>
+    </section>
+
+    <!-- ===== LE LEXIQUE : retours 16 et 17 ===== -->
+    <section class="bloc" id="lexique" aria-labelledby="lexique-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">💡</span>
+        <h2 id="lexique-titre">Le lexique</h2>
+      </div>
+      <p class="bloc-intro">Deux lecteurs nous ont écrit la même chose&nbsp;: les sigles et le vocabulaire technique bloquent la lecture. Voici tous les mots du comparateur, expliqués en une ou deux phrases. Et partout dans la page, les mots <span class="lex-demo">soulignés en pointillés</span> ouvrent leur définition sur place, sans perdre le fil.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="lexique-pli">
+        <span class="trio-etat"><span class="quand-ferme">Ouvrir le lexique</span><span class="quand-ouvert">Replier le lexique</span> <span class="chev" aria-hidden="true">▼</span></span>
+      </button>
+      <div class="bloc-pli" id="lexique-pli" hidden>
+        <div class="lex-outils">
+          <label class="lex-champ" for="lex-recherche"><span class="lecteur-seul">Chercher un mot dans le lexique</span></label>
+          <input type="search" id="lex-recherche" placeholder="Chercher un mot : CVAE, moratoire, ZFE…" autocomplete="off">
+          <div class="lex-filtres" id="lex-filtres" role="group" aria-label="Filtrer le lexique par thème"></div>
+          <p class="lex-compte" id="lex-compte" role="status" aria-live="polite"></p>
+        </div>
+        <dl class="lex-liste" id="lex-liste"></dl>
       </div>
     </section>
 
@@ -4496,6 +4701,15 @@
       meth.innerHTML = '<b>📌 Méthode.</b> ' + esc(M.methode) + '<br><span style="color:var(--muted);font-size:14px">' + esc(M.animation) + '</span>';
     }
 
+    /* Retours 4 et 14 : deux lecteurs contestent la citation de Melenchon a
+       27:13. Le mecanisme d'affichage d'un signalement est en place, mais la
+       table est VIDE : Anna ne veut aucune mention publique sur le site, elle
+       communique sur ces sujets par ailleurs. Pour reactiver un signalement,
+       ajouter une entree ci-dessous, rien d'autre a toucher.
+         'melenchon|27:13': { texte: "...", date: "..." }
+       Rien ne s'affiche tant que cette table est vide. */
+    var SIGNALEMENTS = {};
+
     /* onglets de thèmes */
     var sw = document.getElementById('medef-switch');
     var corps = document.getElementById('medef-corps');
@@ -4511,15 +4725,36 @@
       if (!t) return;
       var html = '';
       if (t.question) {
-        html += '<div class="medef-question"><span class="qui-pose">🧑‍💼 La question venue de la salle</span>' + esc(t.question) + '</div>';
+        /* le texte de la question est d'un seul bloc dans les donnees :
+           « Question de X, metier : "…" ». On le coupe au premier guillemet
+           pour avoir d'un cote l'etiquette (qui pose, et a quel titre) et de
+           l'autre la question elle-meme. Rien n'est reecrit ni resume. */
+        var etq = t.question, cite = '';
+        var coupe = t.question.indexOf('\u00ab');
+        if (coupe > 0) {
+          etq = t.question.slice(0, coupe).replace(/\s*:\s*$/, '').trim();
+          cite = t.question.slice(coupe).trim();
+        }
+        html += '<div class="medef-question">' +
+          '<button type="button" class="mq-bandeau" aria-expanded="true" aria-controls="medef-q-corps">' +
+            '<span class="mq-picto" aria-hidden="true">\uD83E\uDDD1\u200D\uD83D\uDCBC</span>' +
+            '<span class="mq-etq">' + esc(etq) + '</span>' +
+            '<span class="mq-fl" aria-hidden="true">\u25B4</span>' +
+          '</button>' +
+          '<div class="mq-corps" id="medef-q-corps">' + esc(cite || t.question) + '</div>' +
+        '</div>';
       }
       html += '<div class="medef-grid">';
       t.prises.forEach(function (p) {
         var c = CAND[p.cand];
         if (!c) return;
         var corps2 = p.citations.map(function (ci) {
+          var cle = p.cand + '|' + ci.ts;
+          var sig = SIGNALEMENTS[cle];
           return '<blockquote>' + esc(ci.texte) + '</blockquote>' + lienTs(ci) +
-            (ci.corr ? '<span class="medef-corr">✏️ Correction : ' + esc(ci.corr) + '</span>' : '');
+            (ci.corr ? '<span class="medef-corr">\u270F\uFE0F Correction : ' + esc(ci.corr) + '</span>' : '') +
+            (sig ? '<span class="medef-signal"><b>\u26A0\uFE0F Citation signal\u00E9e</b><br>' + esc(sig.texte) +
+                   '<span class="signal-date">Signal\u00E9 le ' + esc(sig.date) + '. La v\u00E9rification est en cours.</span></span>' : '');
         }).join('');
         html += '<article class="medef-card" style="--card-bg:' + esc(c.bg || '#ffffff') + ';--card-shadow:' + esc(c.shadow || '#332e32') + '">' +
           '<div class="qui-head">' + avatar(c) + '<h3>' + esc(c.nom) + '</h3></div>' + corps2 + '</article>';
@@ -4531,6 +4766,56 @@
           '</dl></details>';
       }
       corps.innerHTML = html;
+      brancherQuestion();
+    }
+
+    /* --- Retour 3 : le bandeau collant de la question ------------------
+       Il se cale juste sous le sommaire collant (dont la hauteur est
+       mesuree, pas devinee) et se replie tout seul quand on descend dans
+       les reponses. Des que le lecteur clique dessus, c'est son choix qui
+       vaut : on arrete de le replier au defilement. */
+    var oeil = null;
+    function hautSommaire() {
+      var t = document.querySelector('.toc');
+      if (!t) { return 74; }
+      var r = t.getBoundingClientRect();
+      return Math.round(r.height) + 20;
+    }
+    function brancherQuestion() {
+      if (oeil) { oeil.disconnect(); oeil = null; }
+      var bloc = corps.querySelector('.medef-question');
+      if (!bloc) { return; }
+      var bouton = bloc.querySelector('.mq-bandeau');
+      var haut = hautSommaire();
+      bloc.style.setProperty('--mq-haut', haut + 'px');
+      var choixDuLecteur = false;
+      function poser(ouvert) {
+        bloc.classList.toggle('replie', !ouvert);
+        bouton.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+      }
+      bouton.addEventListener('click', function () {
+        choixDuLecteur = true;
+        poser(bouton.getAttribute('aria-expanded') !== 'true');
+      });
+      if (!('IntersectionObserver' in window)) { return; }
+      var temoin = document.createElement('div');
+      temoin.setAttribute('aria-hidden', 'true');
+      temoin.style.cssText = 'height:1px;margin:0;padding:0';
+      bloc.parentNode.insertBefore(temoin, bloc);
+      oeil = new IntersectionObserver(function (entrees) {
+        if (choixDuLecteur) { return; }
+        /* on ne replie jamais sous les doigts de quelqu'un qui lit au clavier
+           ou au lecteur d'ecran a l'interieur du bloc */
+        if (bloc.contains(document.activeElement)) { return; }
+        /* on ne replie que si le temoin est passe AU-DESSUS de la fenetre.
+           S'il est encore plus bas (panneau qu'on vient d'ouvrir, pas encore
+           atteint), la question doit rester ouverte. */
+        var e = entrees[0];
+        var limite = e.rootBounds ? e.rootBounds.top : 0;
+        var passeAuDessus = !e.isIntersecting && e.boundingClientRect.top < limite;
+        poser(!passeAuDessus);
+      }, { rootMargin: '-' + (haut + 6) + 'px 0px 0px 0px', threshold: 0 });
+      oeil.observe(temoin);
     }
 
     if (sw && corps) {
@@ -4547,5 +4832,463 @@
     }
   })();
   </script>
+  <!-- ===== LE LEXIQUE : donnees + moteur (retours 16 et 17) ===== -->
+  <script>
+  /* Le lexique : 103 entrees, chacune avec sa source.
+     Il vit dans la page et non dans data.js, pour ne pas toucher aux
+     donnees du comparateur. Chaque definition a ete verifiee sur sa
+     source en septembre 2026 ; « s » est l'URL, « sn » le nom affiche. */
+  window.KOMUNE_LEXIQUE = [
+    {"id":"ppl","t":"PPL","x":"Un texte déposé par des parlementaires, député·es ou sénateur·rices. Quand le texte vient du gouvernement, on parle de projet de loi.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/travail-legislatif/la-procedure-legislative","sn":"Assemblée nationale","d":"Proposition de loi","a":["PPL"],"l":1},
+    {"id":"pjl","t":"Projet de loi","x":"Un texte déposé par le gouvernement, après passage en Conseil des ministres. À distinguer d'une proposition de loi, qui vient des parlementaires.","c":"loi","s":"https://www.conseil-constitutionnel.fr/le-bloc-de-constitutionnalite/texte-integral-de-la-constitution-du-4-octobre-1958-en-vigueur","sn":"Conseil constitutionnel (Constitution, article 39)","l":0},
+    {"id":"amendement","t":"Amendement","x":"Une modification proposée à un texte pendant son examen. Chaque amendement est débattu puis voté séparément.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/travail-legislatif/l-exercice-du-droit-d-amendement","sn":"Assemblée nationale","l":0},
+    {"id":"rapporteur","t":"Rapporteur·e","x":"Le ou la parlementaire chargé·e d'examiner un texte pour sa commission, de proposer des modifications et de défendre les conclusions en séance.","c":"loi","s":"https://www.assemblee-nationale.fr/connaissance/lexique.asp","sn":"Assemblée nationale (petit lexique parlementaire)","l":0},
+    {"id":"seance","t":"Séance publique","x":"Le débat dans l'hémicycle, ouvert au public et retransmis. L'essentiel du travail de réécriture se fait avant, en commission.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/travail-legislatif/la-seance-pleniere","sn":"Assemblée nationale","l":0},
+    {"id":"hemicycle","t":"Hémicycle","x":"La salle en demi-cercle où siègent les parlementaires. « Passer en séance » veut dire y être débattu.","c":"loi","s":"https://www.assemblee-nationale.fr/connaissance/lexique.asp","sn":"Assemblée nationale (petit lexique parlementaire)","a":["hémicycle"],"l":1},
+    {"id":"scrutin","t":"Scrutin public","x":"Un vote où le choix de chaque parlementaire est enregistré et publié. C'est la seule forme de vote qui permet de savoir qui a voté quoi : le comparateur ne s'appuie que sur ceux-là.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/travail-legislatif/les-votes-a-l-assemblee-nationale","sn":"Assemblée nationale","a":["scrutin public"],"l":1},
+    {"id":"abstention","t":"Abstention","x":"Un·e parlementaire présent·e qui ne prend ni le pour ni le contre. Ce n'est pas la même chose qu'une absence : l'abstention est un choix enregistré.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/travail-legislatif/les-votes-a-l-assemblee-nationale","sn":"Assemblée nationale","l":0},
+    {"id":"absence","t":"Absence","x":"Ne pas participer au vote. Une absence n'est ni un vote contre ni une abstention : elle ne dit rien de la position de la personne.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/travail-legislatif/les-votes-a-l-assemblee-nationale","sn":"Assemblée nationale","l":0},
+    {"id":"cmp","t":"CMP","x":"Sept député·es et sept sénateur·rices réuni·es pour écrire un texte commun quand les deux chambres n'arrivent pas à voter la même version.","c":"loi","s":"https://www.senat.fr/connaitre-le-senat/role-et-fonctionnement/la-commission-mixte-paritaire.html","sn":"Sénat","d":"Commission mixte paritaire","a":["CMP","commission mixte paritaire"],"l":1},
+    {"id":"navette","t":"Navette parlementaire","x":"L'aller-retour d'un texte entre l'Assemblée nationale et le Sénat, jusqu'à ce que les deux chambres votent la même version.","c":"loi","s":"https://www.senat.fr/connaitre-le-senat/role-et-fonctionnement/la-navette-parlementaire.html","sn":"Sénat","a":["navette parlementaire"],"l":1},
+    {"id":"lecture","t":"Lecture définitive","x":"Quand le désaccord entre les deux chambres persiste, le gouvernement peut demander à l'Assemblée nationale de statuer une dernière fois : c'est elle qui a le dernier mot.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/travail-legislatif/la-procedure-legislative","sn":"Assemblée nationale","a":["lecture définitive"],"l":1},
+    {"id":"acceleree","t":"Procédure accélérée","x":"À la demande du gouvernement, les délais minimaux d'examen d'un texte (six semaines après le dépôt, quatre semaines après la transmission à l'autre chambre) ne s'appliquent plus. Une commission mixte paritaire peut alors être réunie après une seule lecture par chambre, au lieu de deux.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/travail-legislatif/la-procedure-legislative","sn":"Assemblée nationale","a":["procédure accélérée"],"l":1},
+    {"id":"art493","t":"Article 49.3","x":"Le gouvernement engage sa responsabilité sur un texte : celui-ci est considéré comme adopté sans vote, sauf si l'Assemblée renverse le gouvernement par une motion de censure. Ce n'est possible que pour un budget de l'État ou de la Sécurité sociale, et pour un seul autre texte par session.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/evaluation-politiques-publiques-controle-gouvernement/la-mise-en-cause-de-la-responsabilite-du-gouvernement","sn":"Assemblée nationale","a":["49.3"],"l":1},
+    {"id":"censure","t":"Motion de censure","x":"Un vote qui peut renverser le gouvernement. Il lui faut la majorité absolue des député·es, soit 289 voix.","c":"loi","s":"https://www.conseil-constitutionnel.fr/le-bloc-de-constitutionnalite/texte-integral-de-la-constitution-du-4-octobre-1958-en-vigueur","sn":"Conseil constitutionnel","a":["motion de censure"],"l":1},
+    {"id":"dissolution","t":"Dissolution","x":"Le président de la République met fin au mandat de l'Assemblée nationale : de nouvelles élections législatives sont organisées.","c":"loi","s":"https://www.conseil-constitutionnel.fr/le-bloc-de-constitutionnalite/texte-integral-de-la-constitution-du-4-octobre-1958-en-vigueur","sn":"Conseil constitutionnel","l":0},
+    {"id":"promulgation","t":"Promulgation","x":"La signature du président de la République qui rend une loi exécutoire, après son vote définitif par le Parlement.","c":"loi","s":"https://www.assemblee-nationale.fr/connaissance/lexique.asp","sn":"Assemblée nationale","a":["promulgation","promulguée","promulgué"],"l":1},
+    {"id":"decret","t":"Décret","x":"Un texte pris par le président de la République ou le Premier ministre, sans vote du Parlement, pour appliquer une loi ou dans son domaine propre.","c":"loi","s":"https://www.assemblee-nationale.fr/connaissance/lexique.asp","sn":"Assemblée nationale","l":0},
+    {"id":"arrete","t":"Arrêté","x":"Un texte d'application pris par un ministre, un préfet ou un maire, en exécution d'une loi ou d'un décret.","c":"loi","s":"https://conseil-etat.fr/outils/glossaire","sn":"Conseil d'État (glossaire)","l":0},
+    {"id":"ordonnance","t":"Ordonnance","x":"Un texte pris par le gouvernement, sur autorisation du Parlement, dans un domaine qui relève normalement de la loi.","c":"loi","s":"https://www.senat.fr/connaitre-le-senat/role-et-fonctionnement/les-ordonnances.html","sn":"Sénat","a":["ordonnance","ordonnances"],"l":1},
+    {"id":"moratoire","t":"Moratoire","x":"Une décision de suspendre l'application d'une règle, en général pour une durée annoncée. Un moratoire ne supprime pas la règle : il gèle son application.","c":"loi","s":"https://www.dictionnaire-academie.fr/article/A9M2797","sn":"Dictionnaire de l'Académie française (9e éd.)","a":["moratoire","moratoires"],"l":1},
+    {"id":"derogation","t":"Dérogation","x":"L'autorisation de ne pas appliquer une règle, dans un cas précis ou pour une durée précise.","c":"loi","s":"https://www.dictionnaire-academie.fr/article/A9D1683","sn":"Dictionnaire de l'Académie française (9e éd.)","l":0},
+    {"id":"transposition","t":"Transposition","x":"La traduction d'une règle européenne, une directive, en droit français. C'est une obligation pour les États membres.","c":"loi","s":"https://commission.europa.eu/law/application-eu-law/implementing-eu-law_fr","sn":"Commission européenne","a":["transposition"],"l":1},
+    {"id":"surtransposition","t":"Surtransposition","x":"Ajouter, en transposant une règle européenne en droit français, des exigences supérieures au minimum demandé par l'Europe.","c":"loi","s":"https://www.senat.fr/leg/etudes-impact/pjl18-010-ei/pjl18-010-ei.html","sn":"Sénat","a":["surtransposition"],"l":1},
+    {"id":"niche","t":"Niche parlementaire","x":"Une journée de séance où un groupe d'opposition ou un groupe minoritaire choisit lui-même les textes examinés. La Constitution réserve un jour de séance par mois à ces groupes, qui se le répartissent ; les groupes de la majorité n'en ont pas.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/la-fixation-de-l-ordre-du-jour-et-la-conference-des-presidents","sn":"Assemblée nationale","a":["niche parlementaire"],"l":1},
+    {"id":"plfss","t":"PLFSS","x":"Le budget annuel de la sécurité sociale, voté chaque automne : maladie, retraites, famille, accidents du travail, autonomie.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/travail-legislatif/l-examen-parlementaire-des-projets-de-loi-de-financement-de-la-securite-sociale","sn":"Assemblée nationale","d":"Projet de loi de financement de la sécurité sociale","a":["PLFSS"],"l":1},
+    {"id":"lfi_budget","t":"Loi de finances","x":"Le budget de l'État, voté chaque automne. Elle fixe les recettes et les dépenses de l'année suivante.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/synthese/fonctionnement-assemblee-nationale/travail-legislatif/l-examen-parlementaire-des-lois-de-finances","sn":"Assemblée nationale","l":0},
+    {"id":"groupe","t":"Groupe parlementaire","x":"Les parlementaires qui s'organisent ensemble : au moins quinze à l'Assemblée nationale, dix au Sénat. Le groupe décide de positions communes, mais un vote de groupe n'est pas le vote personnel de chacun de ses membres.","c":"loi","s":"https://www.assemblee-nationale.fr/dyn/17/divers/texte_reference/02_reglement_assemblee_nationale.html","sn":"Assemblée nationale","a":["groupe parlementaire"],"l":1},
+    {"id":"rn","t":"RN","x":"Parti fondé en 1972 sous le nom de Front national et renommé Rassemblement national en 2018 ; Jordan Bardella en est le président. À l'Assemblée nationale, ses député·es siègent dans le groupe Rassemblement National (RN), présidé par Marine Le Pen.","c":"partis","s":"https://rassemblementnational.fr/statuts-du-rassemblement-national","sn":"Rassemblement national (statuts)","d":"Rassemblement national","a":["RN"],"l":1},
+    {"id":"lfi","t":"LFI","x":"Le mouvement fondé en 2016 par Jean-Luc Mélenchon. À l'Assemblée nationale, ses député·es siègent dans le groupe La France insoumise - Nouveau Front Populaire (LFI-NFP).","c":"partis","s":"https://www.assemblee-nationale.fr/dyn/les-groupes-politiques","sn":"Assemblée nationale","d":"La France insoumise","a":["LFI","LFI-NFP"],"l":1},
+    {"id":"lr","t":"LR","x":"Parti de droite. À l'Assemblée nationale, ses député·es siègent depuis 2024 dans le groupe Droite Républicaine (DR) ; au Sénat, dans le groupe Les Républicains.","c":"partis","s":"https://www.senat.fr/vos-senateurs/groupes-politiques.html","sn":"Sénat","d":"Les Républicains","a":["LR"],"l":1},
+    {"id":"epr","t":"EPR","x":"Le nom, depuis 2024, du groupe où siègent à l'Assemblée nationale les député·es Renaissance et leurs allié·es. Renaissance est le parti issu de La République en marche (LREM), rebaptisé en 2022, dont Gabriel Attal est le secrétaire général.","c":"partis","s":"https://www.assemblee-nationale.fr/dyn/les-groupes-politiques","sn":"Assemblée nationale","d":"Ensemble pour la République","a":["EPR"],"l":1},
+    {"id":"hor","t":"HOR","x":"Le groupe où siègent, à l'Assemblée nationale, les député·es du parti Horizons d'Édouard Philippe et des député·es indépendant·es qui s'y associent.","c":"partis","s":"https://www.assemblee-nationale.fr/dyn/les-groupes-politiques","sn":"Assemblée nationale","d":"Horizons & Indépendants","a":["HOR"],"l":1},
+    {"id":"dr","t":"DR","x":"Le nom du groupe des député·es Les Républicains à l'Assemblée nationale depuis 2024.","c":"partis","s":"https://www.assemblee-nationale.fr/dyn/les-groupes-politiques","sn":"Assemblée nationale","d":"Droite Républicaine","a":["DR"],"l":1},
+    {"id":"nfp","t":"NFP","x":"L'alliance de gauche formée en juin 2024 pour les élections législatives anticipées. Elle réunit notamment La France insoumise, le Parti socialiste, Les Écologistes, le Parti communiste français, Place publique et Génération·s.","c":"partis","s":"https://fr.wikipedia.org/wiki/Nouveau_Front_populaire","sn":"Wikipédia (fr)","d":"Nouveau Front populaire","a":["NFP"],"l":1},
+    {"id":"nupes","t":"NUPES","x":"L'alliance de gauche des législatives de 2022, remplacée en 2024 par le Nouveau Front populaire.","c":"partis","s":"https://fr.wikipedia.org/wiki/Nouvelle_Union_populaire_écologique_et_sociale","sn":"Wikipédia (fr)","d":"Nouvelle Union populaire écologique et sociale","a":["NUPES"],"l":1},
+    {"id":"ps","t":"PS","x":"Parti de gauche ; à l'Assemblée nationale, ses député·es siègent dans le groupe Socialistes et apparentés (SOC). Raphaël Glucksmann n'en est pas membre : il est cofondateur et coprésident de Place publique, mouvement allié au PS aux élections européennes.","c":"partis","s":"https://www.assemblee-nationale.fr/dyn/les-groupes-politiques","sn":"Assemblée nationale","d":"Parti socialiste","a":["PS"],"l":1},
+    {"id":"lrem","t":"LREM","x":"Le mouvement fondé par Emmanuel Macron en 2016 sous le nom « En marche ! », renommé La République en marche en 2017, puis Renaissance en 2022.","c":"partis","s":"https://fr.wikipedia.org/wiki/Renaissance_(parti)","sn":"Wikipédia (fr)","d":"La République en marche","a":["LREM"],"l":1},
+    {"id":"udr","t":"UDR","x":"À la fois un parti, fondé en 2024 par Éric Ciotti après son rapprochement avec le Rassemblement national, et le nom du groupe de ses député·es à l'Assemblée nationale, groupe qui s'appelait « À droite ! » à sa création en juillet 2024.","c":"partis","s":"https://fr.wikipedia.org/wiki/Union_des_droites_pour_la_République","sn":"Wikipédia (fr)","d":"Union des droites pour la République","a":["UDR"],"l":1},
+    {"id":"medef","t":"MEDEF","x":"La principale organisation patronale française. Elle organise chaque été La REF, la Rencontre des entrepreneurs de France : c'est là que s'est tenu, le 27 août 2026, le débat entre sept candidat·es à la présidentielle.","c":"partis","s":"https://laref.org/evenement/la-ref-2026/","sn":"La REF (Medef)","d":"Mouvement des entreprises de France","a":["MEDEF","Medef"],"l":1},
+    {"id":"fnsea","t":"FNSEA","x":"Le principal syndicat agricole français.","c":"partis","s":"https://www.senat.fr/travaux-parlementaires/commissions/commission-des-affaires-economiques/actualite-affaires-economiques/federation-nationale-des-syndicats-dexploitants-agricoles-audition-du-president-new646f9c194bdea990676155.html","sn":"Sénat, commission des affaires économiques","d":"Fédération nationale des syndicats d'exploitants agricoles","a":["FNSEA"],"l":1},
+    {"id":"zfe","t":"ZFE","x":"Des périmètres urbains où les véhicules les plus polluants sont progressivement interdits, pour améliorer la qualité de l'air.","c":"ecolo","s":"https://www.ecologie.gouv.fr/politiques-publiques/zones-faibles-emissions-zfe","sn":"Ministère de la Transition écologique","d":"Zones à faibles émissions","a":["ZFE","zones à faibles émissions","zone à faibles émissions"],"l":1},
+    {"id":"zan","t":"ZAN","x":"L'objectif de ne plus consommer, au total, de nouveaux sols naturels ou agricoles : toute surface nouvellement artificialisée doit être compensée par une renaturation ailleurs.","c":"ecolo","s":"https://www.ecologie.gouv.fr/politiques-publiques/artificialisation-sols","sn":"Ministère de la Transition écologique","d":"Zéro artificialisation nette","a":["ZAN","zéro artificialisation nette"],"l":1},
+    {"id":"artificialisation","t":"Artificialisation","x":"La transformation d'un sol naturel, agricole ou forestier en surface construite ou imperméabilisée : routes, parkings, bâtiments. La loi retient une définition plus large : l'altération durable des fonctions écologiques du sol et de son potentiel agronomique.","c":"ecolo","s":"https://www.ecologie.gouv.fr/politiques-publiques/artificialisation-sols","sn":"Ministère de la Transition écologique","a":["artificialisation","artificialisant","artificialisée","artificialisés"],"l":1},
+    {"id":"aper","t":"APER","x":"La loi n° 2023-175 du 10 mars 2023 qui simplifie et accélère les autorisations pour installer des projets d'énergies renouvelables.","c":"ecolo","s":"https://agriculture.gouv.fr/loi-relative-lacceleration-des-energies-renouvelables-un-cadre-pour-les-installations","sn":"Ministère de l'Agriculture","d":"Accélération de la production d'énergies renouvelables","a":["APER"],"l":1},
+    {"id":"ppe","t":"PPE","x":"La feuille de route qui fixe les objectifs de production et de consommation d'énergie de la France pour les années à venir. La troisième, PPE3, couvre 2026-2035 et a été fixée par le décret n° 2026-76 du 12 février 2026.","c":"ecolo","s":"https://www.economie.gouv.fr/ppe-3-programmation-pluriannuelle-de-lenergie","sn":"Ministère de l'Économie","d":"Programmation pluriannuelle de l'énergie","a":["PPE3","PPE 3","PPE"],"l":1},
+    {"id":"enr","t":"ENR","x":"Éolien, solaire, hydraulique, biomasse, géothermie : des sources d'énergie qui se renouvellent naturellement.","c":"ecolo","s":"https://www.ecologie.gouv.fr/politiques-publiques/energies-renouvelables","sn":"Ministère de la Transition écologique","d":"Énergies renouvelables","a":["ENR"],"l":1},
+    {"id":"pesticide","t":"Pesticide","x":"Un produit destiné à détruire ou repousser ce qui nuit aux cultures : insectes, champignons, mauvaises herbes. Le terme réglementaire est « produit phytopharmaceutique » ; le mot pesticide couvre aussi les biocides, utilisés hors agriculture.","c":"ecolo","s":"https://draaf.occitanie.agriculture.gouv.fr/Definition-des-pesticides-des","sn":"Ministère de l'Agriculture (DRAAF Occitanie)","d":"produit phytopharmaceutique","a":["phytosanitaire","phytosanitaires","phytopharmaceutique","phytopharmaceutiques"],"l":1},
+    {"id":"neonico","t":"Néonicotinoïde","x":"Une famille d'insecticides qui agit sur le système nerveux des insectes. Interdits en France depuis le 1er septembre 2018, en application de la loi du 8 août 2016, pour leurs effets sur les abeilles et les autres pollinisateurs.","c":"ecolo","s":"https://www.info.gouv.fr/communique/9271-communique-sur-l-interdiction-de-l-utilisation-des-neonicotinoides","sn":"Gouvernement","a":["néonicotinoïde","néonicotinoïdes"],"l":1},
+    {"id":"acetamipride","t":"Acétamipride","x":"Un insecticide de la famille des néonicotinoïdes, interdit en France depuis le 1er septembre 2018, alors que son approbation au niveau européen reste valable jusqu'en 2033. La loi d'urgence agricole votée en juillet 2026 permet à l'Anses d'autoriser à nouveau son usage par dérogation.","c":"ecolo","s":"https://france.representation.ec.europa.eu/informations-et-evenements/informations/pesticides-glyphosate-acetamipride-non-leurope-ne-nous-empoisonne-pas-2026-07-27_fr","sn":"Commission européenne, représentation en France","a":["acétamipride"],"l":1},
+    {"id":"glyphosate","t":"Glyphosate","x":"L'herbicide le plus produit au monde. Il est classé « cancérogène probable pour l'homme » (groupe 2A) par le Centre international de recherche sur le cancer depuis mars 2015.","c":"ecolo","s":"https://www.iarc.who.int/wp-content/uploads/2018/07/MonographVolume112-1.pdf","sn":"CIRC (Centre international de recherche sur le cancer)","a":["glyphosate"],"l":1},
+    {"id":"sdhi","t":"SDHI","x":"Une famille de fongicides utilisés contre les champignons des cultures. Leur toxicité pour d'autres organismes fait l'objet d'un débat scientifique.","c":"ecolo","s":"https://www.anses.fr/fr/content/fongicides-inhibiteurs-de-la-succinate-d%C3%A9shydrog%C3%A9nase-sdhi-l%E2%80%99anses-pr%C3%A9sente-les-r%C3%A9sultats-de","sn":"Anses","d":"Inhibiteurs de la succinate déshydrogénase","a":["SDHI"],"l":1},
+    {"id":"nodu","t":"NODU","x":"L'indicateur historique français de suivi des pesticides : il rapporte les quantités vendues aux doses maximales autorisées, ce qui donne un nombre d'hectares qui seraient traités à pleine dose, sans tenir compte de la dangerosité des produits. Il n'est plus l'indicateur de référence depuis 2024, mais il continue d'être calculé.","c":"ecolo","s":"https://agriculture.gouv.fr/les-indicateurs-de-suivi-de-la-strategie-ecophyto-2030","sn":"Ministère de l'Agriculture","d":"Nombre de doses unités","a":["NODU"],"l":1},
+    {"id":"hri1","t":"HRI1","x":"L'indicateur européen devenu la référence française avec la stratégie Écophyto 2030, publiée en mai 2024 : il additionne les quantités de substances vendues en les pondérant selon quatre groupes de dangerosité. Le NODU continue d'être calculé en parallèle, et les deux indicateurs ne donnent pas le même résultat pour une même année.","c":"ecolo","s":"https://agriculture.gouv.fr/les-indicateurs-de-suivi-de-la-strategie-ecophyto-2030","sn":"Ministère de l'Agriculture","d":"Harmonised Risk Indicator 1","a":["HRI1","HRI 1"],"l":1},
+    {"id":"venteconseil","t":"Séparation vente-conseil","x":"La règle issue de la loi EGalim de 2018 qui interdisait à une même entreprise de vendre des pesticides et de conseiller les agriculteurs sur leur usage, pour éviter le conflit d'intérêts. La loi du 11 août 2025 y a mis fin pour les distributeurs, qui peuvent de nouveau conseiller à condition de facturer le conseil à part ; la séparation reste stricte pour les fabricants.","c":"ecolo","s":"https://www.senat.fr/travaux-parlementaires/textes-legislatifs/la-loi-en-clair/session-2023-2024/proposition-de-loi-visant-a-lever-les-contraintes-a-lexercice-du-metier-dagriculteur.html","sn":"Sénat","a":["séparation vente-conseil","séparation de la vente et du conseil"],"l":1},
+    {"id":"giec","t":"GIEC","x":"L'organisme de l'ONU qui fait la synthèse des travaux scientifiques publiés sur le climat. Il ne mène pas de recherche lui-même.","c":"ecolo","s":"https://www.ipcc.ch/site/assets/uploads/2018/04/FS_what_ipcc_fr.pdf","sn":"GIEC","d":"Groupe d'experts intergouvernemental sur l'évolution du climat","a":["GIEC"],"l":1},
+    {"id":"neutralite","t":"Neutralité carbone","x":"L'équilibre entre les gaz à effet de serre émis et ceux retirés de l'atmosphère. L'Union européenne s'est fixé cet objectif pour 2050.","c":"ecolo","s":"https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=LEGISSUM:4536626","sn":"EUR-Lex (loi européenne sur le climat)","a":["neutralité carbone"],"l":1},
+    {"id":"agrivolt","t":"Agrivoltaïsme","x":"L'installation de panneaux solaires sur des terres agricoles, l'agriculture devant rester l'activité principale de la parcelle. L'installation doit en plus rendre un service à l'exploitation : protéger les cultures des aléas, aider à s'adapter au changement climatique ou améliorer le bien-être animal.","c":"ecolo","s":"https://agriculture.gouv.fr/loi-relative-lacceleration-des-energies-renouvelables-un-cadre-pour-les-installations","sn":"Ministère de l'Agriculture","a":["agrivoltaïsme","agrivoltaïque"],"l":1},
+    {"id":"methanisation","t":"Méthanisation","x":"La dégradation de déchets organiques par des bactéries, à l'abri de l'oxygène : elle produit du biogaz, qui peut être épuré en biométhane et injecté dans les réseaux de gaz, et un résidu appelé digestat, utilisé comme engrais.","c":"ecolo","s":"https://www.ecologie.gouv.fr/politiques-publiques/biogaz","sn":"Ministère de la Transition écologique","a":["méthanisation"],"l":1},
+    {"id":"edf","t":"EDF","x":"Le principal producteur d'électricité français. L'État en détient 100 % du capital depuis le 8 juin 2023.","c":"ecolo","s":"https://www.economie.gouv.fr/files/files/directions_services/agence-participations-etat/Documents/Communiques/919%20-%20L%E2%80%99Etat%20redevient%20l%E2%80%99actionnaire%20unique%20d%E2%80%99EDF.pdf","sn":"Ministère de l'Économie, Agence des participations de l'État","d":"Électricité de France","a":["EDF"],"l":1},
+    {"id":"rte","t":"RTE","x":"Le gestionnaire du réseau haute tension français : il équilibre à chaque instant la production et la consommation d'électricité.","c":"ecolo","s":"https://www.ecologie.gouv.fr/politiques-publiques/reseaux-electriques","sn":"Ministère de la Transition écologique","d":"Réseau de transport d'électricité","a":["RTE"],"l":1},
+    {"id":"regie","t":"Régie publique","x":"La gestion d'un service directement par une collectivité ou par l'État, sans le confier à une entreprise privée.","c":"ecolo","s":"https://www.collectivites-locales.gouv.fr/animer-les-territoires/commande-publique/les-concessions-et-delegations-de-service-public/les-autres-modes-de-gestion-des-services-publics-locaux","sn":"Ministère de l'Intérieur, portail des collectivités locales","a":["régie publique"],"l":1},
+    {"id":"impotsprod","t":"Impôts de production","x":"Les taxes assises sur l'activité de l'entreprise (sa valeur ajoutée, ses locaux, son chiffre d'affaires) et non sur son bénéfice. Elles sont donc dues même quand l'entreprise ne gagne pas d'argent. La CVAE, la CFE et la C3S en font partie.","c":"argent","s":"https://www.strategie-plan.gouv.fr/files/files/Publications/Rapport/fs-2024-rapport-france_relance_vol_ii_13_impots-production_0.pdf","sn":"France Stratégie","a":["impôts de production","impôt de production"],"l":1},
+    {"id":"cvae","t":"CVAE","x":"Un impôt local assis sur la valeur ajoutée produite par l'entreprise. Il est dû par les entreprises dont le chiffre d'affaires dépasse 500 000 euros, et sa suppression complète est programmée pour 2030. (seuil et calendrier au 1er janvier 2026)","c":"argent","s":"https://www.economie.gouv.fr/entreprises/gerer-sa-fiscalite-et-ses-impots/autres-impots-et-taxes/quest-ce-que-la-cotisation-sur-la-valeur-ajoutee-des-entreprises-cvae","sn":"Ministère de l'Économie","d":"Cotisation sur la valeur ajoutée des entreprises","a":["CVAE"],"l":1},
+    {"id":"cfe","t":"CFE","x":"Un impôt local assis sur la valeur locative des locaux utilisés par l'entreprise. Avec la CVAE, elle forme la contribution économique territoriale (CET).","c":"argent","s":"https://www.impots.gouv.fr/professionnel/cet-cfe-et-cvae","sn":"impots.gouv.fr","d":"Cotisation foncière des entreprises","a":["CFE"],"l":1},
+    {"id":"c3s","t":"C3S","x":"Une contribution assise sur le chiffre d'affaires, et non sur le bénéfice. Elle est due par les entreprises au-delà de 19 millions d'euros de chiffre d'affaires, au taux de 0,16 %, et finance l'assurance vieillesse de la sécurité sociale. (seuil et taux au 1er janvier 2026)","c":"argent","s":"https://entreprendre.service-public.gouv.fr/vosdroits/F22726","sn":"Service-public.fr (Entreprendre)","d":"Contribution sociale de solidarité des sociétés","a":["C3S"],"l":1},
+    {"id":"csg","t":"CSG","x":"Un prélèvement qui porte sur presque tous les revenus, salaires, retraites, placements, et qui finance la protection sociale.","c":"argent","s":"https://www.economie.gouv.fr/particuliers/contribution-sociale-generalisee-csg","sn":"Ministère de l'Économie","d":"Contribution sociale généralisée","a":["CSG"],"l":1},
+    {"id":"tva","t":"TVA","x":"L'impôt payé par le consommateur à chaque achat, collecté par les entreprises pour l'État. C'est la première recette du budget de l'État (2026).","c":"argent","s":"https://www.senat.fr/rap/l25-139-1/l25-139-19.html","sn":"Sénat","d":"Taxe sur la valeur ajoutée","a":["TVA"],"l":1},
+    {"id":"tvasociale","t":"TVA sociale","x":"Déplacer une partie du financement de la protection sociale des cotisations sur les salaires vers la TVA, donc vers la consommation.","c":"argent","s":"https://www.economie.gouv.fr/facileco/tva-sociale-definition-financement-securite-sociale","sn":"Ministère de l'Économie","a":["TVA sociale"],"l":1},
+    {"id":"isf","t":"ISF","x":"L'impôt sur les patrimoines élevés, supprimé en 2018 et remplacé par l'impôt sur la fortune immobilière (IFI).","c":"argent","s":"https://www.senat.fr/rap/r19-042-1/r19-042-15.html","sn":"Sénat","d":"Impôt de solidarité sur la fortune","a":["ISF"],"l":1},
+    {"id":"ifi","t":"IFI","x":"L'impôt qui a remplacé l'ISF en 2018. Il ne porte que sur le patrimoine immobilier : les placements financiers en sont sortis.","c":"argent","s":"https://www.senat.fr/rap/r19-042-1/r19-042-15.html","sn":"Sénat","d":"Impôt sur la fortune immobilière","a":["IFI"],"l":1},
+    {"id":"flattax","t":"Flat tax","x":"Un taux unique sur les revenus du capital (intérêts, dividendes, plus-values), en place depuis 2018, au lieu du barème progressif de l'impôt sur le revenu. Son taux global est de 31,4 % depuis le 1er janvier 2026 (12,8 % d'impôt sur le revenu et 18,6 % de prélèvements sociaux), contre 30 % auparavant.","c":"argent","s":"https://entreprendre.service-public.gouv.fr/actualites/A18796?lang=fr","sn":"Service-public.fr (Entreprendre)","d":"Prélèvement forfaitaire unique","a":["flat tax"],"l":1},
+    {"id":"dutreil","t":"Pacte Dutreil","x":"Un dispositif qui allège fortement les droits à payer lors de la transmission d'une entreprise familiale, à condition de conserver les parts pendant une durée fixée.","c":"argent","s":"https://entreprendre.service-public.gouv.fr/vosdroits/F36024?lang=fr","sn":"Service-public.fr (Entreprendre)","a":["pacte Dutreil","Pacte Dutreil"],"l":1},
+    {"id":"smic","t":"SMIC","x":"Le salaire horaire minimum légal en France. Il est revalorisé au moins une fois par an.","c":"argent","s":"https://www.service-public.gouv.fr/particuliers/vosdroits/F2300","sn":"Service-public.fr","d":"Salaire minimum interprofessionnel de croissance","a":["SMIC"],"l":1},
+    {"id":"brutnet","t":"Brut, net, coût du travail","x":"Le salaire brut inclut les cotisations salariales ; le net est ce que touche le salarié. Le « coût du travail » ajoute au brut les cotisations patronales et diverses taxes : c'est tout ce que dépense l'employeur pour l'emploi d'un salarié.","c":"argent","s":"https://www.insee.fr/fr/statistiques/7678548?sommaire=7681078","sn":"Insee","a":["coût du travail"],"l":1},
+    {"id":"cotisations","t":"Cotisations sociales","x":"Les prélèvements sur les salaires, part salariale et part patronale, qui financent retraites, maladie, chômage et famille.","c":"argent","s":"https://entreprendre.service-public.gouv.fr/vosdroits/F24013","sn":"Service-public.fr (Entreprendre)","l":0},
+    {"id":"exoneration","t":"Exonération de cotisations","x":"La réduction ou la suppression de cotisations pour certains niveaux de salaire ou certains employeurs. L'État compense en général la perte à la sécurité sociale.","c":"argent","s":"https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLFSS-2025/PLFSS2025-Annexe04.pdf","sn":"Assemblée nationale (annexe 4 au PLFSS 2025)","l":0},
+    {"id":"pme","t":"PME","x":"Une entreprise qui emploie moins de 250 personnes et dont le chiffre d'affaires annuel ne dépasse pas 50 millions d'euros ou le total de bilan 43 millions d'euros.","c":"argent","s":"https://www.insee.fr/fr/metadonnees/definition/c1962","sn":"Insee","d":"Petite et moyenne entreprise","a":["PME"],"l":1},
+    {"id":"tpe","t":"TPE","x":"Moins de 10 personnes employées, et un chiffre d'affaires annuel ou un total de bilan qui ne dépasse pas 2 millions d'euros. C'est la catégorie que l'Insee appelle « microentreprise ».","c":"argent","s":"https://www.insee.fr/fr/metadonnees/definition/c1079","sn":"Insee","d":"Très petite entreprise","a":["TPE"],"l":1},
+    {"id":"dette","t":"Dette et déficit publics","x":"La dette est le stock des emprunts accumulés par les administrations publiques. Le déficit est le manque d'une seule année entre leurs recettes et leurs dépenses.","c":"argent","s":"https://www.insee.fr/fr/statistiques/8574703?sommaire=8574832","sn":"Insee","l":0},
+    {"id":"regledor","t":"Règle d'or","x":"Un principe budgétaire selon lequel l'emprunt ne peut financer que les dépenses d'investissement, jamais les dépenses courantes. En France, il s'impose aux collectivités territoriales sous le nom d'« équilibre réel », mais pas à l'État : l'inscrire dans la Constitution pour l'État reste une proposition.","c":"argent","s":"https://www.senat.fr/rap/l17-056/l17-05615.html","sn":"Sénat","a":["règle d'or"],"l":1},
+    {"id":"repartition","t":"Répartition et capitalisation","x":"En répartition, les cotisations des actifs paient directement les pensions des retraités du moment. En capitalisation, chacun épargne et investit pour sa propre retraite.","c":"argent","s":"https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_06_R%C3%A9partition%20%C3%A0%20Capitalisation.pdf","sn":"Conseil d'orientation des retraites","l":0},
+    {"id":"commandepub","t":"Commande publique","x":"L'ensemble des contrats passés par l'État, les collectivités, les hôpitaux et les autres organismes publics pour leurs besoins de travaux, de fournitures ou de services : les marchés publics et les concessions.","c":"argent","s":"https://www.economie.gouv.fr/files/files/directions_services/daj/media-document/FT03_Les_contrats_de_la_commande_publique_et_autre.pdf?v=1763981067","sn":"Ministère de l'Économie (direction des affaires juridiques)","a":["commande publique"],"l":1},
+    {"id":"miroir","t":"Mesures miroirs","x":"Exiger des produits importés qu'ils respectent les normes imposées aux producteurs européens.","c":"argent","s":"https://www.senat.fr/questions/base/2024/qSEQ240310626.html","sn":"Sénat (réponse du gouvernement à une question écrite)","a":["mesures miroirs"],"l":1},
+    {"id":"pinm","t":"Projet d'intérêt national majeur","x":"Un statut créé par la loi « industrie verte » du 23 octobre 2023 et attribué par décret, qui permet d'accélérer et de simplifier les procédures d'autorisation de certains grands projets industriels.","c":"argent","s":"https://www.economie.gouv.fr/actualites/que-contient-la-loi-industrie-verte","sn":"Ministère de l'Économie","a":["projet d'intérêt national majeur","intérêt national majeur"],"l":1},
+    {"id":"precaution","t":"Principe de précaution","x":"Un principe à valeur constitutionnelle, inscrit à l'article 5 de la Charte de l'environnement de 2004 : quand un dommage à l'environnement, même incertain en l'état des connaissances scientifiques, pourrait être grave et irréversible, les autorités publiques doivent évaluer le risque et prendre des mesures provisoires et proportionnées.","c":"argent","s":"https://www.conseil-constitutionnel.fr/le-bloc-de-constitutionnalite/charte-de-l-environnement-de-2004","sn":"Conseil constitutionnel","a":["principe de précaution"],"l":1},
+    {"id":"ars","t":"ARS","x":"L'établissement public de l'État qui pilote la politique de santé dans chaque région : les hôpitaux, la médecine de ville, le secteur médico-social (EHPAD, handicap) et la prévention.","c":"sante","s":"https://www.ars.sante.fr/quest-ce-quune-agence-regionale-de-sante","sn":"Agences régionales de santé","d":"Agence régionale de santé","a":["ARS"],"l":1},
+    {"id":"pma","t":"PMA","x":"Les techniques d'aide à la conception. Elle est ouverte à toutes les femmes en France depuis la loi de bioéthique du 2 août 2021.","c":"sante","s":"https://www.ameli.fr/assure/remboursements/rembourse/assistance-medicale-la-procreation-amp/prise-en-charge-de-l-assistance-medicale-la-procreation-amp","sn":"Assurance maladie (ameli.fr)","d":"Procréation médicalement assistée","a":["PMA"],"l":1},
+    {"id":"ivg","t":"IVG","x":"L'avortement. Depuis la loi constitutionnelle du 8 mars 2024, la Constitution inscrit « la liberté garantie à la femme d'avoir recours à une interruption volontaire de grossesse ».","c":"sante","s":"https://www.conseil-constitutionnel.fr/loi-constitutionnelle-n-2024-200-du-8-mars-2024","sn":"Conseil constitutionnel","d":"Interruption volontaire de grossesse","a":["IVG"],"l":1},
+    {"id":"desert","t":"Désert médical","x":"Un territoire où l'offre de soins est très insuffisante au regard de la population qui y vit. L'administration parle plutôt de commune « sous-dense » : la DREES retient le seuil de moins de 2,5 consultations de médecin généraliste par an et par habitant (mesure DREES de 2017).","c":"sante","s":"https://drees.solidarites-sante.gouv.fr/sites/default/files/2020-08/dd17.pdf","sn":"DREES (ministère de la Santé)","a":["désert médical","déserts médicaux"],"l":1},
+    {"id":"t2a","t":"Tarification à l'activité","x":"Le mode de financement des hôpitaux fondé sur le nombre et le type de séjours et d'actes réalisés, plutôt que sur un budget global. Elle s'applique depuis 2004 aux activités de médecine, chirurgie et obstétrique.","c":"sante","s":"https://www.senat.fr/rap/r05-298/r05-298_mono.html","sn":"Sénat","d":"T2A","a":["tarification à l'activité","T2A"],"l":1},
+    {"id":"restecharge","t":"Reste à charge","x":"La part des dépenses de santé qui reste à payer par le patient une fois que l'assurance maladie a remboursé sa part : ticket modérateur, participation forfaitaire, franchise médicale, forfait hospitalier. Une complémentaire santé peut en couvrir tout ou partie.","c":"sante","s":"https://www.ameli.fr/assure/remboursements/reste-charge","sn":"Assurance maladie (ameli.fr)","a":["reste à charge"],"l":1},
+    {"id":"voteperso","t":"Vote personnel","x":"Le vote d'un·e candidat·e en son nom, dans une chambre où il ou elle siégeait. C'est la seule chose qu'on puisse lui attribuer directement.","c":"methode","s":"#methode","sn":"La méthode du comparateur","a":["vote personnel"],"l":1},
+    {"id":"votegroupe","t":"Vote de groupe","x":"La position du groupe parlementaire de la personne, relevée avec les chiffres exacts (pour, contre, abstention). C'est utile quand elle ne siégeait pas, mais ce n'est pas son vote : le comparateur ne mélange jamais les deux.","c":"methode","s":"#methode","sn":"La méthode du comparateur","a":["vote de groupe","vote du groupe"],"l":1},
+    {"id":"nontestable","t":"Non testable","x":"Aucun vote ni acte n'était possible : pas de mandat, ministre qui ne vote pas, texte sans scrutin. Ce n'est pas une mauvaise note, et le comparateur dit toujours laquelle de ces raisons s'applique.","c":"methode","s":"#methode","sn":"La méthode du comparateur","a":["non testable"],"l":1},
+    {"id":"heterogene","t":"Position collective hétérogène","x":"Le parti ou le groupe s'est divisé. À partir de 20 % de voix divergentes dans un vote, le comparateur ne parle plus d'une « ligne » mais d'une position hétérogène.","c":"methode","s":"#methode","sn":"La méthode du comparateur","a":["position collective hétérogène","hétérogène"],"l":1},
+    {"id":"partiel","t":"Partiellement aligné","x":"Une partie des actes suit la promesse, une partie s'en écarte : abstention ambiguë, vote absent, discours à géométrie variable.","c":"methode","s":"#methode","sn":"La méthode du comparateur","a":["partiellement aligné"],"l":1},
+    {"id":"contradictoire","t":"Contradictoire","x":"Les actes vont à l'encontre de la promesse, de façon documentée.","c":"methode","s":"#methode","sn":"La méthode du comparateur","l":0},
+    {"id":"aligne","t":"Aligné","x":"Les votes et les actes suivent la promesse. Cela ne dit pas que la promesse est bonne : juste qu'elle est tenue.","c":"methode","s":"#methode","sn":"La méthode du comparateur","l":0},
+    {"id":"placepublique","t":"Place publique","x":"Le mouvement cofondé par Raphaël Glucksmann en 2018, allié au Parti socialiste aux élections européennes de 2019 et de 2024.","c":"partis","s":"https://place-publique.eu/trombinoscope/d7gAAtkKcvueTJRMqeYBC/raphael-glucksmann","sn":"Place publique","l":0},
+    {"id":"ecologistes","t":"Les Écologistes","x":"Le parti écologiste français, appelé Europe Écologie Les Verts (EELV) jusqu'en 2023 ; ses député·es siègent dans le groupe Écologiste et Social (ECOS) à l'Assemblée nationale. Marine Tondelier en est la secrétaire nationale.","c":"partis","s":"https://lesecologistes.fr/posts/8cidP1qx5fHps6y2NFsIP/discours-de-marine-tondelier-14-octobre-2023","sn":"Les Écologistes (site officiel)","l":0},
+    {"id":"renaissance","t":"Renaissance","x":"Le parti fondé autour d'Emmanuel Macron en 2016 sous le nom « En marche ! », devenu La République en marche (LREM) en 2017 puis Renaissance en 2022. Ses député·es siègent dans le groupe Ensemble pour la République (EPR).","c":"partis","s":"https://recherche-entreprises.api.gouv.fr/search?q=819004045","sn":"API Recherche d'entreprises (État)","l":0},
+    {"id":"horizons","t":"Horizons","x":"Le parti fondé par Édouard Philippe en 2021. Ses député·es siègent dans le groupe Horizons & Indépendants (HOR).","c":"partis","s":"https://recherche-entreprises.api.gouv.fr/search?q=904507258","sn":"API Recherche d'entreprises (État)","l":0}
+  ];
+  /* ================= LEXIQUE (retours 16 et 17) =====================
+     Deux demandes de lecteurs : un lexique plus etoffe, et pouvoir
+     cliquer un mot pour en avoir la definition sur place. Les entrees
+     vivent ici, dans la page, et pas dans data.js : les donnees du
+     comparateur (lois, votes, sources) ne sont pas touchees.
+     ================================================================== */
+  (function () {
+    var G = window.KOMUNE_LEXIQUE;
+    if (!G || !G.length) { return; }
+
+    var CATS = [
+      ['loi', '🏛️', 'Comment une loi se fait'],
+      ['argent', '💰', 'Argent, impôts, travail'],
+      ['ecolo', '🌿', 'Écologie et agriculture'],
+      ['sante', '🩺', 'Santé'],
+      ['partis', '🗳️', 'Partis, groupes, organisations'],
+      ['methode', '🧭', 'Les mots du comparateur']
+    ];
+    var NOMCAT = {}; CATS.forEach(function (c) { NOMCAT[c[0]] = c[2]; });
+    var PAR_ID = {}; G.forEach(function (e) { PAR_ID[e.id] = e; });
+
+    function esc(t) {
+      return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function sansAccent(t) {
+      return String(t).toLowerCase().normalize ? String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '') : String(t).toLowerCase();
+    }
+
+    /* ---------- 1. la rubrique : recherche + liste complete ---------- */
+    var champ = document.getElementById('lex-recherche');
+    var liste = document.getElementById('lex-liste');
+    var filtres = document.getElementById('lex-filtres');
+    var compte = document.getElementById('lex-compte');
+    var catActive = 'tout';
+
+    function trie(a, b) { return sansAccent(a.t).localeCompare(sansAccent(b.t), 'fr'); }
+
+    /* Chaque definition porte sa source : le lexique tient le meme standard
+       que le reste du site. Les sept entrees qui decrivent la methode du
+       comparateur renvoient a la section Methode de cette page. */
+    function lienSource(e) {
+      if (!e.s) { return ''; }
+      var interne = e.s.charAt(0) === '#';
+      return '<a class="lex-src' + (interne ? ' lex-src-interne' : '') + '" href="' + esc(e.s) + '"' +
+        (interne ? '' : ' target="_blank" rel="noopener noreferrer"') + '>' +
+        '<span class="lecteur-seul">Source de la d\u00E9finition : </span>' +
+        esc(e.sn || 'source') + (interne ? '' : ' \u2197') + '</a>';
+    }
+
+    function dessineListe() {
+      if (!liste) { return; }
+      var q = sansAccent(champ ? champ.value.trim() : '');
+      var vus = G.filter(function (e) {
+        if (catActive !== 'tout' && e.c !== catActive) { return false; }
+        if (!q) { return true; }
+        return sansAccent(e.t).indexOf(q) >= 0 || sansAccent(e.d || '').indexOf(q) >= 0 ||
+               sansAccent(e.x).indexOf(q) >= 0;
+      }).sort(trie);
+      if (compte) {
+        compte.textContent = vus.length === 0 ? 'Aucune entrée ne correspond.'
+          : (vus.length + (vus.length > 1 ? ' entrées' : ' entrée')
+             + (catActive === 'tout' && !q ? ' au total' : ' affichée' + (vus.length > 1 ? 's' : '')));
+      }
+      if (!vus.length) { liste.innerHTML = ''; return; }
+      var h = '';
+      vus.forEach(function (e) {
+        h += '<div class="lex-entree" id="lex-' + esc(e.id) + '">' +
+          '<dt><span class="lex-terme">' + esc(e.t) + '</span>' +
+          (e.d ? '<span class="lex-dev">' + esc(e.d) + '</span>' : '') +
+          '<span class="lex-cat">' + esc(NOMCAT[e.c] || '') + '</span></dt>' +
+          '<dd>' + esc(e.x) + lienSource(e) + '</dd></div>';
+      });
+      liste.innerHTML = h;
+    }
+
+    if (filtres) {
+      var hf = '<button type="button" class="lex-chip est-actif" data-cat="tout">Tout</button>';
+      CATS.forEach(function (c) {
+        hf += '<button type="button" class="lex-chip" data-cat="' + c[0] + '">' +
+          '<span aria-hidden="true">' + c[1] + '</span> ' + esc(c[2]) + '</button>';
+      });
+      filtres.innerHTML = hf;
+      filtres.addEventListener('click', function (ev) {
+        var b = ev.target.closest('.lex-chip'); if (!b) { return; }
+        catActive = b.dataset.cat;
+        filtres.querySelectorAll('.lex-chip').forEach(function (x) {
+          x.classList.toggle('est-actif', x === b);
+          x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+        });
+        dessineListe();
+      });
+      filtres.querySelectorAll('.lex-chip').forEach(function (x) {
+        x.setAttribute('aria-pressed', x.classList.contains('est-actif') ? 'true' : 'false');
+      });
+    }
+    if (champ) { champ.addEventListener('input', dessineListe); }
+    dessineListe();
+
+    /* ---------- 2. la bulle de definition ---------- */
+    var bulle = null, declencheur = null;
+
+    function fermerBulle(rendreLeFocus) {
+      if (!bulle) { return; }
+      bulle.hidden = true;
+      if (declencheur) {
+        declencheur.setAttribute('aria-expanded', 'false');
+        if (rendreLeFocus) { declencheur.focus(); }
+      }
+      declencheur = null;
+    }
+
+    function creeBulle() {
+      if (bulle) { return bulle; }
+      bulle = document.createElement('div');
+      bulle.className = 'lex-bulle';
+      bulle.id = 'lex-bulle';
+      bulle.setAttribute('role', 'dialog');
+      bulle.setAttribute('aria-labelledby', 'lex-bulle-titre');
+      bulle.setAttribute('tabindex', '-1');
+      bulle.hidden = true;
+      bulle.innerHTML =
+        '<div class="lex-bulle-haut">' +
+          '<p class="lex-bulle-titre" id="lex-bulle-titre"></p>' +
+          '<button type="button" class="lex-bulle-x" aria-label="Fermer la définition">✕</button>' +
+        '</div>' +
+        '<p class="lex-bulle-dev"></p>' +
+        '<p class="lex-bulle-txt"></p>' +
+        '<p class="lex-bulle-src"></p>' +
+        '<a class="lex-bulle-lien" href="#lexique">Tout le lexique \u2192</a>';
+      document.body.appendChild(bulle);
+      bulle.querySelector('.lex-bulle-x').addEventListener('click', function () { fermerBulle(true); });
+      bulle.querySelector('.lex-bulle-lien').addEventListener('click', function () {
+        var d = declencheur; fermerBulle(false);
+        setTimeout(function () { ouvrirRubrique(d ? d.dataset.lex : null); }, 30);
+      });
+      return bulle;
+    }
+
+    function ouvrirRubrique(id) {
+      var sec = document.getElementById('lexique');
+      if (!sec) { return; }
+      var b = sec.querySelector('.plier[aria-controls]');
+      if (b && b.getAttribute('aria-expanded') !== 'true') { b.click(); }
+      setTimeout(function () {
+        if (id && champ) { champ.value = ''; catActive = 'tout'; dessineListe(); }
+        var cible = id ? document.getElementById('lex-' + id) : sec;
+        (cible || sec).scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (cible) {
+          cible.classList.add('est-vise');
+          setTimeout(function () { cible.classList.remove('est-vise'); }, 2400);
+        }
+      }, 120);
+    }
+
+    function place(bt) {
+      var b = creeBulle();
+      b.hidden = false;
+      b.style.left = '0px'; b.style.top = '0px';
+      var r = bt.getBoundingClientRect();
+      var bb = b.getBoundingClientRect();
+      var marge = 10;
+      var x = r.left + r.width / 2 - bb.width / 2;
+      x = Math.max(marge, Math.min(x, window.innerWidth - bb.width - marge));
+      var y = r.bottom + 8;
+      if (y + bb.height > window.innerHeight - marge) {
+        var haut = r.top - bb.height - 8;
+        y = haut > marge ? haut : Math.max(marge, window.innerHeight - bb.height - marge);
+      }
+      b.style.left = Math.round(x) + 'px';
+      b.style.top = Math.round(y) + 'px';
+    }
+
+    function ouvrirBulle(bt) {
+      var e = PAR_ID[bt.dataset.lex]; if (!e) { return; }
+      var b = creeBulle();
+      b.querySelector('.lex-bulle-titre').textContent = e.t;
+      var dev = b.querySelector('.lex-bulle-dev');
+      dev.textContent = e.d || '';
+      dev.hidden = !e.d;
+      b.querySelector('.lex-bulle-txt').textContent = e.x;
+      var src = b.querySelector('.lex-bulle-src');
+      src.innerHTML = lienSource(e);
+      src.hidden = !e.s;
+      if (declencheur && declencheur !== bt) { declencheur.setAttribute('aria-expanded', 'false'); }
+      declencheur = bt;
+      bt.setAttribute('aria-expanded', 'true');
+      place(bt);
+      b.focus();
+    }
+
+    document.addEventListener('click', function (ev) {
+      var bt = ev.target.closest ? ev.target.closest('.mot-lex') : null;
+      if (bt) {
+        ev.preventDefault();
+        if (declencheur === bt && bulle && !bulle.hidden) { fermerBulle(true); }
+        else { ouvrirBulle(bt); }
+        return;
+      }
+      if (bulle && !bulle.hidden && !ev.target.closest('.lex-bulle')) { fermerBulle(false); }
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && bulle && !bulle.hidden) { fermerBulle(true); }
+    });
+    window.addEventListener('resize', function () { fermerBulle(false); });
+    window.addEventListener('scroll', function () { if (declencheur) { place(declencheur); } }, { passive: true });
+
+    /* ---------- 3. rendre les mots cliquables dans la page ---------- */
+    var EXCLUS = 'a,button,summary,label,select,option,textarea,input,code,kbd,' +
+      '.toc,.site-nav,.site-entete,#lexique,.lex-bulle,.mot-lex,.chip,.badge-align,' +
+      '.badge-qui,.mini,.cell-label,.qr-pill,.medef-ts,.dot,.statut,.avatar,' +
+      '.trio-etat,.plier,.switch,.bloc-emoji,.mq-etq,.loi-sum,.sum-txt,.strip,' +
+      '.medef-defs,' +
+      'h1,h2,h3,h4,h5,h6,[aria-hidden="true"]';
+    var BLOCS = '.loi-card,.medef-card,.medef-question,.attente-card,.q-item,' +
+      '.cand-detail,.qr-cand,.source-item,.clair,.bloc-intro,.hero-main,' +
+      '.orbit-person,.profil-case,.trio-pli,section.bloc';
+
+    /* Un sigle ne se reconnait qu'a la casse exacte : « PS » oui, « ps »
+       non. Un mot ordinaire se reconnait quelle que soit la casse, mais
+       les accents doivent correspondre. On classe du plus long au plus
+       court pour que « zéro artificialisation nette » gagne contre
+       « artificialisation », et « TVA sociale » contre « TVA ». */
+    var CIBLES = [];
+    G.forEach(function (e) {
+      if (!e.l) { return; }
+      (e.a || []).forEach(function (mot) {
+        CIBLES.push([mot, e.id, !/^[A-Z0-9][A-Z0-9 .É]*$/.test(mot)]);
+      });
+    });
+    CIBLES.sort(function (a, b) { return b[0].length - a[0].length; });
+
+    var LETTRE = /[0-9A-Za-zÀ-ÖØ-öø-ÿ]/;
+    function borne(txt, i, j) {
+      if (i > 0 && LETTRE.test(txt.charAt(i - 1))) { return false; }
+      if (j < txt.length && LETTRE.test(txt.charAt(j))) { return false; }
+      return true;
+    }
+    function cherche(txt) {
+      /* renvoie les occurrences [debut, fin, id], sans chevauchement */
+      var trouves = [];
+      var bas = txt.toLowerCase();
+      /* toLowerCase peut changer la longueur sur certains alphabets : dans
+         ce cas on renonce a la recherche insensible plutot que de decaler
+         les positions et decouper un mot au mauvais endroit. */
+      var basSur = bas.length === txt.length;
+      CIBLES.forEach(function (c) {
+        var insensible = c[2];
+        if (insensible && !basSur) { return; }
+        var cible = insensible ? bas : txt;
+        var mot = insensible ? c[0].toLowerCase() : c[0];
+        var de = 0, k;
+        while ((k = cible.indexOf(mot, de)) >= 0) {
+          de = k + 1;
+          var fin = k + mot.length;
+          if (!borne(txt, k, fin)) { continue; }
+          var libre = true;
+          for (var q = 0; q < trouves.length; q++) {
+            if (k < trouves[q][1] && fin > trouves[q][0]) { libre = false; break; }
+          }
+          if (libre) { trouves.push([k, fin, c[1]]); }
+        }
+      });
+      trouves.sort(function (a, b) { return a[0] - b[0]; });
+      return trouves;
+    }
+
+    var dejaVu = new WeakMap();
+    function premiereFois(bloc, id) {
+      var s = dejaVu.get(bloc);
+      if (!s) { s = {}; dejaVu.set(bloc, s); }
+      if (s[id]) { return false; }
+      s[id] = 1; return true;
+    }
+
+    var enTrain = false;
+    function marquer(racine) {
+      if (!racine || enTrain) { return; }
+      enTrain = true;
+      try {
+        var noeuds = [];
+        var promeneur = document.createTreeWalker(racine, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (n) {
+            var v = n.nodeValue;
+            if (!v || v.length < 2 || !/\S/.test(v)) { return NodeFilter.FILTER_REJECT; }
+            var p = n.parentElement;
+            if (!p || !p.closest || p.closest(EXCLUS)) { return NodeFilter.FILTER_REJECT; }
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        var n; while ((n = promeneur.nextNode())) { noeuds.push(n); }
+        noeuds.forEach(function (nd) {
+          var txt = nd.nodeValue;
+          var occ = cherche(txt);
+          if (!occ.length) { return; }
+          var bloc = (nd.parentElement.closest(BLOCS)) || document.body;
+          var garde = occ.filter(function (o) { return premiereFois(bloc, o[2]); });
+          if (!garde.length) { return; }
+          var frag = document.createDocumentFragment();
+          var pos = 0;
+          garde.forEach(function (o) {
+            if (o[0] > pos) { frag.appendChild(document.createTextNode(txt.slice(pos, o[0]))); }
+            var e = PAR_ID[o[2]];
+            var bt = document.createElement('button');
+            bt.type = 'button';
+            bt.className = 'mot-lex';
+            bt.dataset.lex = o[2];
+            bt.setAttribute('aria-expanded', 'false');
+            bt.setAttribute('aria-controls', 'lex-bulle');
+            bt.appendChild(document.createTextNode(txt.slice(o[0], o[1])));
+            var aide = document.createElement('span');
+            aide.className = 'lecteur-seul';
+            aide.textContent = ' (' + (e && e.d ? e.d + ', ' : '') + 'voir la définition)';
+            bt.appendChild(aide);
+            frag.appendChild(bt);
+            pos = o[1];
+          });
+          if (pos < txt.length) { frag.appendChild(document.createTextNode(txt.slice(pos))); }
+          nd.parentNode.replaceChild(frag, nd);
+        });
+      } catch (err) { /* jamais casser la page pour un lexique */ }
+      enTrain = false;
+    }
+
+    function toutMarquer() {
+      var zone = document.querySelector('.page') || document.body;
+      marquer(zone);
+    }
+
+    toutMarquer();
+    /* le contenu du comparateur arrive par vagues (lois, debat, jeu...) :
+       on repasse a chaque fois, mais jamais plus d'une fois par salve. */
+    var attente = null;
+    var oeilLex = new MutationObserver(function () {
+      if (enTrain) { return; }
+      clearTimeout(attente);
+      attente = setTimeout(toutMarquer, 160);
+    });
+    oeilLex.observe(document.querySelector('.page') || document.body,
+      { childList: true, subtree: true });
+
+    /* si on arrive avec #lexique dans l'adresse, on ouvre la rubrique */
+    if (location.hash === '#lexique') { setTimeout(function () { ouvrirRubrique(null); }, 400); }
+    window.__LEX_OUVRIR = ouvrirRubrique;
+  })();
+  </script>
+
 </body>
 </html>

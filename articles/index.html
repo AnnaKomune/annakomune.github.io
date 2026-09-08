@@ -710,6 +710,27 @@
 
     /* --- 1.4.4 Redimensionnement : rien en dessous de 12px --- */
     body { text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+  
+  /* ---------- Retour 9 : plus un seul mot qui deborde de sa boite ----------
+     Un lecteur developpeur a signale des textes qui debordent sur un ecran
+     de 408 px (Fairphone 5). La cause est mecanique : nos titres XXL sont
+     dimensionnes en vw, et sur un ecran etroit un mot long ("Bienvenue",
+     "presidentielle", "fonctionne") devient plus large que sa colonne.
+     Le correctif est un plafond en min() : la taille ne peut que DESCENDRE
+     par rapport a l'existant, jamais monter, et la courbe reste continue
+     (pas de saut a un point de rupture). Les valeurs de plafond sont
+     calculees a partir du mot le plus long mesure sur chaque page a 320 px.
+     On laisse aussi la cesure francaise possible (lang="fr"), et la coupure
+     brute uniquement sur les petits textes, ou elle ne choque pas. */
+  @media (max-width: 700px) {
+    .qr-nom, .qr-sub, .qr-qui, .cell-label {
+      overflow-wrap: break-word;
+    }
+    h1, h2, h3, .mega, .meter-title, .meter-reveal-main {
+      -webkit-hyphens: auto;
+      hyphens: auto;
+    }
+  }
   </style>
 </head>
 
