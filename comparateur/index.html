@@ -2584,6 +2584,342 @@
     /* ---------- les docks flottants : ils ne recouvrent plus la fin de page ---------- */
     main#contenu { padding-bottom: 96px; }
   </style>
+
+  <style>
+    /* ==================== v16 : pages Programmes et Candidat·es ==================== */
+    .lecteur-seul { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    main#contenu { padding-bottom: 96px; }
+
+    /* ---------- l'encart « comment lire » ---------- */
+    .regle { position: relative; z-index: 1; margin: 18px 0 0; border: 2px dashed var(--ink); border-radius: 18px; background: var(--yellow); padding: 14px 16px; max-width: 78ch; }
+    .regle p { margin: 0 0 8px; font-weight: 650; line-height: 1.38; font-size: 15px; }
+    .regle p:last-child { margin-bottom: 0; }
+    .regle .badge-mention { vertical-align: 1px; }
+
+    /* ---------- etiquette « d'ou vient la mesure » ---------- */
+    .badge-mention { display: inline-flex; align-items: center; gap: 4px; border: 2px solid var(--ink); border-radius: 999px; padding: 1px 9px 2px; font-size: 12px; font-weight: 800; line-height: 1.2; background: var(--white); color: var(--ink); white-space: normal; text-align: left; }
+    .badge-mention.b-2027 { background: var(--green); }
+    .badge-mention.b-passe { background: var(--white); }
+    .badge-mention.b-prop { background: var(--sky); }
+
+    /* ---------- onglets sujet / candidat ---------- */
+    .onglets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 6px 0 18px; }
+    .onglet { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px; text-align: left; border: 2px solid var(--ink); border-radius: 18px; padding: 12px 14px; background: var(--white); box-shadow: 4px 4px 0 var(--ink); min-height: 64px; }
+    .onglet[aria-selected="true"] { background: var(--ink); color: var(--cream); box-shadow: 4px 4px 0 var(--pink); }
+    .onglet .o-emoji { font-size: 26px; line-height: 1; }
+    .onglet .o-titre { display: block; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 18px; line-height: 1; }
+    .onglet .o-sous { display: block; font-size: 12.5px; font-weight: 650; opacity: .85; margin-top: 3px; line-height: 1.25; }
+    @media (max-width: 420px) { .onglets { grid-template-columns: 1fr; } .onglet .o-sous { display: none; } .onglet { min-height: 52px; } }
+
+    /* ---------- chips de sujets et sous-themes ---------- */
+    .sujets { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 12px; }
+    .fchip .n { font-weight: 700; opacity: .8; font-size: 12px; margin-left: 4px; }
+    .fchip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+    .fchip[aria-pressed="true"] .n { opacity: .85; }
+    .fchip:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+    .sous-titre { margin: 14px 0 6px; font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+    .sous { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+    .pchip[aria-pressed="true"] { background: var(--pink); }
+    .pchip .n { opacity: .8; font-size: 11.5px; margin-left: 3px; }
+    .pchip[aria-pressed="true"] .n { opacity: 1; }
+    .voir-plus { border: 0; background: transparent; text-decoration: underline; font-weight: 700; font-size: 13.5px; padding: 6px 4px; min-height: 40px; }
+
+    /* ---------- tetes des porteurs (programmes) ---------- */
+    .porteurs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 6px 0 14px; }
+    @media (min-width: 560px) { .porteurs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    @media (min-width: 900px) { .porteurs { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+    .porteur { display: grid; justify-items: center; align-content: start; gap: 4px; padding: 10px 6px 10px; border: 2px solid var(--ink); border-radius: 18px; background: var(--white); box-shadow: 4px 4px 0 var(--ink); text-align: center; min-height: 44px; transition: transform .12s ease, box-shadow .12s ease; }
+    .porteur:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+    .porteur[aria-pressed="true"] { background: var(--yellow); box-shadow: 4px 4px 0 var(--blue); }
+    .porteur .tete-nom { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 15px; line-height: 1; margin-top: 4px; }
+    .porteur .tete-parti { font-size: 11.5px; font-weight: 700; color: var(--muted); line-height: 1.2; }
+    .porteur .n { font-size: 12px; font-weight: 800; }
+    .tete-img { width: 84px; height: 84px; object-fit: contain; display: block; }
+    .tete-img.petite { width: 56px; height: 56px; }
+    .tete-img.mini { width: 40px; height: 40px; }
+    .tete-init { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; border: 3px solid var(--yellow); background: var(--cream); font-family: "Oswald", Impact, sans-serif; font-weight: 700; font-size: 26px; color: var(--ink); }
+    .tete-init.petite { width: 56px; height: 56px; font-size: 18px; }
+    .tete-init.mini { width: 40px; height: 40px; font-size: 14px; border-width: 2px; }
+
+    /* ---------- bilan / compteur ---------- */
+    .compte { margin: 4px 0 10px; font-weight: 700; font-size: 15px; }
+    .compte b { font-family: "Oswald", Impact, sans-serif; font-size: 20px; }
+    .actifs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 0 0 12px; }
+    .actif-chip { display: inline-flex; align-items: center; gap: 6px; border: 2px solid var(--ink); border-radius: 999px; padding: 4px 6px 4px 11px; background: var(--pink); font-weight: 800; font-size: 13px; }
+    .actif-chip .x { border: 0; background: var(--ink); color: var(--cream); border-radius: 50%; width: 22px; height: 22px; display: grid; place-items: center; font-size: 12px; line-height: 1; padding: 0; }
+    .tout-effacer { border: 0; background: transparent; text-decoration: underline; font-weight: 700; font-size: 13.5px; min-height: 40px; }
+
+    /* ---------- groupes de resultats ---------- */
+    .grps { display: grid; gap: 12px; }
+    .grp { border: 2px solid var(--ink); border-radius: 18px; background: var(--white); box-shadow: 4px 4px 0 var(--ink); overflow: hidden; scroll-margin-top: 120px; }
+    .grp-tete { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; text-align: left; border: 0; background: transparent; padding: 10px 14px 10px 10px; min-height: 60px; }
+    .grp-tete:hover { background: var(--cream); }
+    .grp-tete[aria-expanded="true"] { border-bottom: 2px solid var(--ink); background: var(--cream); }
+    .grp-tete .chev { transition: transform .2s ease; }
+    .grp-tete[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    .grp-qui { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 20px; line-height: 1; margin: 0; }
+    .grp-sous { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 5px 0 0; font-size: 13px; font-weight: 650; color: var(--muted); }
+    .grp-n { font-family: "Oswald", Impact, sans-serif; font-weight: 700; font-size: 22px; line-height: 1; text-align: right; }
+    .grp-n small { display: block; font-family: "Bricolage Grotesque", Inter, system-ui, sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+    .grp-corps { padding: 10px 10px 12px; display: grid; gap: 8px; }
+    .grp-note { margin: 0 0 4px; font-size: 13.5px; font-weight: 650; color: var(--muted); border-left: 4px solid var(--gold); padding: 4px 10px; }
+    .grp-vide { margin: 0; font-size: 13.5px; font-weight: 650; color: var(--muted); }
+
+    /* ---------- une mesure ---------- */
+    .mes { border: 2px solid var(--ink); border-radius: 14px; background: var(--white); overflow: hidden; scroll-margin-top: 130px; }
+    .mes.est-cible { box-shadow: 0 0 0 4px var(--pink); }
+    .mes-tete { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 10px; align-items: start; width: 100%; text-align: left; border: 0; background: transparent; padding: 10px 12px; min-height: 52px; }
+    .mes-tete:hover { background: var(--cream); }
+    .mes-court { font-weight: 750; font-size: 15.5px; line-height: 1.32; margin: 0; }
+    .mes-court .lex { font-weight: inherit; }
+    .mes-meta { grid-column: 1; display: flex; flex-wrap: wrap; gap: 5px 8px; align-items: center; font-size: 12.5px; color: var(--muted); font-weight: 650; }
+    .mes-meta .ref { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; }
+    .mes-meta .also { font-style: italic; }
+    .mes-tete .chev { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 13px; transition: transform .2s ease; }
+    .mes-tete[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    body.niv-gros .mes-long, body.niv-tout .mes-long { display: none; }
+    .mes-long { margin: 6px 0 0; font-size: 14px; font-weight: 550; color: var(--ink); line-height: 1.4; grid-column: 1; }
+    .mes-corps { border-top: 2px solid var(--line); padding: 10px 12px 12px; display: grid; gap: 10px; }
+    .mes-texte { margin: 0; border-left: 4px solid var(--purple); padding: 6px 12px; font-size: 15px; line-height: 1.5; background: var(--cream); border-radius: 0 10px 10px 0; }
+    .mes-texte .amorce { font-weight: 750; }
+    .mes-texte.attente { color: var(--muted); font-style: italic; }
+    .mes-src { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted); font-weight: 600; }
+    .mes-src b { color: var(--ink); }
+    .mes-src a { color: var(--blue); font-weight: 750; }
+    .mes-tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 0; }
+    .mes-tags .t { border: 1px solid var(--ink); border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 700; background: var(--white); }
+    .mes-tags .t.pub { background: var(--sky); }
+    .mes-tags .t.th { background: var(--yellow); }
+    .mes-note { margin: 0; font-size: 13px; font-weight: 600; border: 2px dashed var(--ink); border-radius: 12px; padding: 8px 10px; background: var(--white); }
+    .mes-note b { text-transform: uppercase; font-size: 11.5px; letter-spacing: .05em; }
+    .mes-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .mes-actions .btn, .fiche-actions .btn { min-height: 40px; padding: 6px 12px; font-size: 13.5px; border-radius: 12px; box-shadow: 2px 2px 0 var(--ink); }
+    .plus-ligne { display: flex; justify-content: center; }
+    .plus-ligne .btn { min-height: 44px; }
+    .liste-plate { display: grid; gap: 8px; }
+    .vide { border: 2px dashed var(--ink); border-radius: 18px; padding: 18px; background: var(--white); font-weight: 650; }
+    .vide p { margin: 0 0 8px; }
+    .vide p:last-child { margin: 0; }
+    .copie-ok { font-size: 12.5px; font-weight: 700; color: var(--purple); }
+
+    /* ---------- « et les autres ? » ---------- */
+    .autres-cands { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
+    .autres-cands a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; border: 2px solid var(--ink); border-radius: 999px; padding: 3px 12px 3px 4px; background: var(--white); font-weight: 750; font-size: 13.5px; min-height: 40px; }
+    .autres-cands a:hover { background: var(--yellow); }
+
+    /* ---------- barre : deux blocs ---------- */
+    .barre.barre-cands { grid-template-columns: 1fr !important; }
+    .barre .filtre-cands { display: flex; flex-wrap: nowrap; gap: 6px; align-items: center; overflow-x: auto; padding: 2px 2px 6px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+    .barre .filtre-cands .pchip { flex: 0 0 auto; white-space: nowrap; }
+    .barre .filtre-cands .lab { font-size: 13px; font-weight: 800; margin-right: 4px; flex: 0 0 auto; }
+    @media (min-width: 900px) {
+      .barre.barre-cands { grid-template-columns: minmax(240px, 380px) minmax(0, 1fr) !important; align-items: center; }
+      .barre .filtre-cands { flex-wrap: wrap; overflow: visible; }
+    }
+
+    /* ==================== candidat·es ==================== */
+    .cands { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 8px 0 16px; }
+    @media (min-width: 620px) { .cands { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (min-width: 900px) { .cands { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    @media (min-width: 1100px) { .cands { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+    .cand { min-width: 0; display: grid; justify-items: center; align-content: start; gap: 6px; padding: 12px 10px 12px; border: 2px solid var(--ink); border-radius: 20px; background: var(--white); box-shadow: 4px 4px 0 var(--ink); text-align: center; transition: transform .12s ease, box-shadow .12s ease; position: relative; }
+    .cand:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+    .cand[aria-expanded="true"] { background: var(--yellow); box-shadow: 4px 4px 0 var(--blue); }
+    .cand .tete-nom { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 17px; line-height: 1; margin-top: 2px; }
+    .cand .tete-parti { font-size: 12px; font-weight: 700; color: var(--muted); line-height: 1.25; }
+    .cand .statut { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+    .cand .verif { position: absolute; top: 8px; right: 8px; font-size: 10.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; border: 2px solid var(--ink); border-radius: 999px; padding: 1px 7px; background: var(--white); }
+    .cand .verif.encours { background: var(--gold); }
+    .pastilles { display: flex; gap: 4px; justify-content: center; margin-top: 4px; }
+    .pastilles.grande { gap: 8px; flex-wrap: wrap; justify-content: flex-start; margin: 8px 0 0; }
+    @media (max-width: 360px) { .pastilles:not(.grande) { gap: 3px; } .pastilles:not(.grande) .past { width: 22px; height: 22px; font-size: 11px; } }
+    .past { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; border: 2px solid var(--ink); font-size: 12px; font-weight: 800; background: var(--white); }
+    .past.oui { background: var(--green); }
+    .past.non { background: var(--white); color: var(--muted); }
+    .past.inc { background: var(--gold); }
+    .pastilles.grande .past { width: auto; height: auto; padding: 6px 10px; display: inline-flex; gap: 6px; align-items: center; font-size: 13px; border-radius: 12px; }
+    .pastilles.grande .past small { font-weight: 700; font-size: 12px; }
+    .groupe-cands { margin: 22px 0 0; }
+    .groupe-cands h3 { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 24px; line-height: 1; margin: 0 0 6px; }
+    .groupe-cands .note { margin: 0 0 10px; font-size: 14px; color: var(--muted); font-weight: 650; max-width: 78ch; }
+    .legende-past { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 6px 0 14px; font-size: 13px; font-weight: 650; color: var(--muted); align-items: center; }
+    .legende-past span { display: inline-flex; align-items: center; gap: 6px; }
+
+    /* ---------- la fiche ---------- */
+    .fiche3 { border: 3px solid var(--ink); border-radius: 26px; background: var(--white); box-shadow: 6px 6px 0 var(--purple); padding: clamp(16px, 3vw, 28px); margin: 8px 0 30px; scroll-margin-top: 90px; }
+    .fiche-haut { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px 18px; align-items: center; }
+    .fiche-haut .tete-img, .fiche-haut .tete-init { width: 120px; height: 120px; }
+    .fiche-haut h2 { font-size: clamp(30px, 5vw, 48px); margin: 0; }
+    .fiche-ident { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin: 6px 0 0; font-size: 14px; font-weight: 700; }
+    .fiche-ident .parti { border: 2px solid var(--ink); border-radius: 999px; padding: 2px 10px; background: var(--yellow); }
+    .fiche-ident .statut { color: var(--muted); }
+    .fiche-ident .verif { border: 2px solid var(--ink); border-radius: 999px; padding: 2px 10px; background: var(--white); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+    .fiche-ident .verif.encours { background: var(--gold); }
+    .fiche-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+    .fiche-retour { margin: 0 0 12px; }
+    .fiche-secs { display: grid; gap: 10px; margin-top: 18px; }
+    .fsec { border: 2px solid var(--ink); border-radius: 16px; background: var(--white); overflow: hidden; }
+    .fsec > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 12px 14px; min-height: 56px; font-weight: 800; }
+    .fsec > summary::-webkit-details-marker { display: none; }
+    .fsec > summary:hover { background: var(--cream); }
+    .fsec[open] > summary { border-bottom: 2px solid var(--ink); background: var(--cream); }
+    .fsec > summary .f-emoji { font-size: 20px; line-height: 1; }
+    .fsec > summary .f-titre { margin: 0; letter-spacing: 0; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 19px; line-height: 1; }
+    .fsec > summary .f-sous { display: block; font-family: "Bricolage Grotesque", Inter, system-ui, sans-serif; text-transform: none; font-size: 12.5px; font-weight: 650; color: var(--muted); margin-top: 3px; }
+    .fsec > summary .chev { font-size: 13px; transition: transform .2s ease; }
+    .fsec[open] > summary .chev { transform: rotate(180deg); }
+    .fsec-corps { padding: 12px 14px 14px; display: grid; gap: 12px; min-width: 0; }
+    .fsec-corps > * { min-width: 0; }
+    .champ-lu p, .champ-lu li { overflow-wrap: anywhere; }
+    .fsec.prio { box-shadow: 4px 4px 0 var(--green); }
+    .fsec.prio-2 { box-shadow: 4px 4px 0 var(--sky); }
+    .champ-lu h4 { margin: 0 0 4px; font-size: 12.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+    .champ-lu p { margin: 0 0 8px; line-height: 1.45; font-size: 15px; }
+    .champ-lu p:last-child { margin-bottom: 0; }
+    .champ-lu ul { margin: 0 0 8px; padding-left: 20px; line-height: 1.45; font-size: 15px; }
+    .champ-lu li { margin-bottom: 4px; }
+    .champ-lu a { color: var(--blue); word-break: break-all; }
+    .chrono { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    .chrono li { display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr); gap: 10px; font-size: 14.5px; line-height: 1.4; }
+    .chrono li b { font-family: "Oswald", Impact, sans-serif; font-weight: 700; font-size: 15.5px; white-space: normal; }
+    @media (max-width: 480px) { .chrono li { grid-template-columns: 1fr; gap: 0; } }
+    .fiche-encours { border: 2px dashed var(--ink); border-radius: 14px; padding: 10px 14px; background: var(--gold); font-weight: 650; font-size: 14.5px; margin-top: 14px; }
+    .fiche-encours p { margin: 0; }
+    .grille-mandats { display: grid; gap: 10px; }
+    @media (min-width: 720px) { .grille-mandats { grid-template-columns: 1fr 1fr; } }
+    .mandat-case { border: 2px solid var(--ink); border-radius: 14px; padding: 10px 12px; background: var(--cream); }
+    .mandat-case.maintenant { background: var(--green); }
+    .mandat-case h4, .mandat-case h3 { margin: 0 0 6px; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700; font-size: 17px; letter-spacing: 0; color: var(--ink); }
+    .mandat-case h4 small, .mandat-case h3 small { display: block; font-family: "Bricolage Grotesque", Inter, system-ui, sans-serif; text-transform: none; font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0; }
+    .avertissement { margin: 0; font-size: 13.5px; font-weight: 650; color: var(--muted); border-left: 4px solid var(--gold); padding: 4px 10px; }
+    .cands-vide { margin: 10px 0; }
+
+    /* ================= les trois entrées de l'outil ================= */
+    .entrees-wrap { position: sticky; top: 0; z-index: 40; margin: 0 0 18px; padding: 10px 0 10px;
+      background: linear-gradient(to bottom, var(--cream) 68%, rgba(252, 247, 232, 0)); }
+    .entrees { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .entree { -webkit-appearance: none; appearance: none; cursor: pointer; font: inherit; color: var(--ink);
+      display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px; text-align: left;
+      border: 2px solid var(--ink); border-radius: 18px; padding: 12px 14px; background: var(--white);
+      box-shadow: 4px 4px 0 var(--ink); min-height: 64px;
+      transition: box-shadow .12s ease, transform .12s ease, background .12s ease; }
+    .entree:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+    .entree:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+    .entree:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    .entree .e-emo { font-size: 26px; line-height: 1; }
+    .entree .e-lab { display: block; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      font-weight: 700; font-size: 17px; line-height: 1.05; }
+    .entree .e-sub { display: block; font-family: inherit; text-transform: none; font-size: 12.5px;
+      font-weight: 650; opacity: .82; margin-top: 4px; line-height: 1.25; }
+    .entree[aria-selected="true"] { background: var(--ink); color: var(--cream); box-shadow: 4px 4px 0 var(--gold); }
+    .entree#tab-cands[aria-selected="true"] { box-shadow: 4px 4px 0 var(--sky); }
+    .entree#tab-progs[aria-selected="true"] { box-shadow: 4px 4px 0 var(--green); }
+
+    .panneau[hidden] { display: none; }
+    .panneau:focus { outline: none; }
+    .panneau-charge { display: grid; place-items: center; gap: 12px; padding: 56px 18px; text-align: center; }
+    .panneau-charge .pc-barre { width: 190px; height: 10px; border: 2px solid var(--ink); border-radius: 99px;
+      background: var(--white); overflow: hidden; }
+    .panneau-charge .pc-barre i { display: block; height: 100%; width: 40%; background: var(--purple);
+      animation: pcgliss 1.1s ease-in-out infinite; }
+    @keyframes pcgliss { 0% { transform: translateX(-110%); } 100% { transform: translateX(310%); } }
+    .panneau-charge p { margin: 0; color: var(--muted); font-size: 14.5px; }
+
+    @media (max-width: 860px) {
+      .entrees { grid-template-columns: 1fr; gap: 7px; }
+      .entree { min-height: 0; padding: 10px 12px; box-shadow: 3px 3px 0 var(--ink); border-radius: 15px; }
+      .entree .e-emo { font-size: 21px; }
+      .entree .e-lab { font-size: 15.5px; }
+      .entree .e-sub { margin-top: 2px; font-size: 12px; }
+      .entrees-wrap { margin-bottom: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .entree, .entree:hover, .entree:active { transition: none; transform: none; }
+      .panneau-charge .pc-barre i { animation: none; width: 100%; }
+    }
+
+    /* ================= le bloc « comment on travaille » ================= */
+    .bloc-plus { margin-top: 30px; margin-bottom: 20px; }
+    .bloc-plus > .bloc-head { gap: 13px; }
+    .bloc-plus > .bloc-head h2 { font-size: clamp(21px, 2.3vw, 30px); line-height: 1.05; }
+    .bloc-plus > .bloc-head .bloc-emoji { width: 48px; height: 48px; aspect-ratio: auto; border-radius: 15px; font-size: 24px; }
+    .bloc-plus > .pitch-bloc { max-width: 72ch; margin: 2px 0 16px; color: var(--muted);
+      font-size: 15px; font-weight: 650; line-height: 1.45; }
+    .grille-plis { display: grid; gap: 12px; }
+
+    /* chaque rubrique devient une ligne d'accordéon compacte, pas une page entière */
+    .grille-plis > .bloc { margin: 0 0 0 0; padding: 14px 16px; border: 2px solid var(--ink);
+      border-radius: 18px; background: var(--white); box-shadow: 3px 3px 0 var(--ink); scroll-margin-top: 90px; }
+    .grille-plis > .bloc > .bloc-head { gap: 11px; margin-bottom: 4px; }
+    .grille-plis > .bloc > .bloc-head h2 { font-size: clamp(17px, 1.5vw, 21px); line-height: 1.08; }
+    .grille-plis > .bloc > .bloc-head .bloc-emoji { width: 38px; height: 38px; aspect-ratio: auto;
+      border-radius: 12px; font-size: 19px; }
+    .grille-plis > .bloc > .bloc-intro { font-size: 14px; margin: 6px 0 10px; max-width: 78ch; }
+    .grille-plis > .bloc .plier { min-height: 42px; padding: 8px 16px; font-size: 14px; margin-top: 4px; }
+    .vers-projet { margin: 20px 0 0; }
+
+    @media (max-width: 900px) {
+      .grille-plis > .bloc { padding: 12px 13px; border-radius: 15px; box-shadow: 2px 2px 0 var(--ink); }
+      .grille-plis > .bloc > .bloc-head { gap: 9px; }
+      .grille-plis > .bloc > .bloc-head h2 { font-size: 16.5px; }
+      .grille-plis > .bloc > .bloc-head .bloc-emoji { width: 32px; height: 32px; font-size: 16px; border-radius: 10px; }
+      .grille-plis > .bloc > .bloc-intro { font-size: 13.5px; }
+    }
+
+    /* ================= menu compact : une seule rangée qui glisse ================= */
+    .site-nav { align-items: center; }
+    .site-liens { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    @media (max-width: 900px) {
+      .site-nav { flex-wrap: nowrap; gap: 10px; min-width: 0; max-width: 100%; }
+      .site-head, .site-header, header { min-width: 0; }
+      .site-brand { flex: none; }
+      .site-brand img { width: 118px; height: auto; }
+      .site-liens { flex: 1 1 auto; min-width: 0; flex-wrap: nowrap; gap: 7px; overflow-x: auto; overscroll-behavior-x: contain;
+        scrollbar-width: none; -ms-overflow-style: none; padding: 2px 2px 3px 0;
+        -webkit-mask-image: linear-gradient(to right, #000 88%, transparent);
+        mask-image: linear-gradient(to right, #000 88%, transparent); }
+      .site-liens::-webkit-scrollbar { display: none; }
+      .site-liens a { flex: none; font-size: 12.5px; padding: 0 12px; white-space: nowrap; }
+    }
+
+    /* ================= une entête courte : l'outil visible tout de suite ================= */
+    .hero2 { padding: 16px 0 2px; gap: 9px; }
+    .hero2 h1 { font-size: min(clamp(28px, 3.6vw, 46px), 8vw); line-height: .95; }
+    .hero2 h1 .h1-ligne { display: inline; }
+    .hero2 h1 .h1-ligne + .h1-ligne { margin-left: .28em; }
+    .hero2 .pitch { font-size: clamp(15px, 1.1vw, 17px); max-width: 74ch; line-height: 1.45; }
+    .hero2 .beta { font-size: 12.8px; line-height: 1.35; }
+    main#contenu { padding-bottom: 96px; }
+
+    @media (max-width: 900px) {
+      .hero2 { padding: 12px 0 2px; gap: 7px; }
+      .hero2 .eyebrow { font-size: 11px; }
+      .hero2 h1 { font-size: min(clamp(26px, 8vw, 38px), 9vw); }
+      .hero2 .pitch { font-size: 15px; }
+      .hero2 .beta { display: none; }
+      /* sur petit ecran, une seule pastille flottante a gauche : l'etat beta est deja dans l'entete */
+      /* deux pastilles au plus : l'etat beta, puis la question, empilees en bas a gauche
+         comme le prevoit la maquette. Le formulaire de retours reste dans chaque bloc. */
+      #beta-dock .beta-pill { font-size: 11.5px; padding: 6px 6px 6px 11px; }
+      #beta-dock .beta-pill .beta-why { width: 25px; height: 25px; font-size: 12px; }
+      #retours-fab { display: none; }
+      main#contenu { padding-bottom: 118px; }
+    }
+    @media (max-width: 420px) {
+      #beta-dock .dock-long { display: none; }
+    }
+
+    /* le titre de l'outil est déjà sur l'onglet : on ne le répète pas à l'écran */
+    .panneau > .panneau-corps > .outil > .bloc-head { position: absolute; width: 1px; height: 1px;
+      margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+    .panneau > .panneau-corps > .outil > .bloc-intro { margin-top: 2px; font-size: 15px; line-height: 1.45; font-weight: 600; }
+
+    /* des pastilles flottantes plus discrètes */
+    @media (max-width: 1100px) {
+      #beta-dock .dock-long { display: none !important; }
+      #beta-dock .dock-court { display: inline !important; }
+    }
+  </style>
 </head>
 <body>
   <a class="saut-contenu" href="#contenu">Aller au contenu principal</a>
@@ -2600,14 +2936,14 @@
     <header class="site-top">
       <a class="brand" href="../" aria-label="Komune Média - retour à l'accueil"><img src="../img/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>
       <nav class="site-nav" aria-label="Navigation du site">
+        <div class="site-liens">
         <a href="../">Accueil</a>
         <a href="../articles/">Articles</a>
         <a class="est-ici" href="./" aria-current="page">Le comparateur présidentielles 2027</a>
-        <a href="../programmes/">Les programmes</a>
-        <a href="../candidats/">Les candidat·es</a>
-        <a href="../comparateur-2027/">Votre cahier des charges pour le projet de comparateur</a>
         <a href="../equipe/">L'équipe</a>
         <a href="../soutenir/">Nous soutenir</a>
+        </div>
+      
       </nav>
     </header>
 
@@ -2616,12 +2952,28 @@
     <div class="hero2">
       <p class="eyebrow">Le comparateur politique citoyen · Komune</p>
       <h1><span class="h1-ligne">Ils promettent.</span><span class="h1-ligne">Ils votent.</span><span class="h1-ligne h1-accent">On compare.</span></h1>
-      <p class="pitch">Santé et écologie, <strong>15 textes de loi</strong>, <strong>5 candidat·es</strong>. Ce qu'ils et elles ont promis, ce qu'ils et elles ont voté, et si les deux collent. Chaque ligne a sa source.</p>
+      <p class="pitch">Trois entrées, les mêmes données : le face-à-face entre ce qui est <strong>promis</strong> et ce qui est <strong>voté</strong>, les fiches des <strong>33 candidat·es</strong>, et les <strong>3 258 mesures</strong> de leurs programmes. Chaque ligne porte sa source.</p>
       <p class="beta">Version beta&nbsp;: la plateforme s'enrichit plusieurs fois par semaine, et on montre aussi ce qui reste à vérifier. Raphaël Glucksmann et Marine Tondelier viennent de se déclarer&nbsp;: leurs votes sont en cours d'ajout. <a href="#chantier">Où on en est exactement →</a></p>
     </div>
-
-    <!-- ===== La barre collante : chercher + choisir son niveau de detail ===== -->
-    <div class="barre" id="barre">
+<div class="entrees-wrap">
+      <div class="entrees" id="entrees" role="tablist" aria-label="Les trois entrées de l'outil">
+        <button type="button" class="entree" id="tab-actes" role="tab" aria-selected="true" aria-controls="pan-actes">
+          <span class="e-emo" aria-hidden="true">🎯</span>
+          <span class="e-lab">Promesses VS actes<span class="e-sub">le face-à-face, vote par vote</span></span>
+        </button>
+        <button type="button" class="entree" id="tab-cands" role="tab" aria-selected="false" aria-controls="pan-cands" tabindex="-1">
+          <span class="e-emo" aria-hidden="true">👤</span>
+          <span class="e-lab">Les candidat·es<span class="e-sub">33 fiches, mandats et parcours</span></span>
+        </button>
+        <button type="button" class="entree" id="tab-progs" role="tab" aria-selected="false" aria-controls="pan-progs" tabindex="-1">
+          <span class="e-emo" aria-hidden="true">🗂️</span>
+          <span class="e-lab">Les programmes<span class="e-sub">3&nbsp;258 mesures et leurs sources</span></span>
+        </button>
+      </div>
+    </div>
+    <div class="panneau" id="pan-actes" role="tabpanel" aria-labelledby="tab-actes" tabindex="-1">
+      <div class="panneau-corps">
+<div class="barre" id="barre">
       <label class="cherche2">
         <span aria-hidden="true">🔍</span>
         <span class="lecteur-seul">Chercher un sujet, un texte, un·e candidat·e ou un mot</span>
@@ -2638,9 +2990,7 @@
         <p class="niveau-aide" id="niveau-aide" role="status" hidden></p>
       </div>
     </div>
-
-    <!-- ===== L'OUTIL : Promesses VS Actes ===== -->
-    <section class="outil" id="promesses" aria-labelledby="promesses-titre">
+<section class="outil" id="promesses" aria-labelledby="promesses-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">🎯</span>
         <h2 id="promesses-titre">Promesses VS Actes</h2>
@@ -2672,9 +3022,7 @@
         <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
       </div>
     </section>
-
-    <!-- ===== Réponses rapides ===== -->
-    <section class="bloc" id="rapide" aria-labelledby="rapide-titre">
+<section class="bloc" id="rapide" aria-labelledby="rapide-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">⚡</span>
         <h2 id="rapide-titre">Réponses rapides</h2>
@@ -2685,9 +3033,157 @@
         <button type="button" class="btn play" data-open-komune>💬 Votre question n'y est pas&nbsp;? Demandez à Komune</button>
       </div>
     </section>
+<section class="bloc" id="medef" aria-labelledby="medef-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🎤</span>
+        <h2 id="medef-titre">Le débat du Medef, citation par citation</h2>
+      </div>
+      <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire, et chaque horodatage ouvre la vidéo au moment exact.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="medef-pli">
+        <span class="trio-etat"><span class="quand-ferme">Ouvrir le débat (53 citations, 6 thèmes)</span><span class="quand-ouvert">Replier le débat</span> <span class="chev" aria-hidden="true">▼</span></span>
+      </button>
+      <div class="bloc-pli" id="medef-pli" hidden>
+        <div class="medef-meta" id="medef-meta"></div>
+        <div class="medef-methode" id="medef-methode"></div>
+        <div class="switch" role="group" aria-label="Choisir un thème du débat" id="medef-switch"></div>
+        <div id="medef-corps"></div>
+        <div class="medef-suite">
+          <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants, et pour les <strong>meetings de campagne</strong>.</p>
+          <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent.</p>
+        </div>
+        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes, c'est tout l'objet du reste du comparateur.</p>
+      </div>
+    </section>
+      </div>
+    </div>
+    <div class="panneau" id="pan-cands" role="tabpanel" aria-labelledby="tab-cands" tabindex="-1" hidden>
+      <div class="panneau-corps">
+<div class="barre barre-cands" id="c-barre">
+      <label class="cherche2">
+        <span aria-hidden="true">🔍</span>
+        <span class="lecteur-seul">Chercher un·e candidat·e ou un parti</span>
+        <input type="search" id="c-recherche" placeholder="Un nom, un parti…" autocomplete="off" aria-describedby="c-compte">
+        <button type="button" id="c-recherche-vider" hidden>Effacer</button>
+      </label>
+      <div class="filtre-cands" id="c-filtres" role="group" aria-label="Filtrer selon les mandats">
+        <span class="lab">Voir&nbsp;:</span>
+        <button type="button" class="pchip" data-f="tous" aria-pressed="true">Tout le monde</button>
+        <button type="button" class="pchip" data-f="parl_now" aria-pressed="false">🏛️ Au Parlement aujourd'hui</button>
+        <button type="button" class="pchip" data-f="parl" aria-pressed="false">📜 A siégé au Parlement</button>
+        <button type="button" class="pchip" data-f="gouv" aria-pressed="false">🏢 A été au gouvernement</button>
+        <button type="button" class="pchip" data-f="loc_now" aria-pressed="false">🏘️ Élu·e local·e aujourd'hui</button>
+        <button type="button" class="pchip" data-f="jamais" aria-pressed="false">🌱 Jamais élu·e</button>
+      </div>
+    </div>
+<section class="outil" id="c-qui" aria-labelledby="c-qui-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">👤</span>
+        <h2 id="c-qui-titre">Les candidat·es</h2>
+      </div>
+      <p class="bloc-intro">Touchez une tête pour ouvrir sa fiche. Sous chaque nom, cinq cases résument ce qu'on peut vérifier&nbsp;: Parlement aujourd'hui, Parlement hier, gouvernement, mandat local aujourd'hui, mandat local hier.</p>
+      <div class="legende-past" aria-hidden="true">
+        <span><span class="past oui">✓</span> oui</span>
+        <span><span class="past non">-</span> non</span>
+        <span><span class="past inc">?</span> pas encore vérifié</span>
+        <span>Ordre&nbsp;: 🏛️ 📜 🏢 🏘️ 🕰️</span>
+      </div>
+      <p class="compte" id="c-compte" role="status" aria-live="polite"></p>
 
-    <!-- ===== Les jeux ===== -->
-    <section class="bloc" id="jouer" aria-labelledby="jouer-titre">
+      <div id="c-fiche-zone" aria-live="polite"></div>
+
+      <div class="groupe-cands" id="c-groupe-declares">
+        <h3>Déclaré·es</h3>
+        <p class="note">Ils et elles ont annoncé leur candidature. La date retenue est celle de l'annonce, pas celle de l'investiture par un parti.</p>
+        <div class="cands" id="c-cands-declares"></div>
+      </div>
+      <div class="groupe-cands" id="c-groupe-primaire">
+        <h3>En lice pour la primaire de la gauche</h3>
+        <p class="note">Candidat·es à la primaire fermée du Parti socialiste et de ses alliés, dont le premier tour est annoncé les 10 et 11 octobre 2026. Une seule personne en sortira candidate. Leurs fiches complètes arriveront après le résultat.</p>
+        <div class="cands" id="c-cands-primaire"></div>
+      </div>
+      <div class="vide cands-vide" id="c-cands-vide" hidden><p>Personne ne correspond à ce filtre.</p><p><button type="button" class="tout-effacer" data-tout-effacer>Tout afficher</button></p></div>
+
+      <div class="retours-encart">
+        <p>Un mandat oublié, une date fausse, une source qui manque&nbsp;? On corrige et on le dit.</p>
+        <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
+      </div>
+    </section>
+      </div>
+    </div>
+    <div class="panneau" id="pan-progs" role="tabpanel" aria-labelledby="tab-progs" tabindex="-1" hidden>
+      <div class="panneau-corps">
+<div class="barre" id="p-barre">
+      <label class="cherche2">
+        <span aria-hidden="true">🔍</span>
+        <span class="lecteur-seul">Chercher une mesure, un mot, un sujet, un·e candidat·e</span>
+        <input type="search" id="p-recherche" placeholder="Retraites, nucléaire, IVG, Tondelier…" autocomplete="off" aria-describedby="p-compte">
+        <button type="button" id="p-recherche-vider" hidden>Effacer</button>
+      </label>
+      <div class="niveau">
+        <span class="niveau-lab" id="p-niveau-lab">Détail&nbsp;:</span>
+        <div class="seg" role="radiogroup" aria-labelledby="p-niveau-lab" id="p-niveau">
+          <button type="button" role="radio" aria-checked="false" data-niv="gros">En gros</button>
+          <button type="button" role="radio" aria-checked="true" data-niv="essentiel">L'essentiel</button>
+          <button type="button" role="radio" aria-checked="false" data-niv="tout">Tout</button>
+        </div>
+        <p class="niveau-aide" id="p-niveau-aide" role="status" hidden></p>
+      </div>
+    </div>
+<section class="outil" id="p-explorer" aria-labelledby="p-explorer-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🗂️</span>
+        <h2 id="p-explorer-titre">Explorer les programmes</h2>
+      </div>
+      <p class="bloc-intro">Deux entrées, un même jeu de mesures. <strong>Par sujet</strong>, pour voir qui écrit quoi sur les retraites ou sur l'hôpital. <strong>Par candidat·e</strong>, pour lire un programme entier, sujet par sujet. Dans les deux cas, touchez une mesure pour lire la phrase complète et vérifier la source.</p>
+
+      <div class="onglets" role="tablist" aria-label="Choisir une entrée">
+        <button type="button" class="onglet" role="tab" id="p-onglet-sujet" aria-selected="true" aria-controls="p-vue-sujet" data-vue="sujet">
+          <span class="o-emoji" aria-hidden="true">🧭</span>
+          <span><span class="o-titre">Par sujet</span><span class="o-sous">18 sujets, des sous-thèmes, et qui dit quoi</span></span>
+        </button>
+        <button type="button" class="onglet" role="tab" id="p-onglet-cand" aria-selected="false" aria-controls="p-vue-cand" data-vue="cand" tabindex="-1">
+          <span class="o-emoji" aria-hidden="true">👤</span>
+          <span><span class="o-titre">Par candidat·e</span><span class="o-sous">Un programme entier, sujet par sujet</span></span>
+        </button>
+      </div>
+
+      <div id="p-vue-sujet" role="tabpanel" aria-labelledby="p-onglet-sujet">
+        <div class="sujets" id="p-sujets" role="group" aria-label="Choisir un sujet"></div>
+        <div id="p-sous-zone" hidden>
+          <p class="sous-titre" id="p-sous-titre">Sous-thèmes</p>
+          <div class="sous" id="p-sous" role="group" aria-label="Affiner par sous-thème"></div>
+          <div id="p-publics-zone" hidden>
+            <p class="sous-titre">Publics concernés</p>
+            <div class="sous" id="p-publics" role="group" aria-label="Affiner par public"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="p-vue-cand" role="tabpanel" aria-labelledby="p-onglet-cand" hidden>
+        <div class="porteurs" id="p-porteurs" role="group" aria-label="Choisir un·e candidat·e ou un parti"></div>
+        <details class="profils2" id="p-autres-zone">
+          <summary><span aria-hidden="true">🙋</span> Et les autres candidat·es&nbsp;? <span class="fl" aria-hidden="true">▼</span></summary>
+          <p class="pnote" id="p-autres-note"></p>
+          <div class="autres-cands" id="p-autres-cands"></div>
+        </details>
+        <details class="profils2" id="p-cand-filtres" hidden>
+          <summary><span aria-hidden="true">🧭</span> Restreindre à un sujet <span class="fl" aria-hidden="true">▼</span></summary>
+          <div class="sous" id="p-cand-sujets" role="group" aria-label="Restreindre à un sujet" style="margin-top:8px"></div>
+        </details>
+      </div>
+
+      <div class="actifs" id="p-actifs" aria-live="polite"></div>
+      <p class="compte" id="p-compte" role="status" aria-live="polite"></p>
+      <div id="p-resultats"></div>
+
+      <div class="retours-encart">
+        <p>Une mesure mal recopiée, un chapitre mal rangé, un programme qu'on n'a pas encore&nbsp;? On corrige et on le dit.</p>
+        <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
+      </div>
+    </section>
+      </div>
+    </div>
+<section class="bloc" id="jouer" aria-labelledby="jouer-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">🎮</span>
         <h2 id="jouer-titre">À jouer entre amis</h2>
@@ -2714,62 +3210,75 @@
         </div>
       </div>
     </section>
-
-    <!-- ===== Le débat du Medef ===== -->
-    <section class="bloc" id="medef" aria-labelledby="medef-titre">
+    <section class="bloc bloc-plus" id="coulisses" aria-labelledby="coulisses-titre">
+      <h2 id="coulisses-titre"><span aria-hidden="true">🧭</span> Comment on travaille</h2>
+      <p class="pitch-bloc">Les règles, le vocabulaire, l'état d'avancement et la bibliothèque des sources. À ouvrir quand une ligne vous surprend.</p>
+      <div class="grille-plis">
+<section class="bloc" id="methode" aria-labelledby="methode-titre">
       <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">🎤</span>
-        <h2 id="medef-titre">Le débat du Medef, citation par citation</h2>
+        <span class="bloc-emoji" aria-hidden="true">🧭</span>
+        <h2 id="methode-titre">La méthode</h2>
       </div>
-      <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire, et chaque horodatage ouvre la vidéo au moment exact.</p>
-      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="medef-pli">
-        <span class="trio-etat"><span class="quand-ferme">Ouvrir le débat (53 citations, 6 thèmes)</span><span class="quand-ouvert">Replier le débat</span> <span class="chev" aria-hidden="true">▼</span></span>
+      <p class="bloc-intro">Plusieurs niveaux d'information et des badges d'alignement qui mesurent une seule chose&nbsp;: la cohérence entre les promesses et les actes.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="methode-pli">
+        <span class="trio-etat"><span class="quand-ferme">Lire la méthode et les verdicts</span><span class="quand-ouvert">Replier la méthode</span> <span class="chev" aria-hidden="true">▼</span></span>
       </button>
-      <div class="bloc-pli" id="medef-pli" hidden>
-        <div class="medef-meta" id="medef-meta"></div>
-        <div class="medef-methode" id="medef-methode"></div>
-        <div class="switch" role="group" aria-label="Choisir un thème du débat" id="medef-switch"></div>
-        <div id="medef-corps"></div>
-        <div class="medef-suite">
-          <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants, et pour les <strong>meetings de campagne</strong>.</p>
-          <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent.</p>
+      <div class="bloc-pli" id="methode-pli" hidden>
+      <div class="methode-grid">
+        <div class="meth-card"><h3>1 · Vote personnel du candidat·e / vote de son parti</h3></div>
+        <div class="meth-card"><h3>2 · Promesses du candidat·e / promesses de son parti</h3><p>Programmes électoraux, déclarations publiques, prises de parole au Parlement...</p></div>
+        <div class="meth-card"><h3>3 · Actes du candidat·e / actes de son parti</h3><p>Votes au Parlement, textes de loi déposés, actions prises dans le cadre d'un mandat local, etc.</p></div>
+        <div class="meth-card"><h3>4 · Évaluation de l'alignement</h3><p>Cohérence entre les promesses et les actes.</p></div>
+      </div>
+      <div class="legende" id="legende-badges">
+        <div class="row"><span class="badge-align">✅ Aligné</span><p>Les votes et les actes suivent la promesse. Ça ne dit pas que la promesse est bonne - juste qu'elle est tenue.</p></div>
+        <div class="row"><span class="badge-align">⚠️ Partiellement aligné</span><p>Une partie des actes suit, une partie s'en écarte (abstention ambiguë, vote absent, discours à géométrie variable).</p></div>
+        <div class="row"><span class="badge-align">❌ Contradictoire</span><p>Les actes vont à l'encontre de la promesse, de façon documentée.</p></div>
+        <div class="row"><span class="badge-align">➖ Non testable</span><p>Pas de vote ni d'acte possible (pas de mandat, ministre qui ne vote pas, texte sans scrutin). Ce n'est pas une mauvaise note.</p></div>
+        <div class="row"><span class="badge-align">🔀 Position collective hétérogène</span><p>Le parti ou le groupe se divise&nbsp;: à partir de 20&nbsp;% de voix divergentes dans un vote, on ne parle plus d'une «&nbsp;ligne&nbsp;» mais d'une position hétérogène.</p></div>
+        <div class="row"><span class="badge-align"><b class="badge-qui">Candidat·e</b>✅ Aligné</span><p>Chaque texte porte deux pastilles&nbsp;: la première juge la <strong>personne</strong>, la seconde son <strong>parti</strong>. Elles peuvent diverger, et c'est souvent là que la lecture devient intéressante.</p></div>
+      </div>
+      <p class="note-bas">Ce comparateur est un travail journalistique citoyen, en cours et daté. Une case «&nbsp;en cours de vérification&nbsp;» signifie que la recherche continue, pas qu'une position n'existe pas. Vous repérez une erreur&nbsp;? <button type="button" class="lien-retours" data-open-retours>Dites-le-nous</button>, on corrige et on le dit.</p>
+          </div>
+    </section>
+<section class="bloc" id="c-methode" aria-labelledby="c-methode-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🧭</span>
+        <h2 id="c-methode-titre">Comment on remplit une fiche</h2>
+      </div>
+      <p class="bloc-intro">Quelques règles simples, les mêmes pour tout le monde. Elles servent à lire les fiches sans se tromper, et à comprendre ce que le comparateur peut ou ne peut pas mesurer pour chaque personne.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="c-methode-pli">
+        <span class="trio-etat"><span class="quand-ferme">Lire les règles</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
+      </button>
+      <div class="bloc-pli" id="c-methode-pli" hidden>
+        <div class="grille-mandats">
+          <div class="mandat-case"><h3>Une fonction n'est pas un mandat</h3><p>Présider un parti, un groupe parlementaire, une association d'élus ou un organisme ne va pas dans les colonnes de mandat. Être suppléant·e d'un·e député·e sans siéger non plus. Ces fonctions ont leur propre rubrique.</p></div>
+          <div class="mandat-case"><h3>Rien sans source</h3><p>Une information sans source ouverte et lue reste hors de la fiche. Une case vide n'est pas un échec, c'est une information. Les sources sont listées en bas de chaque fiche.</p></div>
+          <div class="mandat-case"><h3>Les faits, dans l'ordre</h3><p>Un fait par ligne, daté, factuel et vérifiable. Pas d'appréciation. Quand une décision de justice existe, on la formule précisément, avec la qualification exacte.</p></div>
+          <div class="mandat-case"><h3>Votes personnels et votes de groupe</h3><p>Une personne qui siégeait au Parlement a des votes personnels. Une personne sans mandat, ou au gouvernement, n'en a aucun&nbsp;: dans ce cas, le comparateur regarde les votes de son groupe parlementaire, et l'écrit à chaque fois. Les deux ne sont jamais mélangés.</p></div>
+          <div class="mandat-case"><h3>Programme d'un cycle antérieur</h3><p>Quand il n'y a pas de programme 2027, la fiche le dit et indique sur quoi on se base en attendant. Un programme de 2022 est toujours présenté comme antérieur, et ne sert jamais à qualifier un alignement personnel.</p></div>
+          <div class="mandat-case"><h3>Site du parti ou site de campagne</h3><p>Quand le site du parti tient lieu de site de campagne, on le signale&nbsp;: ce n'est pas la parole du ou de la candidat·e, c'est celle du parti.</p></div>
         </div>
-        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes, c'est tout l'objet du reste du comparateur.</p>
       </div>
     </section>
-
-<!-- ===== LES CANDIDAT·ES : rubrique a part, plus un des outils ===== -->
-    <section class="bloc" id="candidats" aria-labelledby="qui-titre">
+<section class="bloc" id="p-sources" aria-labelledby="p-sources-titre">
       <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">👤</span>
-        <h2 id="qui-titre">Les candidat·es</h2>
+        <span class="bloc-emoji" aria-hidden="true">📚</span>
+        <h2 id="p-sources-titre">D'où viennent ces mesures</h2>
       </div>
-      <p class="bloc-intro">Cette rubrique répond à deux questions. D'abord&nbsp;: <strong>qui sont les sept candidat·es</strong>, quels mandats et quelles fonctions ils et elles ont exercés. Ensuite&nbsp;: <strong>quels actes le comparateur retient pour chacun·e, et pourquoi</strong>. Une personne qui siégeait au Parlement a des votes personnels&nbsp;; une personne sans mandat, ou au gouvernement, n'en a aucun - dans ce cas nous regardons les votes de son groupe parlementaire, et nous l'écrivons à chaque fois. C'est la clé pour lire le reste de la page sans se tromper.</p>
-      <div class="cta-row" style="margin:0 0 16px">
-        <a class="btn primary" href="../candidats/">👤 Les fiches des 33 candidat·es : mandats, parcours, programme</a>
-        <a class="btn" href="../programmes/">🗂️ Les programmes, mesure par mesure</a>
-      </div>
-      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="candidats-pli">
-        <span class="trio-etat"><span class="quand-ferme">Voir les parcours des 7 candidat·es</span><span class="quand-ouvert">Replier les parcours</span> <span class="chev" aria-hidden="true">▼</span></span>
+      <p class="bloc-intro">Un document programmatique, c'est un texte publié par un parti ou une campagne&nbsp;: programme, livret thématique, page «&nbsp;Nos propositions&nbsp;». Voici ce que nous avons dépouillé, document par document, avec l'état du programme 2027 de chaque candidat·e. Quand un programme n'est pas sorti, on le dit, et on ne fait pas passer un texte de 2022 pour une promesse de 2027.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="p-sources-pli">
+        <span class="trio-etat"><span class="quand-ferme">Voir les 50 documents et l'état des programmes</span><span class="quand-ouvert">Replier</span> <span class="chev" aria-hidden="true">▼</span></span>
       </button>
-      <div class="bloc-pli" id="candidats-pli" hidden>
-      <div id="qui">
-      <div class="qui-grid" id="qui-grid"></div>
-      <div class="soutien-card" style="margin-top:22px">
-        <h3>On a besoin de vous pour développer la plateforme.</h3>
-        <p>Nous avons besoin de vous pour faire grandir le comparateur. Chaque vote ajouté, ce sont des heures passées à dépouiller des scrutins, des comptes rendus de séance et des programmes, ligne par ligne. Ni annonceur, ni parti, ni argent public derrière ce travail&nbsp;: c'est votre soutien qui fixe le rythme.</p>
-        <div class="soutien-row">
-          <a class="btn don" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">💛 Nous soutenir</a>
-          <a class="btn" href="../soutenir/">Toutes les façons d'aider</a>
-          <button type="button" class="btn play" data-open-retours>✍️ Nous faire un retour</button>
-        </div>
-      </div>
-      </div>
+      <div class="bloc-pli" id="p-sources-pli" hidden>
+        <h3 class="sous-titre">Où en est chaque programme 2027</h3>
+        <div class="grps" id="p-etat-liste"></div>
+        <h3 class="sous-titre" style="margin-top:18px">Les documents dépouillés</h3>
+        <div class="liste-plate" id="p-docs-liste"></div>
+        <p class="avertissement" style="margin-top:14px">Méthode&nbsp;: une ligne par mesure, tous partis confondus. L'intitulé court reprend l'amorce que le programme met lui-même en gras quand elle existe, sinon la première phrase. Le texte intégral est recopié sans coupe ni reformulation. Nous consignons, nous n'évaluons pas&nbsp;: aucune mesure n'est ici rapprochée d'une loi ni jugée. C'est le rôle du <a href="../comparateur/">comparateur</a>.</p>
       </div>
     </section>
-
-    <!-- ===== LE LEXIQUE : retours 16 et 17 ===== -->
-    <section class="bloc" id="lexique" aria-labelledby="lexique-titre">
+<section class="bloc" id="lexique" aria-labelledby="lexique-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">💡</span>
         <h2 id="lexique-titre">Le lexique</h2>
@@ -2788,9 +3297,27 @@
         <dl class="lex-liste" id="lex-liste"></dl>
       </div>
     </section>
-
-    <!-- ===== OÙ ON EN EST ===== -->
-    <section class="bloc" id="chantier" aria-labelledby="chantier-titre">
+<section class="bloc" id="sources" aria-labelledby="sources-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">📚</span>
+        <h2 id="sources-titre">Les sources</h2>
+      </div>
+      <p class="bloc-intro">Deux sources minimum par vote documenté, dont une primaire (scrutin officiel, programme, texte de loi). En plus des liens présents dans chaque carte, voici la bibliothèque complète.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="sources-pli">
+        <span class="trio-etat"><span class="quand-ferme">Ouvrir la bibliothèque des sources</span><span class="quand-ouvert">Replier les sources</span> <span class="chev" aria-hidden="true">▼</span></span>
+      </button>
+      <div class="bloc-pli" id="sources-pli" hidden>
+      <details class="sources-pli">
+        <summary><span class="sources-quoi">📚 Voir la bibliothèque complète</span><span class="sources-etat" aria-hidden="true"></span></summary>
+        <div class="sources-list" id="sources-list"></div>
+      </details>
+        <div class="retours-encart">
+          <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
+          <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
+        </div>
+          </div>
+    </section>
+<section class="bloc" id="chantier" aria-labelledby="chantier-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">🚧</span>
         <h2 id="chantier-titre">Où on en est</h2>
@@ -2842,58 +3369,38 @@
         </div>
           </div>
     </section>
-
-    <section class="bloc" id="methode" aria-labelledby="methode-titre">
+<section class="bloc" id="candidats" aria-labelledby="qui-titre">
       <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">🧭</span>
-        <h2 id="methode-titre">La méthode</h2>
+        <span class="bloc-emoji" aria-hidden="true">👤</span>
+        <h2 id="qui-titre">Les candidat·es</h2>
       </div>
-      <p class="bloc-intro">Plusieurs niveaux d'information et des badges d'alignement qui mesurent une seule chose&nbsp;: la cohérence entre les promesses et les actes.</p>
-      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="methode-pli">
-        <span class="trio-etat"><span class="quand-ferme">Lire la méthode et les verdicts</span><span class="quand-ouvert">Replier la méthode</span> <span class="chev" aria-hidden="true">▼</span></span>
+      <p class="bloc-intro">Cette rubrique répond à deux questions. D'abord&nbsp;: <strong>qui sont les sept candidat·es</strong>, quels mandats et quelles fonctions ils et elles ont exercés. Ensuite&nbsp;: <strong>quels actes le comparateur retient pour chacun·e, et pourquoi</strong>. Une personne qui siégeait au Parlement a des votes personnels&nbsp;; une personne sans mandat, ou au gouvernement, n'en a aucun - dans ce cas nous regardons les votes de son groupe parlementaire, et nous l'écrivons à chaque fois. C'est la clé pour lire le reste de la page sans se tromper.</p>
+      <div class="cta-row" style="margin:0 0 16px">
+        <a class="btn primary" href="../candidats/">👤 Les fiches des 33 candidat·es : mandats, parcours, programme</a>
+        <a class="btn" href="../programmes/">🗂️ Les programmes, mesure par mesure</a>
+      </div>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="candidats-pli">
+        <span class="trio-etat"><span class="quand-ferme">Voir les parcours des 7 candidat·es</span><span class="quand-ouvert">Replier les parcours</span> <span class="chev" aria-hidden="true">▼</span></span>
       </button>
-      <div class="bloc-pli" id="methode-pli" hidden>
-      <div class="methode-grid">
-        <div class="meth-card"><h3>1 · Vote personnel du candidat·e / vote de son parti</h3></div>
-        <div class="meth-card"><h3>2 · Promesses du candidat·e / promesses de son parti</h3><p>Programmes électoraux, déclarations publiques, prises de parole au Parlement...</p></div>
-        <div class="meth-card"><h3>3 · Actes du candidat·e / actes de son parti</h3><p>Votes au Parlement, textes de loi déposés, actions prises dans le cadre d'un mandat local, etc.</p></div>
-        <div class="meth-card"><h3>4 · Évaluation de l'alignement</h3><p>Cohérence entre les promesses et les actes.</p></div>
-      </div>
-      <div class="legende" id="legende-badges">
-        <div class="row"><span class="badge-align">✅ Aligné</span><p>Les votes et les actes suivent la promesse. Ça ne dit pas que la promesse est bonne - juste qu'elle est tenue.</p></div>
-        <div class="row"><span class="badge-align">⚠️ Partiellement aligné</span><p>Une partie des actes suit, une partie s'en écarte (abstention ambiguë, vote absent, discours à géométrie variable).</p></div>
-        <div class="row"><span class="badge-align">❌ Contradictoire</span><p>Les actes vont à l'encontre de la promesse, de façon documentée.</p></div>
-        <div class="row"><span class="badge-align">➖ Non testable</span><p>Pas de vote ni d'acte possible (pas de mandat, ministre qui ne vote pas, texte sans scrutin). Ce n'est pas une mauvaise note.</p></div>
-        <div class="row"><span class="badge-align">🔀 Position collective hétérogène</span><p>Le parti ou le groupe se divise&nbsp;: à partir de 20&nbsp;% de voix divergentes dans un vote, on ne parle plus d'une «&nbsp;ligne&nbsp;» mais d'une position hétérogène.</p></div>
-        <div class="row"><span class="badge-align"><b class="badge-qui">Candidat·e</b>✅ Aligné</span><p>Chaque texte porte deux pastilles&nbsp;: la première juge la <strong>personne</strong>, la seconde son <strong>parti</strong>. Elles peuvent diverger, et c'est souvent là que la lecture devient intéressante.</p></div>
-      </div>
-      <p class="note-bas">Ce comparateur est un travail journalistique citoyen, en cours et daté. Une case «&nbsp;en cours de vérification&nbsp;» signifie que la recherche continue, pas qu'une position n'existe pas. Vous repérez une erreur&nbsp;? <button type="button" class="lien-retours" data-open-retours>Dites-le-nous</button>, on corrige et on le dit.</p>
-          </div>
-    </section>
-
-    <!-- ===== LES SOURCES ===== -->
-    <section class="bloc" id="sources" aria-labelledby="sources-titre">
-      <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">📚</span>
-        <h2 id="sources-titre">Les sources</h2>
-      </div>
-      <p class="bloc-intro">Deux sources minimum par vote documenté, dont une primaire (scrutin officiel, programme, texte de loi). En plus des liens présents dans chaque carte, voici la bibliothèque complète.</p>
-      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="sources-pli">
-        <span class="trio-etat"><span class="quand-ferme">Ouvrir la bibliothèque des sources</span><span class="quand-ouvert">Replier les sources</span> <span class="chev" aria-hidden="true">▼</span></span>
-      </button>
-      <div class="bloc-pli" id="sources-pli" hidden>
-      <details class="sources-pli">
-        <summary><span class="sources-quoi">📚 Voir la bibliothèque complète</span><span class="sources-etat" aria-hidden="true"></span></summary>
-        <div class="sources-list" id="sources-list"></div>
-      </details>
-        <div class="retours-encart">
-          <p>Une erreur, une source qui manque, un vote mal interprété&nbsp;? On corrige et on le dit.</p>
-          <button type="button" class="btn play" data-open-retours>✍️ J'ai des retours</button>
+      <div class="bloc-pli" id="candidats-pli" hidden>
+      <div id="qui">
+      <div class="qui-grid" id="qui-grid"></div>
+      <div class="soutien-card" style="margin-top:22px">
+        <h3>On a besoin de vous pour développer la plateforme.</h3>
+        <p>Nous avons besoin de vous pour faire grandir le comparateur. Chaque vote ajouté, ce sont des heures passées à dépouiller des scrutins, des comptes rendus de séance et des programmes, ligne par ligne. Ni annonceur, ni parti, ni argent public derrière ce travail&nbsp;: c'est votre soutien qui fixe le rythme.</p>
+        <div class="soutien-row">
+          <a class="btn don" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">💛 Nous soutenir</a>
+          <a class="btn" href="../soutenir/">Toutes les façons d'aider</a>
+          <button type="button" class="btn play" data-open-retours>✍️ Nous faire un retour</button>
         </div>
-          </div>
+      </div>
+      </div>
+      </div>
     </section>
-
-    </main>
+      </div>
+      <p class="vers-projet"><a class="button button-ghost" href="../comparateur-2027/">Le projet de comparateur, et comment y participer →</a></p>
+    </section>
+</main>
 
     <footer class="site-foot">
       <div class="foot-brand">
@@ -5496,5 +6003,917 @@
   })();
   </script>
 
+  <script>
+  window.KP_CANDS = function () {
+
+    'use strict';
+    var D = window.KOMUNE_CANDIDATS;
+    if (!D) { return; }
+    var C = D.candidats;
+    var TETES = ["anasse-kazib", "antoine-mikolajczak", "benoit-mathieu", "bernard-cazeneuve", "bruno-retailleau", "clara-egger", "david-lisnard", "delphine-batho", "edouard-philippe", "emmanuel-maurel", "fabien-roussel", "fabien-verdier", "florian-philippot", "francis-lalanne", "francois-asselineau", "francois-ruffin", "gabriel-attal", "jean-luc-melenchon", "jerome-guedj", "juan-branco", "karim-bouamrane", "lydie-massard", "manolo-mlekuz", "marine-le-pen", "marine-tondelier", "nathalie-arthaud", "nicolas-dupont-aignan", "olivier-faure", "philippe-brun", "raphael-glucksmann", "segolene-royal", "selma-labib", "xavier-bertrand"];
+    var DANS_COMPARATEUR = ['jean-luc-melenchon', 'marine-le-pen', 'gabriel-attal', 'edouard-philippe', 'bruno-retailleau'];
+
+    /* ---------- utilitaires ---------- */
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+    function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+    function el(html) { var t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; }
+    function initiales(nom) { return nom.split(/[\s-]+/).filter(Boolean).slice(0, 3).map(function (x) { return x[0]; }).join('').toUpperCase(); }
+    function tete(c, taille) {
+      var cls = taille ? ' ' + taille : '';
+      if (TETES.indexOf(c.slug) > -1) { return '<img class="tete-img' + cls + '" src="../candidats/img/' + c.slug + '.webp" alt="" width="84" height="84" decoding="async">'; }
+      return '<span class="tete-init' + cls + '" aria-hidden="true">' + esc(initiales(c.nom)) + '</span>';
+    }
+    function liens(s) { return s.replace(/(https?:\/\/[^\s)]+[^\s).,;])/g, function (u) { return '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + u.replace(/^https?:\/\//, '').replace(/^www\./, '') + '</a>'; }); }
+    var DATE = /^((?:\d{1,2}(?:er)?\s+)?(?:janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)?\s*\d{4}(?:\s*(?:-|à|puis|et)\s*(?:[a-zéû]+\s+)?\d{4})?)\s*:\s*(.+)$/i;
+    /* le texte d'une cellule : paragraphes, listes a puces, chronologies, liens */
+    function riche(texte, chrono) {
+      if (!texte) { return ''; }
+      var blocs = texte.split(/\n\s*\n/), out = [];
+      blocs.forEach(function (b) {
+        var lignes = b.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
+        if (!lignes.length) { return; }
+        var puces = lignes.every(function (l) { return /^[•*\-]\s+/.test(l); });
+        var dates = chrono && lignes.filter(function (l) { return DATE.test(l); }).length >= Math.max(1, lignes.length - 1);
+        if (dates) {
+          out.push('<ul class="chrono">' + lignes.map(function (l) { var m = l.match(DATE); return m ? '<li><b>' + esc(m[1]) + '</b><span>' + liens(esc(m[2])) + '</span></li>' : '<li><b></b><span>' + liens(esc(l)) + '</span></li>'; }).join('') + '</ul>');
+        } else if (puces) {
+          out.push('<ul>' + lignes.map(function (l) { return '<li>' + liens(esc(l.replace(/^[•*\-]\s+/, ''))) + '</li>'; }).join('') + '</ul>');
+        } else {
+          /* melange : puces au milieu d'un paragraphe */
+          var cour = [];
+          var flush = function () { if (cour.length) { out.push('<p>' + cour.map(function (l) { return liens(esc(l)); }).join('<br>') + '</p>'); cour = []; } };
+          var li = [];
+          var flushLi = function () { if (li.length) { out.push('<ul>' + li.map(function (l) { return '<li>' + liens(esc(l)) + '</li>'; }).join('') + '</ul>'); li = []; } };
+          lignes.forEach(function (l) {
+            if (/^[•*\-]\s+/.test(l)) { flush(); li.push(l.replace(/^[•*\-]\s+/, '')); }
+            else { flushLi(); cour.push(l); }
+          });
+          flush(); flushLi();
+        }
+      });
+      return out.join('');
+    }
+
+    /* ---------- pastilles ---------- */
+    var PAST = [
+      ['p_parl_now', '🏛️', 'Au Parlement aujourd\'hui'], ['p_parl_past', '📜', 'A siégé au Parlement'], ['p_gouv', '🏢', 'A été au gouvernement'],
+      ['p_loc_now', '🏘️', 'Mandat local en cours'], ['p_loc_past', '🕰️', 'Mandat local passé']
+    ];
+    function etatPast(v) { return v === '✅' ? 'oui' : (v === '➖' ? 'non' : 'inc'); }
+    function pastilles(c, grande) {
+      return '<span class="pastilles' + (grande ? ' grande' : '') + '" role="list" aria-label="Ce qu\'on peut vérifier">' + PAST.map(function (p) {
+        var e = etatPast(c[p[0]]);
+        var mot = e === 'oui' ? 'oui' : (e === 'non' ? 'non' : 'pas encore vérifié');
+        return '<span class="past ' + e + '" role="listitem" title="' + esc(p[2] + ' : ' + mot) + '">' + (grande ? '<span aria-hidden="true">' + p[1] + '</span><small>' + esc(p[2]) + ' : <b>' + mot + '</b></small>' : '<span aria-hidden="true">' + (e === 'oui' ? '✓' : (e === 'non' ? '-' : '?')) + '</span><span class="lecteur-seul">' + esc(p[2] + ' : ' + mot) + '</span>') + '</span>';
+      }).join('') + '</span>';
+    }
+
+    /* ---------- statut ---------- */
+    function statutTexte(c) {
+      if (c.statut === 'candidat primaire') { return 'Primaire de la gauche · annoncé·e le ' + c.date; }
+      return 'Déclaré·e le ' + c.date;
+    }
+    function statutCourt(c) { return c.statut === 'candidat primaire' ? 'Primaire · ' + c.date : c.date; }
+    function verifBadge(c) { return c.verif === 'sourcé' ? '<span class="verif">Fiche sourcée</span>' : '<span class="verif encours">Fiche en cours</span>'; }
+
+    /* ---------- cartes ---------- */
+    function carte(c) {
+      return '<button type="button" class="cand" id="c-' + esc(c.slug) + '" data-slug="' + esc(c.slug) + '" aria-expanded="false" aria-controls="c-fiche-zone">' +
+        verifBadge(c) + tete(c) +
+        '<span class="tete-nom">' + esc(c.nom) + '</span>' +
+        '<span class="tete-parti">' + esc(c.parti) + '</span>' +
+        '<span class="statut">' + esc(statutCourt(c)) + '</span>' +
+        pastilles(c, false) +
+      '</button>';
+    }
+
+    /* ---------- la fiche ---------- */
+    function sec(id, emoji, titre, sous, corps, ouvert, cls) {
+      return '<details class="fsec' + (cls ? ' ' + cls : '') + '" id="' + id + '"' + (ouvert ? ' open' : '') + '><summary><span class="f-emoji" aria-hidden="true">' + emoji + '</span><span><h3 class="f-titre">' + titre + '</h3>' + (sous ? '<span class="f-sous">' + sous + '</span>' : '') + '</span><span class="chev" aria-hidden="true">▼</span></summary><div class="fsec-corps champ-lu">' + corps + '</div></details>';
+    }
+    function champ(titre, html) { return html ? '<div class="champ-lu"><h4>' + titre + '</h4>' + html + '</div>' : ''; }
+    function progLibelle(p) {
+      return { 'complet publié': 'Programme 2027 publié', 'partiel': 'Programme 2027 partiel ou en construction', 'aucun': 'Pas de programme publié', 'à vérifier': 'Programme à vérifier' }[p] || p;
+    }
+    function fiche(c) {
+      var enCours = c.verif !== 'sourcé';
+      var actions = [];
+      if (c.site) { actions.push('<a class="btn" href="' + esc(c.site) + '" target="_blank" rel="noopener noreferrer">🌐 Site de campagne ↗</a>'); }
+      if (c.prog_url && c.prog_url !== c.site) { actions.push('<a class="btn" href="' + esc(c.prog_url) + '" target="_blank" rel="noopener noreferrer">📄 Le programme ↗</a>'); }
+      if (c.n_mesures) { actions.push('<a class="btn play" href="#c=' + esc(c.slug) + '" data-ong="progs">🗂️ ' + c.n_mesures + ' mesures dans les programmes</a>'); }
+      if (DANS_COMPARATEUR.indexOf(c.slug) > -1) { actions.push('<a class="btn play" href="#promesses-actes" data-ong="actes">🎯 Promesses VS Actes</a>'); }
+      var secs = [];
+      if (enCours) {
+        secs.push('<div class="fiche-encours"><p><b>Fiche en cours de vérification.</b> Nous n\'affichons que ce qui est sourcé : l\'identité, le statut de candidature et le programme. Les mandats, le parcours et les faits datés arrivent après recherche' + (c.statut === 'candidat primaire' ? ', après le résultat de la primaire' : '') + '.</p></div>');
+      } else {
+        var nbOui = PAST.filter(function (p) { return c[p[0]] === '✅'; }).length;
+        var sousV = nbOui === 0 ? 'Aucun mandat, ni parlementaire, ni gouvernemental, ni local' : PAST.filter(function (p) { return c[p[0]] === '✅'; }).map(function (p) { return p[2].toLowerCase(); }).join(' · ');
+        secs.push(sec('f-verif', '🔎', 'Ce qu\'on peut vérifier', esc(sousV), pastilles(c, true) + champ('Ses votes, et ceux qu\'on peut regarder à sa place', riche(c.votes)), true, 'prio'));
+        var cases = '<div class="grille-mandats">' +
+          '<div class="mandat-case' + (c.p_parl_now === '✅' ? ' maintenant' : '') + '"><h4>Parlement <small>aujourd\'hui</small></h4>' + riche(c.parl_now) + '</div>' +
+          '<div class="mandat-case' + (c.p_loc_now === '✅' ? ' maintenant' : '') + '"><h4>Mandats locaux <small>actuels et passés</small></h4>' + riche(c.local) + '</div>' +
+          '<div class="mandat-case"><h4>Parlement <small>hier</small></h4>' + riche(c.parl_past) + '</div>' +
+          '<div class="mandat-case"><h4>Gouvernement <small>passé ou en cours</small></h4>' + riche(c.gouv) + '</div>' +
+          '</div><p class="avertissement">Une fonction (présider un parti, un groupe, un organisme) n\'est pas un mandat : elle est dans la rubrique suivante.</p>';
+        secs.push(sec('f-mandats', '🏛️', 'Mandats', 'Actuels d\'abord, puis passés', cases, true, 'prio-2'));
+        secs.push(sec('f-parcours', '🧭', 'Parcours et fonctions', 'Profession, parti, responsabilités non électives', champ('Profession', riche(c.profession)) + champ('Fonctions non électives', riche(c.fonctions)), false));
+      }
+      secs.push(sec('f-prog', '📄', 'Programme', esc(progLibelle(c.prog)), champ('État', '<p><span class="badge-mention ' + (c.prog === 'complet publié' ? 'b-2027' : (c.prog === 'aucun' ? 'b-passe' : 'b-prop')) + '">' + esc(progLibelle(c.prog)) + '</span></p>') + champ('Sur quoi on se base', riche(c.prog_detail)) +
+        champ('Liens', (c.prog_url ? '<p><a href="' + esc(c.prog_url) + '" target="_blank" rel="noopener noreferrer">' + esc(c.prog_url) + '</a></p>' : '') + (c.site && c.site !== c.prog_url ? '<p><a href="' + esc(c.site) + '" target="_blank" rel="noopener noreferrer">' + esc(c.site) + '</a></p>' : '')) +
+        (c.n_mesures ? '<p><a class="btn play" href="#c=' + esc(c.slug) + '" data-ong="progs">🗂️ Lire ses ' + c.n_mesures + ' mesures, sujet par sujet</a></p>' : ''), !!(enCours), ''));
+      if (!enCours) {
+        if (c.faits) { secs.push(sec('f-faits', '🗓️', 'Repères datés', 'Un fait par ligne, dans l\'ordre', riche(c.faits, true), false)); }
+        if (c.judiciaire) { secs.push(sec('f-judiciaire', '⚖️', 'Situation judiciaire', 'Formulée avec les qualifications exactes', riche(c.judiciaire), false)); }
+      }
+      if (c.sources) { secs.push(sec('f-sources', '📚', 'Sources', 'Ce qu\'on a ouvert et lu', riche(c.sources), false)); }
+      return '<article class="fiche3" id="c-fiche" aria-labelledby="c-fiche-nom" tabindex="-1">' +
+        '<p class="fiche-retour"><button type="button" class="btn" data-fermer>← Toutes les têtes</button></p>' +
+        '<div class="fiche-haut">' + tete(c) + '<div><h2 id="c-fiche-nom">' + esc(c.nom) + '</h2>' +
+          '<p class="fiche-ident"><span class="parti">' + esc(c.parti) + '</span><span class="statut">' + esc(statutTexte(c)) + '</span>' + verifBadge(c) + '</p></div></div>' +
+        (actions.length ? '<div class="fiche-actions">' + actions.join('') + '</div>' : '') +
+        '<div class="fiche-secs">' + secs.join('') + '</div>' +
+        '<div class="fiche-actions"><button type="button" class="btn" data-copier>🔗 Copier le lien de la fiche</button><button type="button" class="btn" data-open-retours>✍️ Signaler une erreur</button><button type="button" class="btn" data-fermer>← Toutes les têtes</button></div>' +
+      '</article>';
+    }
+
+    /* ---------- etat et rendu ---------- */
+    var $ = function (id) { return document.getElementById('c-' + id); };
+    var ETAT = { f: 'tous', q: '', ouvert: null };
+    var PAR_SLUG = {}; C.forEach(function (c) { PAR_SLUG[c.slug] = c; });
+    function passe(c) {
+      var f = ETAT.f;
+      if (f === 'parl_now' && c.p_parl_now !== '✅') { return false; }
+      if (f === 'parl' && c.p_parl_now !== '✅' && c.p_parl_past !== '✅') { return false; }
+      if (f === 'gouv' && c.p_gouv !== '✅') { return false; }
+      if (f === 'loc_now' && c.p_loc_now !== '✅') { return false; }
+      if (f === 'jamais' && !PAST.every(function (p) { return c[p[0]] === '➖'; })) { return false; }
+      if (ETAT.q.trim()) { var q = norm(ETAT.q); if (norm(c.nom + ' ' + c.parti).indexOf(q) < 0) { return false; } }
+      return true;
+    }
+    function rendre() {
+      var decl = C.filter(function (c) { return c.statut !== 'candidat primaire' && passe(c); });
+      var prim = C.filter(function (c) { return c.statut === 'candidat primaire' && passe(c); });
+      $('cands-declares').innerHTML = decl.map(carte).join('');
+      $('cands-primaire').innerHTML = prim.map(carte).join('');
+      $('groupe-declares').hidden = !decl.length; $('groupe-primaire').hidden = !prim.length;
+      $('cands-vide').hidden = !!(decl.length + prim.length);
+      var total = decl.length + prim.length;
+      var libF = { tous: '', parl_now: ' au Parlement aujourd\'hui', parl: ' ayant siégé au Parlement', gouv: ' passé·es par le gouvernement', loc_now: ' avec un mandat local en cours', jamais: ' sans aucun mandat, jamais' }[ETAT.f];
+      var inconnus = ETAT.f !== 'tous' ? C.filter(function (c) { return c.verif !== 'sourcé' && (!ETAT.q.trim() || norm(c.nom + ' ' + c.parti).indexOf(norm(ETAT.q)) > -1); }).length : 0;
+      $('compte').innerHTML = '<b>' + total + '</b> candidat·e' + (total > 1 ? 's' : '') + libF + (ETAT.q.trim() ? ' pour «&nbsp;' + esc(ETAT.q.trim()) + '&nbsp;»' : '') + '.' +
+        (inconnus ? ' <span style="color:var(--muted);font-weight:650">' + inconnus + ' fiche' + (inconnus > 1 ? 's' : '') + ' en cours ne ' + (inconnus > 1 ? 'sont' : 'est') + ' pas comptée' + (inconnus > 1 ? 's' : '') + ' : mandats pas encore vérifiés.</span>' : '');
+      document.querySelectorAll('#c-filtres [data-f]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.f === ETAT.f ? 'true' : 'false'); });
+      if (ETAT.ouvert) { var b = document.getElementById('c-' + ETAT.ouvert); if (b) { b.setAttribute('aria-expanded', 'true'); } }
+    }
+    function ouvrir(slug, scroll) {
+      var c = PAR_SLUG[slug]; if (!c) { return; }
+      ETAT.ouvert = slug;
+      document.querySelectorAll('.cand[aria-expanded="true"]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+      var b = document.getElementById('c-' + slug); if (b) { b.setAttribute('aria-expanded', 'true'); }
+      $('fiche-zone').innerHTML = fiche(c);
+      document.title = c.nom + ' : mandats, parcours, programme · Komune';
+      if (location.hash !== '#f=' + slug) { history.replaceState(null, '', location.pathname + location.search + '#f=' + slug); }
+      if (scroll !== false) {
+        var f = $('fiche');
+        setTimeout(function () { f.scrollIntoView({ block: 'start' }); f.focus({ preventScroll: true }); }, 30);
+      }
+    }
+    function fermer() {
+      ETAT.ouvert = null;
+      $('fiche-zone').innerHTML = '';
+      document.querySelectorAll('.cand[aria-expanded="true"]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+      document.title = TITRE;
+      history.replaceState(null, '', location.pathname + location.search + '#candidats');
+      $('qui').scrollIntoView({ block: 'start' });
+    }
+    var TITRE = document.title;
+
+    /* ---------- evenements ---------- */
+    document.addEventListener('click', function (e) {
+      if (!(e.target.closest && e.target.closest('#pan-cands'))) { return; }
+      var t;
+      if ((t = e.target.closest('.cand[data-slug]'))) {
+        if (ETAT.ouvert === t.dataset.slug) { fermer(); } else { ouvrir(t.dataset.slug); }
+        return;
+      }
+      if (e.target.closest('[data-fermer]')) { fermer(); return; }
+      if ((t = e.target.closest('[data-copier]'))) {
+        var url = location.origin + location.pathname + '#f=' + ETAT.ouvert;
+        var fini = function () { var s = t.nextElementSibling; if (s && s.classList.contains('copie-ok')) { s.remove(); } t.insertAdjacentHTML('afterend', '<span class="copie-ok" role="status">Lien copié</span>'); };
+        if (navigator.clipboard) { navigator.clipboard.writeText(url).then(fini, function () { prompt('Copiez ce lien :', url); }); } else { prompt('Copiez ce lien :', url); }
+        return;
+      }
+      if ((t = e.target.closest('#c-filtres [data-f]'))) { ETAT.f = t.dataset.f; rendre(); return; }
+      if (e.target.closest('[data-tout-effacer]')) { ETAT.f = 'tous'; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; rendre(); }
+    });
+    var rech = $('recherche'), vider = $('recherche-vider'), minuteur;
+    rech.addEventListener('input', function () { clearTimeout(minuteur); minuteur = setTimeout(function () { ETAT.q = rech.value; vider.hidden = !rech.value; rendre(); }, 180); });
+    vider.addEventListener('click', function () { rech.value = ''; ETAT.q = ''; vider.hidden = true; rendre(); rech.focus(); });
+    window.addEventListener('hashchange', function () { var s = (location.hash.match(/^#f=(.+)$/) || [])[1]; if (s && PAR_SLUG[s]) { ouvrir(s); } });
+
+    /* ---------- depart ---------- */
+    var pitch = $('pitch');
+    if (pitch) { var nd = C.filter(function (c) { return c.statut !== 'candidat primaire'; }).length, np = C.length - nd; pitch.innerHTML = '<strong>' + C.length + ' candidat·es</strong> à la présidentielle 2027 (' + nd + ' déclaré·es, ' + np + ' en lice pour la primaire de la gauche), une fiche chacun·e. Ce qui nous intéresse d\'abord&nbsp;: <strong>leurs mandats, actuels et passés</strong>. C\'est là qu\'on peut regarder les actes, pas seulement les paroles. Puis le parcours, le programme, les faits datés, et les sources de tout ça.'; }
+    rendre();
+    var h = (location.hash.match(/^#f=(.+)$/) || [])[1];
+    if (h && PAR_SLUG[h]) { ouvrir(h); }
+    window.__KOMUNE_CANDIDATS_OUVRIR = ouvrir;
+  };
+  </script>
+  <script>
+  window.KP_PROGS = function () {
+
+    'use strict';
+    var P = window.KOMUNE_PROGRAMMES;
+    if (!P) { return; }
+    var C = (window.KOMUNE_CANDIDATS && window.KOMUNE_CANDIDATS.candidats) || [];
+    var TETES = ["anasse-kazib", "antoine-mikolajczak", "benoit-mathieu", "bernard-cazeneuve", "bruno-retailleau", "clara-egger", "david-lisnard", "delphine-batho", "edouard-philippe", "emmanuel-maurel", "fabien-roussel", "fabien-verdier", "florian-philippot", "francis-lalanne", "francois-asselineau", "francois-ruffin", "gabriel-attal", "jean-luc-melenchon", "jerome-guedj", "juan-branco", "karim-bouamrane", "lydie-massard", "manolo-mlekuz", "marine-le-pen", "marine-tondelier", "nathalie-arthaud", "nicolas-dupont-aignan", "olivier-faure", "philippe-brun", "raphael-glucksmann", "segolene-royal", "selma-labib", "xavier-bertrand"];
+
+    /* ---------- utilitaires ---------- */
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+    function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’‘]/g, "'"); }
+    function el(html) { var t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; }
+    function nb(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+    function pluriel(n, un, des) { return n + ' ' + (n > 1 ? des : un); }
+    function slugify(s) { return norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+    function initiales(nom) { return nom.split(/[\s-]+/).filter(Boolean).slice(0, 3).map(function (x) { return x[0]; }).join('').toUpperCase(); }
+    function tete(slug, nom, taille) {
+      var cls = taille ? ' ' + taille : '';
+      if (slug && TETES.indexOf(slug) > -1) { return '<img class="tete-img' + cls + '" src="../candidats/img/' + slug + '.webp" alt="" width="84" height="84" loading="lazy" decoding="async">'; }
+      return '<span class="tete-init' + cls + '" aria-hidden="true">' + esc(initiales(nom)) + '</span>';
+    }
+
+    /* ---------- les donnees, depliees ---------- */
+    var CLES = P.cles;
+    var M = P.mesures.map(function (row) {
+      var o = {}; CLES.forEach(function (k, i) { if (row[i] != null) o[k] = row[i]; });
+      o.tags = o.tags || []; o.theme2 = o.theme2 || [];
+      o.doc = P.docs[o.d]; o.chap = [P.parts[P.chaps[o.ch][0]], P.chaps[o.ch][1]];
+      o.parti = o.doc.parti; o.cand = o.doc.cand || null; o.cslug = o.doc.cslug || null; o.mention = o.doc.mention || null;
+      o.pkey = slugify(o.parti);
+      o._n = norm([o.court, o.tags.map(function (t) { return P.tags[t]; }).join(' '), o.chap[1], o.chap[0], o.parti, o.cand, o.id, o.pub].join(' '));
+      return o;
+    });
+    var PAR_ID = {}; M.forEach(function (m) { PAR_ID[m.id] = m; });
+    var THEMES = Object.keys(P.themes).map(Number).sort(function (a, b) { return a - b; });
+    var CAND_PAR_SLUG = {}; C.forEach(function (c) { CAND_PAR_SLUG[c.slug] = c; });
+
+    /* les porteurs : un par parti, avec la tete du ou de la candidat·e 2027 quand il y en a un·e */
+    var PORTEURS = [];
+    var PK = {};
+    M.forEach(function (m) {
+      var p = PK[m.pkey];
+      if (!p) { p = PK[m.pkey] = { key: m.pkey, parti: m.parti, n: 0, cands: {}, docs: {}, slug: null, nom: null, versions: {} }; PORTEURS.push(p); }
+      p.n++;
+      p.docs[m.d] = true;
+      p.versions[m.mention || '2027'] = (p.versions[m.mention || '2027'] || 0) + 1;
+      if (m.cslug) { p.cands[m.cslug] = (p.cands[m.cslug] || 0) + 1; if (!p.slug && CAND_PAR_SLUG[m.cslug]) { p.slug = m.cslug; p.nom = m.cand; } }
+    });
+    PORTEURS.forEach(function (p) {
+      if (!p.nom) { p.nom = p.parti; p.libelle = 'candidat·e à confirmer'; }
+      else { p.libelle = p.parti; }
+      p.etat = null;
+      P.etat.forEach(function (e) { if ((p.slug && e.cand === p.nom) || (!p.slug && e.parti === p.parti && /non désigné/.test(e.cand))) { p.etat = p.etat || e; } });
+      p.mentions = Object.keys(p.versions).filter(function (v) { return v !== '2027'; });
+      p.n2027 = p.versions['2027'] || 0;
+    });
+    PORTEURS.sort(function (a, b) { return b.n - a.n; });
+    var PAR_PKEY = {}; PORTEURS.forEach(function (p) { PAR_PKEY[p.key] = p; });
+
+    /* ---------- etat ---------- */
+    var ETAT = { vue: 'sujet', s: null, t: null, pub: null, c: null, cs: null, q: '' };
+    var NIV = 'essentiel';
+    try { NIV = localStorage.getItem('komune.programmes.niveau') || 'essentiel'; } catch (e) {}
+    var OUVERTS = {};
+    var TEXTES = null, chargementTextes = null;
+    function chargerTextes(cb) {
+      if (TEXTES) { cb(TEXTES); return; }
+      if (window.KOMUNE_TEXTES) { TEXTES = window.KOMUNE_TEXTES; cb(TEXTES); return; }
+      if (!chargementTextes) {
+        chargementTextes = [];
+        var sc = document.createElement('script'); sc.src = '../programmes/textes.js'; sc.async = true;
+        sc.onload = function () { TEXTES = window.KOMUNE_TEXTES || {}; chargementTextes.forEach(function (f) { f(TEXTES); }); chargementTextes = null; };
+        sc.onerror = function () { TEXTES = {}; chargementTextes.forEach(function (f) { f(TEXTES); }); chargementTextes = null; };
+        document.head.appendChild(sc);
+      }
+      chargementTextes.push(cb);
+    }
+
+    /* ---------- la mention ---------- */
+    function badgeMention(m) {
+      if (!m.mention) { return ''; }
+      var cls = /proposition|chantier/.test(m.mention) ? 'b-prop' : 'b-passe';
+      return '<span class="badge-mention ' + cls + '" title="Cette mesure ne vient pas d\'un programme publié pour 2027">' + esc(m.mention) + '</span>';
+    }
+
+    /* ---------- une mesure ---------- */
+    function mesCard(m, opts) {
+      opts = opts || {};
+      var long = TEXTES && TEXTES[m.id] ? premiere(m) : null;
+      var meta = [];
+      meta.push(badgeMention(m));
+      if (opts.contexte) {
+        meta.push('<span>' + esc(m.cand || m.parti) + (m.cand && m.cand !== m.parti ? ' · ' + esc(m.parti) : '') + '</span>');
+        meta.push('<span>' + esc(P.themes[m.theme]) + '</span>');
+      }
+      if (m.theme2.length) { meta.push('<span class="also">aussi : ' + m.theme2.map(function (t) { return esc(P.themes[t]); }).join(', ') + '</span>'); }
+      if (m.pub) { meta.push('<span>👥 ' + esc(m.pub) + '</span>'); }
+      if (m.portee === 'EUROPE') { meta.push('<span>🇪🇺 échelon européen</span>'); }
+      meta.push('<span class="ref">' + esc(m.id) + (m.ref ? ' · réf. ' + esc(m.ref) : '') + '</span>');
+      var ouvert = !!OUVERTS[m.id];
+      return '<article class="mes" id="m-' + esc(m.id) + '" data-id="' + esc(m.id) + '">' +
+        '<button type="button" class="mes-tete" aria-expanded="' + (ouvert ? 'true' : 'false') + '" aria-controls="mc-' + esc(m.id) + '">' +
+          '<span class="mes-court">' + esc(m.court) + '</span>' +
+          '<span class="chev" aria-hidden="true">▼</span>' +
+          '<span class="mes-meta">' + meta.filter(Boolean).join('') + '</span>' +
+          (long ? '<span class="mes-long niv-essentiel-seul">' + esc(long) + '</span>' : '<span class="mes-long niv-essentiel-seul" data-long hidden></span>') +
+        '</button>' +
+        '<div class="mes-corps" id="mc-' + esc(m.id) + '"' + (ouvert ? '' : ' hidden') + '>' + (ouvert ? mesCorps(m) : '') + '</div>' +
+      '</article>';
+    }
+    function premiere(m) {
+      var t = TEXTES[m.id]; if (!t) { return null; }
+      var l = t.l || (t.n ? (t.t || '').slice(0, t.n) : null);
+      if (!l) { return null; }
+      /* inutile si l'intitule court dit deja tout */
+      if (norm(l).replace(/[.\s]+$/, '') === norm(m.court).replace(/[.\s]+$/, '')) { return null; }
+      if (l.length <= m.court.length + 12 && norm(l).indexOf(norm(m.court)) === 0) { return null; }
+      return l;
+    }
+    function mesCorps(m) {
+      var t = TEXTES ? TEXTES[m.id] : null;
+      var texte;
+      if (!TEXTES) { texte = '<blockquote class="mes-texte attente">Chargement du texte intégral…</blockquote>'; }
+      else if (t && t.t && norm(t.t).replace(/[.\s]+$/, '') === norm(m.court).replace(/[.\s]+$/, '')) { texte = '<blockquote class="mes-texte attente">Le document ne développe pas cette mesure : l\'intitulé est le texte intégral.</blockquote>'; }
+      else if (t && t.t) {
+        var tx = t.t, n = t.n || 0;
+        texte = '<blockquote class="mes-texte" cite="' + esc(m.doc.url || '') + '">' + (n ? '<span class="amorce">' + esc(tx.slice(0, n)) + '</span>' + esc(tx.slice(n)) : esc(tx)) + '</blockquote>';
+      } else { texte = '<blockquote class="mes-texte attente">Le programme n\'en dit pas plus que l\'intitulé.</blockquote>'; }
+      var src = '<p class="mes-src"><b>Source :</b> ' + esc(m.doc.doc) +
+        (m.chap[0] || m.chap[1] ? ' · <b>' + esc([m.chap[0], m.chap[1]].filter(function (x, i, a) { return x && a.indexOf(x) === i; }).join(' › ')) + '</b>' : '') +
+        (m.ref ? ' · réf. ' + esc(m.ref) : '') +
+        (m.doc.url ? ' · <a href="' + esc(m.doc.url) + '" target="_blank" rel="noopener noreferrer">Ouvrir le document ↗</a>' : '') +
+        (m.mention ? '<br><b>D\'où ça vient :</b> ' + esc(m.mention) + ', pas un programme publié pour 2027.' : '') + '</p>';
+      var tags = '<p class="mes-tags" aria-label="Sujets et mots-clés">' +
+        '<button type="button" class="t th" data-theme="' + m.theme + '">' + esc(P.themes[m.theme]) + '</button>' +
+        m.theme2.map(function (th) { return '<button type="button" class="t th" data-theme="' + th + '">' + esc(P.themes[th]) + '</button>'; }).join('') +
+        m.tags.map(function (ti) { return '<button type="button" class="t" data-tag="' + ti + '">' + esc(P.tags[ti]) + '</button>'; }).join('') +
+        (m.pub ? '<span class="t pub">👥 ' + esc(m.pub) + '</span>' : '') + '</p>';
+      var note = m.note ? '<p class="mes-note"><b>Note de la rédaction</b><br>' + esc(m.note) + '</p>' : '';
+      var app = m.app && PAR_ID[m.app] ? '<p class="mes-src"><b>Mesure apparentée :</b> <a href="#m=' + esc(m.app) + '" data-aller="' + esc(m.app) + '">' + esc(PAR_ID[m.app].court) + '</a> (' + esc(PAR_ID[m.app].cand || PAR_ID[m.app].parti) + ')</p>' : '';
+      var qual = m.qual != null ? P.qual[m.qual] : '';
+      var quali = qual && /réécrire/.test(qual) ? '<p class="avertissement">Intitulé court à réécrire par la rédaction : pour l\'instant, c\'est la première phrase du programme, ou son amorce.</p>' : '';
+      var actions = '<div class="mes-actions">' +
+        '<button type="button" class="btn" data-copier="' + esc(m.id) + '">🔗 Copier le lien</button>' +
+        (m.cslug && CAND_PAR_SLUG[m.cslug] ? '<a class="btn" href="#f=' + esc(m.cslug) + '" data-ong="cands">👤 Fiche ' + esc(m.cand) + '</a>' : '') +
+        (ETAT.vue === 'sujet' ? '<button type="button" class="btn" data-voir-cand="' + esc(m.pkey) + '">📖 Tout le programme ' + esc(m.cand ? m.cand.split(' ').slice(-1)[0] : m.parti) + '</button>' : '<button type="button" class="btn" data-voir-sujet="' + m.theme + '">🧭 Ce sujet chez tout le monde</button>') +
+        '</div>';
+      return texte + src + tags + note + app + quali + actions;
+    }
+
+    /* ---------- filtres ---------- */
+    function correspond(m) {
+      if (ETAT.vue === 'sujet') {
+        if (ETAT.s != null && m.theme !== ETAT.s && m.theme2.indexOf(ETAT.s) < 0) { return false; }
+        if (ETAT.t != null && m.tags.indexOf(ETAT.t) < 0) { return false; }
+        if (ETAT.pub && m.pub !== ETAT.pub) { return false; }
+      } else {
+        if (ETAT.c && m.pkey !== ETAT.c) { return false; }
+        if (ETAT.cs != null && m.theme !== ETAT.cs && m.theme2.indexOf(ETAT.cs) < 0) { return false; }
+      }
+      return true;
+    }
+    var MOTS = [];
+    function motsRecherche() {
+      MOTS = norm(ETAT.q).split(/\s+/).filter(function (w) { return w.length >= 2; });
+      return MOTS.length > 0;
+    }
+    function cherche(m) {
+      var base = m._n;
+      if (TEXTES && TEXTES[m.id] && TEXTES[m.id]._n === undefined) { TEXTES[m.id]._n = norm(TEXTES[m.id].t || ''); }
+      var plein = ETAT.plein && TEXTES && TEXTES[m.id] ? TEXTES[m.id]._n : '';
+      for (var i = 0; i < MOTS.length; i++) { if (base.indexOf(MOTS[i]) < 0 && (!plein || plein.indexOf(MOTS[i]) < 0)) { return false; } }
+      return true;
+    }
+    function filtrer() {
+      var r = M.filter(correspond);
+      if (motsRecherche()) { r = r.filter(cherche); }
+      return r;
+    }
+
+    /* ---------- rendu ---------- */
+    var $ = function (id) { return document.getElementById('p-' + id); };
+    var sujets = $('sujets'), sousZone = $('sous-zone'), sous = $('sous'), publicsZone = $('publics-zone'), publics = $('publics');
+    var porteurs = $('porteurs'), candFiltres = $('cand-filtres'), candSujets = $('cand-sujets');
+    var actifs = $('actifs'), compte = $('compte'), resultats = $('resultats');
+    var PAGE = 25;
+
+    function rendreSujets() {
+      var counts = {}; M.forEach(function (m) { counts[m.theme] = (counts[m.theme] || 0) + 1; });
+      sujets.innerHTML = THEMES.map(function (t) {
+        return '<button type="button" class="fchip" data-s="' + t + '" aria-pressed="' + (ETAT.s === t ? 'true' : 'false') + '">' + esc(P.themes[t]) + '<span class="n">' + counts[t] + '</span></button>';
+      }).join('');
+    }
+    var sousTout = false;
+    function rendreSous() {
+      if (ETAT.s == null) { sousZone.hidden = true; return; }
+      sousZone.hidden = false;
+      var tc = {}, pc = {};
+      M.forEach(function (m) {
+        if (m.theme !== ETAT.s && m.theme2.indexOf(ETAT.s) < 0) { return; }
+        m.tags.forEach(function (t) { tc[t] = (tc[t] || 0) + 1; });
+        if (m.pub) { pc[m.pub] = (pc[m.pub] || 0) + 1; }
+      });
+      var liste = Object.keys(tc).map(Number).sort(function (a, b) { return tc[b] - tc[a] || P.tags[a].localeCompare(P.tags[b]); });
+      var visibles = sousTout || ETAT.t != null && liste.indexOf(ETAT.t) >= 14 ? liste : liste.slice(0, 14);
+      sous.innerHTML = visibles.map(function (t) {
+        return '<button type="button" class="pchip" data-t="' + t + '" aria-pressed="' + (ETAT.t === t ? 'true' : 'false') + '">' + esc(P.tags[t]) + '<span class="n">' + tc[t] + '</span></button>';
+      }).join('') + (liste.length > 14 && !sousTout && visibles.length < liste.length ? '<button type="button" class="voir-plus" data-sous-tout>+ ' + (liste.length - 14) + ' autres sous-thèmes</button>' : '');
+      var pubs = Object.keys(pc).sort();
+      publicsZone.hidden = pubs.length === 0;
+      publics.innerHTML = pubs.map(function (p) { return '<button type="button" class="pchip" data-pub="' + esc(p) + '" aria-pressed="' + (ETAT.pub === p ? 'true' : 'false') + '">👥 ' + esc(p) + '<span class="n">' + pc[p] + '</span></button>'; }).join('');
+    }
+    function rendrePorteurs() {
+      porteurs.innerHTML = PORTEURS.map(function (p) {
+        var sous = p.n2027 === p.n ? 'programme 2027' : (p.n2027 ? p.n2027 + ' pour 2027 + ' + (p.n - p.n2027) + ' antérieures' : p.mentions.join(' · '));
+        return '<button type="button" class="porteur" data-c="' + esc(p.key) + '" aria-pressed="' + (ETAT.c === p.key ? 'true' : 'false') + '">' +
+          tete(p.slug, p.nom) + '<span class="tete-nom">' + esc(p.nom) + '</span><span class="tete-parti">' + esc(p.libelle) + '</span>' +
+          '<span class="n">' + nb(p.n) + ' mesures</span><span class="tete-parti">' + esc(sous) + '</span></button>';
+      }).join('');
+      /* les candidat·es sans document consigne */
+      var avec = {}; PORTEURS.forEach(function (p) { if (p.slug) { avec[p.slug] = true; } Object.keys(p.cands).forEach(function (s) { avec[s] = true; }); });
+      var autres = C.filter(function (c) { return !avec[c.slug]; });
+      $('autres-note').textContent = autres.length ? 'Pour ' + pluriel(autres.length, 'candidat·e déclaré·e ou en primaire', 'candidat·es déclaré·es ou en primaire') + ', nous n\'avons pas encore dépouillé de document programmatique : soit il n\'existe pas, soit il est en cours de saisie. Leur fiche dit où ils et elles en sont.' : 'Toutes les personnes candidates ont un document consigné.';
+      $('autres-cands').innerHTML = autres.map(function (c) { return '<a href="#f=' + esc(c.slug) + '" data-ong="cands">' + tete(c.slug, c.nom, 'mini') + esc(c.nom) + '</a>'; }).join('');
+      if (ETAT.c) {
+        candFiltres.hidden = false; if (ETAT.cs != null) { candFiltres.open = true; }
+        var counts = {}; M.forEach(function (m) { if (m.pkey === ETAT.c) { counts[m.theme] = (counts[m.theme] || 0) + 1; } });
+        candSujets.innerHTML = THEMES.map(function (t) {
+          return '<button type="button" class="pchip" data-cs="' + t + '" aria-pressed="' + (ETAT.cs === t ? 'true' : 'false') + '"' + (counts[t] ? '' : ' disabled') + '>' + esc(P.themes[t]) + '<span class="n">' + (counts[t] || 0) + '</span></button>';
+        }).join('');
+      } else { candFiltres.hidden = true; }
+    }
+    function rendreActifs() {
+      var chips = [];
+      if (ETAT.vue === 'sujet') {
+        if (ETAT.s != null) { chips.push(['s', '🧭 ' + P.themes[ETAT.s]]); }
+        if (ETAT.t != null) { chips.push(['t', P.tags[ETAT.t]]); }
+        if (ETAT.pub) { chips.push(['pub', '👥 ' + ETAT.pub]); }
+      } else {
+        if (ETAT.c && PAR_PKEY[ETAT.c]) { chips.push(['c', '👤 ' + PAR_PKEY[ETAT.c].nom]); }
+        if (ETAT.cs != null) { chips.push(['cs', '🧭 ' + P.themes[ETAT.cs]]); }
+      }
+      if (ETAT.q.trim()) { chips.push(['q', '🔍 « ' + ETAT.q.trim() + ' »']); }
+      actifs.innerHTML = chips.map(function (c) { return '<span class="actif-chip">' + esc(c[1]) + '<button type="button" class="x" data-retirer="' + c[0] + '" aria-label="Retirer ce filtre">✕</button></span>'; }).join('') +
+        (chips.length > 1 ? '<button type="button" class="tout-effacer" data-tout-effacer>Tout effacer</button>' : '');
+    }
+
+    function grp(id, titreHtml, sousHtml, n, corpsHtml, ouvert, teteHtml) {
+      return '<section class="grp" id="' + esc(id) + '">' +
+        '<button type="button" class="grp-tete" aria-expanded="' + (ouvert ? 'true' : 'false') + '" aria-controls="' + esc(id) + '-corps">' +
+          (teteHtml || '<span></span>') +
+          '<span><span class="grp-qui">' + titreHtml + '</span>' + (sousHtml ? '<span class="grp-sous">' + sousHtml + '</span>' : '') + '</span>' +
+          '<span class="grp-n">' + nb(n) + '<small>' + (n > 1 ? 'mesures' : 'mesure') + '</small> <span class="chev" aria-hidden="true">▼</span></span>' +
+        '</button>' +
+        '<div class="grp-corps" id="' + esc(id) + '-corps"' + (ouvert ? '' : ' hidden') + '></div>' +
+      '</section>';
+    }
+    function listeMesures(conteneur, liste, opts) {
+      conteneur.innerHTML = '';
+      var i = 0;
+      function encore() {
+        var tranche = liste.slice(i, i + PAGE);
+        var frag = document.createDocumentFragment();
+        tranche.forEach(function (m) { frag.appendChild(el(mesCard(m, opts))); });
+        var bouton = conteneur.querySelector('.plus-ligne'); if (bouton) { bouton.remove(); }
+        conteneur.appendChild(frag);
+        i += tranche.length;
+        if (i < liste.length) {
+          var b = el('<div class="plus-ligne"><button type="button" class="btn">Afficher ' + Math.min(PAGE, liste.length - i) + ' de plus <small>(' + nb(liste.length - i) + ' restantes)</small></button></div>');
+          b.querySelector('button').addEventListener('click', encore);
+          conteneur.appendChild(b);
+        }
+        if (NIV === 'tout') { ouvrirVisibles(conteneur); }
+        completerLongs(conteneur);
+      }
+      encore();
+    }
+    var GROUPES = {};
+    function rendreResultats() {
+      var liste = filtrer();
+      GROUPES = {};
+      resultats.innerHTML = '';
+      var q = ETAT.q.trim();
+      var rienChoisi = ETAT.vue === 'sujet' ? (ETAT.s == null && ETAT.t == null && !ETAT.pub) : !ETAT.c;
+      if (!q && rienChoisi) {
+        compte.innerHTML = '<b>' + nb(M.length) + '</b> mesures, <b>' + PORTEURS.length + '</b> programmes ou partis. ' + (ETAT.vue === 'sujet' ? 'Choisissez un sujet ci-dessus, ou tapez un mot.' : 'Choisissez un·e candidat·e ci-dessus, ou tapez un mot.');
+        resultats.innerHTML = '<div class="vide"><p>🎲 Pas d\'idée par où commencer&nbsp;? <button type="button" class="btn play" data-hasard>Une mesure au hasard</button></p>' +
+          '<p>Ou essayez : ' + ['Retraites', 'Nucléaire', 'IVG', 'Déserts médicaux', 'Immigration', 'Logement'].map(function (w) { return '<button type="button" class="voir-plus" data-essai="' + esc(w) + '">' + esc(w) + '</button>'; }).join(' ') + '</p></div>';
+        return;
+      }
+      if (!liste.length) {
+        compte.innerHTML = 'Aucune mesure ne correspond' + (q ? ' à «&nbsp;' + esc(q) + '&nbsp;»' : '') + '.';
+        resultats.innerHTML = '<div class="vide"><p>Rien de ce côté. Ça arrive : tous les programmes ne parlent pas de tout, et certains ne sont pas encore sortis.</p>' +
+          (q && !rienChoisi ? '<p><button type="button" class="btn play" data-partout>Chercher «&nbsp;' + esc(q) + '&nbsp;» partout, sans les filtres</button></p>' : '') +
+          (q && !ETAT.plein ? '<p><button type="button" class="btn" data-plein>Chercher aussi dans le texte intégral des mesures</button></p>' : '') +
+          '<p><button type="button" class="tout-effacer" data-tout-effacer>Effacer les filtres</button></p></div>';
+        return;
+      }
+      if (q) {
+        /* recherche : liste a plat, les intitules qui contiennent le mot d'abord */
+        var court = norm(q);
+        liste.sort(function (a, b) {
+          var ia = norm(a.court).indexOf(court) > -1 ? 0 : 1, ib = norm(b.court).indexOf(court) > -1 ? 0 : 1;
+          return ia - ib || a.theme - b.theme;
+        });
+        compte.innerHTML = '<b>' + nb(liste.length) + '</b> ' + (liste.length > 1 ? 'mesures trouvées' : 'mesure trouvée') + ' pour «&nbsp;' + esc(q) + '&nbsp;»' +
+          (rienChoisi ? '' : ' dans la sélection <button type="button" class="voir-plus" data-partout>(chercher partout)</button>') + '. ' +
+          (ETAT.plein ? 'Recherche dans les intitulés et le texte intégral.' : '<button type="button" class="voir-plus" data-plein>Chercher aussi dans le texte intégral</button>');
+        var zone = el('<div class="liste-plate"></div>');
+        resultats.appendChild(zone);
+        listeMesures(zone, liste, { contexte: true });
+        return;
+      }
+      if (ETAT.vue === 'sujet') {
+        /* groupes par porteur */
+        var parP = {}; liste.forEach(function (m) { (parP[m.pkey] = parP[m.pkey] || []).push(m); });
+        var cles = Object.keys(parP).sort(function (a, b) { return parP[b].length - parP[a].length; });
+        var lab = [ETAT.s != null ? P.themes[ETAT.s] : null, ETAT.t != null ? P.tags[ETAT.t] : null, ETAT.pub ? '👥 ' + ETAT.pub : null].filter(Boolean).join(' › ');
+        compte.innerHTML = '<b>' + nb(liste.length) + '</b> ' + (liste.length > 1 ? 'mesures' : 'mesure') + ' sur «&nbsp;' + esc(lab) + '&nbsp;», chez <b>' + cles.length + '</b> ' + (cles.length > 1 ? 'programmes ou partis' : 'programme') + '. Touchez un nom pour lire.';
+        var ouvrir = liste.length <= 40 || cles.length <= 2;
+        var html = '<div class="grps">' + cles.map(function (k, idx) {
+          var p = PAR_PKEY[k], l = parP[k];
+          var mentions = {}; l.forEach(function (m) { mentions[m.mention || '2027'] = (mentions[m.mention || '2027'] || 0) + 1; });
+          var sousH = '<span>' + esc(p.libelle) + '</span>' + Object.keys(mentions).map(function (v) {
+            return v === '2027' ? '<span class="badge-mention b-2027">programme 2027</span>' : '<span class="badge-mention ' + (/proposition|chantier/.test(v) ? 'b-prop' : 'b-passe') + '">' + esc(v) + '</span>';
+          }).join('');
+          GROUPES['g-' + k] = { liste: l, opts: {}, note: p.etat && p.etat.vide ? p.etat.vide : null };
+          return grp('g-' + k, esc(p.nom), sousH, l.length, '', ouvrir || idx === 0, tete(p.slug, p.nom, 'petite'));
+        }).join('') + '</div>';
+        resultats.innerHTML = html;
+      } else {
+        var p2 = PAR_PKEY[ETAT.c];
+        var parT = {}; liste.forEach(function (m) { (parT[m.theme] = parT[m.theme] || []).push(m); });
+        var themes = THEMES.filter(function (t) { return parT[t]; });
+        compte.innerHTML = '<b>' + nb(liste.length) + '</b> mesures chez <b>' + esc(p2.nom) + '</b>' + (ETAT.cs != null ? ' sur «&nbsp;' + esc(P.themes[ETAT.cs]) + '&nbsp;»' : ', sur <b>' + themes.length + '</b> sujets') + '.' +
+          (p2.etat && p2.etat.vide ? '<br><span class="avertissement" style="display:inline-block;margin-top:6px">' + esc(p2.etat.vide) + '.</span>' : '');
+        var ouvrir2 = themes.length <= 2 || liste.length <= 40;
+        var html2 = '<div class="grps">' + themes.map(function (t, idx) {
+          var l = parT[t];
+          var mentions = {}; l.forEach(function (m) { mentions[m.mention || '2027'] = 1; });
+          var sousH = Object.keys(mentions).map(function (v) { return v === '2027' ? '<span class="badge-mention b-2027">programme 2027</span>' : '<span class="badge-mention ' + (/proposition|chantier/.test(v) ? 'b-prop' : 'b-passe') + '">' + esc(v) + '</span>'; }).join('');
+          GROUPES['g-t' + t] = { liste: l, opts: {} };
+          return grp('g-t' + t, esc(P.themes[t]), sousH, l.length, '', ouvrir2 || idx === 0, '<span class="o-emoji" aria-hidden="true">🧭</span>');
+        }).join('') + '</div>';
+        resultats.innerHTML = html2;
+        if (ETAT.cs == null) {
+          var manquants = THEMES.filter(function (t) { return !parT[t]; });
+          if (manquants.length) { resultats.appendChild(el('<p class="grp-vide" style="margin-top:10px">Rien dans les documents consignés sur : ' + manquants.map(function (t) { return esc(P.themes[t]); }).join(', ') + '. Ça ne veut pas dire «&nbsp;pas de position&nbsp;»&nbsp;: seulement qu\'aucun document dépouillé n\'en parle.</p>')); }
+        }
+      }
+      /* remplir les groupes ouverts */
+      Object.keys(GROUPES).forEach(function (id) {
+        var b = document.getElementById(id); if (!b) { return; }
+        if (b.querySelector('.grp-tete').getAttribute('aria-expanded') === 'true') { remplirGroupe(id); }
+      });
+    }
+    function remplirGroupe(id) {
+      var g = GROUPES[id], corps = document.getElementById(id + '-corps');
+      if (!g || !corps || corps.dataset.rempli) { return; }
+      corps.dataset.rempli = '1';
+      if (g.note) { corps.appendChild(el('<p class="grp-note">' + esc(g.note) + '.</p>')); }
+      var zone = el('<div class="liste-plate"></div>'); corps.appendChild(zone);
+      listeMesures(zone, g.liste, g.opts);
+    }
+
+    /* ---------- niveaux de detail ---------- */
+    function appliquerNiveau() {
+      document.body.classList.remove('niv-gros', 'niv-essentiel', 'niv-tout');
+      document.body.classList.add('niv-' + NIV);
+      document.querySelectorAll('#p-niveau [role=radio]').forEach(function (b) { b.setAttribute('aria-checked', b.dataset.niv === NIV ? 'true' : 'false'); });
+      if (NIV === 'tout') { ouvrirVisibles(resultats); }
+      if (NIV !== 'gros') { completerLongs(resultats); }
+    }
+    function ouvrirVisibles(zone) {
+      chargerTextes(function () {
+        zone.querySelectorAll('.mes').forEach(function (a) { var id = a.dataset.id; if (!OUVERTS[id]) { ouvrirMesure(a, true); } });
+      });
+    }
+    function completerLongs(zone) {
+      if (NIV === 'gros') { return; }
+      chargerTextes(function () {
+        zone.querySelectorAll('.mes-long[data-long]').forEach(function (sp) {
+          var m = PAR_ID[sp.closest('.mes').dataset.id]; var l = premiere(m);
+          if (l) { sp.textContent = l; sp.hidden = false; }
+          sp.removeAttribute('data-long');
+        });
+      });
+    }
+    function ouvrirMesure(art, sansScroll) {
+      var id = art.dataset.id, m = PAR_ID[id];
+      var b = art.querySelector('.mes-tete'), corps = art.querySelector('.mes-corps');
+      OUVERTS[id] = true;
+      b.setAttribute('aria-expanded', 'true'); corps.hidden = false;
+      corps.innerHTML = mesCorps(m);
+      if (!TEXTES) { chargerTextes(function () { if (OUVERTS[id]) { corps.innerHTML = mesCorps(m); } }); }
+    }
+    function fermerMesure(art) {
+      var id = art.dataset.id; delete OUVERTS[id];
+      art.querySelector('.mes-tete').setAttribute('aria-expanded', 'false'); art.querySelector('.mes-corps').hidden = true;
+    }
+
+    /* ---------- vue ---------- */
+    function changerVue(v) {
+      ETAT.vue = v;
+      document.querySelectorAll('.onglet').forEach(function (o) { var on = o.dataset.vue === v; o.setAttribute('aria-selected', on ? 'true' : 'false'); o.tabIndex = on ? 0 : -1; });
+      $('vue-sujet').hidden = v !== 'sujet'; $('vue-cand').hidden = v !== 'cand';
+    }
+    function toutRendre() {
+      rendreSujets(); rendreSous(); rendrePorteurs(); rendreActifs(); rendreResultats(); appliquerNiveau(); ecrireHash();
+    }
+
+    /* ---------- ancre ---------- */
+    var hashInterne = false;
+    function ecrireHash() {
+      var p = [];
+      if (ETAT.vue === 'cand') { p.push('v=c'); }
+      if (ETAT.vue === 'sujet') { if (ETAT.s != null) { p.push('s=' + ETAT.s); } if (ETAT.t != null) { p.push('t=' + encodeURIComponent(P.tags[ETAT.t])); } if (ETAT.pub) { p.push('p=' + encodeURIComponent(ETAT.pub)); } }
+      else { if (ETAT.c) { p.push('c=' + ETAT.c); } if (ETAT.cs != null) { p.push('s=' + ETAT.cs); } }
+      if (ETAT.q.trim()) { p.push('q=' + encodeURIComponent(ETAT.q.trim())); }
+      var pan = document.getElementById('pan-progs');
+      if (pan && pan.hidden) { return; }
+      var h = p.length ? '#' + p.join('&') : '#programmes';
+      if (location.hash !== h) { hashInterne = true; history.replaceState(null, '', location.pathname + location.search + h); setTimeout(function () { hashInterne = false; }, 0); }
+    }
+    function lireHash() {
+      var h = location.hash.replace(/^#/, ''); if (!h) { return false; }
+      var kv = {}; h.split('&').forEach(function (x) { var i = x.indexOf('='); if (i > 0) { kv[x.slice(0, i)] = decodeURIComponent(x.slice(i + 1)); } });
+      if (kv.m && PAR_ID[kv.m]) {
+        var m = PAR_ID[kv.m];
+        changerVue('cand'); ETAT.c = m.pkey; ETAT.cs = m.theme; ETAT.q = ''; $('recherche').value = '';
+        OUVERTS = {}; OUVERTS[m.id] = true;
+        toutRendre();
+        var g = document.getElementById('g-t' + m.theme);
+        if (g) { var bt = g.querySelector('.grp-tete'); if (bt.getAttribute('aria-expanded') !== 'true') { bt.setAttribute('aria-expanded', 'true'); g.querySelector('.grp-corps').hidden = false; remplirGroupe('g-t' + m.theme); } }
+        var art = document.getElementById('m-' + m.id);
+        if (!art) {
+          /* au-dela de la premiere tranche : on deplie jusqu'a la trouver */
+          var essais = 0;
+          while (!document.getElementById('m-' + m.id) && essais++ < 40) { var plus = g && g.querySelector('.plus-ligne button'); if (!plus) { break; } plus.click(); }
+          art = document.getElementById('m-' + m.id);
+        }
+        if (art) { art.classList.add('est-cible'); chargerTextes(function () { ouvrirMesure(art, true); }); setTimeout(function () { art.scrollIntoView({ block: 'center' }); art.querySelector('.mes-tete').focus({ preventScroll: true }); }, 60); }
+        return true;
+      }
+      if (kv.c && !PAR_PKEY[kv.c]) { PORTEURS.forEach(function (p) { if (p.slug === kv.c || p.cands[kv.c]) { kv.c = p.key; } }); }
+      if (kv.v === 'c' || kv.c) { changerVue('cand'); ETAT.c = kv.c && PAR_PKEY[kv.c] ? kv.c : null; ETAT.cs = kv.s != null && P.themes[kv.s] ? Number(kv.s) : null; }
+      else { changerVue('sujet'); ETAT.s = kv.s != null && P.themes[kv.s] ? Number(kv.s) : null; var ti = kv.t ? P.tags.indexOf(kv.t) : -1; ETAT.t = ti > -1 ? ti : null; ETAT.pub = kv.p || null; }
+      ETAT.q = kv.q || ''; $('recherche').value = ETAT.q; $('recherche-vider').hidden = !ETAT.q;
+      toutRendre();
+      return true;
+    }
+    window.addEventListener('hashchange', function () { if (!hashInterne) { lireHash(); } });
+
+    /* ---------- sources : etat des programmes et documents ---------- */
+    (function () {
+      var etatListe = $('etat-liste'), docsListe = $('docs-liste');
+      if (etatListe) {
+        etatListe.innerHTML = P.etat.map(function (e) {
+          var c = C.filter(function (x) { return x.nom === e.cand; })[0];
+          var cls = /publié$/.test(e.etat) && !/non désigné/.test(e.etat) ? 'b-2027' : (/Pas de programme|Archive/.test(e.etat) ? 'b-passe' : 'b-prop');
+          return '<div class="grp"><div class="grp-tete" style="cursor:default">' + tete(c ? c.slug : null, e.cand.replace(/[\[\]]/g, ''), 'petite') +
+            '<span><span class="grp-qui">' + esc(e.cand.replace(/[\[\]]/g, '')) + '</span><span class="grp-sous"><span>' + esc(e.parti) + '</span><span class="badge-mention ' + cls + '">' + esc(e.etat) + '</span></span>' +
+            '<span class="grp-sous" style="display:block;margin-top:6px;color:var(--ink)">' + esc(e.consigne) + (e.vide ? '<br><em>Affiché quand une case est vide : «&nbsp;' + esc(e.vide) + '&nbsp;»</em>' : '') + '</span></span><span></span></div></div>';
+        }).join('');
+      }
+      if (docsListe) {
+        docsListe.innerHTML = P.docs.map(function (d) {
+          return '<p class="mes-src" style="border:2px solid var(--line);border-radius:12px;padding:8px 10px;margin:0"><b>' + esc(d.parti) + (d.cand ? ' · ' + esc(d.cand) : '') + '</b> · ' + esc(d.doc) + ' · <b>' + nb(d.n) + '</b> ' + (d.n > 1 ? 'mesures' : 'mesure') +
+            (d.mention ? ' · <span class="badge-mention ' + (/proposition|chantier/.test(d.mention) ? 'b-prop' : 'b-passe') + '">' + esc(d.mention) + '</span>' : ' · <span class="badge-mention b-2027">programme 2027</span>') +
+            (d.url ? ' · <a href="' + esc(d.url) + '" target="_blank" rel="noopener noreferrer">Ouvrir ↗</a>' : '') + '</p>';
+        }).join('');
+      }
+      var pitch = $('pitch');
+      if (pitch) { pitch.innerHTML = '<strong>' + nb(M.length) + ' mesures</strong> tirées de <strong>' + P.docs.length + ' documents</strong> de campagne, classées en <strong>' + THEMES.length + ' sujets</strong>. Chaque ligne est une phrase d\'un programme, recopiée telle quelle, avec le document et le chapitre d\'où elle vient. Pas ce qu\'ils et elles disent à la télé&nbsp;: ce qu\'ils et elles ont signé.'; }
+      var qf = document.querySelector('#p-sources .quand-ferme'); if (qf) { qf.textContent = 'Voir les ' + P.docs.length + ' documents et l\'état des programmes'; }
+    })();
+
+    /* ---------- evenements ---------- */
+    document.querySelectorAll('.onglet').forEach(function (o) {
+      o.addEventListener('click', function () { changerVue(o.dataset.vue); toutRendre(); });
+      o.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); var autre = o.dataset.vue === 'sujet' ? $('onglet-cand') : $('onglet-sujet'); autre.focus(); autre.click(); }
+      });
+    });
+    sujets.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-s]'); if (!b) { return; }
+      var s = Number(b.dataset.s);
+      ETAT.s = ETAT.s === s ? null : s; ETAT.t = null; ETAT.pub = null; sousTout = false;
+      toutRendre();
+    });
+    sous.addEventListener('click', function (e) {
+      var st = e.target.closest('[data-sous-tout]'); if (st) { sousTout = true; rendreSous(); return; }
+      var b = e.target.closest('[data-t]'); if (!b) { return; }
+      var t = Number(b.dataset.t); ETAT.t = ETAT.t === t ? null : t; toutRendre();
+    });
+    publics.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-pub]'); if (!b) { return; }
+      ETAT.pub = ETAT.pub === b.dataset.pub ? null : b.dataset.pub; toutRendre();
+    });
+    porteurs.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-c]'); if (!b) { return; }
+      ETAT.c = ETAT.c === b.dataset.c ? null : b.dataset.c; ETAT.cs = null; toutRendre();
+      if (ETAT.c) { setTimeout(function () { compte.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 30); }
+    });
+    candSujets.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-cs]'); if (!b || b.disabled) { return; }
+      var t = Number(b.dataset.cs); ETAT.cs = ETAT.cs === t ? null : t; toutRendre();
+    });
+    actifs.addEventListener('click', function (e) {
+      var r = e.target.closest('[data-retirer]');
+      if (r) { var k = r.dataset.retirer; if (k === 'q') { ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; } else if (k === 's') { ETAT.s = null; ETAT.t = null; ETAT.pub = null; } else if (k === 'c') { ETAT.c = null; ETAT.cs = null; } else { ETAT[k] = null; } toutRendre(); return; }
+      if (e.target.closest('[data-tout-effacer]')) { toutEffacer(); }
+    });
+    function toutEffacer() { ETAT.s = ETAT.t = ETAT.pub = ETAT.c = ETAT.cs = null; ETAT.q = ''; ETAT.plein = false; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); }
+
+    resultats.addEventListener('click', function (e) {
+      var t;
+      if ((t = e.target.closest('.grp-tete'))) {
+        var ouvert = t.getAttribute('aria-expanded') === 'true'; var id = t.closest('.grp').id; var corps = document.getElementById(id + '-corps');
+        if (!corps) { return; }
+        t.setAttribute('aria-expanded', ouvert ? 'false' : 'true'); corps.hidden = ouvert;
+        if (!ouvert) { remplirGroupe(id); }
+        return;
+      }
+      if ((t = e.target.closest('.mes-tete'))) {
+        var art = t.closest('.mes');
+        if (t.getAttribute('aria-expanded') === 'true') { fermerMesure(art); } else { ouvrirMesure(art); }
+        return;
+      }
+      if ((t = e.target.closest('[data-copier]'))) {
+        var url = location.origin + location.pathname + '#m=' + t.dataset.copier;
+        var fini = function () { var s = t.nextElementSibling; if (s && s.classList.contains('copie-ok')) { s.remove(); } t.insertAdjacentHTML('afterend', '<span class="copie-ok" role="status">Lien copié</span>'); };
+        if (navigator.clipboard) { navigator.clipboard.writeText(url).then(fini, function () { prompt('Copiez ce lien :', url); }); } else { prompt('Copiez ce lien :', url); }
+        return;
+      }
+      if ((t = e.target.closest('[data-voir-cand]'))) { changerVue('cand'); ETAT.c = t.dataset.voirCand; ETAT.cs = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
+      if ((t = e.target.closest('[data-voir-sujet]'))) { changerVue('sujet'); ETAT.s = Number(t.dataset.voirSujet); ETAT.t = null; ETAT.pub = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
+      if ((t = e.target.closest('.mes-tags [data-tag]'))) { changerVue('sujet'); var mm = PAR_ID[t.closest('.mes').dataset.id]; ETAT.s = mm.theme; ETAT.t = Number(t.dataset.tag); ETAT.pub = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
+      if ((t = e.target.closest('.mes-tags [data-theme]'))) { changerVue('sujet'); ETAT.s = Number(t.dataset.theme); ETAT.t = null; ETAT.pub = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
+      if ((t = e.target.closest('[data-aller]'))) { e.preventDefault(); location.hash = '#m=' + t.dataset.aller; return; }
+      if ((t = e.target.closest('[data-hasard]'))) {
+        var m = M[Math.floor(Math.random() * M.length)];
+        location.hash = '#m=' + m.id; return;
+      }
+      if ((t = e.target.closest('[data-essai]'))) { $('recherche').value = t.dataset.essai; ETAT.q = t.dataset.essai; $('recherche-vider').hidden = false; toutRendre(); return; }
+      if ((t = e.target.closest('[data-plein]'))) { ETAT.plein = true; chargerTextes(function () { toutRendre(); }); return; }
+      if (e.target.closest('[data-partout]')) { partout(); return; }
+      if (e.target.closest('[data-tout-effacer]')) { toutEffacer(); }
+    });
+    function partout() { ETAT.s = ETAT.t = ETAT.pub = ETAT.c = ETAT.cs = null; toutRendre(); }
+    compte.addEventListener('click', function (e) {
+      if (e.target.closest('[data-plein]')) { ETAT.plein = true; chargerTextes(function () { toutRendre(); }); }
+      if (e.target.closest('[data-partout]')) { partout(); }
+    });
+
+    var rech = $('recherche'), vider = $('recherche-vider'), minuteur;
+    rech.addEventListener('input', function () {
+      clearTimeout(minuteur);
+      minuteur = setTimeout(function () { ETAT.q = rech.value; vider.hidden = !rech.value; toutRendre(); }, 220);
+    });
+    rech.addEventListener('keydown', function (e) { if (e.key === 'Escape') { rech.value = ''; ETAT.q = ''; vider.hidden = true; toutRendre(); } });
+    vider.addEventListener('click', function () { rech.value = ''; ETAT.q = ''; vider.hidden = true; toutRendre(); rech.focus(); });
+
+    var aide = $('niveau-aide'), aideMinuteur;
+    var AIDES = { gros: 'Juste l\'intitulé de chaque mesure.', essentiel: 'L\'intitulé, et la première phrase du programme quand elle en dit plus.', tout: 'Le texte intégral de chaque mesure, déplié.' };
+    document.querySelectorAll('#p-niveau [role=radio]').forEach(function (b, i, all) {
+      b.addEventListener('click', function () {
+        NIV = b.dataset.niv; try { localStorage.setItem('komune.programmes.niveau', NIV); } catch (e) {}
+        appliquerNiveau();
+        aide.textContent = AIDES[NIV]; aide.hidden = false; clearTimeout(aideMinuteur); aideMinuteur = setTimeout(function () { aide.hidden = true; }, 4500);
+      });
+      b.addEventListener('keydown', function (e) {
+        var j = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? i + 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? i - 1 : null);
+        if (j === null) { return; } e.preventDefault(); j = (j + all.length) % all.length; all[j].focus(); all[j].click();
+      });
+    });
+
+    /* ---------- depart ---------- */
+    document.body.classList.add('niv-' + NIV);
+    if (!lireHash()) { toutRendre(); }
+    window.__KOMUNE_PROGRAMMES_ETAT = function () { return ETAT; };
+  };
+  </script>
+  <script>
+  (function () {
+    'use strict';
+    var ONG = [
+      { cle: 'actes', hash: 'promesses-actes', donnees: [], init: null },
+      { cle: 'cands', hash: 'candidats', donnees: ['../candidats/data.js'], init: 'KP_CANDS' },
+      { cle: 'progs', hash: 'programmes', donnees: ['../candidats/data.js', '../programmes/data.js'], init: 'KP_PROGS' }
+    ];
+    var faits = {}, lances = {};
+    function charger(src) {
+      return new Promise(function (ok, ko) {
+        if (faits[src]) { ok(); return; }
+        var s = document.createElement('script');
+        s.src = src; s.async = false;
+        s.onload = function () { faits[src] = 1; ok(); };
+        s.onerror = function () { ko(new Error(src)); };
+        document.head.appendChild(s);
+      });
+    }
+    function attente(pan) {
+      var z = document.createElement('div');
+      z.className = 'panneau-charge';
+      z.innerHTML = '<div class="pc-barre" aria-hidden="true"><i></i></div><p>Chargement des données…</p>';
+      pan.insertBefore(z, pan.firstChild);
+      return z;
+    }
+    function demarrer(o) {
+      var pan = document.getElementById('pan-' + o.cle);
+      if (lances[o.cle] || !o.init) { return; }
+      lances[o.cle] = 1;
+      var contenu = pan.querySelector('.panneau-corps');
+      var z = attente(pan);
+      if (contenu) { contenu.hidden = true; }
+      var suite = Promise.resolve();
+      o.donnees.forEach(function (src) { suite = suite.then(function () { return charger(src); }); });
+      suite.then(function () {
+        z.remove();
+        if (contenu) { contenu.hidden = false; }
+        if (window[o.init]) { window[o.init](); }
+      }).catch(function () {
+        z.innerHTML = '<p>Les données n\'ont pas pu être chargées. Vérifiez votre connexion, puis rechargez la page.</p>';
+        lances[o.cle] = 0;
+      });
+    }
+    function afficher(cle, pousser, focus) {
+      var trouve = false;
+      ONG.forEach(function (o) {
+        var actif = o.cle === cle, t = document.getElementById('tab-' + o.cle), p = document.getElementById('pan-' + o.cle);
+        if (!t || !p) { return; }
+        if (actif) { trouve = true; }
+        t.setAttribute('aria-selected', actif ? 'true' : 'false');
+        t.tabIndex = actif ? 0 : -1;
+        p.hidden = !actif;
+        if (actif) { demarrer(o); }
+      });
+      if (!trouve) { return false; }
+      var o = ONG.filter(function (x) { return x.cle === cle; })[0];
+      if (pousser && window.history && history.replaceState) {
+        history.pushState({ ong: cle }, '', '#' + o.hash);
+      }
+      if (focus) {
+        var t = document.getElementById('tab-' + cle);
+        if (t) { t.focus(); }
+        var w = document.getElementById('entrees');
+        if (w) {
+          var y = w.getBoundingClientRect().top + window.pageYOffset - 6;
+          if (window.pageYOffset > y) { window.scrollTo({ top: y, behavior: 'auto' }); }
+        }
+      }
+      return true;
+    }
+    function deHash() {
+      var h = (location.hash || '').replace(/^#/, '');
+      if (!h) { return null; }
+      var o = ONG.filter(function (x) { return x.hash === h; })[0];
+      if (o) { return o.cle; }
+      /* les modules ecrivent leur propre etat dans le hash : on en deduit l'onglet */
+      if (/(^|&)f=/.test(h)) { return 'cands'; }
+      if (/(^|&)(c|s|t|p|q|m|v)=/.test(h)) { return 'progs'; }
+      return null;
+    }
+    ONG.forEach(function (o, i) {
+      var t = document.getElementById('tab-' + o.cle);
+      if (!t) { return; }
+      t.addEventListener('click', function () { afficher(o.cle, true, true); });
+      t.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0);
+        if (!d) { return; }
+        e.preventDefault();
+        afficher(ONG[(i + d + ONG.length) % ONG.length].cle, true, true);
+      });
+    });
+    window.addEventListener('popstate', function () { afficher(deHash() || 'actes', false, false); });
+    window.KP_ONGLET = function (cle, garderHash) { return afficher(cle, !garderHash, true); };
+    afficher(deHash() || 'actes', false, false);
+  })();
+  </script>
+  <script>
+  (function () {
+    'use strict';
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[data-ong]') : null;
+      if (!a || !window.KP_ONGLET) { return; }
+      var cle = a.getAttribute('data-ong');
+      var h = a.getAttribute('href') || '';
+      e.preventDefault();
+      window.KP_ONGLET(cle, h.charAt(0) === '#' && h !== '#promesses-actes');
+      if (h.charAt(0) === '#' && h !== '#promesses-actes' && location.hash !== h) { location.hash = h; }
+    });
+  })();
+  </script>
 </body>
 </html>

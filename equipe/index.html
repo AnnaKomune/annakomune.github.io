@@ -550,6 +550,23 @@
     h2 { font-size: min(clamp(46px, 14vw, 74px), 13.7vw); }
   }
   </style>
+  <style>
+    /* ================= menu compact : une seule rangée qui glisse ================= */
+    .site-nav { align-items: center; }
+    .site-liens { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    @media (max-width: 900px) {
+      .site-nav { flex-wrap: nowrap; gap: 10px; min-width: 0; max-width: 100%; }
+      .site-head, .site-header, header { min-width: 0; }
+      .site-brand { flex: none; }
+      .site-brand img { width: 118px; height: auto; }
+      .site-liens { flex: 1 1 auto; min-width: 0; flex-wrap: nowrap; gap: 7px; overflow-x: auto; overscroll-behavior-x: contain;
+        scrollbar-width: none; -ms-overflow-style: none; padding: 2px 2px 3px 0;
+        -webkit-mask-image: linear-gradient(to right, #000 88%, transparent);
+        mask-image: linear-gradient(to right, #000 88%, transparent); }
+      .site-liens::-webkit-scrollbar { display: none; }
+      .site-liens a { flex: none; font-size: 12.5px; padding: 0 12px; white-space: nowrap; }
+    }
+  </style>
 </head>
 
 <body>
@@ -559,14 +576,14 @@
     <!-- ===== Navigation commune du site ===== -->
     <nav class="site-nav" aria-label="Navigation du site">
       <a class="site-brand" href="../" aria-label="Komune Média - retour à l'accueil"><img src="../img/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>
+      <div class="site-liens">
       <a class="site-link" href="../">Accueil</a>
       <a class="site-link" href="../articles/">Articles</a>
       <a class="site-link" href="../comparateur/">Le comparateur présidentielles 2027</a>
-      <a class="site-link" href="../programmes/">Les programmes</a>
-      <a class="site-link" href="../candidats/">Les candidat·es</a>
-      <a class="site-link" href="../comparateur-2027/">Votre cahier des charges pour le projet de comparateur</a>
       <a class="site-link is-current" href="./" aria-current="page">L'équipe</a>
       <a class="site-link" href="../soutenir/">Nous soutenir</a>
+      </div>
+    
     </nav>
     </header>
 
