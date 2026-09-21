@@ -2919,6 +2919,28 @@
       #beta-dock .dock-long { display: none !important; }
       #beta-dock .dock-court { display: inline !important; }
     }
+
+    /* ================= l'onglet Promesses ================= */
+    /* le bandeau qui dit sur quoi on se base */
+    #p-socle { margin: 0 0 16px; padding: 15px 17px; border: 2px solid var(--ink); border-radius: 18px;
+      background: var(--white); box-shadow: 3px 3px 0 var(--ink); }
+    #p-socle .socle-titre { margin: 0 0 8px; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      font-weight: 700; font-size: 17px; line-height: 1.1; }
+    #p-socle p { margin: 0 0 8px; font-size: 14.5px; font-weight: 650; line-height: 1.45; }
+    #p-socle .socle-liste { margin: 0 0 10px; padding-left: 20px; }
+    #p-socle .socle-liste li { font-size: 14.5px; font-weight: 600; line-height: 1.45; margin-bottom: 4px; }
+    #p-socle .socle-fin { margin: 0; color: var(--muted); }
+    #p-socle .badge-mention { vertical-align: baseline; }
+
+    /* le sous-thème sur la carte d'une mesure */
+    .mes-meta .st { font-weight: 700; }
+    .mes-tags .t.st { background: var(--sky); }
+
+    @media (max-width: 900px) {
+      #p-socle { padding: 12px 13px; border-radius: 15px; box-shadow: 2px 2px 0 var(--ink); }
+      #p-socle .socle-titre { font-size: 15.5px; }
+      #p-socle p, #p-socle .socle-liste li { font-size: 13.8px; }
+    }
   </style>
 </head>
 <body>
@@ -2952,7 +2974,7 @@
     <div class="hero2">
       <p class="eyebrow">Le comparateur politique citoyen · Komune</p>
       <h1><span class="h1-ligne">Ils promettent.</span><span class="h1-ligne">Ils votent.</span><span class="h1-ligne h1-accent">On compare.</span></h1>
-      <p class="pitch">Trois entrées, les mêmes données : le face-à-face entre ce qui est <strong>promis</strong> et ce qui est <strong>voté</strong>, les fiches des <strong>33 candidat·es</strong>, et les <strong>3 258 mesures</strong> de leurs programmes. Chaque ligne porte sa source.</p>
+      <p class="pitch">Trois entrées, les mêmes données : le face-à-face entre ce qui est <strong>promis</strong> et ce qui est <strong>voté</strong>, les fiches des <strong>33 candidat·es</strong>, et les <strong>4 456 mesures</strong> de leurs programmes. Chaque ligne porte sa source.</p>
       <p class="beta">Version beta&nbsp;: la plateforme s'enrichit plusieurs fois par semaine, et on montre aussi ce qui reste à vérifier. Raphaël Glucksmann et Marine Tondelier viennent de se déclarer&nbsp;: leurs votes sont en cours d'ajout. <a href="#chantier">Où on en est exactement →</a></p>
     </div>
 <div class="entrees-wrap">
@@ -2967,7 +2989,7 @@
         </button>
         <button type="button" class="entree" id="tab-progs" role="tab" aria-selected="false" aria-controls="pan-progs" tabindex="-1">
           <span class="e-emo" aria-hidden="true">🗂️</span>
-          <span class="e-lab">Les programmes<span class="e-sub">3&nbsp;258 mesures et leurs sources</span></span>
+          <span class="e-lab">Les promesses<span class="e-sub">4&nbsp;456 mesures et leurs sources</span></span>
         </button>
       </div>
     </div>
@@ -3115,8 +3137,8 @@
 <div class="barre" id="p-barre">
       <label class="cherche2">
         <span aria-hidden="true">🔍</span>
-        <span class="lecteur-seul">Chercher une mesure, un mot, un sujet, un·e candidat·e</span>
-        <input type="search" id="p-recherche" placeholder="Retraites, nucléaire, IVG, Tondelier…" autocomplete="off" aria-describedby="p-compte">
+        <span class="lecteur-seul">Chercher par mot-clé : un sujet, un sous-thème, un mot-clé, une mesure, un·e candidat·e</span>
+        <input type="search" id="p-recherche" placeholder="Retraites, nucléaire, IVG, ruralités, Tondelier…" autocomplete="off" aria-describedby="p-compte">
         <button type="button" id="p-recherche-vider" hidden>Effacer</button>
       </label>
       <div class="niveau">
@@ -3129,17 +3151,27 @@
         <p class="niveau-aide" id="p-niveau-aide" role="status" hidden></p>
       </div>
     </div>
+<section class="bloc socle" id="p-socle" aria-labelledby="p-socle-titre">
+      <h2 class="socle-titre" id="p-socle-titre"><span aria-hidden="true">📌</span> Sur quoi on se base</h2>
+      <p>Pour identifier les promesses d'un·e candidat·e, on part d'abord de ses <strong>mesures programmatiques</strong>, dans cet ordre&nbsp;:</p>
+      <ol class="socle-liste">
+        <li><b>Le programme 2027</b>, quand il est publié.</li>
+        <li><b>À défaut</b>, le programme de la présidentielle 2022, des législatives ou des européennes 2024.</li>
+        <li><b>S'il n'existe aucun programme</b>, on se base sur des déclarations publiques.</li>
+      </ol>
+      <p class="socle-fin">C'est pour ça que chaque mesure porte, à côté d'elle, <b>l'élection ou le document d'où elle vient</b> - <span class="badge-mention b-2027">Prés. 2027</span>, <span class="badge-mention b-passe">Prés. 2022</span>, <span class="badge-mention b-passe">Légis. 2024</span>, <span class="badge-mention b-prop">2026, cahier de campagne</span>… Touchez une mesure pour lire son texte et ouvrir le document source.</p>
+    </section>
 <section class="outil" id="p-explorer" aria-labelledby="p-explorer-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">🗂️</span>
-        <h2 id="p-explorer-titre">Explorer les programmes</h2>
+        <h2 id="p-explorer-titre">Les promesses, mesure par mesure</h2>
       </div>
-      <p class="bloc-intro">Deux entrées, un même jeu de mesures. <strong>Par sujet</strong>, pour voir qui écrit quoi sur les retraites ou sur l'hôpital. <strong>Par candidat·e</strong>, pour lire un programme entier, sujet par sujet. Dans les deux cas, touchez une mesure pour lire la phrase complète et vérifier la source.</p>
+      <p class="bloc-intro">Deux entrées, un même jeu de mesures. <strong>Par sujet</strong>, pour voir qui promet quoi sur les retraites ou sur l'hôpital, sujet puis sous-thème. <strong>Par candidat·e</strong>, pour lire un programme entier. Et la barre de recherche, en haut, cherche dans les sujets, les sous-thèmes, les mots-clés et le texte des mesures.</p>
 
       <div class="onglets" role="tablist" aria-label="Choisir une entrée">
         <button type="button" class="onglet" role="tab" id="p-onglet-sujet" aria-selected="true" aria-controls="p-vue-sujet" data-vue="sujet">
           <span class="o-emoji" aria-hidden="true">🧭</span>
-          <span><span class="o-titre">Par sujet</span><span class="o-sous">18 sujets, des sous-thèmes, et qui dit quoi</span></span>
+          <span><span class="o-titre">Par sujet</span><span class="o-sous">18 sujets, 222 sous-thèmes, et qui promet quoi</span></span>
         </button>
         <button type="button" class="onglet" role="tab" id="p-onglet-cand" aria-selected="false" aria-controls="p-vue-cand" data-vue="cand" tabindex="-1">
           <span class="o-emoji" aria-hidden="true">👤</span>
@@ -3152,9 +3184,9 @@
         <div id="p-sous-zone" hidden>
           <p class="sous-titre" id="p-sous-titre">Sous-thèmes</p>
           <div class="sous" id="p-sous" role="group" aria-label="Affiner par sous-thème"></div>
-          <div id="p-publics-zone" hidden>
-            <p class="sous-titre">Publics concernés</p>
-            <div class="sous" id="p-publics" role="group" aria-label="Affiner par public"></div>
+          <div id="p-mots-zone" hidden>
+            <p class="sous-titre">Mots-clés les plus présents</p>
+            <div class="sous" id="p-mots" role="group" aria-label="Affiner par mot-clé"></div>
           </div>
         </div>
       </div>
@@ -6249,9 +6281,15 @@
       var o = {}; CLES.forEach(function (k, i) { if (row[i] != null) o[k] = row[i]; });
       o.tags = o.tags || []; o.theme2 = o.theme2 || [];
       o.doc = P.docs[o.d]; o.chap = [P.parts[P.chaps[o.ch][0]], P.chaps[o.ch][1]];
-      o.parti = o.doc.parti; o.cand = o.doc.cand || null; o.cslug = o.doc.cslug || null; o.mention = o.doc.mention || null;
+      o.parti = o.doc.parti; o.cand = o.doc.cand || null; o.cslug = o.doc.cslug || null;
+      o.src = o.doc.src; o.passe = !!o.doc.passe; o.sous = P.sous[o.st][1];
+      /* quatre documents ont une adresse par chapitre : l'URL appartient a la mesure */
+      o.url = o.u != null ? P.urls[o.u] : (o.doc.url || null);
       o.pkey = slugify(o.parti);
-      o._n = norm([o.court, o.tags.map(function (t) { return P.tags[t]; }).join(' '), o.chap[1], o.chap[0], o.parti, o.cand, o.id, o.pub].join(' '));
+      o._n = norm([o.court, P.themes[o.theme], o.sous,
+        o.tags.map(function (t) { return P.tags[t]; }).join(' '),
+        o.theme2.map(function (t) { return P.themes[t]; }).join(' '),
+        o.chap[1], o.chap[0], o.parti, o.cand, o.id, o.src].join(' '));
       return o;
     });
     var PAR_ID = {}; M.forEach(function (m) { PAR_ID[m.id] = m; });
@@ -6266,7 +6304,7 @@
       if (!p) { p = PK[m.pkey] = { key: m.pkey, parti: m.parti, n: 0, cands: {}, docs: {}, slug: null, nom: null, versions: {} }; PORTEURS.push(p); }
       p.n++;
       p.docs[m.d] = true;
-      p.versions[m.mention || '2027'] = (p.versions[m.mention || '2027'] || 0) + 1;
+      p.versions[m.src] = (p.versions[m.src] || 0) + 1;
       if (m.cslug) { p.cands[m.cslug] = (p.cands[m.cslug] || 0) + 1; if (!p.slug && CAND_PAR_SLUG[m.cslug]) { p.slug = m.cslug; p.nom = m.cand; } }
     });
     PORTEURS.forEach(function (p) {
@@ -6274,14 +6312,14 @@
       else { p.libelle = p.parti; }
       p.etat = null;
       P.etat.forEach(function (e) { if ((p.slug && e.cand === p.nom) || (!p.slug && e.parti === p.parti && /non désigné/.test(e.cand))) { p.etat = p.etat || e; } });
-      p.mentions = Object.keys(p.versions).filter(function (v) { return v !== '2027'; });
-      p.n2027 = p.versions['2027'] || 0;
+      p.mentions = Object.keys(p.versions).filter(function (v) { return v !== 'Prés. 2027'; });
+      p.n2027 = p.versions['Prés. 2027'] || 0;
     });
     PORTEURS.sort(function (a, b) { return b.n - a.n; });
     var PAR_PKEY = {}; PORTEURS.forEach(function (p) { PAR_PKEY[p.key] = p; });
 
     /* ---------- etat ---------- */
-    var ETAT = { vue: 'sujet', s: null, t: null, pub: null, c: null, cs: null, q: '' };
+    var ETAT = { vue: 'sujet', s: null, st: null, tag: null, c: null, cs: null, q: '' };
     var NIV = 'essentiel';
     try { NIV = localStorage.getItem('komune.programmes.niveau') || 'essentiel'; } catch (e) {}
     var OUVERTS = {};
@@ -6300,10 +6338,14 @@
     }
 
     /* ---------- la mention ---------- */
+    var PASSEES = { 'Prés. 2022': 1, 'Légis. 2024': 1, 'Euro. 2024': 1, 'Légis. part. 2025': 1, 'Munic. 2026': 1 };
+    function badgeCls(v) { return v === 'Prés. 2027' ? 'b-2027' : (PASSEES[v] ? 'b-passe' : 'b-prop'); }
     function badgeMention(m) {
-      if (!m.mention) { return ''; }
-      var cls = /proposition|chantier/.test(m.mention) ? 'b-prop' : 'b-passe';
-      return '<span class="badge-mention ' + cls + '" title="Cette mesure ne vient pas d\'un programme publié pour 2027">' + esc(m.mention) + '</span>';
+      if (!m.src) { return ''; }
+      var cls = m.src === 'Prés. 2027' ? 'b-2027' : (m.passe ? 'b-passe' : 'b-prop');
+      var quoi = m.src === 'Prés. 2027' ? 'Mesure tirée d\'un programme publié pour 2027'
+        : (m.passe ? 'Mesure tirée du programme d\'une élection passée' : 'Mesure tirée d\'un document de campagne, pas d\'un programme publié pour 2027');
+      return '<span class="badge-mention ' + cls + '" title="' + esc(quoi + ' : ' + m.doc.doc) + '">(' + esc(m.src) + ')</span>';
     }
 
     /* ---------- une mesure ---------- */
@@ -6317,8 +6359,7 @@
         meta.push('<span>' + esc(P.themes[m.theme]) + '</span>');
       }
       if (m.theme2.length) { meta.push('<span class="also">aussi : ' + m.theme2.map(function (t) { return esc(P.themes[t]); }).join(', ') + '</span>'); }
-      if (m.pub) { meta.push('<span>👥 ' + esc(m.pub) + '</span>'); }
-      if (m.portee === 'EUROPE') { meta.push('<span>🇪🇺 échelon européen</span>'); }
+      meta.push('<span class="st">' + esc(m.sous) + '</span>');
       meta.push('<span class="ref">' + esc(m.id) + (m.ref ? ' · réf. ' + esc(m.ref) : '') + '</span>');
       var ouvert = !!OUVERTS[m.id];
       return '<article class="mes" id="m-' + esc(m.id) + '" data-id="' + esc(m.id) + '">' +
@@ -6347,20 +6388,19 @@
       else if (t && t.t && norm(t.t).replace(/[.\s]+$/, '') === norm(m.court).replace(/[.\s]+$/, '')) { texte = '<blockquote class="mes-texte attente">Le document ne développe pas cette mesure : l\'intitulé est le texte intégral.</blockquote>'; }
       else if (t && t.t) {
         var tx = t.t, n = t.n || 0;
-        texte = '<blockquote class="mes-texte" cite="' + esc(m.doc.url || '') + '">' + (n ? '<span class="amorce">' + esc(tx.slice(0, n)) + '</span>' + esc(tx.slice(n)) : esc(tx)) + '</blockquote>';
+        texte = '<blockquote class="mes-texte" cite="' + esc(m.url || '') + '">' + (n ? '<span class="amorce">' + esc(tx.slice(0, n)) + '</span>' + esc(tx.slice(n)) : esc(tx)) + '</blockquote>';
       } else { texte = '<blockquote class="mes-texte attente">Le programme n\'en dit pas plus que l\'intitulé.</blockquote>'; }
       var src = '<p class="mes-src"><b>Source :</b> ' + esc(m.doc.doc) +
         (m.chap[0] || m.chap[1] ? ' · <b>' + esc([m.chap[0], m.chap[1]].filter(function (x, i, a) { return x && a.indexOf(x) === i; }).join(' › ')) + '</b>' : '') +
         (m.ref ? ' · réf. ' + esc(m.ref) : '') +
-        (m.doc.url ? ' · <a href="' + esc(m.doc.url) + '" target="_blank" rel="noopener noreferrer">Ouvrir le document ↗</a>' : '') +
-        (m.mention ? '<br><b>D\'où ça vient :</b> ' + esc(m.mention) + ', pas un programme publié pour 2027.' : '') + '</p>';
+        (m.url ? ' · <a href="' + esc(m.url) + '" target="_blank" rel="noopener noreferrer">Ouvrir ' + (m.doc.nurl ? 'la page source' : 'le document') + ' ↗</a>' : '') +
+        '<br><b>D\'où ça vient :</b> ' + esc(m.src) + (m.src === 'Prés. 2027' ? ', programme publié pour la présidentielle 2027.' : m.passe ? ', programme d\'une élection passée.' : ', document de campagne, pas un programme publié pour 2027.') + '</p>';
       var tags = '<p class="mes-tags" aria-label="Sujets et mots-clés">' +
         '<button type="button" class="t th" data-theme="' + m.theme + '">' + esc(P.themes[m.theme]) + '</button>' +
         m.theme2.map(function (th) { return '<button type="button" class="t th" data-theme="' + th + '">' + esc(P.themes[th]) + '</button>'; }).join('') +
-        m.tags.map(function (ti) { return '<button type="button" class="t" data-tag="' + ti + '">' + esc(P.tags[ti]) + '</button>'; }).join('') +
-        (m.pub ? '<span class="t pub">👥 ' + esc(m.pub) + '</span>' : '') + '</p>';
-      var note = m.note ? '<p class="mes-note"><b>Note de la rédaction</b><br>' + esc(m.note) + '</p>' : '';
-      var app = m.app && PAR_ID[m.app] ? '<p class="mes-src"><b>Mesure apparentée :</b> <a href="#m=' + esc(m.app) + '" data-aller="' + esc(m.app) + '">' + esc(PAR_ID[m.app].court) + '</a> (' + esc(PAR_ID[m.app].cand || PAR_ID[m.app].parti) + ')</p>' : '';
+        '<button type="button" class="t st" data-st="' + m.st + '">' + esc(m.sous) + '</button>' +
+        m.tags.map(function (ti) { return '<button type="button" class="t" data-tag="' + ti + '">' + esc(P.tags[ti]) + '</button>'; }).join('') + '</p>';
+      var note = '', app = '';
       var qual = m.qual != null ? P.qual[m.qual] : '';
       var quali = qual && /réécrire/.test(qual) ? '<p class="avertissement">Intitulé court à réécrire par la rédaction : pour l\'instant, c\'est la première phrase du programme, ou son amorce.</p>' : '';
       var actions = '<div class="mes-actions">' +
@@ -6375,8 +6415,8 @@
     function correspond(m) {
       if (ETAT.vue === 'sujet') {
         if (ETAT.s != null && m.theme !== ETAT.s && m.theme2.indexOf(ETAT.s) < 0) { return false; }
-        if (ETAT.t != null && m.tags.indexOf(ETAT.t) < 0) { return false; }
-        if (ETAT.pub && m.pub !== ETAT.pub) { return false; }
+        if (ETAT.st != null && m.st !== ETAT.st) { return false; }
+        if (ETAT.tag != null && m.tags.indexOf(ETAT.tag) < 0) { return false; }
       } else {
         if (ETAT.c && m.pkey !== ETAT.c) { return false; }
         if (ETAT.cs != null && m.theme !== ETAT.cs && m.theme2.indexOf(ETAT.cs) < 0) { return false; }
@@ -6403,7 +6443,7 @@
 
     /* ---------- rendu ---------- */
     var $ = function (id) { return document.getElementById('p-' + id); };
-    var sujets = $('sujets'), sousZone = $('sous-zone'), sous = $('sous'), publicsZone = $('publics-zone'), publics = $('publics');
+    var sujets = $('sujets'), sousZone = $('sous-zone'), sous = $('sous'), motsZone = $('mots-zone'), mots = $('mots');
     var porteurs = $('porteurs'), candFiltres = $('cand-filtres'), candSujets = $('cand-sujets');
     var actifs = $('actifs'), compte = $('compte'), resultats = $('resultats');
     var PAGE = 25;
@@ -6414,24 +6454,31 @@
         return '<button type="button" class="fchip" data-s="' + t + '" aria-pressed="' + (ETAT.s === t ? 'true' : 'false') + '">' + esc(P.themes[t]) + '<span class="n">' + counts[t] + '</span></button>';
       }).join('');
     }
-    var sousTout = false;
+    var sousTout = false, motsTout = false;
     function rendreSous() {
       if (ETAT.s == null) { sousZone.hidden = true; return; }
       sousZone.hidden = false;
-      var tc = {}, pc = {};
+      /* les sous-themes du sujet : un seul par mesure, c'est le chemin de navigation */
+      var sc = {}, tc = {};
       M.forEach(function (m) {
-        if (m.theme !== ETAT.s && m.theme2.indexOf(ETAT.s) < 0) { return; }
-        m.tags.forEach(function (t) { tc[t] = (tc[t] || 0) + 1; });
-        if (m.pub) { pc[m.pub] = (pc[m.pub] || 0) + 1; }
+        if (m.theme !== ETAT.s) { return; }
+        sc[m.st] = (sc[m.st] || 0) + 1;
+        if (ETAT.st == null || m.st === ETAT.st) { m.tags.forEach(function (t) { tc[t] = (tc[t] || 0) + 1; }); }
       });
-      var liste = Object.keys(tc).map(Number).sort(function (a, b) { return tc[b] - tc[a] || P.tags[a].localeCompare(P.tags[b]); });
-      var visibles = sousTout || ETAT.t != null && liste.indexOf(ETAT.t) >= 14 ? liste : liste.slice(0, 14);
+      var liste = Object.keys(sc).map(Number).sort(function (a, b) { return sc[b] - sc[a] || P.sous[a][1].localeCompare(P.sous[b][1]); });
+      var visibles = sousTout || (ETAT.st != null && liste.indexOf(ETAT.st) >= 12) ? liste : liste.slice(0, 12);
       sous.innerHTML = visibles.map(function (t) {
-        return '<button type="button" class="pchip" data-t="' + t + '" aria-pressed="' + (ETAT.t === t ? 'true' : 'false') + '">' + esc(P.tags[t]) + '<span class="n">' + tc[t] + '</span></button>';
-      }).join('') + (liste.length > 14 && !sousTout && visibles.length < liste.length ? '<button type="button" class="voir-plus" data-sous-tout>+ ' + (liste.length - 14) + ' autres sous-thèmes</button>' : '');
-      var pubs = Object.keys(pc).sort();
-      publicsZone.hidden = pubs.length === 0;
-      publics.innerHTML = pubs.map(function (p) { return '<button type="button" class="pchip" data-pub="' + esc(p) + '" aria-pressed="' + (ETAT.pub === p ? 'true' : 'false') + '">👥 ' + esc(p) + '<span class="n">' + pc[p] + '</span></button>'; }).join('');
+        return '<button type="button" class="pchip" data-st="' + t + '" aria-pressed="' + (ETAT.st === t ? 'true' : 'false') + '">' + esc(P.sous[t][1]) + '<span class="n">' + sc[t] + '</span></button>';
+      }).join('') + (liste.length > visibles.length ? '<button type="button" class="voir-plus" data-sous-tout>+ ' + (liste.length - visibles.length) + ' autres sous-thèmes</button>' : '');
+      /* les mots-cles : on n'expose que ceux qui reviennent, la longue traine n'aide pas a naviguer */
+      var seuil = 3;
+      var ml = Object.keys(tc).map(Number).filter(function (t) { return tc[t] >= seuil || t === ETAT.tag; })
+        .sort(function (a, b) { return tc[b] - tc[a] || P.tags[a].localeCompare(P.tags[b]); });
+      var mv = motsTout || (ETAT.tag != null && ml.indexOf(ETAT.tag) >= 14) ? ml : ml.slice(0, 14);
+      motsZone.hidden = ml.length === 0;
+      mots.innerHTML = mv.map(function (t) {
+        return '<button type="button" class="pchip" data-mot="' + t + '" aria-pressed="' + (ETAT.tag === t ? 'true' : 'false') + '">' + esc(P.tags[t]) + '<span class="n">' + tc[t] + '</span></button>';
+      }).join('') + (ml.length > mv.length ? '<button type="button" class="voir-plus" data-mots-tout>+ ' + (ml.length - mv.length) + ' autres mots-clés</button>' : '');
     }
     function rendrePorteurs() {
       porteurs.innerHTML = PORTEURS.map(function (p) {
@@ -6457,8 +6504,8 @@
       var chips = [];
       if (ETAT.vue === 'sujet') {
         if (ETAT.s != null) { chips.push(['s', '🧭 ' + P.themes[ETAT.s]]); }
-        if (ETAT.t != null) { chips.push(['t', P.tags[ETAT.t]]); }
-        if (ETAT.pub) { chips.push(['pub', '👥 ' + ETAT.pub]); }
+        if (ETAT.st != null) { chips.push(['st', P.sous[ETAT.st][1]]); }
+        if (ETAT.tag != null) { chips.push(['tag', '🔖 ' + P.tags[ETAT.tag]]); }
       } else {
         if (ETAT.c && PAR_PKEY[ETAT.c]) { chips.push(['c', '👤 ' + PAR_PKEY[ETAT.c].nom]); }
         if (ETAT.cs != null) { chips.push(['cs', '🧭 ' + P.themes[ETAT.cs]]); }
@@ -6504,7 +6551,7 @@
       GROUPES = {};
       resultats.innerHTML = '';
       var q = ETAT.q.trim();
-      var rienChoisi = ETAT.vue === 'sujet' ? (ETAT.s == null && ETAT.t == null && !ETAT.pub) : !ETAT.c;
+      var rienChoisi = ETAT.vue === 'sujet' ? (ETAT.s == null && ETAT.st == null && ETAT.tag == null) : !ETAT.c;
       if (!q && rienChoisi) {
         compte.innerHTML = '<b>' + nb(M.length) + '</b> mesures, <b>' + PORTEURS.length + '</b> programmes ou partis. ' + (ETAT.vue === 'sujet' ? 'Choisissez un sujet ci-dessus, ou tapez un mot.' : 'Choisissez un·e candidat·e ci-dessus, ou tapez un mot.');
         resultats.innerHTML = '<div class="vide"><p>🎲 Pas d\'idée par où commencer&nbsp;? <button type="button" class="btn play" data-hasard>Une mesure au hasard</button></p>' +
@@ -6538,14 +6585,14 @@
         /* groupes par porteur */
         var parP = {}; liste.forEach(function (m) { (parP[m.pkey] = parP[m.pkey] || []).push(m); });
         var cles = Object.keys(parP).sort(function (a, b) { return parP[b].length - parP[a].length; });
-        var lab = [ETAT.s != null ? P.themes[ETAT.s] : null, ETAT.t != null ? P.tags[ETAT.t] : null, ETAT.pub ? '👥 ' + ETAT.pub : null].filter(Boolean).join(' › ');
+        var lab = [ETAT.s != null ? P.themes[ETAT.s] : null, ETAT.st != null ? P.sous[ETAT.st][1] : null, ETAT.tag != null ? P.tags[ETAT.tag] : null].filter(Boolean).join(' › ');
         compte.innerHTML = '<b>' + nb(liste.length) + '</b> ' + (liste.length > 1 ? 'mesures' : 'mesure') + ' sur «&nbsp;' + esc(lab) + '&nbsp;», chez <b>' + cles.length + '</b> ' + (cles.length > 1 ? 'programmes ou partis' : 'programme') + '. Touchez un nom pour lire.';
         var ouvrir = liste.length <= 40 || cles.length <= 2;
         var html = '<div class="grps">' + cles.map(function (k, idx) {
           var p = PAR_PKEY[k], l = parP[k];
-          var mentions = {}; l.forEach(function (m) { mentions[m.mention || '2027'] = (mentions[m.mention || '2027'] || 0) + 1; });
+          var mentions = {}; l.forEach(function (m) { mentions[m.src] = (mentions[m.src] || 0) + 1; });
           var sousH = '<span>' + esc(p.libelle) + '</span>' + Object.keys(mentions).map(function (v) {
-            return v === '2027' ? '<span class="badge-mention b-2027">programme 2027</span>' : '<span class="badge-mention ' + (/proposition|chantier/.test(v) ? 'b-prop' : 'b-passe') + '">' + esc(v) + '</span>';
+            return '<span class="badge-mention ' + badgeCls(v) + '">(' + esc(v) + ')</span>';
           }).join('');
           GROUPES['g-' + k] = { liste: l, opts: {}, note: p.etat && p.etat.vide ? p.etat.vide : null };
           return grp('g-' + k, esc(p.nom), sousH, l.length, '', ouvrir || idx === 0, tete(p.slug, p.nom, 'petite'));
@@ -6560,8 +6607,8 @@
         var ouvrir2 = themes.length <= 2 || liste.length <= 40;
         var html2 = '<div class="grps">' + themes.map(function (t, idx) {
           var l = parT[t];
-          var mentions = {}; l.forEach(function (m) { mentions[m.mention || '2027'] = 1; });
-          var sousH = Object.keys(mentions).map(function (v) { return v === '2027' ? '<span class="badge-mention b-2027">programme 2027</span>' : '<span class="badge-mention ' + (/proposition|chantier/.test(v) ? 'b-prop' : 'b-passe') + '">' + esc(v) + '</span>'; }).join('');
+          var mentions = {}; l.forEach(function (m) { mentions[m.src] = 1; });
+          var sousH = Object.keys(mentions).map(function (v) { return '<span class="badge-mention ' + badgeCls(v) + '">(' + esc(v) + ')</span>'; }).join('');
           GROUPES['g-t' + t] = { liste: l, opts: {} };
           return grp('g-t' + t, esc(P.themes[t]), sousH, l.length, '', ouvrir2 || idx === 0, '<span class="o-emoji" aria-hidden="true">🧭</span>');
         }).join('') + '</div>';
@@ -6637,7 +6684,7 @@
     function ecrireHash() {
       var p = [];
       if (ETAT.vue === 'cand') { p.push('v=c'); }
-      if (ETAT.vue === 'sujet') { if (ETAT.s != null) { p.push('s=' + ETAT.s); } if (ETAT.t != null) { p.push('t=' + encodeURIComponent(P.tags[ETAT.t])); } if (ETAT.pub) { p.push('p=' + encodeURIComponent(ETAT.pub)); } }
+      if (ETAT.vue === 'sujet') { if (ETAT.s != null) { p.push('s=' + ETAT.s); } if (ETAT.st != null) { p.push('st=' + encodeURIComponent(P.sous[ETAT.st][1])); } if (ETAT.tag != null) { p.push('t=' + encodeURIComponent(P.tags[ETAT.tag])); } }
       else { if (ETAT.c) { p.push('c=' + ETAT.c); } if (ETAT.cs != null) { p.push('s=' + ETAT.cs); } }
       if (ETAT.q.trim()) { p.push('q=' + encodeURIComponent(ETAT.q.trim())); }
       var pan = document.getElementById('pan-progs');
@@ -6667,7 +6714,13 @@
       }
       if (kv.c && !PAR_PKEY[kv.c]) { PORTEURS.forEach(function (p) { if (p.slug === kv.c || p.cands[kv.c]) { kv.c = p.key; } }); }
       if (kv.v === 'c' || kv.c) { changerVue('cand'); ETAT.c = kv.c && PAR_PKEY[kv.c] ? kv.c : null; ETAT.cs = kv.s != null && P.themes[kv.s] ? Number(kv.s) : null; }
-      else { changerVue('sujet'); ETAT.s = kv.s != null && P.themes[kv.s] ? Number(kv.s) : null; var ti = kv.t ? P.tags.indexOf(kv.t) : -1; ETAT.t = ti > -1 ? ti : null; ETAT.pub = kv.p || null; }
+      else {
+        changerVue('sujet');
+        ETAT.s = kv.s != null && P.themes[kv.s] ? Number(kv.s) : null;
+        var si = -1; if (kv.st != null && ETAT.s != null) { P.sous.forEach(function (x, k) { if (si < 0 && x[0] === ETAT.s && x[1] === kv.st) { si = k; } }); }
+        ETAT.st = si > -1 ? si : null;
+        var ti = kv.t ? P.tags.indexOf(kv.t) : -1; ETAT.tag = ti > -1 ? ti : null;
+      }
       ETAT.q = kv.q || ''; $('recherche').value = ETAT.q; $('recherche-vider').hidden = !ETAT.q;
       toutRendre();
       return true;
@@ -6689,7 +6742,7 @@
       if (docsListe) {
         docsListe.innerHTML = P.docs.map(function (d) {
           return '<p class="mes-src" style="border:2px solid var(--line);border-radius:12px;padding:8px 10px;margin:0"><b>' + esc(d.parti) + (d.cand ? ' · ' + esc(d.cand) : '') + '</b> · ' + esc(d.doc) + ' · <b>' + nb(d.n) + '</b> ' + (d.n > 1 ? 'mesures' : 'mesure') +
-            (d.mention ? ' · <span class="badge-mention ' + (/proposition|chantier/.test(d.mention) ? 'b-prop' : 'b-passe') + '">' + esc(d.mention) + '</span>' : ' · <span class="badge-mention b-2027">programme 2027</span>') +
+            (d.src ? ' · <span class="badge-mention ' + badgeCls(d.src) + '">(' + esc(d.src) + ')</span>' : '') +
             (d.url ? ' · <a href="' + esc(d.url) + '" target="_blank" rel="noopener noreferrer">Ouvrir ↗</a>' : '') + '</p>';
         }).join('');
       }
@@ -6708,17 +6761,18 @@
     sujets.addEventListener('click', function (e) {
       var b = e.target.closest('[data-s]'); if (!b) { return; }
       var s = Number(b.dataset.s);
-      ETAT.s = ETAT.s === s ? null : s; ETAT.t = null; ETAT.pub = null; sousTout = false;
+      ETAT.s = ETAT.s === s ? null : s; ETAT.st = null; ETAT.tag = null; sousTout = false; motsTout = false;
       toutRendre();
     });
     sous.addEventListener('click', function (e) {
-      var st = e.target.closest('[data-sous-tout]'); if (st) { sousTout = true; rendreSous(); return; }
-      var b = e.target.closest('[data-t]'); if (!b) { return; }
-      var t = Number(b.dataset.t); ETAT.t = ETAT.t === t ? null : t; toutRendre();
+      if (e.target.closest('[data-sous-tout]')) { sousTout = true; rendreSous(); return; }
+      var b = e.target.closest('[data-st]'); if (!b) { return; }
+      var t = Number(b.dataset.st); ETAT.st = ETAT.st === t ? null : t; ETAT.tag = null; motsTout = false; toutRendre();
     });
-    publics.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-pub]'); if (!b) { return; }
-      ETAT.pub = ETAT.pub === b.dataset.pub ? null : b.dataset.pub; toutRendre();
+    mots.addEventListener('click', function (e) {
+      if (e.target.closest('[data-mots-tout]')) { motsTout = true; rendreSous(); return; }
+      var b = e.target.closest('[data-mot]'); if (!b) { return; }
+      var t = Number(b.dataset.mot); ETAT.tag = ETAT.tag === t ? null : t; toutRendre();
     });
     porteurs.addEventListener('click', function (e) {
       var b = e.target.closest('[data-c]'); if (!b) { return; }
@@ -6731,10 +6785,10 @@
     });
     actifs.addEventListener('click', function (e) {
       var r = e.target.closest('[data-retirer]');
-      if (r) { var k = r.dataset.retirer; if (k === 'q') { ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; } else if (k === 's') { ETAT.s = null; ETAT.t = null; ETAT.pub = null; } else if (k === 'c') { ETAT.c = null; ETAT.cs = null; } else { ETAT[k] = null; } toutRendre(); return; }
+      if (r) { var k = r.dataset.retirer; if (k === 'q') { ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; } else if (k === 's') { ETAT.s = null; ETAT.st = null; ETAT.tag = null; } else if (k === 'c') { ETAT.c = null; ETAT.cs = null; } else { ETAT[k] = null; } toutRendre(); return; }
       if (e.target.closest('[data-tout-effacer]')) { toutEffacer(); }
     });
-    function toutEffacer() { ETAT.s = ETAT.t = ETAT.pub = ETAT.c = ETAT.cs = null; ETAT.q = ''; ETAT.plein = false; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); }
+    function toutEffacer() { ETAT.s = ETAT.st = ETAT.tag = ETAT.c = ETAT.cs = null; ETAT.q = ''; ETAT.plein = false; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); }
 
     resultats.addEventListener('click', function (e) {
       var t;
@@ -6757,9 +6811,10 @@
         return;
       }
       if ((t = e.target.closest('[data-voir-cand]'))) { changerVue('cand'); ETAT.c = t.dataset.voirCand; ETAT.cs = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
-      if ((t = e.target.closest('[data-voir-sujet]'))) { changerVue('sujet'); ETAT.s = Number(t.dataset.voirSujet); ETAT.t = null; ETAT.pub = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
-      if ((t = e.target.closest('.mes-tags [data-tag]'))) { changerVue('sujet'); var mm = PAR_ID[t.closest('.mes').dataset.id]; ETAT.s = mm.theme; ETAT.t = Number(t.dataset.tag); ETAT.pub = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
-      if ((t = e.target.closest('.mes-tags [data-theme]'))) { changerVue('sujet'); ETAT.s = Number(t.dataset.theme); ETAT.t = null; ETAT.pub = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
+      if ((t = e.target.closest('[data-voir-sujet]'))) { changerVue('sujet'); ETAT.s = Number(t.dataset.voirSujet); ETAT.st = null; ETAT.tag = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
+      if ((t = e.target.closest('.mes-tags [data-st]'))) { changerVue('sujet'); var ms = PAR_ID[t.closest('.mes').dataset.id]; ETAT.s = ms.theme; ETAT.st = Number(t.dataset.st); ETAT.tag = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
+      if ((t = e.target.closest('.mes-tags [data-tag]'))) { changerVue('sujet'); var mm = PAR_ID[t.closest('.mes').dataset.id]; ETAT.s = mm.theme; ETAT.st = null; ETAT.tag = Number(t.dataset.tag); ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
+      if ((t = e.target.closest('.mes-tags [data-theme]'))) { changerVue('sujet'); ETAT.s = Number(t.dataset.theme); ETAT.st = null; ETAT.tag = null; ETAT.q = ''; $('recherche').value = ''; $('recherche-vider').hidden = true; toutRendre(); $('explorer').scrollIntoView(); return; }
       if ((t = e.target.closest('[data-aller]'))) { e.preventDefault(); location.hash = '#m=' + t.dataset.aller; return; }
       if ((t = e.target.closest('[data-hasard]'))) {
         var m = M[Math.floor(Math.random() * M.length)];
@@ -6770,7 +6825,7 @@
       if (e.target.closest('[data-partout]')) { partout(); return; }
       if (e.target.closest('[data-tout-effacer]')) { toutEffacer(); }
     });
-    function partout() { ETAT.s = ETAT.t = ETAT.pub = ETAT.c = ETAT.cs = null; toutRendre(); }
+    function partout() { ETAT.s = ETAT.st = ETAT.tag = ETAT.c = ETAT.cs = null; toutRendre(); }
     compte.addEventListener('click', function (e) {
       if (e.target.closest('[data-plein]')) { ETAT.plein = true; chargerTextes(function () { toutRendre(); }); }
       if (e.target.closest('[data-partout]')) { partout(); }
