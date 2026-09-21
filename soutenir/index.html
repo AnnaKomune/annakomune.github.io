@@ -11,13 +11,13 @@
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://www.komunemedia.fr/soutenir/">
   <meta property="og:title" content="Soutenir le comparateur de la présidentielle 2027 - Komune">
-  <meta property="og:description" content="Soutenir Komune pour lancer et développer une plateforme citoyenne indépendante pour la présidentielle 2027.">
+  <meta property="og:description" content="Le cap des 800 soutiens mensuels est atteint. Objectif maintenant : le tenir chaque mois jusqu’à la présidentielle 2027.">
   <meta property="og:image" content="https://www.komunemedia.fr/img/og-comparateur.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://www.komunemedia.fr/img/og-comparateur.png">
   <link rel="icon" type="image/png" href="../img/favicon.png">
   <link rel="apple-touch-icon" href="../img/favicon.png">
-  <meta name="description" content="Soutenir Komune pour lancer et développer une plateforme citoyenne indépendante pour la présidentielle 2027.">
+  <meta name="description" content="Le cap des 800 soutiens mensuels est atteint. Objectif maintenant : le tenir chaque mois jusqu’à la présidentielle 2027.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1311,6 +1311,17 @@
       transition: width 1.6s cubic-bezier(.16, 1.05, .26, 1.08);
     }
 
+    /* le cap est tenu : la jauge le dit, sans que la couleur soit la seule indication */
+    .supporter-meter.cap-tenu .supporter-meter-number strong::after {
+      content: " \2713";
+      color: #1f7a3d;
+      font-size: .7em;
+      vertical-align: super;
+    }
+    .supporter-meter.cap-tenu .manual-meter-fill {
+      box-shadow: 0 0 22px rgba(31, 122, 61, .32);
+    }
+
     @keyframes meterShine {
       0%, 35% { transform: translateX(-120%); }
       75%, 100% { transform: translateX(120%); }
@@ -2033,43 +2044,43 @@
 
     <main id="contenu" tabindex="-1">
     <article class="page-frame">
-      <div class="alert-ticker" aria-label="Merci pour le soutien au comparateur politique Komune">
+      <div class="alert-ticker" aria-label="Le cap des 800 soutiens mensuels est atteint, merci">
         <div class="ticker-track">
-          <span>💛 Premier palier passé : grâce à vous, le comparateur politique peut voir le jour.</span>
-          <span>🚀 Prochain cap : 800 soutiens mensuels pour développer la plateforme pendant toute la campagne présidentielle.</span>
-          <span>🗳️ Première version en ligne mi-août : programmes, votes, actes, contradictions, conséquences concrètes.</span>
-          <span>💛 Premier palier passé : grâce à vous, le comparateur politique peut voir le jour.</span>
+          <span>💛 On y est : le cap des 800 soutiens mensuels est atteint. Merci, vraiment.</span>
+          <span>🔁 Nouvel objectif : tenir ces 800 soutiens chaque mois, jusqu’au bout de la présidentielle.</span>
+          <span>🗳️ Le comparateur est en ligne : les programmes recopiés mot pour mot, avec leurs sources.</span>
+          <span>💛 On y est : le cap des 800 soutiens mensuels est atteint. Merci, vraiment.</span>
         </div>
       </div>
 
       <section class="section hero-grid" aria-labelledby="page-title">
         <article class="card white hero-card">
           <div>
-            <div class="eyebrow">Plateforme présidentielle 2027</div>
-            <h1 id="page-title">Le comparateur prend de l’ampleur</h1>
-            <p class="hero-lead">Grâce à vous, on peut croire au lancement du comparateur politique.</p>
-            <p class="large-copy">Mi-août, on mettra en ligne une première version de la plateforme : un outil gratuit pour comparer les candidat·es à partir de leurs programmes, de leurs votes, de leurs actes et de leurs contradictions.</p>
-            <p class="large-copy">Maintenant, on passe au cap suivant : réunir les moyens de le développer et de le mettre à jour pendant toute la campagne présidentielle.</p>
+            <div class="eyebrow">Cap des 800 atteint</div>
+            <h1 id="page-title">On y est. Grâce à vous.</h1>
+            <p class="hero-lead">Le cap des 800 soutiens mensuels est atteint. C’est incroyable, et c’est vous qui l’avez fait. Merci, vraiment.</p>
+            <p class="large-copy">Ce chiffre, on ne l’avait pas choisi au hasard : c’est ce qu’il faut pour développer le comparateur, vérifier chaque mesure et le tenir à jour. Il est atteint, et la plateforme est en ligne, gratuite, sans publicité.</p>
+            <p class="large-copy">Maintenant, l’objectif change : il ne s’agit plus de monter, mais de rester à 800 soutiens mensuels au minimum, chaque mois, jusqu’au bout de la présidentielle.</p>
           </div>
           <div class="hero-actions">
-            <a class="button pop" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">Soutenir le projet ↗</a>
+            <a class="button pop" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">Rejoindre les 800 ↗</a>
           </div>
         </article>
 
         <div class="card pink meter-card" id="top-jauge" role="group" aria-label="Objectif de soutiens Komune">
           <div class="meter-intro">
             <div class="meter-intro-title">
-              <div class="eyebrow">Nouveau cap</div>
-              <h2 class="meter-title">800 soutiens mensuels pour tenir jusqu’à la présidentielle.</h2>
+              <div class="eyebrow">Le cap à tenir</div>
+              <h2 class="meter-title">800 soutiens mensuels, chaque mois, jusqu’à la présidentielle.</h2>
             </div>
-            <p class="meter-note">Le cap des 800 nous permet de développer, sourcer et mettre à jour la plateforme tout au long de la campagne.</p>
+            <p class="meter-note">Le cap est atteint. Ce qui compte maintenant, c’est qu’il ne redescende pas : un soutien qui s’arrête, c’est une place à reprendre.</p>
           </div>
 
           <div class="meter-wrapper meter-wrapper-reveal">
             <div class="meter-reveal" data-meter-reveal>
               <button class="meter-reveal-button" type="button" aria-controls="komune-meter-panel" aria-expanded="false">
                 <span class="meter-reveal-kicker">Jauge en direct</span>
-                <span class="meter-reveal-main">Objectif : 800 soutiens mensuels.</span>
+                <span class="meter-reveal-main">Où on en est ce mois-ci.</span>
                 <span class="meter-reveal-sub">Clique, ça charge le compteur ✨</span>
               </button>
 
@@ -2094,25 +2105,25 @@
                     </div>
                     <div class="milestone-marker milestone-marker--almost" aria-hidden="true">
                       <span>700</span>
-                      <em>plus que 100 🫣</em>
+                      <em>dernière ligne droite</em>
                     </div>
                     <div class="manual-meter-track" aria-label="Objectif : 800 soutiens mensuels">
                       <span class="manual-meter-fill"></span>
                     </div>
                   </div>
                   <div class="supporter-meter-chips supporter-meter-chips-v26">
-                    <div class="supporter-chip milestone-chip"><strong>palier 1 ✓</strong>projet lancé</div>
+                    <div class="supporter-chip milestone-chip"><strong>cap 800 ✓</strong>plateforme en ligne</div>
                     <div class="supporter-chip"><strong data-supporter-percent>…</strong>du cap 800</div>
-                    <div class="supporter-chip"><strong data-supporter-left>…</strong>soutiens restants</div>
-                    <div class="supporter-chip"><strong>700</strong>plus que 100 🫣</div>
+                    <div class="supporter-chip"><strong data-supporter-left>…</strong><span data-left-label>soutiens restants</span></div>
+                    <div class="supporter-chip"><strong>800</strong>le seuil à ne pas lâcher</div>
                   </div>
-                  <p class="manual-meter-legend">Premier palier déjà passé. Nouveau cap : 800 soutiens mensuels pour développer l’outil pendant toute la présidentielle.</p>
+                  <p class="manual-meter-legend">Cap des 800 atteint. L’enjeu maintenant : rester au-dessus, chaque mois, jusqu’à la présidentielle.</p>
                   <p class="meter-updated">MIS À JOUR 4 fois par jour</p>
                 </div>
               </div>
             </div>
           </div>
-          <a class="button" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">Je soutiens le comparateur ↗</a>
+          <a class="button" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">Je tiens le cap avec vous ↗</a>
         </div>
       </section>
 
@@ -2145,18 +2156,18 @@
         <article class="card dark danger-card">
           <div>
             <div class="eyebrow">Merci, vraiment</div>
-            <h2>Vous avez passé le premier palier.</h2>
-            <p class="large-copy">Le premier palier nous permet de croire au lancement du comparateur. Grâce à vous, ce n’est plus seulement une idée : c’est un projet qui prend de l’ampleur.</p>
-            <p class="large-copy">Des centaines de personnes ont répondu au formulaire, des journalistes, chercheur·ses, expert·es et développeur·ses nous proposent leur aide, et la première version arrive mi-août.</p>
+            <h2>Vous avez atteint le cap des 800.</h2>
+            <p class="large-copy">C’est incroyable. On avait posé ce chiffre comme un objectif lointain, et vous l’avez atteint. Merci beaucoup, sincèrement, à chacun·e d’entre vous.</p>
+            <p class="large-copy">Des centaines de personnes ont répondu au formulaire, des journalistes, chercheur·ses, expert·es et développeur·ses nous proposent leur aide, et le comparateur est en ligne.</p>
           </div>
-          <p class="deadline">Maintenant, on passe au cap des <span class="mark-pink">800 soutiens mensuels</span> pour tenir tout le temps de la campagne.</p>
+          <p class="deadline">Maintenant, une seule chose compte : <span class="mark-pink">rester à 800 soutiens mensuels minimum</span> jusqu’au bout de la présidentielle.</p>
         </article>
 
         <article class="card yellow plan-card">
           <div class="eyebrow">Ce qu’on construit pour 2027</div>
           <h2>Comparer les candidat·es autrement.</h2>
           <p class="large-copy">Pas sur les petites phrases, les sondages ou les clashs. Sur les programmes, les votes réels, les actes au pouvoir, les contradictions et les conséquences concrètes dans nos vies.</p>
-          <p class="big-sentence">Le premier palier sert à lancer. <span class="mark-purple">Le cap des 800 sert à développer, vérifier, mettre à jour et tenir jusqu’à l’élection.</span></p>
+          <p class="big-sentence">Les 800 ont permis de lancer la plateforme. <span class="mark-purple">Les tenir, c’est ce qui permet de la vérifier, de la mettre à jour et de la faire vivre jusqu’à l’élection.</span></p>
         </article>
       </section>
 
@@ -2164,15 +2175,15 @@
         <article class="card blue change-card main">
           <div>
             <div class="eyebrow">Ce que votre don change</div>
-            <h2>Votre don finance la plateforme présidentielle.</h2>
+            <h2>Votre don fait tourner la plateforme.</h2>
           </div>
-          <p class="statement"><span class="mark-yellow">Concrètement</span>, il transforme l’élan en outil durable.</p>
+          <p class="statement"><span class="mark-yellow">Concrètement</span>, il transforme l’élan en outil qui dure.</p>
         </article>
 
         <article class="card white change-card">
           <h3>Concrètement</h3>
           <ul class="bullet-list">
-            <li>sortir une première version du comparateur politique mi-août</li>
+            <li>garder le comparateur en ligne, gratuit et sans publicité</li>
             <li>vérifier les programmes, les votes, les actes et les contradictions</li>
             <li>mettre à jour la plateforme pendant toute la campagne présidentielle</li>
             <li>développer les fonctionnalités demandées : profils croisés, sources, jeux, formats partageables</li>
@@ -2249,9 +2260,9 @@
 
       <section class="section" id="dons" aria-labelledby="final-title">
         <article class="card white final-card">
-          <div class="eyebrow">Cap 800 soutiens mensuels</div>
-          <h2 id="final-title">Le lancement est possible. Maintenant, il faut tenir.</h2>
-          <p class="final-copy">Votre don nous aide à développer le comparateur politique jusqu’à la présidentielle de 2027.</p>
+          <div class="eyebrow">Tenir les 800</div>
+          <h2 id="final-title">Le cap est atteint. Maintenant, il faut le tenir.</h2>
+          <p class="final-copy">Chaque mois, ces 800 soutiens sont ce qui permet de développer le comparateur, de le vérifier et de le mettre à jour jusqu’à la présidentielle de 2027.</p>
           <a class="button pop" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">👉 Soutenir la plateforme</a>
           <p class="tax-note">66 % de votre don est déductible des impôts. Par exemple, un don de 7 € par mois revient à environ 2,40 € après réduction fiscale.</p>
         </article>
@@ -2445,11 +2456,13 @@
         return;
       }
 
-      const percent = Math.min(Math.round((current / target) * 100), 100);
+      const capTenu = current >= target;
+      /* tant que le cap n'est pas atteint, on arrondit vers le bas : 799/800 ne doit pas afficher 100 % */
+      const percent = capTenu ? 100 : Math.min(Math.floor((current / target) * 100), 99);
       const left = Math.max(target - current, 0);
       const milestone = 300;
       const milestonePercent = Math.min(Math.max((milestone / target) * 100, 0), 100);
-      const milestoneStatus = current >= milestone ? "1er palier passé" : `${Math.max(milestone - current, 0)} avant lancement`;
+      const milestoneStatus = current >= milestone ? "1er palier passé" : `${Math.max(milestone - current, 0)} avant le 1er palier`;
 
       komuneMeterLatestData = {
         currentSupporters: current,
@@ -2463,11 +2476,15 @@
       meter.style.setProperty("--meter-progress", animate ? "0%" : `${percent}%`);
       meter.style.setProperty("--milestone-progress", `${milestonePercent}%`);
       meter.classList.toggle("milestone-passed", current >= milestone);
+      meter.classList.toggle("cap-tenu", capTenu);
       meter.classList.remove("is-animating");
 
       updateText("[data-supporter-target]", target, meter);
       updateText("[data-supporter-percent]", `${percent}%`, meter);
-      updateText("[data-supporter-left]", left, meter);
+      /* une fois le cap atteint, ce qui compte n'est plus ce qui manque mais la marge */
+      const marge = current - target;
+      updateText("[data-supporter-left]", capTenu ? (marge > 0 ? `+${marge}` : "✓") : left, meter);
+      updateText("[data-left-label]", capTenu ? (marge > 0 ? "au-dessus du cap" : "le cap, tout juste") : "pour retrouver le cap", meter);
       updateText("[data-supporter-milestone]", milestone, meter);
       updateText("[data-milestone-status]", milestoneStatus, meter);
 
@@ -2488,12 +2505,16 @@
 
       const track = meter.querySelector(".manual-meter-track");
       if (track) {
-        track.setAttribute("aria-label", `Objectif : ${current} soutiens mensuels sur ${target}`);
+        track.setAttribute("aria-label", capTenu
+          ? `Cap tenu : ${current} soutiens mensuels, pour un objectif de ${target}`
+          : `${current} soutiens mensuels sur un objectif de ${target}`);
       }
 
       const legend = meter.querySelector(".manual-meter-legend");
       if (legend) {
-        legend.textContent = current >= 300 ? `Premier palier déjà passé. Nouveau cap : ${target} soutiens mensuels pour développer l’outil pendant toute la présidentielle.` : `Cap final : ${target} soutiens mensuels pour toute la campagne.`;
+        legend.textContent = capTenu
+          ? `Cap des ${target} atteint. L’enjeu maintenant : rester au-dessus, chaque mois, jusqu’à la présidentielle.`
+          : `Il manque ${left} ${left > 1 ? "soutiens" : "soutien"} pour retrouver le cap des ${target} soutiens mensuels.`;
       }
 
       setMeterStatus(komuneMeterLatestData.updatedLabel, false);

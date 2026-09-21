@@ -3022,21 +3022,29 @@
     .sujet:hover { background: var(--yellow); transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
     .sujet:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
     .sujet:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
-    .sujet .s-emo { font-size: 20px; line-height: 1; }
+    .sujet .s-emo { font-size: 20px; line-height: 1; transition: transform .14s ease; }
+    .sujet:hover .s-emo, .sujet:focus-visible .s-emo { transform: scale(1.16) rotate(-7deg); }
     .sujet.au-hasard { background: var(--gold); }
 
     /* les chemins proposés */
     .chemins { display: grid; gap: 9px; }
-    .chemin { display: block; text-align: left; border: 2px solid var(--ink); border-radius: 15px;
+    .chemin { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 13px;
+      text-align: left; border: 2px solid var(--ink); border-radius: 15px;
       background: var(--green); padding: 12px 15px; font: inherit; color: var(--ink); cursor: pointer;
       min-height: 52px; box-shadow: 3px 3px 0 var(--ink);
-      transition: transform .12s ease, box-shadow .12s ease; }
-    .chemin:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease; }
+    .chemin:hover { background: var(--yellow); transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
     .chemin:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
-    .chemin:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    .chemin:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; background: var(--yellow); }
     .chemin b { display: block; font-size: 16px; font-weight: 800; }
     .chemin small { display: block; margin-top: 2px; font-size: 13px; font-weight: 600; opacity: .8; }
     .chemin.secondaire { background: var(--white); }
+    .chemin.secondaire:hover, .chemin.secondaire:focus-visible { background: var(--sky); }
+    /* l'emoji bouge un peu au survol : decoratif, jamais lu, et immobile si la personne
+       a demande moins d'animations */
+    .chemin-emo { font-size: 22px; line-height: 1; display: block;
+      transition: transform .14s ease; }
+    .chemin:hover .chemin-emo, .chemin:focus-visible .chemin-emo { transform: scale(1.16) rotate(-7deg); }
 
     /* la carte d'une mesure */
     .carte { border: 2px solid var(--ink); border-radius: 20px; background: var(--white);
@@ -3054,6 +3062,8 @@
       display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
     .carte-source a { color: var(--bleu-texte, #0000d6); }
     .carte-plus { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .carte-plus .btn:hover, .carte-nav .btn:not(:disabled):hover { background: var(--sky); }
+    .carte-nav .btn.play:not(:disabled):hover { background: var(--yellow); }
     .carte-texte .texte-integral { margin: 0; border-left: 4px solid var(--line); padding: 4px 0 4px 13px;
       font-size: 15px; line-height: 1.5; font-weight: 600; }
     .carte-texte .texte-integral.attente { color: var(--muted); font-style: italic; border-left-style: dashed; }
@@ -3095,6 +3105,8 @@
       .tour.komune p { font-size: 15.5px; }
       .grille-sujets { grid-template-columns: repeat(auto-fill, minmax(146px, 1fr)); gap: 7px; }
       .sujet { font-size: 13.5px; padding: 10px 11px; border-radius: 13px; box-shadow: 2px 2px 0 var(--ink); }
+      .chemin { gap: 11px; padding: 11px 13px; }
+      .chemin-emo { font-size: 20px; }
       .carte { padding: 14px 15px; border-radius: 16px; box-shadow: 3px 3px 0 var(--ink); }
       .carte-tete .tete-img, .carte-tete .tete-init { width: 50px; height: 50px; }
       .carte-nom { font-size: 18px; }
@@ -3103,8 +3115,10 @@
       .muets .m-etat { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 3px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .sujet, .chemin { transition: none; }
+      .sujet, .chemin, .chemin-emo, .sujet .s-emo { transition: none; }
       .sujet:hover, .chemin:hover, .sujet:active, .chemin:active { transform: none; }
+      .chemin:hover .chemin-emo, .chemin:focus-visible .chemin-emo,
+      .sujet:hover .s-emo, .sujet:focus-visible .s-emo { transform: none; }
       .tour.attente .pastille { animation: none; opacity: 1; }
     }
   </style>
@@ -7059,6 +7073,8 @@
     }
     function nb(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
     function pluriel(n, un, des) { return nb(n) + ' ' + (n > 1 ? des : un); }
+    /* un emoji decoratif : il ne doit jamais etre lu a voix haute, le texte du bouton suffit */
+    function emo(e) { return '<span class="chemin-emo" aria-hidden="true">' + e + '</span>'; }
     function el(html) { var t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; }
 
     /* ---------- les tours de parole ---------- */
@@ -7172,8 +7188,8 @@
     function question(rendreFocus) {
       fil.innerHTML = '';
       ajouter('komune ouverture',
-        '<p class="demande">Qu\'est-ce qui compte le plus pour vous&nbsp;?</p>' +
-        '<p class="sous-demande">Choisissez un sujet. On regarde ce que les candidat·es en écrivent, et d\'où vient chaque phrase.</p>');
+        '<p class="demande">Vous voulez vérifier quoi&nbsp;?</p>' +
+        '<p class="sous-demande">Choisissez un sujet. On vous montre ce que les candidat·es en écrivent, mot pour mot, et d\'où vient chaque phrase.</p>');
       var sujets = SUJETS.map(function (s) {
         return '<button type="button" class="sujet" data-theme="' + s.n + '">' +
           '<span class="s-emo" aria-hidden="true">' + s.e + '</span>' + esc(s.t) + '</button>';
@@ -7222,18 +7238,18 @@
     function proposerChemins(b) {
       var opts = [];
       if (b.ecrivent.length) {
-        opts.push('<button type="button" class="chemin" data-chemin="lire">' +
-          '<b>Lire ce qu\'ils promettent</b><small>' + pluriel(b.ecrivent.length, 'candidat·e, une mesure à la fois', 'candidat·es, une mesure à la fois') + '</small></button>');
+        opts.push('<button type="button" class="chemin" data-chemin="lire">' + emo('📖') +
+          '<span><b>Lire ce qu\'ils promettent</b><small>' + pluriel(b.ecrivent.length, 'candidat·e, une mesure à la fois', 'candidat·es, une mesure à la fois') + '</small></span></button>');
       }
       if (b.meilleur) {
-        opts.push('<button type="button" class="chemin" data-chemin="point">' +
-          '<b>Le point où ils se retrouvent le plus</b><small>' + esc(P.sous[b.meilleur.st][1]) + '</small></button>');
+        opts.push('<button type="button" class="chemin" data-chemin="point">' + emo('🤝') +
+          '<span><b>Le point où ils se retrouvent le plus</b><small>' + esc(P.sous[b.meilleur.st][1]) + '</small></span></button>');
       }
       if (b.muets.length) {
-        opts.push('<button type="button" class="chemin" data-chemin="muets">' +
-          '<b>Qui n\'en parle pas</b><small>' + pluriel(b.muets.length, 'candidat·e déclaré·e', 'candidat·es déclaré·es') + '</small></button>');
+        opts.push('<button type="button" class="chemin" data-chemin="muets">' + emo('🤐') +
+          '<span><b>Qui n\'en parle pas</b><small>' + pluriel(b.muets.length, 'candidat·e déclaré·e', 'candidat·es déclaré·es') + '</small></span></button>');
       }
-      opts.push('<button type="button" class="chemin secondaire" data-chemin="autre"><b>Un autre sujet</b></button>');
+      opts.push('<button type="button" class="chemin secondaire" data-chemin="autre">' + emo('🔀') + '<span><b>Un autre sujet</b></span></button>');
       cadrer(ajouter('choix', '<p class="petite-demande">Par quoi on commence&nbsp;?</p><div class="chemins">' + opts.join('') + '</div>'));
     }
 
@@ -7278,8 +7294,8 @@
             (url ? ' · <a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">Voir la source ↗</a>' : '') +
           '</p>' +
           '<p class="carte-plus">' +
-            '<button type="button" class="btn" data-texte="' + esc(m.id) + '">Lire le texte complet</button>' +
-            (reste ? '<button type="button" class="btn" data-tout="' + esc(slug) + '">Ses ' + nb(reste) + ' autres sur ce sujet</button>' : '') +
+            '<button type="button" class="btn" data-texte="' + esc(m.id) + '"><span aria-hidden="true">📄</span> Lire le texte complet</button>' +
+            (reste ? '<button type="button" class="btn" data-tout="' + esc(slug) + '"><span aria-hidden="true">🗂️</span> Ses ' + nb(reste) + ' autres sur ce sujet</button>' : '') +
           '</p>' +
           '<div class="carte-texte" id="txt-' + esc(m.id) + '" hidden></div>' +
         '</article>' +
@@ -7320,9 +7336,9 @@
         'À droite de chaque nom, où ils en sont.</p>' +
         '<ul class="muets">' + lignes + '</ul>', true);
       cadrer(ajouter('choix', '<div class="chemins">' +
-        '<button type="button" class="chemin" data-chemin="lire"><b>Lire ceux qui en parlent</b><small>' +
-          pluriel(b.ecrivent.length, 'candidat·e', 'candidat·es') + '</small></button>' +
-        '<button type="button" class="chemin secondaire" data-chemin="autre"><b>Un autre sujet</b></button></div>'));
+        '<button type="button" class="chemin" data-chemin="lire">' + emo('📖') + '<span><b>Lire ceux qui en parlent</b><small>' +
+          pluriel(b.ecrivent.length, 'candidat·e', 'candidat·es') + '</small></span></button>' +
+        '<button type="button" class="chemin secondaire" data-chemin="autre">' + emo('🔀') + '<span><b>Un autre sujet</b></span></button></div>'));
     }
 
     /* ---------- etape 3c : le point le plus partage ---------- */
@@ -7345,9 +7361,9 @@
         (ETAT.st != null ? ', pour le seul point «&nbsp;' + esc(P.sous[ETAT.st][1]) + '&nbsp;»' : '') +
         '. Il reste <b>' + pluriel(b.M.length - vues, 'mesure', 'mesures') + '</b> sur ce sujet dans le référentiel.</p>', true);
       cadrer(ajouter('choix', '<div class="chemins">' +
-        '<button type="button" class="chemin" data-ouvrir="' + ETAT.theme + '"><b>Ouvrir l\'outil sur ' + esc(sujet) + '</b>' +
-          '<small>les ' + nb(b.M.length) + ' mesures, la recherche, les sous-thèmes</small></button>' +
-        '<button type="button" class="chemin secondaire" data-chemin="autre"><b>Un autre sujet</b></button></div>'));
+        '<button type="button" class="chemin" data-ouvrir="' + ETAT.theme + '">' + emo('🧭') + '<span><b>Ouvrir l\'outil sur ' + esc(sujet) + '</b>' +
+          '<small>les ' + nb(b.M.length) + ' mesures, la recherche, les sous-thèmes</small></span></button>' +
+        '<button type="button" class="chemin secondaire" data-chemin="autre">' + emo('🔀') + '<span><b>Un autre sujet</b></span></button></div>'));
     }
 
     /* ---------- l'adresse ---------- */
@@ -7392,7 +7408,7 @@
       if ((t = e.target.closest('[data-texte]'))) {
         var id = t.dataset.texte, zone = document.getElementById('txt-' + id);
         if (!zone) { return; }
-        if (!zone.hidden) { zone.hidden = true; t.textContent = 'Lire le texte complet'; return; }
+        if (!zone.hidden) { zone.hidden = true; t.innerHTML = '<span aria-hidden="true">📄</span> Lire le texte complet'; return; }
         t.disabled = true;
         chargerTextes().then(function (T) {
           var e2 = T[id] || {};
@@ -7401,7 +7417,7 @@
             : '<p class="texte-integral attente">Le document ne développe pas cette mesure&nbsp;: l\'intitulé est le texte intégral.</p>';
           zone.hidden = false;
           t.disabled = false;
-          t.textContent = 'Replier le texte';
+          t.innerHTML = '<span aria-hidden="true">📄</span> Replier le texte';
         });
         return;
       }
