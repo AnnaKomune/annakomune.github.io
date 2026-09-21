@@ -2976,6 +2976,137 @@
 
     /* 5. un rappel visible de l'onglet actif au clavier, en plus du contour */
     .entree:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+    /* ================= le premier écran : une question, puis une chose à la fois ================= */
+    .parcours { max-width: 860px; margin: 0; padding: 4px 0 40px; }
+    /* une seule colonne, definie, sinon la grille imbriquee des sujets se retracte */
+    .fil { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .tour { scroll-margin-top: 20px; scroll-margin-bottom: 116px; }
+    .tour:focus { outline: none; }
+    .tour:focus-visible { outline: 3px solid var(--blue); outline-offset: 6px; border-radius: 12px; }
+
+    /* ce que dit Komune */
+    .tour.komune { border: 2px solid var(--ink); border-radius: 18px; border-top-left-radius: 4px;
+      background: var(--white); box-shadow: 4px 4px 0 var(--ink); padding: 15px 18px; }
+    .tour.komune p { margin: 0; font-size: 16.5px; line-height: 1.5; font-weight: 600; }
+    .tour.komune p + p { margin-top: 9px; }
+    .tour.komune b { background: var(--yellow); padding: 0 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    .tour.komune .nuance { display: block; margin-top: 9px; font-weight: 600; font-size: 14.5px; color: var(--muted); }
+    .tour.komune .nuance b { background: none; padding: 0; }
+
+    /* l'ouverture : la question seule */
+    .tour.komune.ouverture { border: 0; background: none; box-shadow: none; padding: 26px 0 2px; }
+    .tour.ouverture .demande { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      font-size: min(clamp(28px, 5.4vw, 46px), 9vw); line-height: 1.02; font-weight: 700; text-wrap: balance; }
+    .tour.ouverture .sous-demande { margin-top: 12px; font-size: 16px; font-weight: 600; color: var(--muted); max-width: 52ch; }
+
+    /* ce que répond le visiteur */
+    .tour.visiteur { justify-self: end; }
+    .bulle-v { display: inline-block; border: 2px solid var(--ink); border-radius: 999px; border-bottom-right-radius: 5px;
+      background: var(--sky); padding: 8px 16px; font-weight: 800; font-size: 15.5px; box-shadow: 3px 3px 0 var(--ink); }
+
+    /* l'attente */
+    .tour.attente { display: flex; align-items: center; gap: 11px; color: var(--muted); font-weight: 600; font-size: 15px; }
+    .tour.attente .pastille { width: 13px; height: 13px; flex: none; border-radius: 99px; background: var(--purple);
+      animation: battement 1.1s ease-in-out infinite; }
+    @keyframes battement { 0%, 100% { opacity: .25; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.15); } }
+
+    /* la grille des sujets */
+    .petite-demande { margin: 0 0 10px; font-weight: 700; font-size: 15.5px; }
+    .grille-sujets { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 9px; }
+    .sujet { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 9px; text-align: left;
+      border: 2px solid var(--ink); border-radius: 15px; background: var(--white); padding: 11px 13px;
+      font: inherit; font-weight: 700; font-size: 14.5px; line-height: 1.2; color: var(--ink);
+      min-height: 52px; cursor: pointer; box-shadow: 3px 3px 0 var(--ink);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease; }
+    .sujet:hover { background: var(--yellow); transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+    .sujet:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+    .sujet:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    .sujet .s-emo { font-size: 20px; line-height: 1; }
+    .sujet.au-hasard { background: var(--gold); }
+
+    /* les chemins proposés */
+    .chemins { display: grid; gap: 9px; }
+    .chemin { display: block; text-align: left; border: 2px solid var(--ink); border-radius: 15px;
+      background: var(--green); padding: 12px 15px; font: inherit; color: var(--ink); cursor: pointer;
+      min-height: 52px; box-shadow: 3px 3px 0 var(--ink);
+      transition: transform .12s ease, box-shadow .12s ease; }
+    .chemin:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+    .chemin:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+    .chemin:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    .chemin b { display: block; font-size: 16px; font-weight: 800; }
+    .chemin small { display: block; margin-top: 2px; font-size: 13px; font-weight: 600; opacity: .8; }
+    .chemin.secondaire { background: var(--white); }
+
+    /* la carte d'une mesure */
+    .carte { border: 2px solid var(--ink); border-radius: 20px; background: var(--white);
+      box-shadow: 5px 5px 0 var(--ink); padding: 17px 19px; display: grid; gap: 12px; }
+    .carte-tete { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 13px; }
+    .carte-tete .tete-img { width: 62px; height: 62px; object-fit: contain; display: block; }
+    .carte-tete .tete-init { display: grid; place-items: center; width: 62px; height: 62px; border: 2px solid var(--ink);
+      border-radius: 50%; background: var(--sky); font-weight: 800; font-size: 19px; }
+    .carte-nom { margin: 0; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      font-size: 22px; line-height: 1.05; font-weight: 700; }
+    .carte-parti { margin: 2px 0 0; font-size: 13.5px; font-weight: 650; color: var(--muted); }
+    .carte-mesure { margin: 0; border-left: 5px solid var(--purple); padding: 2px 0 2px 14px;
+      font-size: 18px; line-height: 1.42; font-weight: 650; }
+    .carte-source { margin: 0; font-size: 13.5px; font-weight: 600; color: var(--muted);
+      display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+    .carte-source a { color: var(--bleu-texte, #0000d6); }
+    .carte-plus { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .carte-texte .texte-integral { margin: 0; border-left: 4px solid var(--line); padding: 4px 0 4px 13px;
+      font-size: 15px; line-height: 1.5; font-weight: 600; }
+    .carte-texte .texte-integral.attente { color: var(--muted); font-style: italic; border-left-style: dashed; }
+    .carte-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; }
+    .carte-compte { margin: 0; font-size: 13.5px; font-weight: 700; color: var(--muted);
+      font-variant-numeric: tabular-nums; }
+    .carte-nav .btn:disabled { opacity: .4; cursor: not-allowed; box-shadow: none; }
+
+    /* qui n'en parle pas */
+    .muets { list-style: none; margin: 13px 0 0; padding: 0; display: grid; gap: 7px; }
+    .muets li { display: grid; grid-template-columns: 1fr auto; gap: 3px 11px; align-items: baseline;
+      border-bottom: 1px solid var(--line); padding-bottom: 7px; }
+    .muets .m-nom { font-weight: 800; font-size: 15.5px; }
+    .muets .m-parti { grid-column: 1; font-size: 13px; color: var(--muted); font-weight: 600; }
+    .muets .m-etat { grid-column: 2; grid-row: 1 / span 2; font-size: 12.5px; font-weight: 700;
+      border: 1.5px solid var(--line); border-radius: 999px; padding: 3px 10px; color: var(--muted);
+      text-align: center; align-self: center; }
+
+    /* la sortie vers l'outil */
+    .parcours-sortie { margin: 26px 0 0; text-align: center; }
+    .lien-outil { border: 0; background: none; font: inherit; font-weight: 700; font-size: 14.5px;
+      color: var(--muted); cursor: pointer; text-decoration: underline; text-underline-offset: 4px;
+      min-height: 44px; padding: 0 8px; }
+    .lien-outil:hover { color: var(--ink); }
+    .lien-outil:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+
+    /* le retour depuis l'outil */
+    .retour-parcours { margin: 0 0 14px; }
+    .retour-parcours button { border: 2px solid var(--ink); background: var(--white); border-radius: 999px;
+      padding: 7px 15px; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer;
+      min-height: 44px; box-shadow: 2px 2px 0 var(--ink); }
+    .retour-parcours button:hover { background: var(--yellow); }
+    .retour-parcours button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+    @media (max-width: 900px) {
+      .tour.komune.ouverture { padding: 14px 0 2px; }
+      .parcours { padding-bottom: 56px; }
+      .tour.komune { padding: 13px 14px; border-radius: 15px; border-top-left-radius: 4px; box-shadow: 3px 3px 0 var(--ink); }
+      .tour.komune p { font-size: 15.5px; }
+      .grille-sujets { grid-template-columns: repeat(auto-fill, minmax(146px, 1fr)); gap: 7px; }
+      .sujet { font-size: 13.5px; padding: 10px 11px; border-radius: 13px; box-shadow: 2px 2px 0 var(--ink); }
+      .carte { padding: 14px 15px; border-radius: 16px; box-shadow: 3px 3px 0 var(--ink); }
+      .carte-tete .tete-img, .carte-tete .tete-init { width: 50px; height: 50px; }
+      .carte-nom { font-size: 18px; }
+      .carte-mesure { font-size: 16.5px; }
+      .muets li { grid-template-columns: 1fr; }
+      .muets .m-etat { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 3px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sujet, .chemin { transition: none; }
+      .sujet:hover, .chemin:hover, .sujet:active, .chemin:active { transform: none; }
+      .tour.attente .pastille { animation: none; opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -3012,6 +3143,13 @@
       <p class="pitch">Trois entrées, les mêmes données : le face-à-face entre ce qui est <strong>promis</strong> et ce qui est <strong>voté</strong>, les fiches des <strong>33 candidat·es</strong>, et les <strong>4 456 mesures</strong> de leurs programmes. Chaque ligne porte sa source.</p>
       <p class="beta">Version beta&nbsp;: la plateforme s'enrichit plusieurs fois par semaine, et on montre aussi ce qui reste à vérifier. Raphaël Glucksmann et Marine Tondelier viennent de se déclarer&nbsp;: leurs votes sont en cours d'ajout. <a href="#chantier">Où on en est exactement →</a></p>
     </div>
+    <section class="parcours" id="parcours" aria-labelledby="parcours-titre">
+      <h2 class="lecteur-seul" id="parcours-titre">Par où commencer</h2>
+      <div class="fil" id="fil"></div>
+      <p class="parcours-sortie"><button type="button" class="lien-outil" id="vers-outil">Je préfère l'outil complet <span aria-hidden="true">→</span></button></p>
+    </section>
+    <div id="outil-complet" hidden>
+    <p class="retour-parcours" id="retour-parcours" hidden><button type="button" id="btn-retour-parcours">← Revenir au début</button></p>
 <div class="entrees-wrap">
       <div class="entrees" id="entrees" role="tablist" aria-label="Les trois entrées de l'outil">
         <button type="button" class="entree" id="tab-actes" role="tab" aria-selected="true" aria-controls="pan-actes">
@@ -3467,6 +3605,7 @@
       </div>
       <p class="vers-projet"><a class="button button-ghost" href="../comparateur-2027/">Le projet de comparateur, et comment y participer →</a></p>
     </section>
+    </div>
 </main>
 
     <footer class="site-foot">
@@ -6449,12 +6588,14 @@
     /* ---------- filtres ---------- */
     function correspond(m) {
       if (ETAT.vue === 'sujet') {
-        if (ETAT.s != null && m.theme !== ETAT.s && m.theme2.indexOf(ETAT.s) < 0) { return false; }
+        /* une mesure n'appartient qu'a sa thematique principale : la double etiquette reste
+           visible sur la carte et cherchable, mais elle ne compte pas deux fois */
+        if (ETAT.s != null && m.theme !== ETAT.s) { return false; }
         if (ETAT.st != null && m.st !== ETAT.st) { return false; }
         if (ETAT.tag != null && m.tags.indexOf(ETAT.tag) < 0) { return false; }
       } else {
         if (ETAT.c && m.pkey !== ETAT.c) { return false; }
-        if (ETAT.cs != null && m.theme !== ETAT.cs && m.theme2.indexOf(ETAT.cs) < 0) { return false; }
+        if (ETAT.cs != null && m.theme !== ETAT.cs) { return false; }
       }
       return true;
     }
@@ -6897,6 +7038,412 @@
   <script>
   (function () {
     'use strict';
+
+    /* ================================================================
+       Le premier ecran : une question, puis une chose a la fois.
+       Tout ce qui est affirme ici est compte dans le referentiel au
+       moment ou la phrase s'affiche. Rien n'est ecrit en dur.
+       ================================================================ */
+
+    var fil = document.getElementById('fil');
+    var section = document.getElementById('parcours');
+    if (!fil) { return; }
+
+    var P = null, C = null, TEXTES = null;
+    var ETAT = { theme: null, chemin: null, i: 0, liste: [], st: null };
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function nb(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+    function pluriel(n, un, des) { return nb(n) + ' ' + (n > 1 ? des : un); }
+    function el(html) { var t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; }
+
+    /* ---------- les tours de parole ---------- */
+    function ajouter(cls, html, focusable) {
+      var d = el('<div class="tour ' + cls + '">' + html + '</div>');
+      fil.appendChild(d);
+      if (focusable) {
+        d.setAttribute('tabindex', '-1');
+        setTimeout(function () {
+          d.focus({ preventScroll: true });
+          d.scrollIntoView({ block: 'nearest' });
+        }, 40);
+      }
+      return d;
+    }
+    /* les options arrivent sous une reponse parfois longue : on les ramene dans l'ecran,
+       sans voler le focus, sinon en mobile elles restent sous la ligne de flottaison */
+    function cadrer(d) {
+      if (!d) { return; }
+      setTimeout(function () { d.scrollIntoView({ block: 'nearest' }); }, 70);
+    }
+    function retirerChoix() {
+      fil.querySelectorAll('.tour.choix').forEach(function (d) { d.remove(); });
+    }
+
+    /* ---------- chargement des donnees, a la demande ---------- */
+    var enCours = null;
+    function script(src) {
+      return new Promise(function (ok, ko) {
+        var s = document.createElement('script');
+        s.src = src; s.async = false;
+        s.onload = ok; s.onerror = function () { ko(new Error(src)); };
+        document.head.appendChild(s);
+      });
+    }
+    function charger() {
+      if (enCours) { return enCours; }
+      var attente = ajouter('attente', '<span class="pastille" aria-hidden="true"></span><span>Je regarde dans le référentiel…</span>');
+      enCours = Promise.resolve()
+        .then(function () { return window.KOMUNE_CANDIDATS ? null : script('../candidats/data.js'); })
+        .then(function () { return window.KOMUNE_PROGRAMMES ? null : script('../programmes/data.js'); })
+        .then(function () {
+          P = window.KOMUNE_PROGRAMMES;
+          C = (window.KOMUNE_CANDIDATS && window.KOMUNE_CANDIDATS.candidats) || [];
+          attente.remove();
+        })
+        .catch(function () {
+          attente.innerHTML = '<span>Les données n\'ont pas pu être chargées. Vérifiez votre connexion, puis rechargez la page.</span>';
+          enCours = null;
+          throw new Error('donnees');
+        });
+      return enCours;
+    }
+    function chargerTextes() {
+      if (TEXTES) { return Promise.resolve(TEXTES); }
+      if (window.KOMUNE_TEXTES) { TEXTES = window.KOMUNE_TEXTES; return Promise.resolve(TEXTES); }
+      return script('../programmes/textes.js').then(function () { TEXTES = window.KOMUNE_TEXTES || {}; return TEXTES; });
+    }
+
+    /* ---------- les comptes, refaits a chaque affichage ---------- */
+    var K = null;
+    function ligne(r) {
+      if (!K) { K = {}; P.cles.forEach(function (c, i) { K[c] = i; }); }
+      var o = {};
+      P.cles.forEach(function (c, i) { if (r[i] != null) { o[c] = r[i]; } });
+      o.doc = P.docs[o.d];
+      o.tags = o.tags || [];
+      return o;
+    }
+    function mesuresDuTheme(t) {
+      return P.mesures.map(ligne).filter(function (m) { return m.theme === t; });
+    }
+    function declares() {
+      return C.filter(function (c) { return c.statut === 'déclaré'; });
+    }
+    function bilan(t) {
+      var M = mesuresDuTheme(t);
+      var parSlug = {}, partis = {}, horsCourse = {}, p2027 = 0, sousC = {}, sousM = {};
+      M.forEach(function (m) {
+        var d = m.doc;
+        if (d.src === 'Prés. 2027') { p2027++; }
+        var qui = d.cslug || null;
+        if (qui) { (parSlug[qui] = parSlug[qui] || []).push(m); }
+        else if (d.cand) { horsCourse[d.cand] = 1; }   /* une personne qui n'est pas candidate en 2027 */
+        else { partis[d.parti] = 1; }                  /* un programme de parti sans candidat·e désigné·e */
+        (sousC[m.st] = sousC[m.st] || {})[qui || d.cand || d.parti] = 1;
+        sousM[m.st] = (sousM[m.st] || 0) + 1;
+      });
+      var D = declares();
+      var ecrivent = D.filter(function (c) { return parSlug[c.slug]; });
+      var muets = D.filter(function (c) { return !parSlug[c.slug]; });
+      /* le sous-theme ou le plus de monde ecrit quelque chose */
+      var meilleur = null;
+      var larges = {};
+      (P.larges || []).forEach(function (i) { larges[i] = 1; });
+      Object.keys(sousC).forEach(function (st) {
+        /* les sous-thèmes fourre-tout du classeur ne sont pas des points de convergence */
+        if (larges[st]) { return; }
+        var n = Object.keys(sousC[st]).length;
+        if (!meilleur || n > meilleur.n || (n === meilleur.n && sousM[st] > meilleur.mes)) {
+          meilleur = { st: Number(st), n: n, mes: sousM[st] };
+        }
+      });
+      ecrivent.sort(function (a, b) { return parSlug[b.slug].length - parSlug[a.slug].length; });
+      return { M: M, parSlug: parSlug, ecrivent: ecrivent, muets: muets, p2027: p2027,
+               partis: Object.keys(partis).length, horsCourse: Object.keys(horsCourse).length,
+               meilleur: meilleur, D: D };
+    }
+
+    /* ---------- etape 1 : la question ---------- */
+    function question(rendreFocus) {
+      fil.innerHTML = '';
+      ajouter('komune ouverture',
+        '<p class="demande">Qu\'est-ce qui compte le plus pour vous&nbsp;?</p>' +
+        '<p class="sous-demande">Choisissez un sujet. On regarde ce que les candidat·es en écrivent, et d\'où vient chaque phrase.</p>');
+      var sujets = SUJETS.map(function (s) {
+        return '<button type="button" class="sujet" data-theme="' + s.n + '">' +
+          '<span class="s-emo" aria-hidden="true">' + s.e + '</span>' + esc(s.t) + '</button>';
+      }).join('');
+      var grille = ajouter('choix tour-sujets', '<div class="grille-sujets" role="group" aria-label="Choisir un sujet">' + sujets +
+        '<button type="button" class="sujet au-hasard" data-hasard><span class="s-emo" aria-hidden="true">🎲</span>Au hasard</button></div>');
+      if (rendreFocus) {
+        var b1 = grille.querySelector('.sujet');
+        if (b1) { b1.focus({ preventScroll: true }); b1.scrollIntoView({ block: 'center' }); }
+      }
+    }
+
+    /* ---------- etape 2 : ce que dit le referentiel ---------- */
+    function choisirSujet(t) {
+      ETAT.theme = t; ETAT.chemin = null; ETAT.i = 0; ETAT.st = null;
+      retirerChoix();
+      var s = SUJETS.filter(function (x) { return x.n === t; })[0] || { t: '', e: '' };
+      ajouter('visiteur', '<span class="bulle-v"><span aria-hidden="true">' + s.e + '</span> ' + esc(s.t) + '</span>');
+      majHash();
+      charger().then(function () {
+        var b = bilan(t);
+        ETAT.bilan = b;
+        var nomSujet = P.themes[t];
+        var phrases = [];
+        phrases.push('<b>' + esc(nomSujet) + '.</b> Le référentiel contient <b>' +
+          pluriel(b.M.length, 'mesure', 'mesures') + '</b>, écrites par <b>' +
+          nb(b.ecrivent.length) + ' des ' + nb(b.D.length) + ' candidat·es déclaré·es</b>' +
+          '.');
+        var autres = [];
+        if (b.partis) { autres.push(pluriel(b.partis, 'programme de parti sans candidat·e désigné·e', 'programmes de partis sans candidat·e désigné·e')); }
+        if (b.horsCourse) { autres.push(pluriel(b.horsCourse, 'personne qui n\'est pas candidate en 2027', 'personnes qui ne sont pas candidates en 2027')); }
+        if (autres.length) { phrases.push('S\'y ajoutent ' + autres.join(' et ') + '.'); }
+        if (b.muets.length) {
+          phrases.push('<b>' + pluriel(b.muets.length, 'n\'écrit rien sur ce sujet', 'n\'écrivent rien sur ce sujet') + '.</b>');
+        }
+        phrases.push('<span class="nuance">Sur ces ' + nb(b.M.length) + ' mesures, ' + nb(b.p2027) +
+          ' viennent d\'un programme publié pour 2027. Les autres d\'une élection passée ou d\'un document de campagne, et c\'est écrit à côté de chaque phrase.</span>');
+        ajouter('komune', '<p>' + phrases.join(' ') + '</p>', true);
+        proposerChemins(b);
+      }).catch(function (e) {
+        ajouter('komune', '<p>Quelque chose s\'est mal passé de notre côté. Rechargez la page, ou passez par l\'outil complet.</p>');
+        if (window.console) { console.error('parcours', e); }
+      });
+    }
+
+    function proposerChemins(b) {
+      var opts = [];
+      if (b.ecrivent.length) {
+        opts.push('<button type="button" class="chemin" data-chemin="lire">' +
+          '<b>Lire ce qu\'ils promettent</b><small>' + pluriel(b.ecrivent.length, 'candidat·e, une mesure à la fois', 'candidat·es, une mesure à la fois') + '</small></button>');
+      }
+      if (b.meilleur) {
+        opts.push('<button type="button" class="chemin" data-chemin="point">' +
+          '<b>Le point où ils se retrouvent le plus</b><small>' + esc(P.sous[b.meilleur.st][1]) + '</small></button>');
+      }
+      if (b.muets.length) {
+        opts.push('<button type="button" class="chemin" data-chemin="muets">' +
+          '<b>Qui n\'en parle pas</b><small>' + pluriel(b.muets.length, 'candidat·e déclaré·e', 'candidat·es déclaré·es') + '</small></button>');
+      }
+      opts.push('<button type="button" class="chemin secondaire" data-chemin="autre"><b>Un autre sujet</b></button>');
+      cadrer(ajouter('choix', '<p class="petite-demande">Par quoi on commence&nbsp;?</p><div class="chemins">' + opts.join('') + '</div>'));
+    }
+
+    /* ---------- etape 3a : les cartes, une par candidat·e ---------- */
+    function lancerLecture(restreint) {
+      var b = ETAT.bilan;
+      ETAT.liste = b.ecrivent.map(function (c) {
+        var ms = b.parSlug[c.slug];
+        if (restreint != null) { ms = ms.filter(function (m) { return m.st === restreint; }); }
+        return { c: c, ms: ms };
+      }).filter(function (x) { return x.ms.length; });
+      ETAT.i = 0;
+      ETAT.st = restreint;
+      if (!ETAT.liste.length) { return; }
+      ajouter('komune',
+        '<p>On y va, une personne à la suite de l\'autre, en commençant par celle qui en écrit le plus. ' +
+        'Chaque carte montre <b>une mesure</b> et d\'où elle vient.</p>');
+      var zone = ajouter('carte-zone', '<div id="carte-courante"></div>', true);
+      zone.id = 'zone-cartes';
+      carte();
+    }
+
+    function carte(rendre) {
+      var z = document.getElementById('carte-courante');
+      if (!z) { return; }
+      var x = ETAT.liste[ETAT.i], c = x.c, m = x.ms[0];
+      var reste = x.ms.length - 1;
+      var slug = c.slug;
+      var tete = TETES.indexOf(slug) > -1
+        ? '<img class="tete-img" src="../candidats/img/' + esc(slug) + '.webp" alt="" width="84" height="84" decoding="async">'
+        : '<span class="tete-init" aria-hidden="true">' + esc(initiales(c.nom)) + '</span>';
+      var url = m.u != null ? P.urls[m.u] : (m.doc.url || null);
+      z.innerHTML =
+        '<article class="carte" aria-label="' + esc(c.nom + ', mesure ' + (ETAT.i + 1) + ' sur ' + ETAT.liste.length) + '">' +
+          '<header class="carte-tete">' + tete +
+            '<div><p class="carte-nom">' + esc(c.nom) + '</p><p class="carte-parti">' + esc(c.parti || '') + '</p></div>' +
+          '</header>' +
+          '<blockquote class="carte-mesure">' + esc(m.court) + '</blockquote>' +
+          '<p class="carte-source">' +
+            '<span class="badge-mention ' + classeSrc(m.doc.src) + '">(' + esc(m.doc.src) + ')</span> ' +
+            esc(P.sous[m.st][1]) +
+            (url ? ' · <a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">Voir la source ↗</a>' : '') +
+          '</p>' +
+          '<p class="carte-plus">' +
+            '<button type="button" class="btn" data-texte="' + esc(m.id) + '">Lire le texte complet</button>' +
+            (reste ? '<button type="button" class="btn" data-tout="' + esc(slug) + '">Ses ' + nb(reste) + ' autres sur ce sujet</button>' : '') +
+          '</p>' +
+          '<div class="carte-texte" id="txt-' + esc(m.id) + '" hidden></div>' +
+        '</article>' +
+        '<div class="carte-nav">' +
+          '<button type="button" class="btn" data-prec ' + (ETAT.i === 0 ? 'disabled' : '') + '>← Précédent</button>' +
+          '<p class="carte-compte" role="status">' + (ETAT.i + 1) + ' sur ' + ETAT.liste.length + '</p>' +
+          '<button type="button" class="btn play" data-suiv>' + (ETAT.i + 1 === ETAT.liste.length ? 'Terminer' : 'Suivant →') + '</button>' +
+        '</div>';
+      /* le innerHTML detruit le bouton qui avait le focus : on le rend, sinon le clavier repart du haut */
+      if (rendre) {
+        var b = z.querySelector('[data-' + rendre + ']');
+        if (!b || b.disabled) { b = z.querySelector('[data-suiv]'); }
+        if (b) { b.focus({ preventScroll: true }); b.scrollIntoView({ block: 'nearest' }); }
+      }
+    }
+
+    function initiales(nom) {
+      return nom.split(/[\s-]+/).filter(Boolean).slice(0, 3).map(function (x) { return x[0]; }).join('').toUpperCase();
+    }
+    var PASSEES = { 'Prés. 2022': 1, 'Légis. 2024': 1, 'Euro. 2024': 1, 'Légis. part. 2025': 1, 'Munic. 2026': 1 };
+    function classeSrc(v) { return v === 'Prés. 2027' ? 'b-2027' : (PASSEES[v] ? 'b-passe' : 'b-prop'); }
+
+    /* ---------- etape 3b : qui n'en parle pas ---------- */
+    function montrerMuets() {
+      var b = ETAT.bilan;
+      var parNom = {};
+      P.etat.forEach(function (e) { parNom[e.cand] = e; });
+      var lignes = b.muets.map(function (c) {
+        var e = parNom[c.nom];
+        var etat = e ? e.etat : null;
+        return '<li><span class="m-nom">' + esc(c.nom) + '</span>' +
+          '<span class="m-parti">' + esc(c.parti || '') + '</span>' +
+          (etat ? '<span class="m-etat">' + esc(etat) + '</span>' : '') + '</li>';
+      }).join('');
+      ajouter('komune',
+        '<p><b>' + pluriel(b.muets.length, 'candidat·e déclaré·e n\'écrit rien', 'candidat·es déclaré·es n\'écrivent rien') +
+        '</b> sur ce sujet. Souvent parce que leur programme n\'est pas sorti, ou pas complet. ' +
+        'À droite de chaque nom, où ils en sont.</p>' +
+        '<ul class="muets">' + lignes + '</ul>', true);
+      cadrer(ajouter('choix', '<div class="chemins">' +
+        '<button type="button" class="chemin" data-chemin="lire"><b>Lire ceux qui en parlent</b><small>' +
+          pluriel(b.ecrivent.length, 'candidat·e', 'candidat·es') + '</small></button>' +
+        '<button type="button" class="chemin secondaire" data-chemin="autre"><b>Un autre sujet</b></button></div>'));
+    }
+
+    /* ---------- etape 3c : le point le plus partage ---------- */
+    function montrerPoint() {
+      var b = ETAT.bilan, p = b.meilleur;
+      ajouter('komune',
+        '<p>Dans ce sujet, le point précis sur lequel le plus de monde écrit quelque chose, c\'est <b>' +
+        esc(P.sous[p.st][1]) + '</b>&nbsp;: <b>' + pluriel(p.n, 'candidat·e ou parti', 'candidat·es ou partis') +
+        '</b>, ' + pluriel(p.mes, 'mesure', 'mesures') + '. Écrire sur le même point ne veut pas dire être d\'accord&nbsp;: lisez.</p>', true);
+      lancerLecture(p.st);
+    }
+
+    /* ---------- fin de parcours ---------- */
+    function fin() {
+      var b = ETAT.bilan;
+      var vues = ETAT.liste.length;
+      var sujet = P.themes[ETAT.theme];
+      ajouter('komune',
+        '<p>Vous avez vu <b>' + pluriel(vues, 'candidat·e', 'candidat·es') + '</b> sur <b>' + esc(sujet) + '</b>' +
+        (ETAT.st != null ? ', pour le seul point «&nbsp;' + esc(P.sous[ETAT.st][1]) + '&nbsp;»' : '') +
+        '. Il reste <b>' + pluriel(b.M.length - vues, 'mesure', 'mesures') + '</b> sur ce sujet dans le référentiel.</p>', true);
+      cadrer(ajouter('choix', '<div class="chemins">' +
+        '<button type="button" class="chemin" data-ouvrir="' + ETAT.theme + '"><b>Ouvrir l\'outil sur ' + esc(sujet) + '</b>' +
+          '<small>les ' + nb(b.M.length) + ' mesures, la recherche, les sous-thèmes</small></button>' +
+        '<button type="button" class="chemin secondaire" data-chemin="autre"><b>Un autre sujet</b></button></div>'));
+    }
+
+    /* ---------- l'adresse ---------- */
+    var hashInterne = false;
+    function majHash() {
+      var h = ETAT.theme != null ? '#d=' + ETAT.theme : '';
+      if (location.hash !== h) {
+        hashInterne = true;
+        history.replaceState(null, '', location.pathname + location.search + h);
+        setTimeout(function () { hashInterne = false; }, 0);
+      }
+    }
+
+    /* ---------- les evenements ---------- */
+    fil.addEventListener('click', function (e) {
+      var t;
+      if ((t = e.target.closest('[data-theme]'))) { choisirSujet(Number(t.dataset.theme)); return; }
+      if (e.target.closest('[data-hasard]')) {
+        charger().then(function () {
+          var libres = SUJETS.filter(function (s) { return P.themes[s.n]; });
+          choisirSujet(libres[Math.floor(Math.random() * libres.length)].n);
+        });
+        return;
+      }
+      if ((t = e.target.closest('[data-chemin]'))) {
+        var quoi = t.dataset.chemin;
+        retirerChoix();
+        if (quoi === 'lire') { ajouter('visiteur', '<span class="bulle-v">Lire ce qu\'ils promettent</span>'); lancerLecture(null); }
+        else if (quoi === 'muets') { ajouter('visiteur', '<span class="bulle-v">Qui n\'en parle pas</span>'); montrerMuets(); }
+        else if (quoi === 'point') { ajouter('visiteur', '<span class="bulle-v">Le point où ils se retrouvent</span>'); montrerPoint(); }
+        else if (quoi === 'autre') { ETAT.theme = null; majHash(); question(true); }
+        return;
+      }
+      if ((t = e.target.closest('[data-suiv]'))) {
+        if (ETAT.i + 1 >= ETAT.liste.length) {
+          var z = document.getElementById('zone-cartes'); if (z) { z.remove(); }
+          fin();
+        } else { ETAT.i++; carte('suiv'); }
+        return;
+      }
+      if ((t = e.target.closest('[data-prec]'))) { if (ETAT.i > 0) { ETAT.i--; carte('prec'); } return; }
+      if ((t = e.target.closest('[data-texte]'))) {
+        var id = t.dataset.texte, zone = document.getElementById('txt-' + id);
+        if (!zone) { return; }
+        if (!zone.hidden) { zone.hidden = true; t.textContent = 'Lire le texte complet'; return; }
+        t.disabled = true;
+        chargerTextes().then(function (T) {
+          var e2 = T[id] || {};
+          zone.innerHTML = e2.t
+            ? '<blockquote class="texte-integral">' + esc(e2.t) + '</blockquote>'
+            : '<p class="texte-integral attente">Le document ne développe pas cette mesure&nbsp;: l\'intitulé est le texte intégral.</p>';
+          zone.hidden = false;
+          t.disabled = false;
+          t.textContent = 'Replier le texte';
+        });
+        return;
+      }
+      if ((t = e.target.closest('[data-tout]'))) {
+        allerOutil('#v=c&c=' + slugParti(t.dataset.tout) + '&s=' + ETAT.theme);
+        return;
+      }
+      if ((t = e.target.closest('[data-ouvrir]'))) { allerOutil('#s=' + t.dataset.ouvrir); return; }
+    });
+
+    function slugParti(slug) {
+      /* l'outil groupe par parti : on retrouve la cle du porteur depuis le slug de la personne */
+      var d = null;
+      P.docs.forEach(function (x) { if (!d && x.cslug === slug) { d = x; } });
+      return d ? d.parti.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : '';
+    }
+
+    /* ---------- le passage vers l'outil complet ---------- */
+    function allerOutil(hash) {
+      if (window.KP_OUTIL) { window.KP_OUTIL(hash || '#programmes'); }
+    }
+    var versOutil = document.getElementById('vers-outil');
+    if (versOutil) { versOutil.addEventListener('click', function () { allerOutil('#promesses-actes'); }); }
+
+    /* ---------- depart ---------- */
+    var SUJETS = [{"n": 1, "t": "Pouvoir d'achat & niveau de vie", "e": "💶"}, {"n": 2, "t": "Travail & emploi", "e": "💼"}, {"n": 3, "t": "Protection sociale & retraites", "e": "🛟"}, {"n": 4, "t": "Santé", "e": "🩺"}, {"n": 5, "t": "Écologie & climat", "e": "🌱"}, {"n": 6, "t": "Éducation & jeunesse", "e": "🎓"}, {"n": 7, "t": "Logement", "e": "🏠"}, {"n": 8, "t": "Services publics & territoires", "e": "🗺️"}, {"n": 9, "t": "Immigration, asile & nationalité", "e": "🛂"}, {"n": 10, "t": "Sécurité & justice", "e": "⚖️"}, {"n": 11, "t": "Droits, égalité & lutte contre les discriminations", "e": "✊"}, {"n": 12, "t": "Démocratie & institutions", "e": "🗳️"}, {"n": 13, "t": "Économie, entreprises & finances publiques", "e": "📈"}, {"n": 14, "t": "Agriculture & alimentation", "e": "🌾"}, {"n": 15, "t": "Culture, médias & information", "e": "🎭"}, {"n": 16, "t": "Numérique & technologies", "e": "💻"}, {"n": 17, "t": "International, Europe & défense", "e": "🌍"}, {"n": 18, "t": "Transports & mobilités", "e": "🚆"}];
+    var TETES = ["anasse-kazib", "antoine-mikolajczak", "benoit-mathieu", "bernard-cazeneuve", "bruno-retailleau", "clara-egger", "david-lisnard", "delphine-batho", "edouard-philippe", "emmanuel-maurel", "fabien-roussel", "fabien-verdier", "florian-philippot", "francis-lalanne", "francois-asselineau", "francois-ruffin", "gabriel-attal", "jean-luc-melenchon", "jerome-guedj", "juan-branco", "karim-bouamrane", "lydie-massard", "manolo-mlekuz", "marine-le-pen", "marine-tondelier", "nathalie-arthaud", "nicolas-dupont-aignan", "olivier-faure", "philippe-brun", "raphael-glucksmann", "segolene-royal", "selma-labib", "xavier-bertrand"];
+
+    window.KP_PARCOURS = {
+      demarrer: function (theme) {
+        if (theme != null) { question(); choisirSujet(theme); return; }
+        if (!fil.children.length) { question(); }
+      },
+      reinitialiser: function (rendreFocus) { ETAT.theme = null; question(rendreFocus); },
+      section: section
+    };
+    question();
+  })();
+  </script>
+  <script>
+  (function () {
+    'use strict';
     var ONG = [
       { cle: 'actes', hash: 'promesses-actes', donnees: [], init: null,
         titre: 'Promesses VS actes : le face-à-face, présidentielle 2027' },
@@ -6907,6 +7454,23 @@
     ];
     var TITRE_SITE = ' · Komune';
     var faits = {}, lances = {};
+    var parcours = document.getElementById('parcours');
+    var outil = document.getElementById('outil-complet');
+    var retour = document.getElementById('retour-parcours');
+    var hero = document.querySelector('.hero2');
+    var TITRE_PARCOURS = 'Le comparateur de la présidentielle 2027';
+
+    /* le premier écran ne montre qu'une question ; l'outil complet vient ensuite */
+    function montrer(quoi) {
+      var auParcours = quoi === 'parcours';
+      if (parcours) { parcours.hidden = !auParcours; }
+      if (outil) { outil.hidden = auParcours; }
+      if (retour) { retour.hidden = auParcours; }
+      if (hero) {
+        hero.querySelectorAll('.pitch, .beta').forEach(function (e) { e.hidden = auParcours; });
+      }
+      if (auParcours) { document.title = TITRE_PARCOURS + TITRE_SITE; }
+    }
     function charger(src) {
       return new Promise(function (ok, ko) {
         if (faits[src]) { ok(); return; }
@@ -6972,6 +7536,10 @@
       }
       return true;
     }
+    function auParcours() {
+      var h = (location.hash || '').replace(/^#/, '');
+      return !h || /^d=\d+$/.test(h);
+    }
     function deHash() {
       var h = (location.hash || '').replace(/^#/, '');
       if (!h) { return null; }
@@ -6995,9 +7563,38 @@
         afficher(ONG[(i + d + ONG.length) % ONG.length].cle, true, true);
       });
     });
-    window.addEventListener('popstate', function () { afficher(deHash() || 'actes', false, false); });
-    window.KP_ONGLET = function (cle, garderHash) { return afficher(cle, !garderHash, true); };
-    afficher(deHash() || 'actes', false, false);
+    function router(focus) {
+      if (auParcours()) {
+        montrer('parcours');
+        var m = (location.hash || '').match(/^#d=(\d+)$/);
+        if (window.KP_PARCOURS) { window.KP_PARCOURS.demarrer(m ? Number(m[1]) : null); }
+        return;
+      }
+      montrer('outil');
+      afficher(deHash() || 'actes', false, !!focus);
+    }
+    window.addEventListener('popstate', function () { router(false); });
+    window.KP_ONGLET = function (cle, garderHash) {
+      montrer('outil');
+      return afficher(cle, !garderHash, true);
+    };
+    /* appelé depuis le parcours : on ouvre l'outil sur l'adresse demandée */
+    window.KP_OUTIL = function (hash) {
+      montrer('outil');
+      if (hash && location.hash !== hash) { history.pushState(null, '', location.pathname + location.search + hash); }
+      afficher(deHash() || 'actes', false, true);
+      if (outil) { outil.scrollIntoView({ block: 'start' }); }
+    };
+    if (retour) {
+      retour.querySelector('button').addEventListener('click', function () {
+        history.pushState(null, '', location.pathname + location.search);
+        montrer('parcours');
+        if (parcours) { parcours.scrollIntoView({ block: 'start' }); }
+        /* le fil est reconstruit : on pose le focus sur le premier sujet, sinon le clavier repart du haut */
+        if (window.KP_PARCOURS) { window.KP_PARCOURS.reinitialiser(true); }
+      });
+    }
+    router(false);
   })();
   </script>
   <script>
