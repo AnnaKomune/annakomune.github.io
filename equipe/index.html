@@ -566,6 +566,9 @@
       .site-liens::-webkit-scrollbar { display: none; }
       .site-liens a { flex: none; font-size: 12.5px; padding: 0 12px; white-space: nowrap; }
     }
+
+    /* la rangee de liens defile au clavier : on montre le focus */
+    .site-liens:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 8px; }
   </style>
 </head>
 

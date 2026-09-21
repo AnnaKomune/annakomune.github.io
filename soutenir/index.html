@@ -2007,6 +2007,9 @@
       .site-liens::-webkit-scrollbar { display: none; }
       .site-liens a { flex: none; font-size: 12.5px; padding: 0 12px; white-space: nowrap; }
     }
+
+    /* la rangee de liens defile au clavier : on montre le focus */
+    .site-liens:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 8px; }
   </style>
 </head>
 
@@ -2053,7 +2056,7 @@
           </div>
         </article>
 
-        <aside class="card pink meter-card" id="top-jauge" aria-label="Objectif de soutiens Komune">
+        <div class="card pink meter-card" id="top-jauge" role="group" aria-label="Objectif de soutiens Komune">
           <div class="meter-intro">
             <div class="meter-intro-title">
               <div class="eyebrow">Nouveau cap</div>
@@ -2110,7 +2113,7 @@
             </div>
           </div>
           <a class="button" href="https://donorbox.org/komune" target="_blank" rel="noopener noreferrer">Je soutiens le comparateur ↗</a>
-        </aside>
+        </div>
       </section>
 
       <section class="section helped-grid" aria-label="Ce que Komune a peut-être aidé à faire">
