@@ -2794,10 +2794,16 @@
     .avertissement { margin: 0; font-size: 13.5px; font-weight: 650; color: var(--muted); border-left: 4px solid var(--gold); padding: 4px 10px; }
     .cands-vide { margin: 10px 0; }
 
-    /* ================= les trois entrées de l'outil ================= */
+    /* ================= les entrées de l'outil ================= */
     .entrees-wrap { position: sticky; top: 0; z-index: 40; margin: 0 0 18px; padding: 10px 0 10px;
       background: linear-gradient(to bottom, var(--cream) 68%, rgba(252, 247, 232, 0)); }
+    /* le face-a-face est l'entree principale : seul sur sa ligne, en grand.
+       Les trois autres sont des portes secondaires, en dessous. */
     .entrees { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .entree.phare { grid-column: 1 / -1; padding: 15px 18px; min-height: 76px; }
+    .entree.phare .e-emo { font-size: 34px; }
+    .entree.phare .e-lab { font-size: 23px; }
+    .entree.phare .e-sub { font-size: 13.5px; margin-top: 5px; opacity: .9; }
     .entree { -webkit-appearance: none; appearance: none; cursor: pointer; font: inherit; color: var(--ink);
       display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px; text-align: left;
       border: 2px solid var(--ink); border-radius: 18px; padding: 12px 14px; background: var(--white);
@@ -2814,6 +2820,10 @@
     .entree[aria-selected="true"] { background: var(--ink); color: var(--cream); box-shadow: 4px 4px 0 var(--gold); }
     .entree#tab-cands[aria-selected="true"] { box-shadow: 4px 4px 0 var(--sky); }
     .entree#tab-progs[aria-selected="true"] { box-shadow: 4px 4px 0 var(--green); }
+    .entree#tab-jeux[aria-selected="true"] { box-shadow: 4px 4px 0 var(--pink); }
+    /* tant qu'on ne l'a pas ouvert, le face-a-face se voit de loin */
+    .entree.phare[aria-selected="false"] { background: var(--gold); }
+    .entree.phare[aria-selected="false"]:hover { background: var(--yellow); }
 
     .panneau[hidden] { display: none; }
     .panneau:focus { outline: none; }
@@ -2827,6 +2837,10 @@
 
     @media (max-width: 860px) {
       .entrees { grid-template-columns: 1fr; gap: 7px; }
+      .entree.phare { padding: 12px 14px; min-height: 0; }
+      .entree.phare .e-emo { font-size: 26px; }
+      .entree.phare .e-lab { font-size: 18px; }
+      .entree.phare .e-sub { font-size: 12.5px; }
       .entree { min-height: 0; padding: 10px 12px; box-shadow: 3px 3px 0 var(--ink); border-radius: 15px; }
       .entree .e-emo { font-size: 21px; }
       .entree .e-lab { font-size: 15.5px; }
@@ -2944,6 +2958,91 @@
       #p-socle .socle-titre { font-size: 15.5px; }
       #p-socle p, #p-socle .socle-liste li { font-size: 13.8px; }
     }
+
+    /* ================= la vue résumée du face-à-face ================= */
+    .synthese { margin: 4px 0 16px; }
+    .synth-demande { margin: 0 0 11px; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      font-weight: 700; font-size: clamp(19px, 2.4vw, 25px); line-height: 1.08; text-wrap: balance; }
+    .synth-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+    .synth-ligne { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center; gap: 13px; text-align: left; font: inherit; color: var(--ink); cursor: pointer;
+      border: 2px solid var(--ink); border-radius: 16px; background: var(--white); padding: 10px 14px;
+      box-shadow: 3px 3px 0 var(--ink); min-height: 56px;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease; }
+    .synth-ligne:hover { background: var(--yellow); transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+    .synth-ligne:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+    .synth-ligne:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; background: var(--yellow); }
+    /* colonnes de largeur fixe : sinon les barres ne commencent pas au meme endroit
+       d'une ligne a l'autre, et on ne peut plus les comparer d'un coup d'oeil */
+    .synth-qui { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 9px;
+      min-width: 178px; }
+    .synth-nom { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase; font-weight: 700;
+      font-size: 16px; line-height: 1.05; white-space: nowrap; }
+    .synth-barre { display: flex; height: 17px; border: 2px solid var(--ink); border-radius: 99px;
+      overflow: hidden; background: var(--white); min-width: 0; }
+    .synth-barre i { display: block; height: 100%; border-right: 1.5px solid rgba(51, 46, 50, .35); }
+    .synth-barre i:last-child { border-right: 0; }
+    .synth-chiffres { display: flex; flex-wrap: nowrap; justify-content: flex-end; gap: 9px;
+      font-weight: 700; font-size: 13.5px; font-variant-numeric: tabular-nums; white-space: nowrap;
+      min-width: 128px; }
+    .synth-chiffres span { display: inline-flex; align-items: center; gap: 3px; }
+    .synth-note { margin: 11px 0 0; font-size: 13px; color: var(--muted); font-weight: 600; line-height: 1.45; }
+    .synth-note b { font-weight: 800; color: var(--ink); }
+
+    /* le bouton qui déplie les textes, un par un */
+    .pli-liste { margin: 2px 0 14px; }
+    .pli-liste button { display: inline-flex; align-items: center; gap: 9px; font: inherit; font-weight: 800;
+      font-size: 15px; color: var(--ink); cursor: pointer; border: 2px solid var(--ink); border-radius: 999px;
+      background: var(--sky); padding: 10px 18px; min-height: 48px; box-shadow: 3px 3px 0 var(--ink);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease; }
+    .pli-liste button:hover { background: var(--yellow); transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+    .pli-liste button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+    .pli-liste button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    .pli-liste .pl-fl { transition: transform .14s ease; }
+    .pli-liste button[aria-expanded="true"] .pl-fl { transform: rotate(180deg); }
+
+    @media (max-width: 720px) {
+      .synth-ligne { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 11px 13px; }
+      .synth-qui { min-width: 0; }
+      .synth-chiffres { min-width: 0; justify-content: flex-start; flex-wrap: wrap; }
+      .synth-barre { height: 15px; }
+      .synth-chiffres { font-size: 13px; gap: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .synth-ligne, .pli-liste button, .pli-liste .pl-fl { transition: none; }
+      .synth-ligne:hover, .synth-ligne:active, .pli-liste button:hover, .pli-liste button:active { transform: none; }
+    }
+
+    /* ================= chercher dans le débat du Medef ================= */
+    .medef-cherche { margin: 10px 0 14px; }
+    .medef-cherche-lab { display: block; font-weight: 800; font-size: 14px; margin-bottom: 6px; }
+    .medef-champ { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--white); padding: 4px 8px 4px 14px;
+      box-shadow: 3px 3px 0 var(--ink); }
+    .medef-champ:focus-within { outline: 3px solid var(--blue); outline-offset: 2px; }
+    .medef-champ .mc-loupe { font-size: 16px; line-height: 1; }
+    .medef-champ input { border: 0; background: none; font: inherit; font-size: 15.5px; font-weight: 650;
+      color: var(--ink); min-height: 44px; min-width: 0; padding: 0; }
+    .medef-champ input:focus { outline: none; }
+    .medef-champ input::-webkit-search-cancel-button { display: none; }
+    .mc-vider { border: 2px solid var(--ink); background: var(--white); border-radius: 999px; font: inherit;
+      font-weight: 700; font-size: 13px; padding: 0 13px; min-height: 40px; cursor: pointer; }
+    .mc-vider:hover { background: var(--yellow); }
+    .mc-vider:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+    .medef-compte { margin: 8px 0 0; font-size: 13.5px; font-weight: 700; color: var(--muted); }
+    .medef-res-theme { margin: 18px 0 10px; font-size: 17px; }
+    .medef-res-theme:first-child { margin-top: 4px; }
+    .medef-res-themes { margin: 4px 0 14px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      font-size: 14px; font-weight: 700; }
+    .medef-theme-lien { font: inherit; font-weight: 700; font-size: 13.5px; cursor: pointer;
+      border: 2px solid var(--ink); border-radius: 999px; background: var(--green); color: var(--ink);
+      padding: 8px 14px; min-height: 44px; box-shadow: 2px 2px 0 var(--ink); }
+    .medef-theme-lien:hover { background: var(--yellow); }
+    .medef-theme-lien:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    .medef-theme-lien .mtl-n { opacity: .75; font-weight: 650; }
+    .medef-res-vide { margin: 10px 0 0; font-size: 15px; font-weight: 650; color: var(--muted); max-width: 62ch; }
+    .medef-res .medef-card h4 { margin: 0; font-size: 19px; font-family: "Oswald", Impact, sans-serif;
+      text-transform: uppercase; font-weight: 700; }
 
     /* ================= accessibilité : correctifs de l'audit du 21/09 ================= */
 
@@ -3154,7 +3253,7 @@
     <div class="hero2">
       <p class="eyebrow">Le comparateur politique citoyen · Komune</p>
       <h1><span class="h1-ligne">Ils promettent.</span><span class="h1-ligne">Ils votent.</span><span class="h1-ligne h1-accent">On compare.</span></h1>
-      <p class="pitch">Trois entrées, les mêmes données : le face-à-face entre ce qui est <strong>promis</strong> et ce qui est <strong>voté</strong>, les fiches des <strong>33 candidat·es</strong>, et les <strong>4 456 mesures</strong> de leurs programmes. Chaque ligne porte sa source.</p>
+      <p class="pitch">Le face-à-face entre ce qui est <strong>promis</strong> et ce qui est <strong>voté</strong>. À côté : les fiches des <strong>33 candidat·es</strong>, les <strong>4 456 mesures</strong> de leurs programmes, et les jeux. Chaque ligne porte sa source.</p>
       <p class="beta">Version beta&nbsp;: la plateforme s'enrichit plusieurs fois par semaine, et on montre aussi ce qui reste à vérifier. Raphaël Glucksmann et Marine Tondelier viennent de se déclarer&nbsp;: leurs votes sont en cours d'ajout. <a href="#chantier">Où on en est exactement →</a></p>
     </div>
     <section class="parcours" id="parcours" aria-labelledby="parcours-titre">
@@ -3165,10 +3264,10 @@
     <div id="outil-complet" hidden>
     <p class="retour-parcours" id="retour-parcours" hidden><button type="button" id="btn-retour-parcours">← Revenir au début</button></p>
 <div class="entrees-wrap">
-      <div class="entrees" id="entrees" role="tablist" aria-label="Les trois entrées de l'outil">
-        <button type="button" class="entree" id="tab-actes" role="tab" aria-selected="true" aria-controls="pan-actes">
+      <div class="entrees" id="entrees" role="tablist" aria-label="Les entrées de l'outil">
+        <button type="button" class="entree phare" id="tab-actes" role="tab" aria-selected="true" aria-controls="pan-actes">
           <span class="e-emo" aria-hidden="true">🎯</span>
-          <span class="e-lab">Promesses VS actes<span class="e-sub">le face-à-face, vote par vote</span></span>
+          <span class="e-lab">Promesses VS actes<span class="e-sub">le face-à-face, texte par texte : ce qui a été promis, ce qui a été voté</span></span>
         </button>
         <button type="button" class="entree" id="tab-cands" role="tab" aria-selected="false" aria-controls="pan-cands" tabindex="-1">
           <span class="e-emo" aria-hidden="true">👤</span>
@@ -3176,7 +3275,11 @@
         </button>
         <button type="button" class="entree" id="tab-progs" role="tab" aria-selected="false" aria-controls="pan-progs" tabindex="-1">
           <span class="e-emo" aria-hidden="true">🗂️</span>
-          <span class="e-lab">Les promesses<span class="e-sub">4&nbsp;456 mesures et leurs sources</span></span>
+          <span class="e-lab">Les programmes<span class="e-sub">4&nbsp;456 mesures et leurs sources</span></span>
+        </button>
+        <button type="button" class="entree" id="tab-jeux" role="tab" aria-selected="false" aria-controls="pan-jeux" tabindex="-1">
+          <span class="e-emo" aria-hidden="true">🎮</span>
+          <span class="e-lab">Les jeux<span class="e-sub">devine le vote, qui a dit quoi, le débat du Medef</span></span>
         </button>
       </div>
     </div>
@@ -3204,12 +3307,13 @@
         <span class="bloc-emoji" aria-hidden="true">🎯</span>
         <h2 id="promesses-titre">Promesses VS Actes</h2>
       </div>
-      <p class="bloc-intro">Touchez une tête pour son face-à-face, texte par texte&nbsp;: à gauche ce qui a été <strong>promis</strong>, à droite ce qui a été <strong>fait</strong>, et un verdict qui mesure une seule chose&nbsp;: si les actes suivent la parole. Jamais si le vote est «&nbsp;bon&nbsp;». Avec tout le monde, touchez un texte pour comparer les cinq d'un coup.</p>
+      <p class="bloc-intro">À gauche ce qui a été <strong>promis</strong>, à droite ce qui a été <strong>voté</strong>. Le verdict mesure une seule chose&nbsp;: si les actes suivent la parole, jamais si le vote est «&nbsp;bon&nbsp;».</p>
 
       <div class="tetes" id="tetes" role="group" aria-label="Choisir qui comparer"></div>
       <p class="bientot-note" id="bientot-note"></p>
 
       <div id="bilan"></div>
+      <div id="synthese"></div>
 
       <div class="filtres2" id="filtres2" role="group" aria-label="Filtrer les textes"></div>
 
@@ -3224,6 +3328,7 @@
         <div class="res2-liste" id="res2-liste"></div>
       </div>
 
+      <p class="pli-liste" id="pli-liste"></p>
       <div id="liste"></div>
 
       <div class="retours-encart">
@@ -3240,27 +3345,6 @@
       <div class="rapide-grid" id="debat-grid"></div>
       <div class="cta-row" style="margin-top:12px">
         <button type="button" class="btn play" data-open-komune>💬 Votre question n'y est pas&nbsp;? Demandez à Komune</button>
-      </div>
-    </section>
-<section class="bloc" id="medef" aria-labelledby="medef-titre">
-      <div class="bloc-head">
-        <span class="bloc-emoji" aria-hidden="true">🎤</span>
-        <h2 id="medef-titre">Le débat du Medef, citation par citation</h2>
-      </div>
-      <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire, et chaque horodatage ouvre la vidéo au moment exact.</p>
-      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="medef-pli">
-        <span class="trio-etat"><span class="quand-ferme">Ouvrir le débat (53 citations, 6 thèmes)</span><span class="quand-ouvert">Replier le débat</span> <span class="chev" aria-hidden="true">▼</span></span>
-      </button>
-      <div class="bloc-pli" id="medef-pli" hidden>
-        <div class="medef-meta" id="medef-meta"></div>
-        <div class="medef-methode" id="medef-methode"></div>
-        <div class="switch" role="group" aria-label="Choisir un thème du débat" id="medef-switch"></div>
-        <div id="medef-corps"></div>
-        <div class="medef-suite">
-          <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants, et pour les <strong>meetings de campagne</strong>.</p>
-          <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent.</p>
-        </div>
-        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes, c'est tout l'objet du reste du comparateur.</p>
       </div>
     </section>
       </div>
@@ -3402,6 +3486,8 @@
     </section>
       </div>
     </div>
+    <div class="panneau" id="pan-jeux" role="tabpanel" aria-labelledby="tab-jeux" tabindex="-1" hidden>
+      <div class="panneau-corps">
 <section class="bloc" id="jouer" aria-labelledby="jouer-titre">
       <div class="bloc-head">
         <span class="bloc-emoji" aria-hidden="true">🎮</span>
@@ -3429,6 +3515,29 @@
         </div>
       </div>
     </section>
+<section class="bloc" id="medef" aria-labelledby="medef-titre">
+      <div class="bloc-head">
+        <span class="bloc-emoji" aria-hidden="true">🎤</span>
+        <h2 id="medef-titre">Le débat du Medef, citation par citation</h2>
+      </div>
+      <p class="bloc-intro">Le 27 août 2026, les <strong>sept candidat·es déclaré·es</strong> ont débattu d'économie face aux entrepreneurs, à Roland-Garros. Voici ce qu'ils et elles ont <em>réellement dit</em>, thème par thème&nbsp;: que des citations, zéro commentaire, et chaque horodatage ouvre la vidéo au moment exact.</p>
+      <button type="button" class="plier bloc-plier" aria-expanded="false" aria-controls="medef-pli">
+        <span class="trio-etat"><span class="quand-ferme">Ouvrir le débat (53 citations, 6 thèmes)</span><span class="quand-ouvert">Replier le débat</span> <span class="chev" aria-hidden="true">▼</span></span>
+      </button>
+      <div class="bloc-pli" id="medef-pli" hidden>
+        <div class="medef-meta" id="medef-meta"></div>
+        <div class="medef-methode" id="medef-methode"></div>
+        <div class="switch" role="group" aria-label="Choisir un thème du débat" id="medef-switch"></div>
+        <div id="medef-corps"></div>
+        <div class="medef-suite">
+          <p><b>🌱 C'est un premier essai.</b> Ce débat du Medef est le premier qu'on décortique comme ça, citation par citation. Si le format vous plaît, on recommencera pour les débats suivants, et pour les <strong>meetings de campagne</strong>.</p>
+          <p><b>🔗 Et ça sera relié au reste.</b> L'<strong>économie</strong> ne fait pas encore partie des sujets traités dans le comparateur&nbsp;: on a commencé par la santé et l'écologie. Quand le sujet économie sera prêt, chaque déclaration ci-dessus sera <strong>reliée aux votes et aux actes</strong> qui lui correspondent.</p>
+        </div>
+        <p class="medef-note-bas">Cette section rapporte des <strong>déclarations de campagne</strong>, pas des votes ni des actes&nbsp;: elle ne dit rien de la cohérence entre les paroles et les actes, c'est tout l'objet du reste du comparateur.</p>
+      </div>
+    </section>
+      </div>
+    </div>
     <section class="bloc bloc-plus" id="coulisses" aria-labelledby="coulisses-titre">
       <h2 id="coulisses-titre"><span aria-hidden="true">🧭</span> Comment on travaille</h2>
       <p class="pitch-bloc">Les règles, le vocabulaire, l'état d'avancement et la bibliothèque des sources. À ouvrir quand une ligne vous surprend.</p>
@@ -4326,9 +4435,11 @@
     }
     function choisir(cid) {
       ETAT.cid = cid;
+      if (!cid) { deploye = false; }
       garde();
       renderTetes();
       renderBilan();
+      renderSynthese();
       renderListe();
     }
 
@@ -4643,7 +4754,106 @@
     if (tick) { tick.innerHTML += tick.innerHTML; }
 
     /* ---------- premier rendu ---------- */
-    renderTetes(); renderBilan(); renderFiltres(); renderProfils(); renderListe();
+
+    /* ---------- la vue résumée : ce que disent les 15 textes, d'un coup d'oeil ----------
+       Rien n'est ecrit en dur : les comptes sortent de D.LOIS et de verdict(),
+       exactement comme le bilan d'une personne et comme la matrice. */
+    var zoneSynth = document.getElementById('synthese');
+    var zonePli = document.getElementById('pli-liste');
+    var zoneListePli = document.getElementById('liste');
+    var deploye = false;
+    var SYNTH_ITEMS = [['aligne', '✅', 'les actes suivent'], ['partiel', '⚠️', 'en partie'],
+                       ['contradictoire', '❌', 'le contraire'], ['heterogene', '🔀', 'groupe divisé'],
+                       ['non-testable', '➖', 'pas testable']];
+    var SYNTH_FOND = { aligne: 'var(--green)', partiel: 'var(--gold)', contradictoire: 'var(--pink)',
+                       heterogene: 'var(--sky)', 'non-testable': '#eeeae0' };
+
+    function comptesDe(cid) {
+      var n = { aligne: 0, partiel: 0, contradictoire: 0, 'non-testable': 0, heterogene: 0 }, total = 0;
+      D.LOIS.forEach(function (l) {
+        var v = l.votes[cid]; if (!v) { return; }
+        total++;
+        var code = verdict(v).code;
+        if (n[code] === undefined) { n[code] = 0; }
+        n[code]++;
+      });
+      return { n: n, total: total };
+    }
+
+    function renderSynthese() {
+      if (!zoneSynth) { return; }
+      zoneSynth.innerHTML = '';
+      if (ETAT.cid) { majPli(); return; }
+      var lignes = JOUEURS.map(function (cid) {
+        var c = CAND[cid], r = comptesDe(cid);
+        if (!r.total) { return ''; }
+        var segments = SYNTH_ITEMS.map(function (it) {
+          var v = r.n[it[0]] || 0;
+          if (!v) { return ''; }
+          return '<i style="width:' + (v / r.total * 100) + '%;background:' + SYNTH_FOND[it[0]] + '"></i>';
+        }).join('');
+        var chiffres = SYNTH_ITEMS.map(function (it) {
+          var v = r.n[it[0]] || 0;
+          if (!v) { return ''; }
+          return '<span title="' + esc(VERDICT_EXPL[it[0]] || '') + '"><b>' + v + '</b><span aria-hidden="true">' + it[1] + '</span></span>';
+        }).join('');
+        var dit = SYNTH_ITEMS.map(function (it) {
+          var v = r.n[it[0]] || 0;
+          return v ? v + ' ' + it[2] : '';
+        }).filter(Boolean).join(', ');
+        return '<li><button type="button" class="synth-ligne" data-synth="' + esc(cid) + '">' +
+          '<span class="synth-qui">' + avatar(c) + '<span class="synth-nom">' + esc(c.court) + '</span></span>' +
+          '<span class="synth-barre" role="img" aria-label="' + esc(c.court + ' sur ' + r.total + ' textes : ' + dit) + '">' + segments + '</span>' +
+          '<span class="synth-chiffres" aria-hidden="true">' + chiffres + '</span>' +
+          '</button></li>';
+      }).filter(Boolean).join('');
+      zoneSynth.appendChild(el('<div class="synthese">' +
+        '<p class="synth-demande">Sur les ' + D.LOIS.length + ' textes relevés, est-ce que les actes suivent la parole&nbsp;?</p>' +
+        '<ul class="synth-liste">' + lignes + '</ul>' +
+        '<p class="synth-note">Touchez quelqu\'un pour son face-à-face, texte par texte. ' +
+        '<b>✅</b> les actes suivent · <b>⚠️</b> en partie · <b>❌</b> le contraire · <b>🔀</b> groupe divisé · <b>➖</b> pas testable sur ce texte. ' +
+        'Ces comptes disent si les actes suivent les promesses, pas si le vote est bon. <a href="#methode">La méthode →</a></p>' +
+        '</div>'));
+      zoneSynth.querySelectorAll('[data-synth]').forEach(function (b) {
+        b.addEventListener('click', function () { deploye = true; choisir(b.dataset.synth); });
+      });
+      majPli();
+    }
+
+    /* la longue liste des textes reste repliee tant qu'on n'a rien demande */
+    function listeDoitEtreVisible() {
+      return !!(ETAT.cid || deploye || ETAT.q || ETAT.profil.length || ETAT.filtre !== 'tous');
+    }
+    function majPli() {
+      if (!zonePli || !zoneListePli) { return; }
+      var visible = listeDoitEtreVisible();
+      zoneListePli.hidden = !visible;
+      zonePli.hidden = !!ETAT.cid;
+      if (ETAT.cid) { return; }
+      var n = (typeof loisVisibles === 'function') ? loisVisibles().length : D.LOIS.length;
+      zonePli.innerHTML = '';
+      var b = el('<button type="button" aria-controls="liste" aria-expanded="' + visible + '">' +
+        '<span aria-hidden="true">📋</span>' +
+        (visible ? 'Replier les textes' : 'Voir les ' + n + ' textes, un par un') +
+        '<span class="pl-fl" aria-hidden="true">▾</span></button>');
+      b.addEventListener('click', function () {
+        deploye = !visible;
+        if (!deploye) { ETAT.ouverts = {}; }
+        majPli();
+        if (deploye && zoneListePli.firstElementChild) {
+          zoneListePli.scrollIntoView({ block: 'start' });
+        } else {
+          zonePli.querySelector('button').focus();
+        }
+      });
+      zonePli.appendChild(b);
+    }
+
+    /* toute la mecanique existante passe par renderListe : on s'y accroche une fois */
+    var renderListeSeul = renderListe;
+    renderListe = function () { renderListeSeul(); majPli(); };
+
+    renderTetes(); renderBilan(); renderFiltres(); renderProfils(); renderSynthese(); renderListe();
 
     /* ==================== REPONSES RAPIDES ==================== */
     var debatGrid = document.getElementById('debat-grid');
@@ -7188,8 +7398,7 @@
     function question(rendreFocus) {
       fil.innerHTML = '';
       ajouter('komune ouverture',
-        '<p class="demande">Vous voulez vérifier quoi&nbsp;?</p>' +
-        '<p class="sous-demande">Choisissez un sujet. On vous montre ce que les candidat·es en écrivent, mot pour mot, et d\'où vient chaque phrase.</p>');
+        '<p class="demande">Vous voulez vérifier quoi&nbsp;?</p>');
       var sujets = SUJETS.map(function (s) {
         return '<button type="button" class="sujet" data-theme="' + s.n + '">' +
           '<span class="s-emo" aria-hidden="true">' + s.e + '</span>' + esc(s.t) + '</button>';
@@ -7242,8 +7451,10 @@
           '<span><b>Lire ce qu\'ils promettent</b><small>' + pluriel(b.ecrivent.length, 'candidat·e, une mesure à la fois', 'candidat·es, une mesure à la fois') + '</small></span></button>');
       }
       if (b.meilleur) {
-        opts.push('<button type="button" class="chemin" data-chemin="point">' + emo('🤝') +
-          '<span><b>Le point où ils se retrouvent le plus</b><small>' + esc(P.sous[b.meilleur.st][1]) + '</small></span></button>');
+        opts.push('<button type="button" class="chemin" data-chemin="point">' + emo('📊') +
+          '<span><b>Où il y a le plus de mesures</b><small>' + esc(P.sous[b.meilleur.st][1]) + ' · ' +
+          pluriel(b.meilleur.mes, 'mesure', 'mesures') + ', ' +
+          pluriel(b.meilleur.n, 'candidat·e ou parti', 'candidat·es ou partis') + '</small></span></button>');
       }
       if (b.muets.length) {
         opts.push('<button type="button" class="chemin" data-chemin="muets">' + emo('🤐') +
@@ -7345,9 +7556,10 @@
     function montrerPoint() {
       var b = ETAT.bilan, p = b.meilleur;
       ajouter('komune',
-        '<p>Dans ce sujet, le point précis sur lequel le plus de monde écrit quelque chose, c\'est <b>' +
-        esc(P.sous[p.st][1]) + '</b>&nbsp;: <b>' + pluriel(p.n, 'candidat·e ou parti', 'candidat·es ou partis') +
-        '</b>, ' + pluriel(p.mes, 'mesure', 'mesures') + '. Écrire sur le même point ne veut pas dire être d\'accord&nbsp;: lisez.</p>', true);
+        '<p>Dans ce sujet, le point précis qui contient le plus de mesures, c\'est <b>' +
+        esc(P.sous[p.st][1]) + '</b>&nbsp;: ' + pluriel(p.mes, 'mesure', 'mesures') + ', écrites par <b>' +
+        pluriel(p.n, 'candidat·e ou parti', 'candidat·es ou partis') + '</b>. ' +
+        'C\'est le point le plus rempli, pas un point d\'accord&nbsp;: lisez ce que chacun·e y écrit.</p>', true);
       lancerLecture(p.st);
     }
 
@@ -7458,6 +7670,151 @@
   })();
   </script>
   <script>
+  /* ==================== CHERCHER DANS LE DÉBAT DU MEDEF ====================
+     Une phrase prononcée pendant le débat ne se retrouvait qu'en ouvrant les six
+     thèmes un par un. Ici on cherche dans les 6 thèmes d'un coup : le texte des
+     citations, le nom de qui parle, la question posée et le titre du thème.
+     Rien n'est reformulé : on affiche les citations telles qu'elles sont dans les
+     données, avec leur horodatage. ==================================== */
+  (function () {
+    'use strict';
+    var H = window.__KOMUNE_HELPERS, D = window.KOMUNE_DATA;
+    if (!H || !D || !D.MEDEF) { return; }
+    var esc = H.esc, el = H.el, CAND = H.CAND, avatar = H.avatar;
+    var M = D.MEDEF;
+    var sw = document.getElementById('medef-switch');
+    var corps = document.getElementById('medef-corps');
+    if (!sw || !corps) { return; }
+
+    function norm(s) {
+      return String(s == null ? '' : s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    }
+
+    /* l'index : une entrée par citation */
+    var INDEX = [];
+    M.themes.forEach(function (t) {
+      (t.prises || []).forEach(function (p) {
+        var c = CAND[p.cand];
+        if (!c) { return; }
+        (p.citations || []).forEach(function (ci) {
+          INDEX.push({ theme: t, cand: c, ci: ci, cle: norm(ci.texte + ' ' + c.nom + ' ' + (c.court || '') + ' ' + (c.parti || '')) });
+        });
+      });
+    });
+    var TOTAL = INDEX.length;
+
+    var zone = el('<div class="medef-cherche">' +
+      '<label class="medef-cherche-lab" for="medef-q">Chercher dans le débat</label>' +
+      '<div class="medef-champ">' +
+        '<span class="mc-loupe" aria-hidden="true">🔍</span>' +
+        '<input type="search" id="medef-q" autocomplete="off" placeholder="retraites, salaires, dette, un nom…">' +
+        '<button type="button" class="mc-vider" id="medef-vider" hidden>Effacer</button>' +
+      '</div>' +
+      '<p class="medef-compte" id="medef-compte" role="status"></p>' +
+      '</div>');
+    sw.parentNode.insertBefore(zone, sw);
+    var res = el('<div class="medef-res" id="medef-res" hidden></div>');
+    corps.parentNode.insertBefore(res, corps.nextSibling);
+
+    var champ = document.getElementById('medef-q');
+    var vider = document.getElementById('medef-vider');
+    var compte = document.getElementById('medef-compte');
+
+    function lienTs(c) {
+      return '<a class="medef-ts" href="' + esc(M.video) + '&t=' + c.sec + 's" target="_blank" rel="noopener noreferrer" title="Ouvrir la vidéo à cet instant">▶ ' + esc(c.ts) + '</a>';
+    }
+
+    function rendre(q) {
+      var mots = norm(q).split(/\s+/).filter(Boolean);
+      if (!mots.length) {
+        res.hidden = true; res.innerHTML = '';
+        sw.hidden = false; sw.style.display = ''; corps.hidden = false;
+        compte.textContent = '';
+        vider.hidden = true;
+        return;
+      }
+      vider.hidden = false;
+      sw.hidden = true; sw.style.display = 'none'; corps.hidden = true; res.hidden = false;
+
+      var trouves = INDEX.filter(function (x) {
+        return mots.every(function (m) { return x.cle.indexOf(m) > -1; });
+      });
+      /* les thèmes dont le titre ou la question parlent du sujet : on les propose,
+         sans les mélanger avec les citations qui contiennent vraiment les mots */
+      var themes = M.themes.filter(function (t) {
+        var cle = norm(t.titre + ' ' + (t.question || ''));
+        return mots.every(function (m) { return cle.indexOf(m) > -1; });
+      });
+
+      var html = '';
+      if (themes.length) {
+        html += '<p class="medef-res-themes">Thème' + (themes.length > 1 ? 's' : '') + ' du débat sur ce sujet&nbsp;: ' +
+          themes.map(function (t) {
+            var n = INDEX.filter(function (x) { return x.theme === t; }).length;
+            return '<button type="button" class="medef-theme-lien" data-theme="' + esc(t.id) + '">' +
+              (t.emoji ? '<span aria-hidden="true">' + esc(t.emoji) + '</span> ' : '') + esc(t.titre) +
+              ' <span class="mtl-n">' + n + ' citations</span></button>';
+          }).join(' ') + '</p>';
+      }
+
+      if (!trouves.length) {
+        html += '<p class="medef-res-vide">Aucune citation ne contient ' + (mots.length > 1 ? 'ces mots' : 'ce mot') +
+          '. Les citations sont reprises mot pour mot&nbsp;: essayez un autre terme, ou ouvrez le thème qui s\'en approche.</p>';
+      } else {
+        var parTheme = {};
+        trouves.forEach(function (x) { (parTheme[x.theme.id] = parTheme[x.theme.id] || []).push(x); });
+        M.themes.forEach(function (t) {
+          var liste = parTheme[t.id];
+          if (!liste) { return; }
+          html += '<h3 class="medef-res-theme">' + (t.emoji ? '<span aria-hidden="true">' + esc(t.emoji) + '</span> ' : '') + esc(t.titre) + '</h3>';
+          html += '<div class="medef-grid">';
+          var parCand = [];
+          liste.forEach(function (x) {
+            var d = parCand.filter(function (y) { return y.cand === x.cand; })[0];
+            if (!d) { d = { cand: x.cand, cits: [] }; parCand.push(d); }
+            d.cits.push(x.ci);
+          });
+          parCand.forEach(function (d) {
+            html += '<article class="medef-card" style="--card-bg:' + esc(d.cand.bg || '#ffffff') + ';--card-shadow:' + esc(d.cand.shadow || '#332e32') + '">' +
+              '<div class="qui-head">' + avatar(d.cand) + '<h4>' + esc(d.cand.nom) + '</h4></div>' +
+              d.cits.map(function (ci) {
+                return '<blockquote>' + esc(ci.texte) + '</blockquote>' + lienTs(ci) +
+                  (ci.corr ? '<span class="medef-corr">✏️ Correction : ' + esc(ci.corr) + '</span>' : '');
+              }).join('') + '</article>';
+          });
+          html += '</div>';
+        });
+      }
+      res.innerHTML = html;
+      compte.textContent = trouves.length
+        ? trouves.length + ' citation' + (trouves.length > 1 ? 's' : '') + ' sur ' + TOTAL + ' contiennent ce que vous cherchez.'
+        : 'Aucune citation sur ' + TOTAL + ' ne contient ce que vous cherchez.';
+
+      res.querySelectorAll('[data-theme]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          champ.value = '';
+          rendre('');
+          var cible = sw.querySelector('[data-theme="' + b.dataset.theme + '"]');
+          if (cible) { cible.click(); cible.focus(); }
+          corps.scrollIntoView({ block: 'start' });
+        });
+      });
+    }
+
+    var minuteur = null;
+    champ.addEventListener('input', function () {
+      clearTimeout(minuteur);
+      minuteur = setTimeout(function () { rendre(champ.value.trim()); }, 160);
+    });
+    vider.addEventListener('click', function () { champ.value = ''; rendre(''); champ.focus(); });
+    window.KP_MEDEF_CHERCHER = function (q) {
+      champ.value = q || '';
+      rendre(champ.value.trim());
+      champ.scrollIntoView({ block: 'center' });
+    };
+  })();
+  </script>
+  <script>
   (function () {
     'use strict';
     var ONG = [
@@ -7466,7 +7823,9 @@
       { cle: 'cands', hash: 'candidats', donnees: ['../candidats/data.js'], init: 'KP_CANDS',
         titre: 'Les candidat·es à la présidentielle 2027 : mandats et parcours' },
       { cle: 'progs', hash: 'programmes', donnees: ['../candidats/data.js', '../programmes/data.js'], init: 'KP_PROGS',
-        titre: 'Les promesses de la présidentielle 2027, mesure par mesure' }
+        titre: 'Les programmes de la présidentielle 2027, mesure par mesure' },
+      { cle: 'jeux', hash: 'jeux', donnees: [], init: null,
+        titre: 'Jouer : devine le vote, qui a dit quoi, le débat du Medef' }
     ];
     var TITRE_SITE = ' · Komune';
     var faits = {}, lances = {};
