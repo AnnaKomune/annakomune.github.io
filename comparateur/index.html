@@ -3220,6 +3220,40 @@
       .sujet:hover .s-emo, .sujet:focus-visible .s-emo { transform: none; }
       .tour.attente .pastille { animation: none; opacity: 1; }
     }
+
+    /* ================= les deux portes, et le face-à-face guidé ================= */
+    .deux-portes { gap: 11px; }
+    .chemin-grand { padding: 17px 19px; min-height: 84px; align-items: start; }
+    .chemin-grand .chemin-emo { font-size: 30px; margin-top: 2px; }
+    .chemin-grand b { font-size: 19px; }
+    .chemin-grand small { font-size: 14px; margin-top: 4px; opacity: .88; line-height: 1.4; }
+
+    /* la liste des textes votés : des titres longs, donc des cases plus larges */
+    .grille-textes { grid-template-columns: repeat(auto-fill, minmax(min(100%, 268px), 1fr)); }
+    .grille-textes .sujet { align-items: start; }
+    .texte-btn .s-emo { margin-top: 1px; }
+    .texte-btn .tb-lab { display: block; }
+    .texte-btn .tb-cle { font-size: 12px; }
+
+    /* la nuance de méthode, en ligne dans la phrase */
+    .tour.komune .nuance-inline { color: var(--muted); font-weight: 650; }
+    .lien-inline { border: 0; background: none; font: inherit; font-weight: 800; color: var(--ink);
+      padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    .lien-inline:hover { background: var(--yellow); }
+    .lien-inline:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+
+    /* la carte face-à-face empruntée à l'outil, posée dans le fil */
+    .tour.duel-zone { display: block; }
+    .tour.duel-zone .duel { margin: 0; }
+    .tour.duel-zone .carte-nav { margin-top: 12px; }
+
+    @media (max-width: 900px) {
+      .chemin-grand { padding: 13px 14px; min-height: 0; }
+      .chemin-grand .chemin-emo { font-size: 25px; }
+      .chemin-grand b { font-size: 17px; }
+      .chemin-grand small { font-size: 13.5px; }
+      .grille-textes { grid-template-columns: minmax(0, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -4852,6 +4886,11 @@
     /* toute la mecanique existante passe par renderListe : on s'y accroche une fois */
     var renderListeSeul = renderListe;
     renderListe = function () { renderListeSeul(); majPli(); };
+
+    /* le premier ecran rejoue le face-a-face de l'outil : on lui passe les memes
+       fonctions, pour qu'il n'existe jamais deux facons de juger un vote */
+    window.KP_ACTES = { verdict: verdict, duelCard: duelCard, CAND: CAND, JOUEURS: JOUEURS,
+                        emojiSujet: emojiSujet, openLoi: openLoi, choisir: choisir };
 
     renderTetes(); renderBilan(); renderFiltres(); renderProfils(); renderSynthese(); renderListe();
 
@@ -7274,7 +7313,16 @@
     if (!fil) { return; }
 
     var P = null, C = null, TEXTES = null;
-    var ETAT = { theme: null, chemin: null, i: 0, liste: [], st: null };
+    var ETAT = { ecran: 'accueil', loi: null, j: 0, theme: null, chemin: null, i: 0, liste: [], st: null };
+    /* le face-a-face est deja rendu par l'outil : on lui emprunte ses fonctions
+       plutot que d'en ecrire une deuxieme version qui pourrait diverger */
+    function actes() { return window.KP_ACTES || null; }
+    function lois() { var D = window.KOMUNE_DATA; return (D && D.LOIS) || []; }
+    function loiPar(id) { var r = null; lois().forEach(function (l) { if (l.id === id) { r = l; } }); return r; }
+    var VERDICTS = { aligne: ['✅', 'les actes suivent'], partiel: ['⚠️', 'en partie'],
+                     contradictoire: ['❌', 'le contraire'], heterogene: ['🔀', 'groupe divisé'],
+                     'non-testable': ['➖', 'pas testable'], inconnu: ['❔', 'pas encore relevé'] };
+    var EMO_SUJET = { sante: '🩺', ecologie: '🌱' };
 
     function esc(s) {
       return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -7394,11 +7442,154 @@
                meilleur: meilleur, D: D };
     }
 
+    /* ---------- ecran 0 : la version simple ou l'outil complet ----------
+       Deux portes, expliquees en une ligne chacune. Le nombre de textes est
+       compte dans les donnees, jamais ecrit en dur. */
+    var sortie = document.querySelector('.parcours-sortie');
+    function montrerSortie(oui) { if (sortie) { sortie.hidden = !oui; } }
+
+    function accueil(rendreFocus) {
+      ETAT.ecran = 'accueil';
+      montrerSortie(false);
+      fil.innerHTML = '';
+      ajouter('komune ouverture', '<p class="demande">On vous guide, ou vous fouillez&nbsp;?</p>');
+      var n = lois().length;
+      var choix = ajouter('choix', '<div class="chemins deux-portes">' +
+        '<button type="button" class="chemin chemin-grand" data-porte="guide">' + emo('🎯') +
+          '<span><b>La version simple</b><small>On vous montre, texte par texte, ce qui était promis et ce qui a été voté. ' +
+          'Rien à chercher, on vous emmène.</small></span></button>' +
+        '<button type="button" class="chemin chemin-grand secondaire" data-porte="outil">' + emo('🔎') +
+          '<span><b>L\'outil complet</b><small>' + (n ? 'Les ' + n + ' textes votés' : 'Les textes votés') +
+          ', les fiches des candidat·es, toutes les mesures de leurs programmes, la recherche et les jeux. ' +
+          'Pour fouiller vous-même.</small></span></button>' +
+        '</div>');
+      if (rendreFocus) {
+        var b1 = choix.querySelector('.chemin');
+        if (b1) { b1.focus({ preventScroll: true }); b1.scrollIntoView({ block: 'center' }); }
+      }
+    }
+
+    /* ---------- la version simple : les textes, un par un ---------- */
+    function ecranTextes(rendreFocus) {
+      ETAT.ecran = 'textes'; ETAT.loi = null; ETAT.j = 0;
+      montrerSortie(true);
+      fil.innerHTML = '';
+      var L = lois();
+      ajouter('komune ouverture', '<p class="demande">Qui a tenu parole&nbsp;?</p>' +
+        '<p class="sous-demande">On a relevé ' + L.length + ' textes votés au Parlement. Pour chacun&nbsp;: ' +
+        'ce qui avait été promis avant, et ce qui a été voté.</p>');
+      var boutons = L.map(function (l) {
+        return '<button type="button" class="sujet texte-btn" data-choix-loi="' + esc(l.id) + '">' +
+          '<span class="s-emo" aria-hidden="true">' + (EMO_SUJET[l.sujet] || '📄') + '</span>' +
+          '<span class="tb-lab">' + esc(l.nom) + (l.cle ? ' <span class="tb-cle" title="texte clé">⭐</span>' : '') + '</span>' +
+          '</button>';
+      }).join('');
+      var grille = ajouter('choix tour-sujets', '<div class="grille-sujets grille-textes" role="group" aria-label="Choisir un texte">' +
+        boutons + '<button type="button" class="sujet au-hasard" data-hasard-loi>' +
+        '<span class="s-emo" aria-hidden="true">🎲</span><span class="tb-lab">Au hasard</span></button></div>');
+      ajouter('choix', '<div class="chemins">' +
+        '<button type="button" class="chemin secondaire" data-porte="sujets">' + emo('🗂️') +
+        '<span><b>Plutôt ce qu\'ils écrivent dans leurs programmes</b>' +
+        '<small>par sujet, sans les votes</small></span></button></div>');
+      majHash();
+      if (rendreFocus) {
+        var b1 = grille.querySelector('.sujet');
+        if (b1) { b1.focus({ preventScroll: true }); b1.scrollIntoView({ block: 'center' }); }
+      }
+    }
+
+    function choisirLoi(id) {
+      var A = actes(), l = loiPar(id);
+      if (!A || !l) { return; }
+      ETAT.ecran = 'textes'; ETAT.loi = id; ETAT.j = 0;
+      retirerChoix();
+      ajouter('visiteur', '<span class="bulle-v"><span aria-hidden="true">' + (EMO_SUJET[l.sujet] || '📄') + '</span> ' + esc(l.nom) + '</span>');
+      majHash();
+      var qui = A.JOUEURS.filter(function (cid) { return l.votes[cid]; });
+      ETAT.liste = qui;
+      var n = {};
+      qui.forEach(function (cid) {
+        var code = A.verdict(l.votes[cid]).code;
+        n[code] = (n[code] || 0) + 1;
+      });
+      var dits = Object.keys(VERDICTS).filter(function (k) { return n[k]; }).map(function (k) {
+        return '<b>' + n[k] + '</b> ' + VERDICTS[k][1];
+      });
+      ajouter('komune',
+        '<p><b>' + esc(l.nom) + '.</b> ' + (l.engros ? esc(l.engros) + ' ' : '') +
+        (l.statut ? '<span class="nuance-inline">' + esc(l.statut) + (l.date ? ', ' + esc(l.date) : '') +
+          (l.chambre ? ', ' + esc(l.chambre) : '') + '.</span>' : '') + '</p>' +
+        '<p>Sur ce texte, on a pu comparer <b>' + pluriel(qui.length, 'personne', 'personnes') + '</b>&nbsp;: ' +
+        dits.join(', ') + '.</p>' +
+        '<span class="nuance">Le verdict dit une seule chose&nbsp;: si les actes suivent la parole. Jamais si le vote est bon.</span>', true);
+      proposerLoi(l);
+    }
+
+    function proposerLoi(l) {
+      cadrer(ajouter('choix', '<p class="petite-demande">On regarde&nbsp;?</p><div class="chemins">' +
+        '<button type="button" class="chemin" data-faces="' + esc(l.id) + '">' + emo('⚖️') +
+          '<span><b>Voir les face-à-face</b><small>promis à gauche, voté à droite, un par un</small></span></button>' +
+        '<button type="button" class="chemin secondaire" data-porte="guide">' + emo('🔀') +
+          '<span><b>Un autre texte</b></span></button>' +
+        '</div>'));
+    }
+
+    function faceAFace(id) {
+      var A = actes(), l = loiPar(id);
+      if (!A || !l) { return; }
+      retirerChoix();
+      ajouter('visiteur', '<span class="bulle-v">Voir les face-à-face</span>');
+      ajouter('komune', '<p>Une personne après l\'autre&nbsp;: à gauche ce qu\'elle avait écrit avant le vote, ' +
+        'à droite ce qu\'elle a voté.</p>');
+      var zone = ajouter('duel-zone', '<div id="duel-courant"></div>', true);
+      zone.id = 'zone-duels';
+      duel();
+    }
+
+    function duel(rendre) {
+      var A = actes(), l = loiPar(ETAT.loi);
+      var z = document.getElementById('duel-courant');
+      if (!A || !l || !z) { return; }
+      var cid = ETAT.liste[ETAT.j];
+      z.innerHTML = '';
+      var carte = A.duelCard(l, cid, { montrerQui: true, montrerTexte: false, actions: false });
+      if (carte) { z.appendChild(carte); }
+      var nav = el('<div class="carte-nav">' +
+        '<button type="button" class="btn" data-duel-prec ' + (ETAT.j === 0 ? 'disabled' : '') + '>← Précédent</button>' +
+        '<p class="carte-compte" role="status">' + (ETAT.j + 1) + ' sur ' + ETAT.liste.length + '</p>' +
+        '<button type="button" class="btn play" data-duel-suiv>' +
+        (ETAT.j + 1 === ETAT.liste.length ? 'Terminer' : 'Suivant →') + '</button></div>');
+      z.appendChild(nav);
+      if (rendre) {
+        var b = nav.querySelector('[data-duel-' + rendre + ']');
+        if (!b || b.disabled) { b = nav.querySelector('[data-duel-suiv]'); }
+        if (b) { b.focus({ preventScroll: true }); b.scrollIntoView({ block: 'nearest' }); }
+      }
+    }
+
+    function finLoi() {
+      var l = loiPar(ETAT.loi), reste = lois().length - 1;
+      var z = document.getElementById('zone-duels'); if (z) { z.remove(); }
+      ajouter('komune', '<p>Vous avez vu <b>' + pluriel(ETAT.liste.length, 'face-à-face', 'face-à-face') +
+        '</b> sur <b>' + esc(l.nom) + '</b>. Il reste <b>' + pluriel(reste, 'texte', 'textes') + '</b> relevés.</p>', true);
+      cadrer(ajouter('choix', '<div class="chemins">' +
+        '<button type="button" class="chemin" data-porte="guide">' + emo('🔀') + '<span><b>Un autre texte</b></span></button>' +
+        '<button type="button" class="chemin secondaire" data-ouvrir-actes="' + esc(l.id) + '">' + emo('🎯') +
+          '<span><b>Ouvrir l\'outil sur ce texte</b><small>les 5 côte à côte, le détail, les sources</small></span></button>' +
+        '<button type="button" class="chemin secondaire" data-porte="sujets">' + emo('🗂️') +
+          '<span><b>Et dans leurs programmes&nbsp;?</b><small>par sujet, ' + pluriel(SUJETS.length, 'sujet', 'sujets') + '</small></span></button>' +
+        '</div>'));
+    }
+
     /* ---------- etape 1 : la question ---------- */
     function question(rendreFocus) {
+      ETAT.ecran = 'sujets'; ETAT.loi = null;
+      montrerSortie(true);
       fil.innerHTML = '';
       ajouter('komune ouverture',
-        '<p class="demande">Vous voulez vérifier quoi&nbsp;?</p>');
+        '<p class="demande">Ils écrivent quoi, sur quel sujet&nbsp;?</p>' +
+        '<p class="sous-demande">Ici, ce sont les programmes : ce qu\'ils ont écrit, mot pour mot. ' +
+        'Les votes, c\'est <button type="button" class="lien-inline" data-porte="guide">le face-à-face</button>.</p>');
       var sujets = SUJETS.map(function (s) {
         return '<button type="button" class="sujet" data-theme="' + s.n + '">' +
           '<span class="s-emo" aria-hidden="true">' + s.e + '</span>' + esc(s.t) + '</button>';
@@ -7581,7 +7772,9 @@
     /* ---------- l'adresse ---------- */
     var hashInterne = false;
     function majHash() {
-      var h = ETAT.theme != null ? '#d=' + ETAT.theme : '';
+      var h = '';
+      if (ETAT.ecran === 'textes') { h = ETAT.loi ? '#loi=' + ETAT.loi : '#guide'; }
+      else if (ETAT.ecran === 'sujets') { h = ETAT.theme != null ? '#d=' + ETAT.theme : '#sujets'; }
       if (location.hash !== h) {
         hashInterne = true;
         history.replaceState(null, '', location.pathname + location.search + h);
@@ -7592,6 +7785,25 @@
     /* ---------- les evenements ---------- */
     fil.addEventListener('click', function (e) {
       var t;
+      if ((t = e.target.closest('[data-porte]'))) {
+        var porte = t.dataset.porte;
+        if (porte === 'guide') { ecranTextes(true); return; }
+        if (porte === 'outil') { allerOutil('#promesses-actes'); return; }
+        if (porte === 'sujets') { ETAT.theme = null; question(true); majHash(); return; }
+      }
+      if ((t = e.target.closest('[data-choix-loi]'))) { choisirLoi(t.dataset.choixLoi); return; }
+      if (e.target.closest('[data-hasard-loi]')) {
+        var L = lois();
+        if (L.length) { choisirLoi(L[Math.floor(Math.random() * L.length)].id); }
+        return;
+      }
+      if ((t = e.target.closest('[data-faces]'))) { faceAFace(t.dataset.faces); return; }
+      if (e.target.closest('[data-duel-suiv]')) {
+        if (ETAT.j + 1 >= ETAT.liste.length) { finLoi(); } else { ETAT.j++; duel('suiv'); }
+        return;
+      }
+      if (e.target.closest('[data-duel-prec]')) { if (ETAT.j > 0) { ETAT.j--; duel('prec'); } return; }
+      if ((t = e.target.closest('[data-ouvrir-actes]'))) { allerOutil('#promesses-actes'); return; }
       if ((t = e.target.closest('[data-theme]'))) { choisirSujet(Number(t.dataset.theme)); return; }
       if (e.target.closest('[data-hasard]')) {
         charger().then(function () {
@@ -7659,14 +7871,19 @@
     var TETES = ["anasse-kazib", "antoine-mikolajczak", "benoit-mathieu", "bernard-cazeneuve", "bruno-retailleau", "clara-egger", "david-lisnard", "delphine-batho", "edouard-philippe", "emmanuel-maurel", "fabien-roussel", "fabien-verdier", "florian-philippot", "francis-lalanne", "francois-asselineau", "francois-ruffin", "gabriel-attal", "jean-luc-melenchon", "jerome-guedj", "juan-branco", "karim-bouamrane", "lydie-massard", "manolo-mlekuz", "marine-le-pen", "marine-tondelier", "nathalie-arthaud", "nicolas-dupont-aignan", "olivier-faure", "philippe-brun", "raphael-glucksmann", "segolene-royal", "selma-labib", "xavier-bertrand"];
 
     window.KP_PARCOURS = {
-      demarrer: function (theme) {
-        if (theme != null) { question(); choisirSujet(theme); return; }
-        if (!fil.children.length) { question(); }
+      /* le routeur passe l'adresse : rien, #guide, #loi=<id>, #sujets ou #d=<n> */
+      demarrer: function (o) {
+        o = o || {};
+        if (o.loi && loiPar(o.loi)) { ecranTextes(); choisirLoi(o.loi); return; }
+        if (o.guide) { if (ETAT.ecran !== 'textes' || ETAT.loi) { ecranTextes(); } return; }
+        if (o.theme != null) { question(); choisirSujet(o.theme); return; }
+        if (o.sujets) { if (ETAT.ecran !== 'sujets' || ETAT.theme != null) { question(); } return; }
+        if (!fil.children.length || ETAT.ecran !== 'accueil') { accueil(); }
       },
-      reinitialiser: function (rendreFocus) { ETAT.theme = null; question(rendreFocus); },
+      reinitialiser: function (rendreFocus) { ETAT.theme = null; ETAT.loi = null; accueil(rendreFocus); },
       section: section
     };
-    question();
+    accueil();
   })();
   </script>
   <script>
@@ -7913,7 +8130,17 @@
     }
     function auParcours() {
       var h = (location.hash || '').replace(/^#/, '');
-      return !h || /^d=\d+$/.test(h);
+      return !h || h === 'guide' || h === 'sujets' || /^loi=[a-z0-9-]+$/.test(h) || /^d=\d+$/.test(h);
+    }
+    function etatParcours() {
+      var h = (location.hash || '').replace(/^#/, '');
+      var m = h.match(/^loi=([a-z0-9-]+)$/);
+      if (m) { return { loi: m[1] }; }
+      if (h === 'guide') { return { guide: true }; }
+      if (h === 'sujets') { return { sujets: true }; }
+      m = h.match(/^d=(\d+)$/);
+      if (m) { return { theme: Number(m[1]) }; }
+      return {};
     }
     function deHash() {
       var h = (location.hash || '').replace(/^#/, '');
@@ -7941,8 +8168,7 @@
     function router(focus) {
       if (auParcours()) {
         montrer('parcours');
-        var m = (location.hash || '').match(/^#d=(\d+)$/);
-        if (window.KP_PARCOURS) { window.KP_PARCOURS.demarrer(m ? Number(m[1]) : null); }
+        if (window.KP_PARCOURS) { window.KP_PARCOURS.demarrer(etatParcours()); }
         return;
       }
       montrer('outil');
