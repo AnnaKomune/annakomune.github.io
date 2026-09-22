@@ -4104,7 +4104,6 @@
       if (brut) {
         var o = JSON.parse(brut);
         if (o && typeof o === 'object') {
-          if (o.cid && CAND[o.cid] && JOUEURS.indexOf(o.cid) >= 0) ETAT.cid = o.cid;
           ETAT.profil = (o.profil || []).filter(function (x) { return AXE[x]; });
         }
       }
