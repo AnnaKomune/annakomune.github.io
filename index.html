@@ -1280,7 +1280,7 @@
     /* ================= v25 : le rappel du comparateur, et un peu de confort ================= */
     /* Le bloc « Présidentielle 2027 » traverse le manifeste : c'est le projet du moment,
        il doit se voir avant d'avoir a faire defiler toute la page. */
-    .compa-teaser { grid-column: 1 / -1; display: grid; gap: 12px; align-content: center;
+    .compa-teaser { display: grid; gap: 12px; align-content: center;
       padding: clamp(26px, 3.6vw, 44px); background: var(--gold); border: 2px solid var(--ink);
       border-radius: 24px; color: var(--ink); text-decoration: none;
       box-shadow: 8px 8px 0 var(--purple);
@@ -1289,7 +1289,8 @@
     .compa-teaser:active { transform: translate(2px, 2px); box-shadow: 4px 4px 0 var(--purple); }
     .compa-teaser:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
     .teaser-titre { display: block; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
-      font-size: clamp(28px, 4.2vw, 52px); font-weight: 400; line-height: .95; letter-spacing: -.03em; }
+      font-size: clamp(34px, 4vw, 54px); font-weight: 400; letter-spacing: -.02em; }
+    .teaser-sous { display: block; font-size: 16px; font-weight: 650; line-height: 1.45; max-width: 44ch; }
     .teaser-titre .mark { background: var(--white); padding: 0 .12em; box-decoration-break: clone;
       -webkit-box-decoration-break: clone; }
     .teaser-cta { display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
@@ -1297,6 +1298,15 @@
       text-underline-offset: 4px; }
     .compa-teaser:hover .teaser-cta span { transform: translateX(3px); }
     .teaser-cta span { display: inline-block; transition: transform .14s ease; }
+
+    /* Un titre surligne a besoin d'air : le fond blanc d'une ligne mordait sur les
+       lettres de la ligne du dessus (interligne 0.95 pour une boite de 1.16). */
+    .teaser-titre, #comparateur-title { line-height: 1.18; }
+    .teaser-titre .mark, #comparateur-title .mark { padding: 0 .09em; }
+
+    /* Le bloc 2027 traverse la grille : on recompose les rangees pour qu'il ne
+       reste pas de trou a cote des cartes du manifeste. */
+    .manifest-card.sky { grid-column: 1 / -1; }
 
     /* Les cartes reagissent au survol : on sait tout de suite ce qui est cliquable. */
     .article, .contact-card, .support-card, .manifest-card:not(.compa-teaser) {
@@ -1396,7 +1406,8 @@
 
         <a class="manifest-card compa-teaser" href="comparateur/">
           <span class="eyebrow">Présidentielle 2027</span>
-          <span class="teaser-titre">On construit un comparateur politique <span class="mark">pour enfin choisir sur du concret</span></span>
+          <span class="teaser-titre">Promesses <span class="mark">VS</span> actes</span>
+          <span class="teaser-sous">Ce qui a été promis à gauche, ce qui a été voté à droite. Texte par texte, avec les sources.</span>
           <span class="teaser-cta">Ouvrir le comparateur <span aria-hidden="true">&#8594;</span></span>
         </a>
         <article class="manifest-card pink">
@@ -1422,42 +1433,42 @@
         <p class="videos-intro">Nos formats courts. Cliquez sur une couverture pour lire la vidéo ici, ou ouvrez-la directement sur Instagram.</p>
         <div class="ig-row" aria-label="Vidéos Instagram Komune">
           <article class="ig-card sh-gold">
-            <button type="button" class="ig-btn" data-ig="p/Dc5g-tHxXfv" aria-label="Ouvrir la vidéo Instagram : Avec Britanie : le comparateur politique, en version test">
-              <span class="ig-cover sans-image">
-                <span class="ig-mot" aria-hidden="true">Le comparateur,<br>version test</span>
+            <button type="button" class="ig-btn" data-ig="p/Dc5g-tHxXfv" aria-label="Ouvrir la vidéo Instagram : Comment repérer les publicités racistes&nbsp;? Avec Britanie de @culturedorée">
+              <span class="ig-cover">
+                <img src="img/ig-Dc5g-tHxXfv.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
                 <span class="ig-badge" aria-hidden="true">&#9654;</span>
               </span>
-              <span class="ig-legende">Avec Britanie : le comparateur politique, en version test</span>
+              <span class="ig-legende">Comment repérer les publicités racistes&nbsp;? Avec Britanie de @culturedorée</span>
             </button>
             <a class="ig-open" href="https://www.instagram.com/p/Dc5g-tHxXfv/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
           </article>
           <article class="ig-card sh-green">
-            <button type="button" class="ig-btn" data-ig="reel/DdLk-CzRmSt" aria-label="Ouvrir la vidéo Instagram : Volontourisme : à qui profite vraiment l&#039;aide ?">
-              <span class="ig-cover sans-image">
-                <span class="ig-mot" aria-hidden="true">Volontourisme</span>
+            <button type="button" class="ig-btn" data-ig="reel/DdLk-CzRmSt" aria-label="Ouvrir la vidéo Instagram : «&nbsp;Je vais aider dans un orphelinat&nbsp;»&nbsp;: le problème du volontourisme">
+              <span class="ig-cover">
+                <img src="img/ig-DdLk-CzRmSt.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
                 <span class="ig-badge" aria-hidden="true">&#9654;</span>
               </span>
-              <span class="ig-legende">Volontourisme : à qui profite vraiment l&#039;aide ?</span>
+              <span class="ig-legende">«&nbsp;Je vais aider dans un orphelinat&nbsp;»&nbsp;: le problème du volontourisme</span>
             </button>
             <a class="ig-open" href="https://www.instagram.com/reel/DdLk-CzRmSt/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
           </article>
           <article class="ig-card sh-pink">
-            <button type="button" class="ig-btn" data-ig="reel/DdZbWy9x4qZ" aria-label="Ouvrir la vidéo Instagram : Avec Nouss : «&nbsp;si ça ne vous coûte rien, ça ne vaut pas grand-chose&nbsp;»">
-              <span class="ig-cover sans-image">
-                <span class="ig-mot" aria-hidden="true">Vivre,<br>libre</span>
+            <button type="button" class="ig-btn" data-ig="reel/DdZbWy9x4qZ" aria-label="Ouvrir la vidéo Instagram : L’islamophobie n’est pas une trend&nbsp;: des tips pour mieux agir">
+              <span class="ig-cover">
+                <img src="img/ig-DdZbWy9x4qZ.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
                 <span class="ig-badge" aria-hidden="true">&#9654;</span>
               </span>
-              <span class="ig-legende">Avec Nouss : «&nbsp;si ça ne vous coûte rien, ça ne vaut pas grand-chose&nbsp;»</span>
+              <span class="ig-legende">L’islamophobie n’est pas une trend&nbsp;: des tips pour mieux agir</span>
             </button>
             <a class="ig-open" href="https://www.instagram.com/reel/DdZbWy9x4qZ/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
           </article>
           <article class="ig-card sh-sky">
-            <button type="button" class="ig-btn" data-ig="reel/DaSJlDYtNAc" aria-label="Ouvrir la vidéo Instagram : Grandir avec des origines guadeloupéennes, quand l&#039;école n&#039;en parle pas">
-              <span class="ig-cover sans-image">
-                <span class="ig-mot" aria-hidden="true">Se connaître</span>
+            <button type="button" class="ig-btn" data-ig="reel/DaSJlDYtNAc" aria-label="Ouvrir la vidéo Instagram : Quand ton histoire est absente des cours, avec Lady Margot">
+              <span class="ig-cover">
+                <img src="img/ig-DaSJlDYtNAc.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
                 <span class="ig-badge" aria-hidden="true">&#9654;</span>
               </span>
-              <span class="ig-legende">Grandir avec des origines guadeloupéennes, quand l&#039;école n&#039;en parle pas</span>
+              <span class="ig-legende">Quand ton histoire est absente des cours, avec Lady Margot</span>
             </button>
             <a class="ig-open" href="https://www.instagram.com/reel/DaSJlDYtNAc/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
           </article>
@@ -1512,12 +1523,12 @@
             <a class="ig-open" href="https://www.instagram.com/reel/DZDSTJktI6g/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
           </article>
           <article class="ig-card sh-yellow">
-            <button type="button" class="ig-btn" data-ig="reel/DVnhfW3DcaU" aria-label="Ouvrir la vidéo Instagram : L'article de Monsieur Kys, écrit depuis la peur et la rage">
+            <button type="button" class="ig-btn" data-ig="reel/DVnhfW3DcaU" aria-label="Ouvrir la vidéo Instagram : L’article de Kendrys Legenty, écrit depuis la peur et la rage">
               <span class="ig-cover">
                 <img src="img/ig-DVnhfW3DcaU.webp" alt="" width="288" height="512" loading="lazy" decoding="async">
                 <span class="ig-badge" aria-hidden="true">&#9654;</span>
               </span>
-              <span class="ig-legende">L'article de Monsieur Kys, écrit depuis la peur et la rage</span>
+              <span class="ig-legende">L’article de Kendrys Legenty, écrit depuis la peur et la rage</span>
             </button>
             <a class="ig-open" href="https://www.instagram.com/reel/DVnhfW3DcaU/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
           </article>
