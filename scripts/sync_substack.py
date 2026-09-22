@@ -17,6 +17,7 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 FEED_URL = "https://komunemedia.substack.com/feed"
+ARCHIVE_API = "https://komunemedia.substack.com/api/v1/archive?sort=new&search=&offset=0&limit=20"
 DATA_FILE = Path(__file__).resolve().parent.parent / "data" / "articles.json"
 
 # Substack bloque les requêtes qui ne ressemblent pas à un navigateur : on s'y présente comme Chrome.
@@ -57,6 +58,49 @@ def _fetch_curl_cffi():
     return resp.content
 
 
+def _items_from_archive(fetch):
+    """L'API publique d'archive de Substack : la meme liste que le flux, en JSON,
+       avec le titre, le sous-titre, la date et l'image de couverture."""
+    payload = json.loads(fetch(ARCHIVE_API).decode("utf-8"))
+    if not isinstance(payload, list):
+        raise RuntimeError("réponse inattendue de l'API d'archive")
+    items = []
+    for p in payload:
+        title = html.unescape((p.get("title") or "").strip())
+        url = (p.get("canonical_url") or "").strip().split("?")[0]
+        excerpt = html.unescape((p.get("subtitle") or p.get("description") or "").strip())
+        date = (p.get("post_date") or "")[:10]
+        image = p.get("cover_image") or ""
+        if title and url:
+            items.append({"title": title, "url": url, "excerpt": excerpt, "date": date, "image": image})
+    return items
+
+
+def _get_cffi(url):
+    """Imite l'empreinte reseau complete de Chrome (TLS/JA3), ce que Cloudflare verifie."""
+    from curl_cffi import requests as cffi_requests
+
+    resp = cffi_requests.get(url, impersonate="chrome", timeout=30, headers={"Accept-Language": "fr-FR,fr;q=0.9"})
+    if resp.status_code != 200 or not resp.content:
+        raise RuntimeError(f"HTTP {resp.status_code}")
+    return resp.content
+
+
+def _get_urllib(url):
+    req = urllib.request.Request(url, headers=HEADERS)
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return resp.read()
+
+
+def _via(relais):
+    """Un relais public va chercher l'adresse depuis ses propres serveurs."""
+    def prendre(url):
+        req = urllib.request.Request(relais + urllib.parse.quote(url, safe=""), headers=HEADERS)
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            return resp.read()
+    return prendre
+
+
 def _fetch_urllib():
     req = urllib.request.Request(FEED_URL, headers=HEADERS)
     with urllib.request.urlopen(req, timeout=30) as resp:
@@ -75,12 +119,27 @@ def get_feed_items():
     # Un fichier XML déjà téléchargé peut être passé en argument (pratique pour tester).
     if len(sys.argv) > 1 and Path(sys.argv[1]).exists() and Path(sys.argv[1]).stat().st_size > 0:
         return parse_items(Path(sys.argv[1]).read_bytes())
-    sources = (
-        ("rss2json", _items_from_rss2json),
-        ("curl_cffi", lambda: parse_items(_fetch_curl_cffi())),
-        ("urllib", lambda: parse_items(_fetch_urllib())),
-        ("proxy", lambda: parse_items(_fetch_proxy())),
+    # Substack bloque de plus en plus les adresses IP des serveurs (403), et les
+    # relais publics tombent regulierement (500, 522). On multiplie donc les chemins :
+    # l'API d'archive d'abord (la plus riche), le flux RSS ensuite, en direct puis
+    # par relais. Le premier qui repond quelque chose gagne.
+    RELAIS = (
+        ("codetabs", "https://api.codetabs.com/v1/proxy/?quest="),
+        ("allorigins", "https://api.allorigins.win/raw?url="),
+        ("corsproxy", "https://corsproxy.io/?url="),
+        ("jina", "https://r.jina.ai/"),
     )
+    sources = [
+        ("api d'archive (empreinte Chrome)", lambda: _items_from_archive(_get_cffi)),
+        ("api d'archive (direct)", lambda: _items_from_archive(_get_urllib)),
+        ("rss2json", _items_from_rss2json),
+        ("flux RSS (empreinte Chrome)", lambda: parse_items(_get_cffi(FEED_URL))),
+        ("flux RSS (direct)", lambda: parse_items(_get_urllib(FEED_URL))),
+    ]
+    for nom, relais in RELAIS:
+        sources.append(("api d'archive via " + nom, (lambda r: lambda: _items_from_archive(_via(r)))(relais)))
+        sources.append(("flux RSS via " + nom, (lambda r: lambda: parse_items(_via(r)(FEED_URL)))(relais)))
+    sources = tuple(sources)
     last_error = None
     for name, fetcher in sources:
         try:
@@ -92,7 +151,7 @@ def get_feed_items():
         except Exception as exc:  # noqa: BLE001 - on tente la méthode suivante
             print(f"{name} : {exc}")
             last_error = exc
-        time.sleep(3)
+        time.sleep(2)
     raise SystemExit(f"Impossible de récupérer le flux RSS ({last_error}).")
 
 

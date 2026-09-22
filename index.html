@@ -1276,6 +1276,57 @@
 
     /* la rangee de liens defile au clavier : on montre le focus */
     .site-liens:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 8px; }
+  
+    /* ================= v25 : le rappel du comparateur, et un peu de confort ================= */
+    /* Le bloc « Présidentielle 2027 » traverse le manifeste : c'est le projet du moment,
+       il doit se voir avant d'avoir a faire defiler toute la page. */
+    .compa-teaser { grid-column: 1 / -1; display: grid; gap: 12px; align-content: center;
+      padding: clamp(26px, 3.6vw, 44px); background: var(--gold); border: 2px solid var(--ink);
+      border-radius: 24px; color: var(--ink); text-decoration: none;
+      box-shadow: 8px 8px 0 var(--purple);
+      transition: transform .14s ease, box-shadow .14s ease, background .14s ease; }
+    .compa-teaser:hover { background: var(--yellow); transform: translate(-2px, -2px); box-shadow: 11px 11px 0 var(--purple); }
+    .compa-teaser:active { transform: translate(2px, 2px); box-shadow: 4px 4px 0 var(--purple); }
+    .compa-teaser:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+    .teaser-titre { display: block; font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      font-size: clamp(28px, 4.2vw, 52px); font-weight: 400; line-height: .95; letter-spacing: -.03em; }
+    .teaser-titre .mark { background: var(--white); padding: 0 .12em; box-decoration-break: clone;
+      -webkit-box-decoration-break: clone; }
+    .teaser-cta { display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+      font-weight: 800; font-size: 15.5px; text-decoration: underline; text-decoration-thickness: 2px;
+      text-underline-offset: 4px; }
+    .compa-teaser:hover .teaser-cta span { transform: translateX(3px); }
+    .teaser-cta span { display: inline-block; transition: transform .14s ease; }
+
+    /* Les cartes reagissent au survol : on sait tout de suite ce qui est cliquable. */
+    .article, .contact-card, .support-card, .manifest-card:not(.compa-teaser) {
+      transition: transform .14s ease, box-shadow .14s ease; }
+    .article:hover, .contact-card:hover { transform: translateY(-3px); box-shadow: 0 22px 54px rgba(51, 46, 50, .16); }
+
+    /* Un rythme regulier entre les grandes sections, et un trait de couleur sous les titres. */
+    .section-head { margin-top: clamp(44px, 6vw, 76px); }
+    .section-head h2 { position: relative; padding-bottom: 10px; }
+    .section-head h2::after { content: ""; position: absolute; left: 0; bottom: 0;
+      width: 84px; height: 7px; border-radius: 99px; background: var(--purple); }
+    .support, .comparator-section, .contact { margin-top: clamp(44px, 6vw, 76px); }
+
+    /* Les rangees qui defilent : on montre qu'il y a la suite a droite. */
+    .carousel-wrap, .ig-wrap { position: relative; }
+    .ig-row::after, .carousel::after { content: ""; flex: none; width: 2px; }
+    .ig-hint { margin: 2px 0 0; font-size: 13px; font-weight: 700; color: rgba(252, 247, 232, .7); }
+
+    /* La couverture d'une video pas encore illustree : un fond Komune plutot qu'un trou. */
+    .ig-cover.sans-image { display: grid; place-items: center; padding: 18px;
+      background: radial-gradient(circle at 24% 20%, rgba(255, 255, 146, .9), transparent 46%),
+                  linear-gradient(135deg, var(--purple), var(--blue)); }
+    .ig-cover.sans-image .ig-mot { font-family: "Oswald", Impact, sans-serif; text-transform: uppercase;
+      font-size: 20px; line-height: 1.05; font-weight: 400; color: var(--cream); text-align: center;
+      letter-spacing: -.01em; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .compa-teaser, .article, .contact-card, .teaser-cta span { transition: none; }
+      .compa-teaser:hover, .compa-teaser:active, .article:hover, .contact-card:hover { transform: none; }
+    }
   </style>
 </head>
 
@@ -1314,7 +1365,7 @@
 
         <aside class="hero-side" aria-label="Quelques chiffres sur Komune">
           <div class="stat wide">
-            <div class="stat-number">200K+</div>
+            <div class="stat-number">250K+</div>
             <div class="stat-label"><span class="hero-copy-line">abonnés sur</span><span class="hero-copy-line">nos réseaux</span></div>
           </div>
           <div class="stat dark">
@@ -1343,6 +1394,11 @@
           <p>Nous analysons l’actualité et les récits dominants pour comprendre comment les rapports de pouvoir, notamment raciaux, structurent notre société et influencent son fonctionnement.</p>
         </article>
 
+        <a class="manifest-card compa-teaser" href="comparateur/">
+          <span class="eyebrow">Présidentielle 2027</span>
+          <span class="teaser-titre">On construit un comparateur politique <span class="mark">pour enfin choisir sur du concret</span></span>
+          <span class="teaser-cta">Ouvrir le comparateur <span aria-hidden="true">&#8594;</span></span>
+        </a>
         <article class="manifest-card pink">
           <p>À travers des décryptages, des analyses et des récits de personnes concernées, nous documentons des réalités souvent invisibilisées et éclairons des sujets instrumentalisés dans le débat politico-médiatique, comme <span class="mark">l’immigration</span>.</p>
         </article>
@@ -1356,56 +1412,6 @@
         </article>
       </section>
 
-      <section class="support" id="soutenir" aria-labelledby="support-title">
-        <div class="support-poster">
-          <div class="eyebrow">Soutenir Komune</div>
-          <h2 id="support-title">Soutenir Komune</h2>
-          <p>Dans moins d'un an, il y aura l'élection présidentielle. Immigration, islam, identité nationale : les sujets que nous traitons au quotidien vont être encore plus présents dans les médias, les discours politiques et les discussions du quotidien.</p>
-          <p>Et plus ces sujets occupent l'espace public, plus il y a besoin de <span class="mark-dark sky">faits</span>, de <span class="mark-dark pink">contexte</span> et d'<span class="mark-dark green">informations vérifiées</span>.</p>
-          <a class="button" href="soutenir/">Nous soutenir ↗</a>
-        </div>
-
-        <div class="support-side">
-          <article class="support-card yellow">
-            <p>Nous voulons passer à la vitesse supérieure : produire davantage de décryptages et de témoignages, réaliser plus de reportages de terrain partout en France, donner davantage la parole aux expert·es et rendre leur savoir accessible au plus grand nombre.</p>
-          </article>
-          <article class="support-card sky">
-            <p>Pour y parvenir, il n'y a pas de solution miracle : nous devons pouvoir consacrer plus de temps au média, moins aux prestations extérieures qui nous font vivre actuellement, et surtout recruter pour renforcer l'équipe.</p>
-          </article>
-        </div>
-      </section>
-
-
-      <section class="comparator-section" id="comparateur-2027" aria-labelledby="comparateur-title">
-        <article class="comparator-copy">
-          <div class="eyebrow">Présidentielle 2027</div>
-          <h2 id="comparateur-title">On construit un comparateur politique <span class="mark pink">pour enfin choisir sur du concret</span></h2>
-          <p>Pour la présidentielle de 2027, on développe une plateforme gratuite pour comparer les candidat·es autrement : pas seulement à partir des promesses, mais aussi des votes, des actes, des contradictions, des sources et de ce que leurs propositions changent concrètement dans nos vies.</p>
-          <p>L’objectif : sortir des clashs, des sondages et des petites phrases pour donner un outil clair, sourcé et accessible à celles et ceux qui veulent comprendre avant de voter.</p>
-          <div class="comparator-points" aria-label="Ce que la plateforme comparera">
-            <span class="comparator-pill">programmes</span>
-            <span class="comparator-pill">votes réels</span>
-            <span class="comparator-pill">actes au pouvoir</span>
-            <span class="comparator-pill">contradictions</span>
-            <span class="comparator-pill">impacts concrets</span>
-            <span class="comparator-pill">sources</span>
-          </div>
-          <div class="comparator-cta">
-            <a class="button" href="comparateur/">Ouvrir le comparateur de la présidentielle 2027</a>
-            <a class="button button-ghost" href="comparateur/#programmes">Les programmes, mesure par mesure</a>
-            <a class="button button-ghost" href="comparateur/#candidats">Les fiches des candidat·es</a>
-            <a class="button button-ghost" href="comparateur-2027/">Lire votre cahier des charges pour le comparateur</a>
-          </div>
-        </article>
-      </section>
-
-      <div class="section-head">
-        <h2>Nos derniers articles</h2>
-        <a class="articles-link" href="articles/">Explorer tous les articles ↗</a>
-      </div>
-
-      <section class="carousel" id="latest-articles" aria-label="Derniers articles Komune"></section>
-
       <div class="section-head">
         <h2>Nos vidéos</h2>
         <a class="articles-link" href="https://www.youtube.com/@komune4882" target="_blank" rel="noopener noreferrer">Notre chaîne YouTube &#8599;</a>
@@ -1415,6 +1421,46 @@
         <h2 id="videos-title">Sur Instagram</h2>
         <p class="videos-intro">Nos formats courts. Cliquez sur une couverture pour lire la vidéo ici, ou ouvrez-la directement sur Instagram.</p>
         <div class="ig-row" aria-label="Vidéos Instagram Komune">
+          <article class="ig-card sh-gold">
+            <button type="button" class="ig-btn" data-ig="p/Dc5g-tHxXfv" aria-label="Ouvrir la vidéo Instagram : Avec Britanie : le comparateur politique, en version test">
+              <span class="ig-cover sans-image">
+                <span class="ig-mot" aria-hidden="true">Le comparateur,<br>version test</span>
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">Avec Britanie : le comparateur politique, en version test</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/p/Dc5g-tHxXfv/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-green">
+            <button type="button" class="ig-btn" data-ig="reel/DdLk-CzRmSt" aria-label="Ouvrir la vidéo Instagram : Volontourisme : à qui profite vraiment l&#039;aide ?">
+              <span class="ig-cover sans-image">
+                <span class="ig-mot" aria-hidden="true">Volontourisme</span>
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">Volontourisme : à qui profite vraiment l&#039;aide ?</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DdLk-CzRmSt/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-pink">
+            <button type="button" class="ig-btn" data-ig="reel/DdZbWy9x4qZ" aria-label="Ouvrir la vidéo Instagram : Avec Nouss : «&nbsp;si ça ne vous coûte rien, ça ne vaut pas grand-chose&nbsp;»">
+              <span class="ig-cover sans-image">
+                <span class="ig-mot" aria-hidden="true">Vivre,<br>libre</span>
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">Avec Nouss : «&nbsp;si ça ne vous coûte rien, ça ne vaut pas grand-chose&nbsp;»</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DdZbWy9x4qZ/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
+          <article class="ig-card sh-sky">
+            <button type="button" class="ig-btn" data-ig="reel/DaSJlDYtNAc" aria-label="Ouvrir la vidéo Instagram : Grandir avec des origines guadeloupéennes, quand l&#039;école n&#039;en parle pas">
+              <span class="ig-cover sans-image">
+                <span class="ig-mot" aria-hidden="true">Se connaître</span>
+                <span class="ig-badge" aria-hidden="true">&#9654;</span>
+              </span>
+              <span class="ig-legende">Grandir avec des origines guadeloupéennes, quand l&#039;école n&#039;en parle pas</span>
+            </button>
+            <a class="ig-open" href="https://www.instagram.com/reel/DaSJlDYtNAc/" target="_blank" rel="noopener noreferrer">Voir sur Instagram &#8599;</a>
+          </article>
           <article class="ig-card sh-pink">
             <button type="button" class="ig-btn" data-ig="reel/DXeyQEVjYzm" aria-label="Ouvrir la vidéo Instagram : Micro-agressions racistes : des scènes fictives, des vécus réels">
               <span class="ig-cover">
@@ -1561,6 +1607,56 @@
           <div id="ig-lb-slot"></div>
         </div>
       </div>
+
+      <div class="section-head">
+        <h2>Nos derniers articles</h2>
+        <a class="articles-link" href="articles/">Explorer tous les articles ↗</a>
+      </div>
+
+      <section class="carousel" id="latest-articles" aria-label="Derniers articles Komune"></section>
+
+      <section class="support" id="soutenir" aria-labelledby="support-title">
+        <div class="support-poster">
+          <div class="eyebrow">Soutenir Komune</div>
+          <h2 id="support-title">Soutenir Komune</h2>
+          <p>Dans moins d'un an, il y aura l'élection présidentielle. Immigration, islam, identité nationale : les sujets que nous traitons au quotidien vont être encore plus présents dans les médias, les discours politiques et les discussions du quotidien.</p>
+          <p>Et plus ces sujets occupent l'espace public, plus il y a besoin de <span class="mark-dark sky">faits</span>, de <span class="mark-dark pink">contexte</span> et d'<span class="mark-dark green">informations vérifiées</span>.</p>
+          <a class="button" href="soutenir/">Nous soutenir ↗</a>
+        </div>
+
+        <div class="support-side">
+          <article class="support-card yellow">
+            <p>Nous voulons passer à la vitesse supérieure : produire davantage de décryptages et de témoignages, réaliser plus de reportages de terrain partout en France, donner davantage la parole aux expert·es et rendre leur savoir accessible au plus grand nombre.</p>
+          </article>
+          <article class="support-card sky">
+            <p>Pour y parvenir, il n'y a pas de solution miracle : nous devons pouvoir consacrer plus de temps au média, moins aux prestations extérieures qui nous font vivre actuellement, et surtout recruter pour renforcer l'équipe.</p>
+          </article>
+        </div>
+      </section>
+
+
+      <section class="comparator-section" id="comparateur-2027" aria-labelledby="comparateur-title">
+        <article class="comparator-copy">
+          <div class="eyebrow">Présidentielle 2027</div>
+          <h2 id="comparateur-title">On construit un comparateur politique <span class="mark pink">pour enfin choisir sur du concret</span></h2>
+          <p>Pour la présidentielle de 2027, on développe une plateforme gratuite pour comparer les candidat·es autrement : pas seulement à partir des promesses, mais aussi des votes, des actes, des contradictions, des sources et de ce que leurs propositions changent concrètement dans nos vies.</p>
+          <p>L’objectif : sortir des clashs, des sondages et des petites phrases pour donner un outil clair, sourcé et accessible à celles et ceux qui veulent comprendre avant de voter.</p>
+          <div class="comparator-points" aria-label="Ce que la plateforme comparera">
+            <span class="comparator-pill">programmes</span>
+            <span class="comparator-pill">votes réels</span>
+            <span class="comparator-pill">actes au pouvoir</span>
+            <span class="comparator-pill">contradictions</span>
+            <span class="comparator-pill">impacts concrets</span>
+            <span class="comparator-pill">sources</span>
+          </div>
+          <div class="comparator-cta">
+            <a class="button" href="comparateur/">Ouvrir le comparateur de la présidentielle 2027</a>
+            <a class="button button-ghost" href="comparateur/#programmes">Les programmes, mesure par mesure</a>
+            <a class="button button-ghost" href="comparateur/#candidats">Les fiches des candidat·es</a>
+            <a class="button button-ghost" href="comparateur-2027/">Lire votre cahier des charges pour le comparateur</a>
+          </div>
+        </article>
+      </section>
 
       <section class="contact" aria-label="Nous contacter">
         <div class="contact-card">
