@@ -3,23 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Les derniers articles de Komune, média indépendant qui décrypte la société avec un regard antiraciste.">
-  <title>Nos articles - Komune Média, média citoyen indépendant</title>
+  <meta name="description" content="Tous les articles de Komune Média : décryptages de l'actualité, enquêtes et débunks des mots sur l'immigration, le racisme et les discriminations. Une nouvelle publication chaque semaine.">
+  <title>Tous nos articles - décryptages, enquêtes et débunks - Komune Média</title>
   <link rel="canonical" href="https://www.komunemedia.fr/articles/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Komune Média">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://www.komunemedia.fr/articles/">
-  <meta property="og:title" content="Nos articles - Komune Média, média citoyen indépendant">
-  <meta property="og:description" content="Les derniers articles de Komune, média indépendant qui décrypte la société avec un regard antiraciste.">
+  <meta property="og:title" content="Tous nos articles - décryptages, enquêtes et débunks - Komune Média">
+  <meta property="og:description" content="Décryptages de l'actualité, enquêtes et débunks des mots sur l'immigration, le racisme et les discriminations. Toute l'archive de Komune Média.">
   <meta property="og:image" content="https://www.komunemedia.fr/img/og-comparateur.png">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tous nos articles - Komune Média">
+  <meta name="twitter:description" content="Décryptages, enquêtes et débunks des mots. Toute l'archive de Komune Média.">
+  <meta name="twitter:image:alt" content="Couverture du dernier article publié par Komune Média">
   <meta name="twitter:image" content="https://www.komunemedia.fr/img/og-comparateur.png">
+  <link rel="alternate" type="application/rss+xml" title="La newsletter de Komune Média" href="https://komunemedia.substack.com/feed">
   <link rel="icon" type="image/png" href="../img/favicon.png">
   <link rel="apple-touch-icon" href="../img/favicon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://substackcdn.com" crossorigin>
+  <link rel="dns-prefetch" href="https://substackcdn.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
 
@@ -309,6 +315,37 @@
     .article-card:nth-child(5n + 4):hover { transform: rotate(0.35deg) translateY(-5px); }
 
     .article-card[hidden] { display: none; }
+    .annee[hidden] { display: none; }
+
+    .annee { margin-top: 26px; }
+
+    .annee-tete {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px 16px;
+      padding: 0 4px 12px;
+      border-bottom: 3px solid var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .annee-tete h2 {
+      font-size: clamp(34px, 4vw, 52px);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .annee-compte {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .article-title { margin: 0; font-family: "Bricolage Grotesque", Inter, ui-sans-serif, system-ui, sans-serif; }
+    .article-date { margin: 0 0 14px; }
 
     .article-card-inner {
       display: grid;
@@ -752,6 +789,8 @@
     /* la rangee de liens defile au clavier : on montre le focus */
     .site-liens:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 8px; }
   </style>
+  <!-- ARTICLES-LD:DEBUT (genere par scripts/page_articles.py) -->
+  <!-- ARTICLES-LD:FIN -->
 </head>
 
 <body>
@@ -798,30 +837,35 @@
 
       <div class="section-head">
         <div>
-          <div class="eyebrow">Les derniers articles</div>
-          <h2>À lire en ce moment</h2>
+          <div class="eyebrow">Toute l'archive</div>
+          <h2>Tous nos articles</h2>
         </div>
-        <p>Les articles complets sont publiés sur la newsletter Substack de Komune. Utilisez la recherche par titre ou cliquez sur une carte pour les lire.</p>
+        <p>Du plus récent au plus ancien, <span id="compte-total">0</span> articles publiés sur la newsletter de Komune. Cherchez un mot-clé ou cliquez sur une couverture pour lire l'article en entier.</p>
       </div>
 
       <section class="search-panel" aria-label="Rechercher parmi les articles">
         <div>
-          <label class="search-label" for="article-search">Rechercher par mot-clé dans les titres</label>
+          <label class="search-label" for="article-search">Rechercher un mot-clé dans les titres et les résumés</label>
           <div class="search-wrap">
             <input class="search-input" id="article-search" type="search" placeholder="Ex. immigration, racisme, identité…" autocomplete="off">
             <span class="search-icon" aria-hidden="true"></span>
           </div>
         </div>
-        <p class="search-status" id="search-status" aria-live="polite">Chargement des articles…</p>
+        <p class="search-status" id="search-status" role="status" aria-live="polite"></p>
       </section>
 
-      <section class="articles-grid" id="articles-grid" aria-label="Les derniers articles de Komune">
-        <div class="loading-card">
-          <div class="eyebrow">Les derniers articles</div>
-          <h2>Chargement de la sélection</h2>
-          <p>Les articles de Komune arrivent.</p>
+      <div id="articles-tout">
+  <!-- ARTICLES:DEBUT (genere par scripts/page_articles.py) -->
+  <!-- ARTICLES:FIN -->
+      </div>
+
+      <div class="articles-grid" id="aucun-resultat" hidden>
+        <div class="empty-state">
+          <div class="eyebrow">Aucun résultat</div>
+          <h2>Pas d'article trouvé.</h2>
+          <p>Essayez un autre mot-clé : la recherche porte sur les titres et les résumés des articles.</p>
         </div>
-      </section>
+      </div>
 
       <section class="newsletter" aria-labelledby="newsletter-title">
         <div>
@@ -847,93 +891,50 @@
   </div>
 
   <script>
+    // La liste des articles est ecrite en dur dans la page (generee par
+    // scripts/page_articles.py). Ce script ne sert qu'a filtrer ce qui est deja la.
     (() => {
-      const grid = document.getElementById('articles-grid');
-      const searchInput = document.getElementById('article-search');
-      const status = document.getElementById('search-status');
-      const coverClasses = ['cover-pink', 'cover-sky', 'cover-gold', 'cover-green', 'cover-purple', 'cover-blue', 'cover-dark'];
-      const coverWords = ['Komune', 'Lire', 'Focus', 'Récit', 'Décryptage', 'Regards', 'À voir'];
+      const champ = document.getElementById('article-search');
+      const etat = document.getElementById('search-status');
+      const vide = document.getElementById('aucun-resultat');
+      const annees = Array.from(document.querySelectorAll('.annee'));
+      const fiches = Array.from(document.querySelectorAll('.article-card'));
+      if (!champ || !fiches.length) return;
 
-      // Liste fournie par Komune : réordonnée ici du plus récent au plus ancien.
-      let articles = []; // chargé depuis ../data/articles.json (synchro Substack automatique)
+      const total = fiches.length;
+      const sansAccent = (v) => (v || '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 
-      const normalize = (value = '') => value
-        .toString()
-        .normalize('NFD')
-        .replace(/[̀-ͯ]/g, '')
-        .toLowerCase()
-        .trim();
+      function filtrer() {
+        const mots = sansAccent(champ.value).split(/\s+/).filter(Boolean);
+        let trouves = 0;
 
-      const escapeHtml = (value = '') => value
-        .toString()
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+        fiches.forEach((fiche) => {
+          const texte = fiche.dataset.cherche || '';
+          const ok = mots.every((mot) => texte.includes(mot));
+          fiche.hidden = !ok;
+          if (ok) trouves += 1;
+        });
 
-      const shortExcerpt = (value = '') => {
-        const text = value.toString().replace(/\s+/g, ' ').trim();
-        return text.length > 190 ? `${text.slice(0, 187).trim()}…` : text;
-      };
+        annees.forEach((annee) => {
+          const visibles = Array.from(annee.querySelectorAll('.article-card')).filter((f) => !f.hidden).length;
+          annee.hidden = visibles === 0;
+          const compteur = annee.querySelector('[data-compte-annee]');
+          if (compteur) compteur.textContent = visibles;
+        });
 
-      function renderCards(list) {
-        if (!list.length) {
-          grid.innerHTML = `
-            <div class="empty-state">
-              <div class="eyebrow">Aucun résultat</div>
-              <h2>Pas d’article trouvé.</h2>
-              <p>Essaie un autre mot-clé : la recherche porte uniquement sur les titres des articles.</p>
-            </div>`;
-          return;
-        }
+        vide.hidden = trouves > 0;
 
-        grid.innerHTML = list.map((article) => {
-          const articleNumber = String(article.originalIndex + 1).padStart(2, '0');
-          const coverClass = coverClasses[article.originalIndex % coverClasses.length];
-          const coverWord = coverWords[article.originalIndex % coverWords.length];
-          const isFeatured = article.originalIndex === 0 && !searchInput.value.trim();
-          const label = isFeatured ? 'Dernière publication' : 'Komune Média';
-          const coverHtml = article.image
-            ? `<div class="article-cover cover-photo"><img src="${escapeHtml(article.image)}" alt="" loading="lazy"></div>`
-            : `<div class="article-cover ${coverClass}"><div class="cover-meta"><span class="cover-number">${articleNumber}</span><span class="cover-label">${label}</span><span class="cover-word">${coverWord}</span></div></div>`;
-
-          return `
-            <a class="article-card${isFeatured ? ' featured' : ''}" href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer">
-              <div class="article-card-inner">
-${coverHtml}
-                <div class="article-body">
-                  <div class="article-date">${article.date ? new Date(article.date + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : label}</div>
-                  <div class="article-title">${escapeHtml(article.title)}</div>
-                  <p class="article-excerpt">${escapeHtml(shortExcerpt(article.excerpt))}</p>
-                  <span class="article-read">Lire l'article sur Substack ↗</span>
-                </div>
-              </div>
-            </a>`;
-        }).join('');
-      }
-
-      function updateSearch() {
-        const term = normalize(searchInput.value);
-        const matching = articles
-          .map((article, originalIndex) => ({ ...article, originalIndex }))
-          .filter((article) => normalize(article.title).includes(term));
-
-        renderCards(matching);
-
-        if (!term) {
-          status.textContent = `${articles.length} articles à lire`;
+        if (!mots.length) {
+          etat.textContent = total + ' articles à lire, du plus récent au plus ancien.';
+        } else if (trouves === 0) {
+          etat.textContent = 'Aucun article pour « ' + champ.value.trim() + ' ».';
         } else {
-          status.textContent = `${matching.length} résultat${matching.length > 1 ? 's' : ''} pour « ${searchInput.value.trim()} »`;
+          etat.textContent = trouves + ' article' + (trouves > 1 ? 's' : '') + ' pour « ' + champ.value.trim() + ' ».';
         }
       }
 
-      searchInput.addEventListener('input', updateSearch);
-
-      fetch('../data/articles.json', { cache: 'no-store' })
-        .then((r) => r.json())
-        .then((list) => { articles = list; updateSearch(); })
-        .catch(() => { status.textContent = 'Impossible de charger les articles - recharge la page.'; });
+      champ.addEventListener('input', filtrer);
+      filtrer();
     })();
   </script>
   <footer class="site-pied">

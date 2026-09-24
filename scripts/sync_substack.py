@@ -16,8 +16,13 @@ import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import page_articles  # noqa: E402
+
 FEED_URL = "https://komunemedia.substack.com/feed"
-ARCHIVE_API = "https://komunemedia.substack.com/api/v1/archive?sort=new&search=&offset=0&limit=20"
+ARCHIVE_API = "https://komunemedia.substack.com/api/v1/archive?sort=new&search=&offset=%d&limit=%d"
+ARCHIVE_PAGE = 50      # articles demandés par appel
+ARCHIVE_MAX = 600      # garde-fou : on ne remonte jamais au-delà
 DATA_FILE = Path(__file__).resolve().parent.parent / "data" / "articles.json"
 
 # Substack bloque les requêtes qui ne ressemblent pas à un navigateur : on s'y présente comme Chrome.
@@ -60,20 +65,39 @@ def _fetch_curl_cffi():
 
 def _items_from_archive(fetch):
     """L'API publique d'archive de Substack : la meme liste que le flux, en JSON,
-       avec le titre, le sous-titre, la date et l'image de couverture."""
-    payload = json.loads(fetch(ARCHIVE_API).decode("utf-8"))
-    if not isinstance(payload, list):
-        raise RuntimeError("réponse inattendue de l'API d'archive")
+       avec le titre, le sous-titre, la date et l'image de couverture.
+
+       On la parcourt page par page (offset) pour ramener TOUTE l'archive, et
+       pas seulement les derniers articles : c'est ce qui alimente la page
+       /articles/ avec l'ensemble des publications et leurs couvertures."""
     items = []
+    vus = set()
+    offset = 0
+    while offset < ARCHIVE_MAX:
+        payload = json.loads(fetch(ARCHIVE_API % (offset, ARCHIVE_PAGE)).decode("utf-8"))
+        if not isinstance(payload, list):
+            raise RuntimeError("réponse inattendue de l'API d'archive")
+        if not payload:
+            break
+        avant = len(items)
+        _ajouter_archive(payload, items, vus)
+        if len(payload) < ARCHIVE_PAGE or len(items) == avant:
+            break
+        offset += ARCHIVE_PAGE
+        time.sleep(1)
+    return items
+
+
+def _ajouter_archive(payload, items, vus):
     for p in payload:
         title = html.unescape((p.get("title") or "").strip())
         url = (p.get("canonical_url") or "").strip().split("?")[0]
         excerpt = html.unescape((p.get("subtitle") or p.get("description") or "").strip())
         date = (p.get("post_date") or "")[:10]
         image = p.get("cover_image") or ""
-        if title and url:
+        if title and url and url not in vus:
+            vus.add(url)
             items.append({"title": title, "url": url, "excerpt": excerpt, "date": date, "image": image})
-    return items
 
 
 def _get_cffi(url):
@@ -200,12 +224,16 @@ def main():
         if article["url"] not in feed_urls:
             merged.append(article)
 
+    merged.sort(key=lambda a: a.get("date") or "", reverse=True)
     new_content = json.dumps(merged, ensure_ascii=False, indent=1)
-    if DATA_FILE.exists() and DATA_FILE.read_text(encoding="utf-8") == new_content:
-        print("Aucun changement.")
-        return
-    DATA_FILE.write_text(new_content, encoding="utf-8")
-    print(f"articles.json mis à jour : {len(merged)} articles.")
+    if not DATA_FILE.exists() or DATA_FILE.read_text(encoding="utf-8") != new_content:
+        DATA_FILE.write_text(new_content, encoding="utf-8")
+        print(f"articles.json mis à jour : {len(merged)} articles.")
+    else:
+        print("articles.json : aucun changement.")
+
+    # La page /articles/ est ecrite en dur a partir de ces donnees (bon pour le referencement).
+    page_articles.ecrire_page(merged)
 
 
 if __name__ == "__main__":

@@ -3341,7 +3341,7 @@
         <span class="bloc-emoji" aria-hidden="true">🎯</span>
         <h2 id="promesses-titre">Promesses VS Actes</h2>
       </div>
-      <p class="bloc-intro">À gauche ce qui a été <strong>promis</strong>, à droite ce qui a été <strong>voté</strong>. Le verdict mesure une seule chose&nbsp;: si les actes suivent la parole, jamais si le vote est «&nbsp;bon&nbsp;».</p>
+      <p class="bloc-intro">D'un côté ce qui a été <strong>promis</strong>, de l'autre ce qui a été <strong>voté</strong>. Le verdict mesure une seule chose&nbsp;: si les actes suivent la parole, jamais si le vote est «&nbsp;bon&nbsp;».</p>
 
       <div class="tetes" id="tetes" role="group" aria-label="Choisir qui comparer"></div>
       <p class="bientot-note" id="bientot-note"></p>
@@ -7527,7 +7527,7 @@
     function proposerLoi(l) {
       cadrer(ajouter('choix', '<p class="petite-demande">On regarde&nbsp;?</p><div class="chemins">' +
         '<button type="button" class="chemin" data-faces="' + esc(l.id) + '">' + emo('⚖️') +
-          '<span><b>Voir les face-à-face</b><small>promis à gauche, voté à droite, un par un</small></span></button>' +
+          '<span><b>Voir les face-à-face</b><small>le promis et le voté, côte à côte, un par un</small></span></button>' +
         '<button type="button" class="chemin secondaire" data-porte="guide">' + emo('🔀') +
           '<span><b>Un autre texte</b></span></button>' +
         '</div>'));
@@ -7538,8 +7538,8 @@
       if (!A || !l) { return; }
       retirerChoix();
       ajouter('visiteur', '<span class="bulle-v">Voir les face-à-face</span>');
-      ajouter('komune', '<p>Une personne après l\'autre&nbsp;: à gauche ce qu\'elle avait écrit avant le vote, ' +
-        'à droite ce qu\'elle a voté.</p>');
+      ajouter('komune', '<p>Une personne après l\'autre&nbsp;: d\'un côté ce qu\'elle avait écrit avant le vote, ' +
+        'de l\'autre ce qu\'elle a voté.</p>');
       var zone = ajouter('duel-zone', '<div id="duel-courant"></div>', true);
       zone.id = 'zone-duels';
       duel();
