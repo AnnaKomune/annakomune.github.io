@@ -2799,7 +2799,108 @@
       background: linear-gradient(to bottom, var(--cream) 68%, rgba(252, 247, 232, 0)); }
     /* le face-a-face est l'entree principale : seul sur sa ligne, en grand.
        Les trois autres sont des portes secondaires, en dessous. */
-    .entrees { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .entrees { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+
+    /* ---------- la barre de reperage : ou on est, ou on va ----------
+       En haut de l'outil, les entrees gardent leur taille. Des qu'on descend
+       dans le contenu, la barre se compacte en une ligne de pastilles pour ne
+       pas manger l'ecran, et la section en cours reste surlignee. */
+    .sommaire {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      padding-bottom: 2px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .sommaire::-webkit-scrollbar { display: none; }
+    .sommaire[hidden] { display: none; }
+
+    .sommaire a {
+      flex: 0 0 auto;
+      padding: 7px 13px;
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--ink);
+      font-size: 13.5px;
+      font-weight: 750;
+      line-height: 1.15;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background .15s ease, color .15s ease;
+    }
+    .sommaire a:hover { background: var(--yellow); }
+    .sommaire a[aria-current="true"] { background: var(--ink); color: var(--cream); }
+
+    /* forme compacte : une ligne de pastilles, comme le sommaire */
+    .entrees-wrap.compacte {
+      padding: 6px 0 8px;
+      background: var(--cream);
+      border-bottom: 2px solid var(--ink);
+    }
+    .entrees-wrap.compacte .entrees {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .entrees-wrap.compacte .entrees::-webkit-scrollbar { display: none; }
+    .entrees-wrap.compacte .entree {
+      flex: 0 0 auto;
+      grid-column: auto;
+      min-height: 0;
+      padding: 7px 12px;
+      border-width: 1.5px;
+      border-radius: 999px;
+      box-shadow: none;
+      font-size: 13.5px;
+    }
+    .entrees-wrap.compacte .entree .e-emo { font-size: 16px; }
+    .entrees-wrap.compacte .entree .e-lab { font-size: 13.5px; }
+    .entrees-wrap.compacte .entree .e-sub { display: none; }
+    /* les identifiants portent l'ombre coloree plus bas : on la neutralise ici
+       avec la meme force, sinon la pastille ronde garde un croissant de couleur */
+    .entrees-wrap.compacte #tab-actes,
+    .entrees-wrap.compacte #tab-cands,
+    .entrees-wrap.compacte #tab-progs,
+    .entrees-wrap.compacte #tab-jeux,
+    .entrees-wrap.compacte #tab-infos { box-shadow: none; }
+
+    /* --repere-h : la hauteur de la barre compacte, mesuree par le script.
+       Tout ce qui se colle en haut vient se ranger dessous, au lieu de la recouvrir. */
+    :root { --repere-h: 92px; }
+    .entrees-wrap { z-index: 60; }
+    .barre, .c-barre, .p-barre { top: var(--repere-h, 92px); }
+    .toc { top: calc(var(--repere-h, 92px) + 10px); }
+    .profil-panneau { top: calc(var(--repere-h, 92px) + 12px); }
+    .medef-question { top: calc(var(--repere-h, 92px) + 12px); }
+
+    /* le titre vise ne doit pas passer sous les barres collees */
+    #promesses, #rapide, #c-groupe-declares, #c-groupe-primaire, #p-socle, #p-explorer,
+    #jouer, #medef, #methode, #c-methode, #p-sources, #lexique, #sources, #chantier,
+    #candidats, #synthese, #bilan, #liste, #pli-liste {
+      scroll-margin-top: calc(var(--repere-h, 92px) + 82px);
+    }
+
+    /* ---------- la phrase de verdict, avant les chiffres ---------- */
+    .verdict-global {
+      margin: 14px 0 2px;
+      padding: 16px 18px;
+      border: 2px solid var(--ink);
+      border-radius: 18px;
+      background: var(--white);
+      box-shadow: 4px 4px 0 var(--gold);
+      font-size: clamp(17px, 1.9vw, 21px);
+      font-weight: 750;
+      line-height: 1.35;
+    }
+    .verdict-global .vg-sur { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase; opacity: .72; }
+    .verdict-global .vg-note { display: block; margin-top: 8px; font-size: 14px; font-weight: 650;
+      line-height: 1.4; opacity: .82; }
+    .verdict-global b { background: var(--yellow); padding: 0 .12em; border-radius: 4px; }
     .entree.phare { grid-column: 1 / -1; padding: 15px 18px; min-height: 76px; }
     .entree.phare .e-emo { font-size: 34px; }
     .entree.phare .e-lab { font-size: 23px; }
@@ -2821,6 +2922,7 @@
     .entree#tab-cands[aria-selected="true"] { box-shadow: 4px 4px 0 var(--sky); }
     .entree#tab-progs[aria-selected="true"] { box-shadow: 4px 4px 0 var(--green); }
     .entree#tab-jeux[aria-selected="true"] { box-shadow: 4px 4px 0 var(--pink); }
+    .entree#tab-infos[aria-selected="true"] { box-shadow: 4px 4px 0 var(--purple); }
     /* tant qu'on ne l'a pas ouvert, le face-a-face se voit de loin */
     .entree.phare[aria-selected="false"] { background: var(--gold); }
     .entree.phare[aria-selected="false"]:hover { background: var(--yellow); }
@@ -2837,6 +2939,8 @@
 
     @media (max-width: 860px) {
       .entrees { grid-template-columns: 1fr; gap: 7px; }
+      .sommaire a { font-size: 12.5px; padding: 6px 11px; }
+      :root { --repere-h: 88px; }
       .entree.phare { padding: 12px 14px; min-height: 0; }
       .entree.phare .e-emo { font-size: 26px; }
       .entree.phare .e-lab { font-size: 18px; }
@@ -3315,7 +3419,12 @@
           <span class="e-emo" aria-hidden="true">🎮</span>
           <span class="e-lab">Les jeux<span class="e-sub">devine le vote, qui a dit quoi, le débat du Medef</span></span>
         </button>
+        <button type="button" class="entree" id="tab-infos" role="tab" aria-selected="false" aria-controls="pan-infos" tabindex="-1">
+          <span class="e-emo" aria-hidden="true">🧭</span>
+          <span class="e-lab">Coulisses<span class="e-sub">la méthode, les sources, le lexique, l'avancement</span></span>
+        </button>
       </div>
+      <nav class="sommaire" id="sommaire" aria-label="Les sections de cette entrée" hidden></nav>
     </div>
     <div class="panneau" id="pan-actes" role="tabpanel" aria-labelledby="tab-actes" tabindex="-1">
       <div class="panneau-corps">
@@ -3343,6 +3452,7 @@
       </div>
       <p class="bloc-intro">D'un côté ce qui a été <strong>promis</strong>, de l'autre ce qui a été <strong>voté</strong>. Le verdict mesure une seule chose&nbsp;: si les actes suivent la parole, jamais si le vote est «&nbsp;bon&nbsp;».</p>
 
+      <p class="verdict-global" id="verdict-global" hidden></p>
       <div class="tetes" id="tetes" role="group" aria-label="Choisir qui comparer"></div>
       <p class="bientot-note" id="bientot-note"></p>
 
@@ -3572,6 +3682,8 @@
     </section>
       </div>
     </div>
+    <div class="panneau" id="pan-infos" role="tabpanel" aria-labelledby="tab-infos" tabindex="-1" hidden>
+      <div class="panneau-corps">
     <section class="bloc bloc-plus" id="coulisses" aria-labelledby="coulisses-titre">
       <h2 id="coulisses-titre"><span aria-hidden="true">🧭</span> Comment on travaille</h2>
       <p class="pitch-bloc">Les règles, le vocabulaire, l'état d'avancement et la bibliothèque des sources. À ouvrir quand une ligne vous surprend.</p>
@@ -3762,6 +3874,8 @@
       </div>
       <p class="vers-projet"><a class="button button-ghost" href="../comparateur-2027/">Le projet de comparateur, et comment y participer →</a></p>
     </section>
+      </div>
+    </div>
     </div>
 </main>
 
@@ -4770,7 +4884,8 @@
       var noeud = cible;
       while (noeud && noeud !== document.body) {
         if (noeud.tagName === 'DETAILS' && !noeud.open) { noeud.open = true; }
-        if (noeud.hasAttribute && noeud.hasAttribute('hidden')) {
+        if (noeud.hasAttribute && noeud.hasAttribute('hidden') &&
+            !(noeud.classList && noeud.classList.contains('panneau'))) {
           noeud.hidden = false;
           if (noeud.id) {
             var btn = document.querySelector('[aria-controls="' + noeud.id + '"]');
@@ -4891,7 +5006,52 @@
     window.KP_ACTES = { verdict: verdict, duelCard: duelCard, CAND: CAND, JOUEURS: JOUEURS,
                         emojiSujet: emojiSujet, openLoi: openLoi, choisir: choisir };
 
+    /* ---------- la phrase d'entree : ce que disent les donnees, en francais ----------
+       Rien n'est ecrit a la main ici : tout est compte sur D.LOIS et JOUEURS.
+       Elle dit une seule chose, la meme que le reste de la page : est-ce que les
+       actes suivent la parole. */
+    function renderVerdictGlobal() {
+      var zone = document.getElementById('verdict-global');
+      if (!zone) { return; }
+      var n = { aligne: 0, partiel: 0, contradictoire: 0, heterogene: 0, 'non-testable': 0 };
+      var couples = 0, gens = {};
+      D.LOIS.forEach(function (l) {
+        JOUEURS.forEach(function (cid) {
+          var v = l.votes[cid];
+          if (!v) { return; }
+          var code = verdict(v).code;
+          if (n[code] === undefined) { return; }
+          couples++;
+          gens[cid] = 1;
+          n[code]++;
+        });
+      });
+      if (!couples) { return; }
+      var nbGens = Object.keys(gens).length;
+      var faits = [];
+      if (n.aligne) { faits.push('les actes ont suivi la promesse <b>' + n.aligne + ' fois</b>'); }
+      if (n.partiel) { faits.push('ils l\'ont suivie en partie <b>' + n.partiel + ' fois</b>'); }
+      if (n.contradictoire) { faits.push('ils ont fait <b>le contraire ' + n.contradictoire + ' fois</b>'); }
+      else if (faits.length) { faits.push('et <b>jamais</b> le contraire'); }
+      if (!faits.length) { return; }
+      var liste = faits.length > 1
+        ? faits.slice(0, -1).join(', ') + (faits[faits.length - 1].indexOf('et ') === 0 ? ', ' : ', et ') + faits[faits.length - 1]
+        : faits[0];
+      var phrase = 'Sur les <b>' + D.LOIS.length + ' textes</b> suivis et les <b>' + nbGens +
+        ' candidat·es</b> qui ont un vote, ' + liste + '.';
+      var note = '';
+      if (n.heterogene || n['non-testable']) {
+        var bouts = [];
+        if (n.heterogene) { bouts.push(n.heterogene + ' fois le groupe s\'est divisé'); }
+        if (n['non-testable']) { bouts.push(n['non-testable'] + ' fois la situation n\'était pas testable (pas de mandat, ministre qui ne vote pas, texte sans scrutin)'); }
+        note = '<span class="vg-note">' + bouts.join(', ') + '. Ce n\'est pas une mauvaise note.</span>';
+      }
+      zone.innerHTML = '<span class="vg-sur">Ce que disent les données aujourd\'hui</span>' + phrase + note;
+      zone.hidden = false;
+    }
+
     renderTetes(); renderBilan(); renderFiltres(); renderProfils(); renderSynthese(); renderListe();
+    renderVerdictGlobal();
 
     /* ==================== REPONSES RAPIDES ==================== */
     var debatGrid = document.getElementById('debat-grid');
@@ -8041,7 +8201,9 @@
       { cle: 'progs', hash: 'programmes', donnees: ['../candidats/data.js', '../programmes/data.js'], init: 'KP_PROGS',
         titre: 'Les programmes de la présidentielle 2027, mesure par mesure' },
       { cle: 'jeux', hash: 'jeux', donnees: [], init: null,
-        titre: 'Jouer : devine le vote, qui a dit quoi, le débat du Medef' }
+        titre: 'Jouer : devine le vote, qui a dit quoi, le débat du Medef' },
+      { cle: 'infos', hash: 'coulisses', donnees: [], init: null,
+        titre: 'Coulisses et méthode : comment on travaille' }
     ];
     var TITRE_SITE = ' · Komune';
     var faits = {}, lances = {};
@@ -8116,6 +8278,7 @@
       if (pousser && window.history && history.replaceState) {
         history.pushState({ ong: cle }, '', '#' + o.hash);
       }
+      if (window.KP_SOMMAIRE) { window.KP_SOMMAIRE(cle); }
       if (focus) {
         var t = document.getElementById('tab-' + cle);
         if (t) { t.focus(); }
@@ -8209,6 +8372,179 @@
       window.KP_ONGLET(cle, h.charAt(0) === '#' && h !== '#promesses-actes');
       if (h.charAt(0) === '#' && h !== '#promesses-actes' && location.hash !== h) { location.hash = h; }
     });
+  })();
+  </script>
+  <script>
+  /* ==================== la barre de reperage ====================
+     Deux lignes collees en haut de l'outil : les entrees, puis les sections de
+     l'entree en cours. La section ou l'on se trouve reste surlignee, et la barre
+     se compacte des qu'on quitte le haut de la page pour ne pas manger l'ecran.
+     Aucune donnee ici : uniquement des reperes de lecture. */
+  (function () {
+    'use strict';
+    var wrap = document.querySelector('.entrees-wrap');
+    var somm = document.getElementById('sommaire');
+    if (!wrap || !somm) { return; }
+
+    /* pour chaque entree, ses etapes. Plusieurs identifiants par etape : on prend
+       le premier qui est reellement visible (certaines zones se replient). */
+    var ETAPES = {
+      actes: [[['synthese', 'bilan', 'promesses'], "Vue d'ensemble"],
+              [['liste', 'pli-liste'], 'Texte par texte'],
+              [['rapide'], 'Réponses rapides']],
+      cands: [[['c-groupe-declares', 'c-qui'], 'Déclaré·es'],
+              [['c-groupe-primaire'], 'Primaire de la gauche']],
+      progs: [[['p-socle'], 'Sur quoi on se base'],
+              [['p-explorer'], 'Mesure par mesure']],
+      jeux:  [[['jouer'], 'À jouer'],
+              [['medef'], 'Le débat du Medef']],
+      infos: [[['methode'], 'La méthode'],
+              [['c-methode'], 'Les fiches'],
+              [['p-sources'], "D'où viennent les mesures"],
+              [['lexique'], 'Le lexique'],
+              [['sources'], 'Les sources'],
+              [['chantier'], 'Où on en est'],
+              [['candidats'], 'Les candidat·es']]
+    };
+
+    var liens = [];
+
+    function visible(el) {
+      return !!(el && el.offsetParent !== null);
+    }
+    function premierVisible(ids) {
+      for (var i = 0; i < ids.length; i++) {
+        var el = document.getElementById(ids[i]);
+        if (visible(el)) { return el; }
+      }
+      var secours = document.getElementById(ids[ids.length - 1]);
+      return secours || null;
+    }
+
+    function construire(cle) {
+      var etapes = ETAPES[cle] || [];
+      somm.innerHTML = '';
+      liens = [];
+      if (etapes.length < 2) { somm.hidden = true; return; }
+      etapes.forEach(function (et) {
+        var a = document.createElement('a');
+        a.href = '#' + et[0][0];
+        a.textContent = et[1];
+        a.dataset.ids = et[0].join(',');
+        a.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          var cible = premierVisible(et[0]);
+          if (!cible) { return; }
+          cible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          marquer(a);
+        });
+        somm.appendChild(a);
+        liens.push(a);
+      });
+      somm.hidden = false;
+      marquer(null);
+    }
+
+    function marquer(actif) {
+      liens.forEach(function (a) {
+        if (a === actif) { a.setAttribute('aria-current', 'true'); }
+        else { a.removeAttribute('aria-current'); }
+      });
+      if (actif) { amenerDansLaBarre(actif); }
+    }
+
+    /* sur telephone la barre defile : on ramene la pastille en cours a l'ecran */
+    function amenerDansLaBarre(a) {
+      var r = a.getBoundingClientRect(), b = somm.getBoundingClientRect();
+      if (r.left < b.left + 4) { somm.scrollLeft += r.left - b.left - 12; }
+      else if (r.right > b.right - 4) { somm.scrollLeft += r.right - b.right + 12; }
+    }
+
+    /* la section en cours : la derniere dont le haut est passe sous la barre */
+    var enAttente = false, dernierH = 0;
+    function suivre() {
+      if (enAttente) { return; }
+      enAttente = true;
+      requestAnimationFrame(function () {
+        enAttente = false;
+        var compacte = window.pageYOffset > 90;
+        wrap.classList.toggle('compacte', compacte);
+        /* la hauteur reelle de la barre sert d'appui a tout ce qui se colle dessous */
+        if (compacte) {
+          var h = Math.round(wrap.getBoundingClientRect().height);
+          if (h && h !== dernierH) {
+            dernierH = h;
+            document.documentElement.style.setProperty('--repere-h', h + 'px');
+          }
+        }
+        if (somm.hidden || !liens.length) { return; }
+        /* meme repere que scroll-margin-top : une section compte comme atteinte
+           des que son haut arrive la ou un clic sur la pastille l'amenerait */
+        var seuil = wrap.getBoundingClientRect().height + 90;
+        var courant = null;
+        liens.forEach(function (a) {
+          var cible = premierVisible(a.dataset.ids.split(','));
+          if (!cible) { return; }
+          if (cible.getBoundingClientRect().top <= seuil) { courant = a; }
+        });
+        /* avant d'avoir atteint la premiere section, on montre quand meme ou on va */
+        marquer(courant || liens[0]);
+      });
+    }
+
+    window.addEventListener('scroll', suivre, { passive: true });
+    window.addEventListener('resize', suivre);
+
+    window.KP_SOMMAIRE = function (cle) {
+      construire(cle);
+      suivre();
+    };
+
+    /* ---------- un lien vers une section d'une autre entree l'ouvre d'abord ----------
+       Depuis que la methode, le lexique et les sources vivent dans l'entree
+       « Coulisses », un lien comme « La methode -> » vise une section masquee :
+       on bascule sur la bonne entree avant de s'y rendre. */
+    function allerVers(id, defiler) {
+      var cible = document.getElementById(id);
+      if (!cible) { return false; }
+      var pan = cible.closest ? cible.closest('.panneau') : null;
+      if (!pan || !pan.hidden || !window.KP_ONGLET) { return false; }
+      /* true : on garde l'ancre dans l'adresse, l'entree ne la remplace pas */
+      window.KP_ONGLET(pan.id.replace(/^pan-/, ''), true);
+      if (defiler !== false) {
+        setTimeout(function () {
+          var c = document.getElementById(id);
+          if (!c) { return; }
+          if (!c.hasAttribute('tabindex')) { c.setAttribute('tabindex', '-1'); }
+          c.focus({ preventScroll: true });
+          c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 90);
+      }
+      return true;
+    }
+    document.addEventListener('click', function (ev) {
+      var a = ev.target.closest ? ev.target.closest('a[href^="#"]') : null;
+      if (!a || a.hasAttribute('data-ong') || a.closest('#sommaire')) { return; }
+      var id = (a.getAttribute('href') || '').slice(1);
+      if (id) { allerVers(id, true); }
+    }, true);
+    /* attention : « candidats » et « coulisses » sont a la fois des adresses
+       d'entree et des identifiants de section. Au chargement et sur changement
+       d'adresse, c'est le routeur qui commande ; au clic sur un lien interne,
+       c'est bien la section qui est visee. */
+    var ADRESSES = ['promesses-actes', 'candidats', 'programmes', 'jeux', 'coulisses'];
+    function estUneEntree(id) { return ADRESSES.indexOf(id) >= 0; }
+    window.addEventListener('hashchange', function () {
+      var id = (location.hash || '').slice(1);
+      if (id && !estUneEntree(id)) { allerVers(id, true); }
+    });
+
+    /* le routeur a deja choisi une entree avant que ce script existe : on rattrape */
+    var actif = document.querySelector('.entree[aria-selected="true"]');
+    if (actif) { window.KP_SOMMAIRE(actif.id.replace(/^tab-/, '')); }
+    if (location.hash.length > 1 && !estUneEntree(location.hash.slice(1))) {
+      allerVers(location.hash.slice(1), true);
+    }
   })();
   </script>
 </body>
