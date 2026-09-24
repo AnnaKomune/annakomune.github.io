@@ -153,15 +153,21 @@ def get_feed_items():
         ("corsproxy", "https://corsproxy.io/?url="),
         ("jina", "https://r.jina.ai/"),
     )
+    # L'API d'archive donne toute la liste ; le flux RSS seulement les derniers
+    # articles. On epuise donc tous les chemins vers l'archive (relais compris)
+    # avant de se rabattre sur le flux.
     sources = [
         ("api d'archive (empreinte Chrome)", lambda: _items_from_archive(_get_cffi)),
         ("api d'archive (direct)", lambda: _items_from_archive(_get_urllib)),
+    ]
+    for nom, relais in RELAIS:
+        sources.append(("api d'archive via " + nom, (lambda r: lambda: _items_from_archive(_via(r)))(relais)))
+    sources += [
         ("rss2json", _items_from_rss2json),
         ("flux RSS (empreinte Chrome)", lambda: parse_items(_get_cffi(FEED_URL))),
         ("flux RSS (direct)", lambda: parse_items(_get_urllib(FEED_URL))),
     ]
     for nom, relais in RELAIS:
-        sources.append(("api d'archive via " + nom, (lambda r: lambda: _items_from_archive(_via(r)))(relais)))
         sources.append(("flux RSS via " + nom, (lambda r: lambda: parse_items(_via(r)(FEED_URL)))(relais)))
     sources = tuple(sources)
     last_error = None
