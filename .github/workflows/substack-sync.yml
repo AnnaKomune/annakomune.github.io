@@ -2,8 +2,8 @@ name: Synchroniser les articles Substack
 
 on:
   schedule:
-    # 4 fois par jour (heures UTC)
-    - cron: "23 5,11,17,23 * * *"
+    # 8 fois par jour (heures UTC)
+    - cron: "23 2,5,8,11,14,17,20,23 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -20,7 +20,22 @@ jobs:
         run: pip install --quiet curl_cffi
 
       - name: Mettre à jour les articles et la page /articles/ depuis Substack
-        run: python3 scripts/sync_substack.py
+        run: |
+          # Substack et les relais publics refusent regulierement les adresses IP
+          # des serveurs GitHub. L'echec est presque toujours passager : on retente
+          # trois fois, a deux minutes d'intervalle, avant d'abandonner.
+          for essai in 1 2 3; do
+            if python3 scripts/sync_substack.py; then
+              exit 0
+            fi
+            echo "Tentative $essai sans succes."
+            if [ "$essai" != "3" ]; then
+              echo "Nouvelle tentative dans 120 secondes."
+              sleep 120
+            fi
+          done
+          echo "::error::Substack reste injoignable apres trois tentatives."
+          exit 1
 
       - name: Publier si quelque chose a changé
         run: |
