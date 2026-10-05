@@ -3408,6 +3408,7 @@
         <a href="../">Accueil</a>
         <a href="../articles/">Articles</a>
         <a class="est-ici" href="./" aria-current="page">Le comparateur présidentielles 2027</a>
+        <a href="../decryptages/">Décryptages</a>
         <a href="../equipe/">L'équipe</a>
         <a href="../soutenir/">Nous soutenir</a>
         </div>
@@ -6793,9 +6794,14 @@
     /* ---------- statut ---------- */
     function statutTexte(c) {
       if (c.statut === 'candidat primaire') { return 'Primaire de la gauche · annoncé·e le ' + c.date; }
+      if (c.statut === 'pressenti') { return 'Pressenti·e, pas encore déclaré·e'; }
       return 'Déclaré·e le ' + c.date;
     }
-    function statutCourt(c) { return c.statut === 'candidat primaire' ? 'Primaire · ' + c.date : c.date; }
+    function statutCourt(c) {
+      if (c.statut === 'candidat primaire') { return 'Primaire · ' + c.date; }
+      if (c.statut === 'pressenti') { return 'Pressenti·e'; }
+      return c.date;
+    }
     function verifBadge(c) { return c.verif === 'sourcé' ? '<span class="verif">Fiche sourcée</span>' : '<span class="verif encours">Fiche en cours</span>'; }
 
     /* ---------- cartes ---------- */
@@ -6820,8 +6826,11 @@
     function fiche(c) {
       var enCours = c.verif !== 'sourcé';
       var actions = [];
-      if (c.site) { actions.push('<a class="btn" href="' + esc(c.site) + '" target="_blank" rel="noopener noreferrer">🌐 Site de campagne ↗</a>'); }
-      if (c.prog_url && c.prog_url !== c.site) { actions.push('<a class="btn" href="' + esc(c.prog_url) + '" target="_blank" rel="noopener noreferrer">📄 Le programme ↗</a>'); }
+      /* une cellule qui dit « Aucun » ou « Pas de site » n'est pas une adresse : pas de bouton */
+      var web = function (v) { v = v || ''; return (v.indexOf('http://') === 0 || v.indexOf('https://') === 0) ? v : ''; };
+      var siteUrl = web(c.site), progUrl = web(c.prog_url);
+      if (siteUrl) { actions.push('<a class="btn" href="' + esc(siteUrl) + '" target="_blank" rel="noopener noreferrer">🌐 Site de campagne ↗</a>'); }
+      if (progUrl && progUrl !== siteUrl) { actions.push('<a class="btn" href="' + esc(progUrl) + '" target="_blank" rel="noopener noreferrer">📄 Le programme ↗</a>'); }
       if (c.n_mesures) { actions.push('<a class="btn play" href="#c=' + esc(c.slug) + '" data-ong="progs">🗂️ ' + c.n_mesures + ' mesures dans les programmes</a>'); }
       if (DANS_COMPARATEUR.indexOf(c.slug) > -1) { actions.push('<a class="btn play" href="#promesses-actes" data-ong="actes">🎯 Promesses VS Actes</a>'); }
       var secs = [];

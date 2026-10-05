@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cinq lectures des programmes de la présidentielle 2027 : le classement des 18 thèmes, le thème n°1 de chaque candidat, 45 citations sur le nucléaire, la confrontation promesse-vote sur les retraites de 2023, et le nombre de mesures écrites par candidat.">
+  <title>Décryptages - les programmes de 2027 en cinq graphiques - Komune Média</title>
+  <link rel="canonical" href="https://www.komunemedia.fr/decryptages/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Komune Média">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://www.komunemedia.fr/decryptages/">
+  <meta property="og:title" content="Décryptages - la présidentielle 2027 en cinq graphiques">
+  <meta property="og:description" content="Le classement des 18 thèmes, le thème n°1 de chaque candidat, 45 citations sur le nucléaire, promesse et vote sur la réforme des retraites de 2023.">
+  <meta property="og:image" content="https://www.komunemedia.fr/img/og-comparateur.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.komunemedia.fr/img/og-comparateur.png">
+  <link rel="icon" type="image/png" href="../img/favicon.png">
+  <link rel="apple-touch-icon" href="../img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #5423df; --pink: #f099f9; --sky: #9abdff; --gold: #fee075;
+      --yellow: #ffff92; --green: #b0fda4; --cream: #fcf7e8; --ink: #332e32;
+      --white: #ffffff; --muted: rgba(51, 46, 50, .72); --line: rgba(51, 46, 50, .14);
+      --radius-xl: 34px; --shadow: 0 18px 48px rgba(51, 46, 50, .09);
+      --data: #2a78d6;          /* la teinte unique des barres */
+      --data-faible: #bcd6f3;
+      --accent: #eb6834;        /* réservée au point saillant, jamais décorative */
+      --v2: #4a1fc4;            /* actes alignés */
+      --v1: #b7a4f0;            /* alignés en partie */
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; overflow-x: hidden; background: var(--cream); color: var(--ink);
+      font-family: "Bricolage Grotesque", Inter, ui-sans-serif, system-ui, sans-serif; line-height: 1.45; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+    h1, h2, h3, p { margin: 0; }
+    .page { width: min(1220px, calc(100% - 28px)); margin: 0 auto; padding: 28px 0 80px; }
+    .canvas { padding: clamp(14px, 2.2vw, 28px); border: 1px solid rgba(51,46,50,.08);
+      border-radius: 38px; background: rgba(255,255,255,.22); box-shadow: var(--shadow); }
+    .eyebrow, h3 { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px; font-weight: 800; line-height: 1.2; letter-spacing: .085em; text-transform: uppercase; }
+    h1, h2 { font-family: "Oswald", Impact, sans-serif; font-weight: 400; letter-spacing: -.045em; line-height: .89; }
+    h1 { font-size: clamp(56px, 7vw, 104px); }
+    h2 { font-size: clamp(38px, 4.6vw, 66px); }
+    p { color: var(--muted); font-size: clamp(16px, 1.44vw, 20px); line-height: 1.5; }
+    .panel { border: 1px solid var(--line); border-radius: var(--radius-xl); box-shadow: var(--shadow); }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px;
+      padding: 14px 20px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink);
+      color: var(--cream); font-size: 16px; font-weight: 800; line-height: 1;
+      transition: transform .18s ease, background .18s ease, color .18s ease; }
+    .button:hover { background: var(--pink); color: var(--ink); transform: translateY(-2px) rotate(-0.5deg); }
+
+    .site-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 14px 22px; padding: 10px clamp(10px, 2vw, 22px) 18px; }
+    .site-brand img { width: clamp(132px, 15vw, 186px); height: auto; }
+    .site-liens { display: flex; flex-wrap: wrap; gap: 8px 10px; }
+    .site-link { padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--white);
+      font-size: 13px; font-weight: 700; line-height: 1; transition: background .18s ease, transform .18s ease; }
+    .site-link:hover { background: var(--gold); transform: translateY(-1px); }
+    .site-link.is-current { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+    .hero { display: grid; grid-template-columns: minmax(0,1fr) minmax(220px,.34fr); gap: 16px; align-items: stretch; }
+    .hero-main { min-width: 0; padding: clamp(30px, 4.4vw, 56px); background: var(--white); }
+    .hero-kicker { display: inline-block; width: fit-content; margin-bottom: 24px; padding-bottom: 7px; border-bottom: 2px solid var(--ink); }
+    .hero-main p { margin-top: 22px; max-width: 56ch; }
+    .hero-cote { display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
+      padding: clamp(24px, 3vw, 38px); background: var(--yellow); transform: rotate(0.5deg); }
+    .hero-cote .button { transform: rotate(-1deg); }
+    .hero-chiffres { display: grid; gap: 14px; }
+    .hero-chiffre b { display: block; font-family: "Oswald", Impact, sans-serif; font-size: clamp(32px, 3.8vw, 48px);
+      font-weight: 700; line-height: .9; letter-spacing: -.04em; }
+    .hero-chiffre span { font-size: 13px; font-weight: 700; color: var(--ink); }
+
+    .somm { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px;
+      margin-top: 16px; padding: 18px clamp(18px, 2.4vw, 28px); background: var(--white); }
+    .somm a { display: block; padding: 12px 15px; border: 1px solid var(--line); border-radius: 18px;
+      background: var(--cream); font-size: 14px; font-weight: 700; line-height: 1.25; }
+    .somm a:hover { background: var(--sky); }
+    .somm a b { display: block; font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+
+    .bloc { margin-top: 56px; }
+    .bloc-tete { padding: clamp(26px, 3.4vw, 44px); background: var(--white); }
+    .bloc-tete .eyebrow { color: var(--muted); }
+    .bloc-tete h2 { margin: 14px 0 18px; }
+    .bloc-tete p { max-width: 62ch; }
+    .bloc-tete p + p { margin-top: 14px; }
+    .bloc-corps { margin-top: 16px; padding: clamp(18px, 2.6vw, 32px); background: var(--white); }
+    .cle { margin: 18px 0 0; padding: 18px 20px; border-left: 4px solid var(--ink); background: var(--cream); border-radius: 0 18px 18px 0; }
+    .cle b { color: var(--ink); font-size: clamp(18px, 1.9vw, 23px); font-weight: 800; letter-spacing: -.02em; line-height: 1.25; }
+    .cle p { margin-top: 8px; font-size: 16px; }
+
+    /* ---- barres ---- */
+    .barres { display: grid; gap: 4px; }
+    .bl { display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: 12px; align-items: center;
+      padding: 4px 6px; border-radius: 10px; }
+    .bl:hover { background: var(--cream); }
+    .bl-nom { font-size: 14px; font-weight: 700; line-height: 1.2; text-align: right; overflow-wrap: anywhere; }
+    .bl-nom small { display: block; font-weight: 600; font-size: 12px; color: var(--muted); }
+    .bl-piste { display: flex; align-items: center; gap: 9px; min-width: 0; }
+    .bl-barre { height: 15px; border-radius: 0 4px 4px 0; background: var(--data); flex: none; min-width: 2px; }
+    .bl.saillant .bl-barre { background: var(--accent); }
+    .bl.saillant .bl-nom { color: var(--ink); }
+    .bl-val { font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .bl-apres { font-size: 12px; color: var(--muted); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bl-zero .bl-barre { background: transparent; border-left: 3px solid var(--accent); border-radius: 0; width: 3px !important; }
+
+    .muets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .muets span { display: inline-flex; align-items: baseline; gap: 6px; padding: 8px 13px; border: 1px solid var(--line);
+      border-radius: 999px; background: var(--cream); font-size: 13px; font-weight: 700; }
+    .muets span b { color: var(--muted); font-weight: 700; font-size: 12px; }
+
+    /* ---- citations ---- */
+    .choix { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .choix button { padding: 10px 15px; border: 1px solid var(--line); border-radius: 999px; background: var(--cream);
+      font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .choix button[aria-pressed="true"] { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+    .cits { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; align-items: start; }
+    .cit { border: 1px solid var(--line); border-radius: 22px; background: var(--cream); padding: 18px 20px; }
+    .cit h3 { font-size: 13px; letter-spacing: .04em; }
+    .cit h3 small { display: block; font-family: "Bricolage Grotesque", sans-serif; text-transform: none;
+      letter-spacing: 0; font-size: 12px; font-weight: 600; color: var(--muted); margin-top: 3px; }
+    .cit ul { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+    .cit li { font-size: 15px; line-height: 1.4; color: var(--ink); }
+    .cit li q { quotes: "« " " »"; font-weight: 600; }
+    .cit li em { display: block; font-style: normal; font-size: 12px; color: var(--muted); font-weight: 600; margin-top: 4px; }
+    .cit details { margin-top: 5px; }
+    .cit summary { font-size: 12px; font-weight: 700; color: var(--data); cursor: pointer; }
+    .cit details p { font-size: 14px; margin-top: 7px; padding-left: 10px; border-left: 2px solid var(--line); }
+
+    /* ---- face-à-face ---- */
+    .ff { display: grid; gap: 14px; }
+    .ffc { border: 1px solid var(--line); border-radius: 24px; background: var(--cream); overflow: hidden; }
+    .ffc-tete { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; padding: 16px 20px; background: var(--white); border-bottom: 1px solid var(--line); }
+    .ffc-nom { font-family: "Oswald", Impact, sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -.03em; line-height: 1; }
+    .ffc-parti { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .ffc-verdict { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px;
+      border-radius: 999px; font-size: 13px; font-weight: 800; }
+    .v-aligne { background: var(--v2); color: var(--white); }
+    .v-partiel { background: var(--v1); color: var(--ink); }
+    .ffc-corps { display: grid; grid-template-columns: 1fr 1fr; }
+    .ffc-col { padding: 18px 20px; min-width: 0; }
+    .ffc-col + .ffc-col { border-left: 1px solid var(--line); background: rgba(255,255,255,.55); }
+    .ffc-col h3 { color: var(--muted); margin-bottom: 10px; }
+    .ffc-col p { font-size: 15px; color: var(--ink); line-height: 1.45; }
+    .ffc-col p + p { margin-top: 9px; }
+    .ffc-col p.sec { color: var(--muted); font-size: 14px; }
+    .ffc-col strong { font-weight: 800; }
+    .ffc-pied { padding: 12px 20px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
+
+    /* ---- état des programmes ---- */
+    .etats { display: grid; gap: 4px; }
+    .et { display: grid; grid-template-columns: minmax(0,198px) 64px minmax(0,1fr); gap: 12px; align-items: center;
+      padding: 6px; border-radius: 10px; }
+    .et:hover { background: var(--cream); }
+    .et-nom { font-size: 14px; font-weight: 700; text-align: right; line-height: 1.2; overflow-wrap: anywhere; }
+    .et-nom small { display: block; font-weight: 600; font-size: 12px; color: var(--muted); }
+    .et-n { text-align: right; font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .et-n.zero { color: var(--accent); }
+    .et-etat { min-width: 0; }
+    .et-etat b { display: block; font-size: 13px; font-weight: 800; }
+    .et-etat small { display: block; font-size: 12px; color: var(--muted); line-height: 1.35; margin-top: 2px; }
+
+    details.tableau { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+    details.tableau summary { cursor: pointer; font-size: 14px; font-weight: 800; }
+    details.tableau .enveloppe { max-height: 420px; overflow: auto; margin-top: 14px; }
+    details.tableau table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    details.tableau th, details.tableau td { padding: 6px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+    details.tableau thead th { position: sticky; top: 0; background: var(--white); font-weight: 800; }
+    details.tableau td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .source { margin-top: 16px; font-size: 13px; color: var(--muted); }
+    .source a { text-decoration: underline; }
+
+    #bulle { position: fixed; z-index: 60; max-width: 310px; padding: 10px 13px; border-radius: 14px;
+      background: var(--ink); color: var(--cream); font-size: 13px; line-height: 1.35;
+      box-shadow: 0 10px 30px rgba(51,46,50,.28); pointer-events: none; opacity: 0; transition: opacity .12s ease; }
+    #bulle.on { opacity: 1; }
+    #bulle b { display: block; font-size: 14px; font-weight: 800; margin-bottom: 3px; }
+    #bulle u { display: block; text-decoration: none; color: rgba(252,247,232,.8); }
+
+    .methode { margin-top: 56px; padding: clamp(26px, 3.4vw, 44px); background: var(--ink); border-radius: var(--radius-xl); color: var(--cream); }
+    .methode h2 { color: var(--cream); }
+    .methode p { color: rgba(252,247,232,.86); }
+    .methode .eyebrow { color: rgba(252,247,232,.6); }
+    .methode ul { margin: 18px 0 0; padding-left: 20px; }
+    .methode li { color: rgba(252,247,232,.86); font-size: 16px; line-height: 1.55; margin-bottom: 10px; }
+    .methode b { color: var(--cream); }
+
+    .site-pied { margin-top: 56px; padding: 30px clamp(14px, 2vw, 24px) 10px; }
+    .site-foot-brand { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+    .site-foot-brand img { width: clamp(120px, 13vw, 160px); height: auto; }
+    .site-foot-brand span { font-size: 13px; color: var(--muted); }
+
+    @media (max-width: 920px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-cote { transform: none; }
+      .ffc-corps { grid-template-columns: 1fr; }
+      .ffc-col + .ffc-col { border-left: 0; border-top: 1px solid var(--line); }
+    }
+    @media (max-width: 680px) {
+      .page { width: min(100% - 18px, 1220px); padding: 10px 0 48px; }
+      .canvas { padding: 10px; border-radius: 24px; }
+      .panel, .methode, .ffc { border-radius: 24px; }
+      h1 { font-size: clamp(46px, 14vw, 78px); }
+      h2 { font-size: clamp(34px, 11vw, 56px); }
+      .hero-main { padding: 28px 22px; }
+      .bloc { margin-top: 40px; }
+      .bl { grid-template-columns: 1fr; gap: 2px; }
+      .bl-nom { text-align: left; }
+      .et { grid-template-columns: 1fr 56px; }
+      .et-nom { text-align: left; }
+      .et-etat { grid-column: 1 / -1; }
+      .cits { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="site-nav" aria-label="Navigation du site">
+      <a class="site-brand" href="../" aria-label="Komune Média - retour à l'accueil"><img src="../img/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>
+      <div class="site-liens">
+      <a class="site-link" href="../">Accueil</a>
+      <a class="site-link" href="../articles/">Articles</a>
+      <a class="site-link" href="../comparateur/">Le comparateur présidentielles 2027</a>
+      <a class="site-link is-current" href="./" aria-current="page">Décryptages</a>
+      <a class="site-link" href="../equipe/">L'équipe</a>
+      <a class="site-link" href="../soutenir/">Nous soutenir</a>
+      </div>
+    </nav>
+
+    <main class="canvas">
+      <header class="hero">
+        <div class="hero-main panel">
+          <p class="eyebrow hero-kicker">Décryptages · présidentielle 2027</p>
+          <h1>Les programmes<br>de 2027 en<br>cinq graphiques</h1>
+          <p>Tout ce que les candidat·es et leurs partis ont écrit pour 2027 est lu et indexé phrase par phrase. Cette page présente cinq lectures de ces données : le classement des thèmes, le thème principal de chaque candidat·e, les citations sur un sujet, la confrontation promesse-vote sur la réforme des retraites, et le nombre de mesures écrites par chacun·e.</p>
+          <p>Chaque chiffre est recalculé sur les données publiées dans le comparateur. Chaque citation est reproduite mot pour mot, avec son document d'origine.</p>
+        </div>
+        <aside class="hero-cote panel">
+          <div class="hero-chiffres">
+            <div class="hero-chiffre"><b id="h-mes"></b><span>mesures lues et indexées</span></div>
+            <div class="hero-chiffre"><b id="h-doc"></b><span>documents dépouillés</span></div>
+            <div class="hero-chiffre"><b id="h-loi"></b><span>textes de loi suivis</span></div>
+          </div>
+          <a class="button" href="../comparateur/">Ouvrir le comparateur</a>
+        </aside>
+      </header>
+
+      <nav class="somm panel" aria-label="Les cinq décryptages">
+        <a href="#sujets"><b>Décryptage 1</b>Classement des 18 thèmes</a>
+        <a href="#obsessions"><b>Décryptage 2</b>Le thème n°1 de chaque candidat</a>
+        <a href="#nucleaire"><b>Décryptage 3</b>Le nucléaire, 45 citations</a>
+        <a href="#retraites"><b>Décryptage 4</b>Retraites : promesse et vote</a>
+        <a href="#etats"><b>Décryptage 5</b>Mesures écrites par candidat·e</a>
+      </nav>
+
+      <section class="bloc" id="sujets">
+        <div class="bloc-tete panel">
+          <p class="eyebrow">Décryptage 1 · classement des 18 thèmes</p>
+          <h2>Le pouvoir d'achat<br>est le dernier des 18 sujets</h2>
+          <p>Chaque mesure relevée est rangée dans un thème et un seul. Voici les 18 thèmes classés par nombre de mesures, avec le nombre de programmes qui en traitent.</p>
+          <div class="cle"><b id="cle1"></b><p id="cle1p"></p></div>
+        </div>
+        <div class="bloc-corps panel">
+          <div class="barres" id="vue1"></div>
+          <h3 style="margin-top:26px">Les programmes qui n'en disent rien</h3>
+          <div class="muets" id="muets1"></div>
+          <details class="tableau"><summary>Voir les chiffres en tableau</summary><div class="enveloppe"><table id="tab1"></table></div></details>
+          <p class="source">Source : <a href="../comparateur/#programmes">comparateur Komune, onglet Programmes</a>. Un thème par mesure, attribué à la lecture du document. Les déclarations publiques ne sont pas comptées ici.</p>
+        </div>
+      </section>
+
+      <section class="bloc" id="obsessions">
+        <div class="bloc-tete panel">
+          <p class="eyebrow">Décryptage 2 · part du thème principal</p>
+          <h2>Le thème n°1<br>de chaque candidat</h2>
+          <p>Pour chaque candidat·e déclaré·e ayant au moins vingt mesures : le thème qui compte le plus de mesures, et la part qu'il représente dans son total. Passez sur une ligne pour voir ses trois premiers thèmes.</p>
+          <div class="cle"><b id="cle2"></b><p id="cle2p"></p></div>
+        </div>
+        <div class="bloc-corps panel">
+          <div class="barres" id="vue2"></div>
+          <details class="tableau"><summary>Voir les trois premiers thèmes de chacun·e</summary><div class="enveloppe"><table id="tab2"></table></div></details>
+          <p class="source">La part est calculée sur le total des mesures de la personne. Un gros programme traite forcément de tout : ce qui compte ici, c'est le déséquilibre.</p>
+        </div>
+      </section>
+
+      <section class="bloc" id="nucleaire">
+        <div class="bloc-tete panel">
+          <p class="eyebrow">Décryptage 3 · citations mot pour mot</p>
+          <h2>Le nucléaire<br>dans 17 programmes</h2>
+          <p>Le nucléaire est l'un des sujets les plus partagés du corpus : 17 programmes en traitent, pour 45 mesures. Elles sont reproduites ici mot pour mot, avec le document d'où elles sortent.</p>
+          <div class="cle"><b id="cle3"></b><p id="cle3p"></p></div>
+        </div>
+        <div class="bloc-corps panel">
+          <div class="cits" id="vue3"></div>
+          <p class="source">Les phrases sont reprises telles qu'elles figurent dans les documents, sans retouche, y compris quand la mise en page du PDF d'origine a collé des mots. Quand la mesure est plus longue, « lire la mesure entière » donne le passage complet. Retrouvez chacune par son identifiant dans <a href="../comparateur/#programmes">l'onglet Programmes</a>.</p>
+        </div>
+      </section>
+
+      <section class="bloc" id="retraites">
+        <div class="bloc-tete panel">
+          <p class="eyebrow">Décryptage 4 · promesse contre acte</p>
+          <h2>Retraites 2023 :<br>promesse et vote<br>de 11 candidat·es</h2>
+          <p>La réforme de 2023 est le texte du comparateur sur lequel le plus de candidat·es peuvent être confronté·es à un acte. Le 49.3 ayant privé l'Assemblée d'un vote sur la loi, le scrutin de référence est la motion de censure du 20 mars 2023, et le vote du Sénat du 16 mars pour les sénateurs.</p>
+          <p>D'un côté ce qu'ils promettent aujourd'hui, de l'autre ce qu'ils ont fait à l'époque. Le badge dit si les deux se tiennent.</p>
+          <div class="cle"><b id="cle4"></b><p id="cle4p"></p></div>
+        </div>
+        <div class="bloc-corps panel">
+          <div class="ff" id="vue4"></div>
+          <p class="source">Source : <a href="../comparateur/">comparateur Komune</a>, onglet Promesses VS actes. Le badge compare la promesse et l'acte de la personne, pas ceux de son parti, et ne juge pas la promesse elle-même.</p>
+        </div>
+      </section>
+
+      <section class="bloc" id="etats">
+        <div class="bloc-tete panel">
+          <p class="eyebrow">Décryptage 5 · état des programmes</p>
+          <h2>Nombre de mesures<br>écrites par candidat·e</h2>
+          <p>Pour chaque personne suivie : le nombre de mesures écrites, l'état de son programme et les documents sur lesquels le relevé repose.</p>
+          <div class="cle"><b id="cle5"></b><p id="cle5p"></p></div>
+        </div>
+        <div class="bloc-corps panel">
+          <div class="etats" id="vue5"></div>
+          <p class="source">Le détail de chaque corpus, document par document, est dans <a href="../comparateur/#programmes">l'onglet Programmes</a>.</p>
+        </div>
+      </section>
+
+      <section class="methode" id="methode">
+        <p class="eyebrow">Comment c'est fait</p>
+        <h2>La méthode</h2>
+        <ul>
+          <li><b>Une mesure = une phrase écrite.</b> On ne relève que ce qui figure dans un document public signé par la personne ou par son parti. Les déclarations orales et les interviews ne sont pas comptées dans ces graphiques.</li>
+          <li><b>Rien sans source.</b> Chaque mesure porte le nom de son document, sa date et son lien.</li>
+          <li><b>Une fonction n'est pas un mandat.</b> Un ministre ne vote pas à l'Assemblée. C'est pourquoi certains ne peuvent pas être confrontés à un vote, sans que cela dise quoi que ce soit d'eux.</li>
+          <li><b>Le volume ne dit pas la qualité.</b> Écrire 800 mesures n'est pas mieux qu'en écrire 50. Ces graphiques décrivent des textes, ils ne notent personne.</li>
+          <li><b>Les chiffres bougent.</b> Cette page est recalculée à chaque mise à jour des données.</li>
+        </ul>
+        <p style="margin-top:18px" id="horodatage"></p>
+      </section>
+    </main>
+
+    <footer class="site-pied">
+      <div class="site-foot-brand">
+        <img src="../img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">
+        <span>© Komune Média - Le média indépendant qui décrypte la société avec un regard antiraciste</span>
+      </div>
+    </footer>
+  </div>
+  <div id="bulle" role="status" aria-live="polite"></div>
+  <script>
+  window.KOMUNE_DEC = {"maj": "2026-10-05", "nMesures": 5410, "nDocs": 179, "nLois": 17, "f1": {"total": 5410, "themes": [{"nom": "International, Europe & défense", "n": 553, "p": 26}, {"nom": "Écologie & climat", "n": 490, "p": 26}, {"nom": "Économie, entreprises & finances publiques", "n": 473, "p": 27}, {"nom": "Éducation & jeunesse", "n": 456, "p": 24}, {"nom": "Sécurité & justice", "n": 450, "p": 25}, {"nom": "Santé", "n": 409, "p": 22}, {"nom": "Démocratie & institutions", "n": 353, "p": 24}, {"nom": "Services publics & territoires", "n": 307, "p": 25}, {"nom": "Droits, égalité & lutte contre les discriminations", "n": 288, "p": 22}, {"nom": "Protection sociale & retraites", "n": 287, "p": 24}, {"nom": "Agriculture & alimentation", "n": 251, "p": 24}, {"nom": "Travail & emploi", "n": 209, "p": 24}, {"nom": "Immigration, asile & nationalité", "n": 200, "p": 26}, {"nom": "Logement", "n": 190, "p": 22}, {"nom": "Culture, médias & information", "n": 181, "p": 18}, {"nom": "Numérique & technologies", "n": 143, "p": 18}, {"nom": "Transports & mobilités", "n": 107, "p": 20}, {"nom": "Pouvoir d'achat & niveau de vie", "n": 63, "p": 18}], "muets": [{"nom": "Juan Branco", "n": 836, "parti": "Ruches Françaises"}, {"nom": "Éric Zemmour", "n": 368, "parti": "Reconquête !"}, {"nom": "Raphaël Glucksmann", "n": 268, "parti": "Place publique"}, {"nom": "Parti Équinoxe", "n": 148, "parti": "Parti Équinoxe"}, {"nom": "Édouard Philippe", "n": 115, "parti": "Horizons"}, {"nom": "David Lisnard", "n": 87, "parti": "Nouvelle Énergie"}, {"nom": "Les Républicains", "n": 80, "parti": "Les Républicains"}, {"nom": "Lydie Massard", "n": 67, "parti": "Union démocratique bretonne"}, {"nom": "Benoît Mathieu", "n": 58, "parti": "Sans parti"}, {"nom": "Clara Egger", "n": 15, "parti": "Solution démocratique"}, {"nom": "Manolo Mlekuz", "n": 6, "parti": "Trajectoire"}, {"nom": "Antoine Mikolajczak", "n": 6, "parti": "Parti Équinoxe"}, {"nom": "Bruno Retailleau", "n": 5, "parti": "Les Républicains"}, {"nom": "Delphine Batho", "n": 5, "parti": "Génération Écologie"}, {"nom": "Karim Bouamrane", "n": 3, "parti": "Parti socialiste"}], "nPorteurs": 33}, "f2": [{"nom": "Jean-Luc Mélenchon", "parti": "La France insoumise", "n": 859, "top": [["Écologie & climat", 132, 15], ["International, Europe & défense", 98, 11], ["Éducation & jeunesse", 90, 10]]}, {"nom": "Juan Branco", "parti": "Ruches Françaises", "n": 836, "top": [["Sécurité & justice", 129, 15], ["Économie, entreprises & finances publiques", 103, 12], ["Éducation & jeunesse", 76, 9]]}, {"nom": "Marine Tondelier", "parti": "Les Écologistes", "n": 649, "top": [["Santé", 140, 22], ["Écologie & climat", 57, 9], ["International, Europe & défense", 56, 9]]}, {"nom": "Éric Zemmour", "parti": "Reconquête !", "n": 368, "top": [["Protection sociale & retraites", 54, 15], ["International, Europe & défense", 36, 10], ["Immigration, asile & nationalité", 34, 9]]}, {"nom": "Fabien Roussel", "parti": "Parti communiste français", "n": 347, "top": [["Logement", 43, 12], ["Économie, entreprises & finances publiques", 42, 12], ["Éducation & jeunesse", 31, 9]]}, {"nom": "Nicolas Dupont-Aignan", "parti": "Debout la France", "n": 313, "top": [["Sécurité & justice", 51, 16], ["International, Europe & défense", 36, 12], ["Logement", 28, 9]]}, {"nom": "Marine Le Pen", "parti": "Rassemblement national", "n": 281, "top": [["Économie, entreprises & finances publiques", 36, 13], ["Immigration, asile & nationalité", 30, 11], ["Sécurité & justice", 25, 9]]}, {"nom": "François Asselineau", "parti": "Union populaire républicaine", "n": 123, "top": [["Démocratie & institutions", 15, 12], ["International, Europe & défense", 14, 11], ["Économie, entreprises & finances publiques", 11, 9]]}, {"nom": "Édouard Philippe", "parti": "Horizons", "n": 115, "top": [["Sécurité & justice", 16, 14], ["Économie, entreprises & finances publiques", 12, 10], ["Écologie & climat", 12, 10]]}, {"nom": "David Lisnard", "parti": "Nouvelle Énergie", "n": 87, "top": [["Éducation & jeunesse", 13, 15], ["Services publics & territoires", 11, 13], ["Sécurité & justice", 11, 13]]}, {"nom": "Bernard Cazeneuve", "parti": "La Convention", "n": 86, "top": [["Éducation & jeunesse", 12, 14], ["International, Europe & défense", 11, 13], ["Protection sociale & retraites", 10, 12]]}, {"nom": "Florian Philippot", "parti": "Les Patriotes", "n": 82, "top": [["Démocratie & institutions", 12, 15], ["Santé", 10, 12], ["International, Europe & défense", 9, 11]]}, {"nom": "Lydie Massard", "parti": "Union démocratique bretonne", "n": 67, "top": [["Écologie & climat", 12, 18], ["Démocratie & institutions", 8, 12], ["Culture, médias & information", 7, 10]]}, {"nom": "Benoît Mathieu", "parti": "Sans parti", "n": 58, "top": [["Démocratie & institutions", 12, 21], ["Éducation & jeunesse", 9, 16], ["Agriculture & alimentation", 6, 10]]}, {"nom": "Anasse Kazib", "parti": "Révolution permanente", "n": 55, "top": [["Droits, égalité & lutte contre les discriminations", 9, 16], ["Économie, entreprises & finances publiques", 7, 13], ["International, Europe & défense", 7, 13]]}, {"nom": "François Ruffin", "parti": "Debout !", "n": 52, "top": [["Écologie & climat", 12, 23], ["Travail & emploi", 10, 19], ["Démocratie & institutions", 9, 17]]}, {"nom": "Nathalie Arthaud", "parti": "Lutte ouvrière", "n": 44, "top": [["Droits, égalité & lutte contre les discriminations", 8, 18], ["Économie, entreprises & finances publiques", 5, 11], ["Écologie & climat", 5, 11]]}, {"nom": "Gabriel Attal", "parti": "Renaissance", "n": 41, "top": [["Éducation & jeunesse", 9, 22], ["International, Europe & défense", 8, 20], ["Économie, entreprises & finances publiques", 6, 15]]}, {"nom": "Francis Lalanne", "parti": "Sans parti", "n": 27, "top": [["International, Europe & défense", 7, 26], ["Démocratie & institutions", 7, 26], ["Économie, entreprises & finances publiques", 3, 11]]}], "f3": {"sujet": "Nucléaire", "n": 45, "porteurs": 17, "groupes": [{"nom": "Éric Zemmour", "parti": "Reconquête !", "items": [{"id": "ECO-187", "nom": "Éric Zemmour", "parti": "Reconquête !", "titre": "Supprimer l’objectif de réduire à 50 % la part du nucléaire dans notre mix électrique en 2035 et allonger la durée de vie du parc existant à 60 ans au moins", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Pour que la France reste la France - Mon programme », programme d’Éric Zemmour, élection présidentielle 2022", "url": "https://www.parti-reconquete.fr"}, {"id": "ECO-188", "nom": "Éric Zemmour", "parti": "Reconquête !", "titre": "Stopper la fermeture prévue des 12 réacteurs nucléaires annoncée pour 2", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Pour que la France reste la France - Mon programme », programme d’Éric Zemmour, élection présidentielle 2022", "url": "https://www.parti-reconquete.fr"}, {"id": "ECO-189", "nom": "Éric Zemmour", "parti": "Reconquête !", "titre": "Assurer le renouvellement de notre parc nucléaire et accompagner la hausse de la demande d’électricité en lançant un programme de construction d’au moins 14 nouveaux réacteurs nucléaires EPR2 à horizon 2", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Pour que la France reste la France - Mon programme », programme d’Éric Zemmour, élection présidentielle 2022", "url": "https://www.parti-reconquete.fr"}, {"id": "ECO-190", "nom": "Éric Zemmour", "parti": "Reconquête !", "titre": "Soutenir le développement des réacteurs de petite taille SMR (Small Modular Reactors) afin de disposer d’un modèle prêt à construire d’ici la fin du quinquennat 31 2.1.RECONQUÉRIR RECONQUÉRIRNOTRE NOTREEXCELLENCE EXCELLENCEET ETNOTRE NOTREPROSPÉRITÉ PROSPÉRITÉ", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Pour que la France reste la France - Mon programme », programme d’Éric Zemmour, élection présidentielle 2022", "url": "https://www.parti-reconquete.fr"}, {"id": "ECO-191", "nom": "Éric Zemmour", "parti": "Reconquête !", "titre": "Relancer la recherche dans le nucléaire du futur, comme les réacteurs de 4e génération (programme ASTRID) et la fusion nucléaire (projet international ITER)", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Pour que la France reste la France - Mon programme », programme d’Éric Zemmour, élection présidentielle 2022", "url": "https://www.parti-reconquete.fr"}, {"id": "ECO-192", "nom": "Éric Zemmour", "parti": "Reconquête !", "titre": "Imposer le nucléaire à l’échelle européenne comme étant le principal outil dans la lutte contre le réchauffement climatique", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Pour que la France reste la France - Mon programme », programme d’Éric Zemmour, élection présidentielle 2022", "url": "https://www.parti-reconquete.fr"}, {"id": "ECO-193", "nom": "Éric Zemmour", "parti": "Reconquête !", "titre": "Permettre à tous les consommateurs français, particuliers et entreprises, de bénéficier de la compétitivité du parc nucléaire existant en remplaçant le dispositif ARENH, qui oblige EDF à vendre un quart de son électricité nucléaire à ses concurrents à un prix ne permettant pas de couvrir tous ses coûts, par un nouveau tarif régulé pour l’électricité nucléaire", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Pour que la France reste la France - Mon programme », programme d’Éric Zemmour, élection présidentielle 2022", "url": "https://www.parti-reconquete.fr"}, {"id": "ECO-195", "nom": "Éric Zemmour", "parti": "Reconquête !", "titre": "Investir dans l’usine de retraitement des déchets nucléaires de la Hague et réaliser le projet de stockage à long terme des déchets nucléaires CIGEO Je garantirai que le développement des énergies renouvelables ne se fasse pas au détriment de nos paysages et de nos finances publiques", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Pour que la France reste la France - Mon programme », programme d’Éric Zemmour, élection présidentielle 2022", "url": "https://www.parti-reconquete.fr"}]}, {"nom": "Parti Équinoxe", "parti": "Parti Équinoxe", "items": [{"id": "ECO-164", "nom": "Parti Équinoxe", "parti": "Parti Équinoxe", "titre": "Prolonger l’exploitation des réacteurs nucléaires français aussi longtemps que possible, sous réserve qu’ils continuent de satisfaire les meilleures normes de sécurité", "texte": "", "src": "Légis. 2024", "an": "2024", "doc": "Programme du Parti Équinoxe pour les élections législatives de juin 2024 - page « Énergie »", "url": "https://parti-equinoxe.fr/legislatives-2024/"}, {"id": "ECO-165", "nom": "Parti Équinoxe", "parti": "Parti Équinoxe", "titre": "Financer le déploiement à court terme de nouveaux réacteurs nucléaires de troisième génération, EPR et EPR2, ainsi que de nouveaux moyens de production éolienne et solaire", "texte": "", "src": "Légis. 2024", "an": "2024", "doc": "Programme du Parti Équinoxe pour les élections législatives de juin 2024 - page « Énergie »", "url": "https://parti-equinoxe.fr/legislatives-2024/"}, {"id": "ECO-167", "nom": "Parti Équinoxe", "parti": "Parti Équinoxe", "titre": "Investir dans la recherche sur les petits réacteurs modulaires électrogènes et calogènes, pour décarboner l’électricité résiduelle et la chaleur industrielle à l’horizon 2035", "texte": "", "src": "Légis. 2024", "an": "2024", "doc": "Programme du Parti Équinoxe pour les élections législatives de juin 2024 - page « Énergie »", "url": "https://parti-equinoxe.fr/legislatives-2024/"}, {"id": "ECO-168", "nom": "Parti Équinoxe", "parti": "Parti Équinoxe", "titre": "Investir dans la recherche sur les réacteurs de quatrième génération afin de fermer le cycle du combustible et de faciliter le traitement des déchets nucléaires à l’horizon 2050", "texte": "", "src": "Légis. 2024", "an": "2024", "doc": "Programme du Parti Équinoxe pour les élections législatives de juin 2024 - page « Énergie »", "url": "https://parti-equinoxe.fr/legislatives-2024/"}, {"id": "ECO-174", "nom": "Parti Équinoxe", "parti": "Parti Équinoxe", "titre": "Subventionner le développement des énergies bas carbone, renouvelables et nucléaire", "texte": "", "src": "Légis. 2024", "an": "2024", "doc": "Programme du Parti Équinoxe pour les élections législatives de juin 2024 - page « Industrie »", "url": "https://parti-equinoxe.fr/programme-legislatives-2024-industrie/"}]}, {"nom": "Marine Tondelier", "parti": "Les Écologistes", "items": [{"id": "ECO-007", "nom": "Marine Tondelier", "parti": "Les Écologistes", "titre": "Planifier la sortie du nucléaire.", "texte": "Planifier la sortie du nucléaire. Mettre fin aux nouveaux programmes EPR-2 et SMR extrêmement dispendieux. Planifier l’arrêt progressif du parc constitué de centrales vieillissantes dont la mise hors service doit être étalée sur une vingtaine d’années. Conduire les études pour évaluer les possibilités de prolongation de certaines d’entre elles sous condition stricte de sûreté afin d’éviter l’effet falaise c’est-à-dire une rupture brutale de production et d’approvisionnement. Commander et publier un rapport sur l’ensemble des coûts financiers réels de la filière nucléaire (approvisionnements, investissements en France et à l’étranger, déchets, retraitements, démantèlements…).", "src": "Prés. 2027", "an": "2027", "doc": "Pour une prospérité écologique - Le nouveau programme des Écologistes, juillet 2026 (fichier vdef-programme-1.pdf)", "url": "https://lesecologistes.fr/document/3N4JsAEmq6vsx42IITGNZa/vdef-programme-1.pdf"}, {"id": "ECO-008", "nom": "Marine Tondelier", "parti": "Les Écologistes", "titre": "Limiter les risques de dangerosité du nucléaire existant.", "texte": "Limiter les risques de dangerosité du nucléaire existant. Revenir sur la fusion de l’Institut de radioprotection et de sûreté nucléaire (IRSN) et l’Autorité de sûreté nucléaire (ASN). Adopter un moratoire sur le projet CIGEO en attendant de mettre sérieusement à l’étude le stockage en sub-surface. Sécuriser les stocks de déchets existants y compris les « matières radioactives» non réutilisées qui ne sont pas considérées comme des déchets. Mettre fin à la sous-traitance pour garantir la sûreté des centrales. Mettre en place une convention collective unique pour les travailleurs du nucléaire. Préserver les savoir-faire et les compétences de la filière et accompagner les salarié·es concerné·es par des contrats collectifs de sécurisation des parcours professionnels et un droit à la reconversion.", "src": "Prés. 2027", "an": "2027", "doc": "Pour une prospérité écologique - Le nouveau programme des Écologistes, juillet 2026 (fichier vdef-programme-1.pdf)", "url": "https://lesecologistes.fr/document/3N4JsAEmq6vsx42IITGNZa/vdef-programme-1.pdf"}, {"id": "ECO-066", "nom": "Marine Tondelier", "parti": "Les Écologistes", "titre": "En Polynésie française.", "texte": "En Polynésie française. Adopter un plan de dépollution et d’indemnisation aux victimes des essais nucléaires. Soutenir l’adaptation au réchauffement climatique.", "src": "Prés. 2027", "an": "2027", "doc": "Pour une prospérité écologique - Le nouveau programme des Écologistes, juillet 2026 (fichier vdef-programme-1.pdf)", "url": "https://lesecologistes.fr/document/3N4JsAEmq6vsx42IITGNZa/vdef-programme-1.pdf"}, {"id": "INT-043", "nom": "Marine Tondelier", "parti": "Les Écologistes", "titre": "Relancer les négociations sur le programme nucléaire iranien et arrêter son programme d’enrichissement, en s’appuyant sur l’initiative des 21 pays arabes et musulmans du 17 juin 2025 pour le désarmement nucléaire total au Moyen-Orient.", "texte": "Relancer les négociations sur le programme nucléaire iranien et arrêter son programme d’enrichissement, en s’appuyant sur l’initiative des 21 pays arabes et musulmans du 17 juin 2025 pour le désarmement nucléaire total au Moyen-Orient. Cette initiative prône un désarmement qui s’applique à tous les États de la région sans exception, y compris Israël, dans un esprit de réciprocité et de transparence.", "src": "Prés. 2027", "an": "2027", "doc": "Pour une prospérité écologique - Le nouveau programme des Écologistes, juillet 2026 (fichier vdef-programme-1.pdf)", "url": "https://lesecologistes.fr/document/3N4JsAEmq6vsx42IITGNZa/vdef-programme-1.pdf"}]}, {"nom": "Les Républicains", "parti": "Les Républicains", "items": [{"id": "ECO-107", "nom": "Les Républicains", "parti": "Les Républicains", "titre": "Inscrire le parc nucléaire dans une trajectoire « 80 ans »", "texte": "", "src": "2026-05", "an": "2026", "doc": "Livret « Électricité », Les Républicains, 2026-05", "url": "https://republicains.fr/wp-content/uploads/2026/05/LR_Electricite_vFF070626.pdf"}, {"id": "ECO-111", "nom": "Les Républicains", "parti": "Les Républicains", "titre": "Protéger le parc nucléaire des arrêts subis et développer la flexibilité pour diminuer le gaspillage d’électricité décarbonée", "texte": "", "src": "2026-05", "an": "2026", "doc": "Livret « Électricité », Les Républicains, 2026-05", "url": "https://republicains.fr/wp-content/uploads/2026/05/LR_Electricite_vFF070626.pdf"}, {"id": "ECO-113", "nom": "Les Républicains", "parti": "Les Républicains", "titre": "Relancer immédiatement les études et recherches sur un prototype de réacteur à neutrons rapides (4e génération)", "texte": "", "src": "2026-05", "an": "2026", "doc": "Livret « Électricité », Les Républicains, 2026-05", "url": "https://republicains.fr/wp-content/uploads/2026/05/LR_Electricite_vFF070626.pdf"}]}, {"nom": "Florian Philippot", "parti": "Les Patriotes", "items": [{"id": "ECO-176", "nom": "Florian Philippot", "parti": "Les Patriotes", "titre": "Investir massivement dans le nucléaire et choisir notre mix énergétique", "texte": "", "src": "2026, grandes orientations", "an": "2026", "doc": "« Grandes orientations pour un projet patriote + le Frexit en 10 questions », édition 2026-2027, livret des Patriotes élaboré avec le concours du Pôle d’expertise du mouvement", "url": "https://les-patriotes.fr/projetpourlafrance/"}, {"id": "ECO-177", "nom": "Florian Philippot", "parti": "Les Patriotes", "titre": "Investir dans le nucléaire et l’hydroélectricité, sources d’énergie propres et stables", "texte": "", "src": "2026, grandes orientations", "an": "2026", "doc": "« Grandes orientations pour un projet patriote + le Frexit en 10 questions », édition 2026-2027, livret des Patriotes élaboré avec le concours du Pôle d’expertise du mouvement", "url": "https://les-patriotes.fr/projetpourlafrance/"}, {"id": "ECO-179", "nom": "Florian Philippot", "parti": "Les Patriotes", "titre": "Conserver notre dissuasion nucléaire", "texte": "", "src": "2026, grandes orientations", "an": "2026", "doc": "« Grandes orientations pour un projet patriote + le Frexit en 10 questions », édition 2026-2027, livret des Patriotes élaboré avec le concours du Pôle d’expertise du mouvement", "url": "https://les-patriotes.fr/projetpourlafrance/"}]}, {"nom": "Fabien Roussel", "parti": "Parti communiste français", "items": [{"id": "ECO-230", "nom": "Fabien Roussel", "parti": "Parti communiste français", "titre": "L’Étatinvestiramassivementdanslaconstruction d’un véritable service public de l’eau Celui-ci permettra de garantir le même tarif à chaque habitant et habitante du pays.", "texte": "L’Étatinvestiramassivementdanslaconstruction d’un véritable service public de l’eau Celui-ci permettra de garantir le même tarif à chaque habitant et habitante du pays. Il accompagnera les communes dans le renouvellement de leurs réseaux, afin de préserver cette ressource indispensable. Dans les collectivités territoriales qui le souhaitent, les régies publiques de l’eau seront encouragées et aidées par ce service public. Décarboner la production et la consommation énergétiques Pour relever avec succès le défi du réchauffement climatique, la décarbonation de la production et de la consommation énergétiques occupe une place déterminante. Grâce au développement de l’électricité d’origine nucléaire, notre pays dispose d’un atout majeur dans la production d’une électricité bas carbone. Aujourd’hui, la gigantesque augmentation des prix de l’énergie, y compris de l’électricité, démontre la malfaisance extrême de la dictature des logiques de marché dans un secteur dont l’objectif devrait être de répondre à des besoins de première nécessité. Nous affirmons plus que jamais que l’énergie doit relever du service public", "src": "Prés. 2022", "an": "2022", "doc": "« La France des Jours heureux - Projet pour un pacte social, écologique, républicain », programme de Fabien Roussel pour l’élection présidentielle des 10 et 24 avril 2022, 67 pages", "url": "https://www.pcf.fr"}, {"id": "ECO-231", "nom": "Fabien Roussel", "parti": "Parti communiste français", "titre": "L’orientation stratégique de la politique de l’énergie sera fondée sur la constitution d’un mix énergétique 100 % public et 100 % décarboné Pour cela, un projet d’investissement sera élaboré, afin de décarboner massivement la production d’énergie et d’atteindre la neutralité carbone à l’horizon 2040-2050.", "texte": "L’orientation stratégique de la politique de l’énergie sera fondée sur la constitution d’un mix énergétique 100 % public et 100 % décarboné Pour cela, un projet d’investissement sera élaboré, afin de décarboner massivement la production d’énergie et d’atteindre la neutralité carbone à l’horizon 2040-2050. Ce projet visera à une forte croissance de la production électrique, en investissant dans les énergies renouvelables (solaire, éolien et surtout dans l’hydraulique, énergie renouvelable pilotable) et dans l’électricité nucléaire avec la construction de six EPR supplémentaires au minimum", "src": "Prés. 2022", "an": "2022", "doc": "« La France des Jours heureux - Projet pour un pacte social, écologique, républicain », programme de Fabien Roussel pour l’élection présidentielle des 10 et 24 avril 2022, 67 pages", "url": "https://www.pcf.fr"}, {"id": "ECO-233", "nom": "Fabien Roussel", "parti": "Parti communiste français", "titre": "Une puissante impulsion sera donnée à la recherche Elle permettra de mettre au point des solutions technologiques répondant aux critères écologiques (décarbonations, dépollutions), et sociaux (bas prix de l’énergie pour toutes et tous les usagers ou consommateurs, anticipation et planification des emplois), indispensables pour une transition énergétique réussie.", "texte": "Une puissante impulsion sera donnée à la recherche Elle permettra de mettre au point des solutions technologiques répondant aux critères écologiques (décarbonations, dépollutions), et sociaux (bas prix de l’énergie pour toutes et tous les usagers ou consommateurs, anticipation et planification des emplois), indispensables pour une transition énergétique réussie. Elle devra concerner tous les modes de production d’énergie décarbonée (renouvelables, nucléaire de fission ou de fusion), comme leur interaction avec le réseau (stockage, pilotage etc.)", "src": "Prés. 2022", "an": "2022", "doc": "« La France des Jours heureux - Projet pour un pacte social, écologique, républicain », programme de Fabien Roussel pour l’élection présidentielle des 10 et 24 avril 2022, 67 pages", "url": "https://www.pcf.fr"}]}, {"nom": "Édouard Philippe", "parti": "Horizons", "items": [{"id": "ECO-328", "nom": "Édouard Philippe", "parti": "Horizons", "titre": "Miser sur nos champions industriels du nucléaire, des énergies renouvelables et des services énergétiques", "texte": "", "src": "2022, édito", "an": "2022", "doc": "Édito de la Note d’Horizons n° 2, « La politique énergétique française en crise », 2022-10", "url": "https://horizonsleparti.fr/les-notes/"}, {"id": "ECO-330", "nom": "Édouard Philippe", "parti": "Horizons", "titre": "Assurer notre souveraineté énergétique par un mix équilibré entre le nucléaire et les énergies renouvelables, en investissant massivement dans les projets qui peuvent nous y conduire", "texte": "", "src": "2022, édito", "an": "2022", "doc": "Édito du hors-série « Horizons s'engage pour le climat », revue Horizons, 2022", "url": "https://horizonsleparti.fr/la-revue/"}, {"id": "ECO-331", "nom": "Édouard Philippe", "parti": "Horizons", "titre": "Assurer notre souveraineté énergétique en relançant le nucléaire, en développant les renouvelables et en électrifiant massivement nos usages", "texte": "", "src": "2026, priorité", "an": "2026", "doc": "« Les priorités d’Édouard Philippe », site de campagne edouardphilippe.fr - présentées par le site comme « les premières orientations de son programme » (pages sans date de publication ; consultées le 15 septembre 2026)", "url": "https://www.edouardphilippe.fr/priorites/pour-une-france-plus-conquerante"}]}, {"nom": "Jean-Luc Mélenchon", "parti": "La France insoumise", "items": [{"id": "ECO-408", "nom": "Jean-Luc Mélenchon", "parti": "La France insoumise", "titre": "Sortir du nucléaire : abandonner les projets d’EPR (European Pressurized Reactor – Réacteur pressurisé européen), planifier le démantèlement, la réhabilitation et la reconversion des sites nucléaires et de l’ensemble de leur bassin de vie", "texte": "", "src": "2025", "an": "2025", "doc": "« L'Avenir en commun » - programme de La France insoumise, édition 2025", "url": "https://melenchon2027.fr/programme2025/livre/chapitre13"}, {"id": "ECO-409", "nom": "Jean-Luc Mélenchon", "parti": "La France insoumise", "titre": "Mettre en place une convention collective unique pour les travailleurs du nucléaire et arrêter l’utilisation massive de la sous-traitance, tout en garantissant leur reconversion au fur et à mesure des fermetures de centrales", "texte": "", "src": "2025", "an": "2025", "doc": "« L'Avenir en commun » - programme de La France insoumise, édition 2025", "url": "https://melenchon2027.fr/programme2025/livre/chapitre13"}, {"id": "ECO-421", "nom": "Jean-Luc Mélenchon", "parti": "La France insoumise", "titre": "Abroger la loi qui a fusionné l’Autorité de sûreté nucléaire (ASN) et l’Institut de radioprotection et de sûreté nucléaire (IRSN) et garantir leurs moyens", "texte": "", "src": "2025", "an": "2025", "doc": "« L'Avenir en commun » - programme de La France insoumise, édition 2025", "url": "https://melenchon2027.fr/programme2025/livre/chapitre13"}]}, {"nom": "Juan Branco", "parti": "Ruches Françaises", "items": [{"id": "ECO-077", "nom": "Juan Branco", "parti": "Ruches Françaises", "titre": "Construction de 14 EPR 2, développement d’une filière intégrée RNR-NA.", "texte": "", "src": "Prés. 2027", "an": "2027", "doc": "La Voie - Le projet (845 mesures, 24 thèmes)", "url": "https://ruches.org/le-projet"}, {"id": "ECO-079", "nom": "Juan Branco", "parti": "Ruches Françaises", "titre": "Développement du stockage des déchets nucléaires en subsurface.", "texte": "", "src": "Prés. 2027", "an": "2027", "doc": "La Voie - Le projet (845 mesures, 24 thèmes)", "url": "https://ruches.org/le-projet"}]}, {"nom": "Marine Le Pen", "parti": "Rassemblement national", "items": [{"id": "ECO-096", "nom": "Marine Le Pen", "parti": "Rassemblement national", "titre": "Relancer la filière nucléaire, hydroélectrique et investir dans la filière hydrogène.", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« 22 mesures pour 2022 » - document de synthèse de la campagne présidentielle 2022", "url": "https://rassemblementnational.fr/22-mesures"}, {"id": "ECO-104", "nom": "Marine Le Pen", "parti": "Rassemblement national", "titre": "Baisser de 30 à 40% la facture d’électricité en rétablissant un prix français de l’électricité, par la fin des règles absurdes du marché européen de l’énergie.", "texte": "Baisser de 30 à 40% la facture d’électricité en rétablissant un prix français de l’électricité, par la fin des règles absurdes du marché européen de l’énergie. Ainsi, nous retrouverons un prix de l’électricité compétitif car proche des coûts de production sur le sol national, tout en permettant à la France d’exporter son électricité à un prix attractif vers ses voisins européens.Protéger le mix électrique français, en investissant dans les technologies d’avenir (nucléaire de nouvelle génération, hydrogène, géothermie…) et en refusant toute ingérence européenne en matière de politique énergétique : nous nous opposons notamment à la libéralisation des concessions de nos barrages hydroélectriques et au développement des énergies intermittentes (éoliennes) imposés par l’UE.", "src": "Euro. 2024", "an": "2024", "doc": "« Notre projet pour une Europe des nations » - programme des élections européennes du 9 juin 2024", "url": "https://rassemblementnational.fr/documents/202411-programme-europeennes.pdf"}]}, {"nom": "Lydie Massard", "parti": "Union démocratique bretonne", "items": [{"id": "ECO-156", "nom": "Lydie Massard", "parti": "Union démocratique bretonne", "titre": "Engager la sortie progressive du nucléaire", "texte": "", "src": "2026, orientation", "an": "2026", "doc": "Rubrique « Nos idées » du site de l’Union démocratique bretonne, page mise à jour le 20 août 2026 - positions thématiques du parti", "url": "https://www.udb.bzh/qui-sommes-nous/nos-idees/"}, {"id": "INT-213", "nom": "Lydie Massard", "parti": "Union démocratique bretonne", "titre": "Permettre, à la faveur du désarmement nucléaire mutuel, la reconversion à terme de la base des sous-marins nucléaires près de Brest", "texte": "", "src": "2026, orientation", "an": "2026", "doc": "Rubrique « Nos idées » du site de l’Union démocratique bretonne, page mise à jour le 20 août 2026 - positions thématiques du parti", "url": "https://www.udb.bzh/qui-sommes-nous/nos-idees/"}]}, {"nom": "Valérie Pécresse", "parti": "Les Républicains", "items": [{"id": "ECO-342", "nom": "Valérie Pécresse", "parti": "Les Républicains", "titre": "Un plan de relance gaullien : construction d’au moins 6 nouveaux réacteurs EPR, redémarrage du projet de réacteur de nouvelle génération et sans déchets, investissements massifs dans les réacteurs existants pour en prolonger la durée de vie", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Le courage de faire » - programme de Valérie Pécresse, élection présidentielle des 10 et 24 avril 2022 (brochure 16 pages)", "url": "https://valeriepecresse.fr/wp-content/uploads/2022/03/Programme-Valerie-Pecresse.pdf"}, {"id": "ECO-349", "nom": "Valérie Pécresse", "parti": "Les Républicains", "titre": "Plan de relance de l’énergie nucléaire et sauvetage d’EDF", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Le courage de faire » - programme de Valérie Pécresse, élection présidentielle des 10 et 24 avril 2022 (brochure 16 pages)", "url": "https://valeriepecresse.fr/wp-content/uploads/2022/03/Programme-Valerie-Pecresse.pdf"}]}, {"nom": "David Lisnard", "parti": "Nouvelle Énergie", "items": [{"id": "ECO-117", "nom": "David Lisnard", "parti": "Nouvelle Énergie", "titre": "Réinvestir les sommes économisées dans les nouvelles technologies nucléaires : traitement des déchets par laser, prolongation des réacteurs jusqu’à 60 ans, EPR de nouvelle génération, mini-réacteurs", "texte": "", "src": "2026, orientation", "an": "2026", "doc": "Page « Notre programme » du site de Nouvelle Énergie - orientations du parti, le programme présidentiel de David Lisnard n’étant pas publié (pages sans date ; consultées le 15 septembre 2026)", "url": "https://www.unenouvelleenergie.fr/notre-programme/generer-un-renouveau-civique/"}]}, {"nom": "Nathalie Arthaud", "parti": "Lutte ouvrière", "items": [{"id": "ECO-144", "nom": "Nathalie Arthaud", "parti": "Lutte ouvrière", "titre": "Ne pas combattre le nucléaire ni les OGM en tant que techniques : le danger ne vient pas de la technique elle-même mais du fait qu’elle soit entre les mains de la bourgeoisie et utilisée pour le profit maximum, sans aucun contrôle de la population", "texte": "", "src": "position permanente", "an": "", "doc": "« Écologie : la véritable menace contre l’environnement et la planète, c’est le capitalisme », rubrique « Nos idées et positions politiques », site de Lutte ouvrière (page non datée, consultée le 15 septembre 2026)", "url": "https://www.lutte-ouvriere.org/portail/qui-sommes-nous/qui-sommes-nous-ecologie"}]}, {"nom": "Philippe Poutou", "parti": "Nouveau Parti Anticapitaliste", "items": [{"id": "ECO-148", "nom": "Philippe Poutou", "parti": "Nouveau Parti Anticapitaliste", "titre": "Arrêter le nucléaire en 10 ans et socialiser le secteur de l’énergie", "texte": "", "src": "Prés. 2022", "an": "2022", "doc": "« Rompre avec le capitalisme, il y a urgence ! », brochure-programme de Philippe Poutou, élection présidentielle 2022, Nouveau Parti Anticapitaliste", "url": "https://npa-revolutionnaires.org/campagnes-presidentielles"}]}, {"nom": "Bernard Cazeneuve", "parti": "La Convention", "items": [{"id": "ECO-182", "nom": "Bernard Cazeneuve", "parti": "La Convention", "titre": "Assumer la filière électronucléaire, planifier le renouvellement du parc, rationaliser les renouvelables, électrifier les usages et s’émanciper des énergies fossiles", "texte": "", "src": "2026, lettre aux Français", "an": "2026", "doc": "« Aux Français - Tenir la promesse de la France », lettre de Bernard Cazeneuve, 15 juillet 2026, 86 pages, dont la section VII « Les propositions de Bernard Cazeneuve »", "url": "https://la-convention.fr"}]}, {"nom": "Jordan Bardella", "parti": "Rassemblement national", "items": [{"id": "ECO-504", "nom": "Jordan Bardella", "parti": "Rassemblement national", "titre": "Lancer le plan Marie Curie de relance du nucléaire (EPR, SMR, réacteurs à neutrons rapides)", "texte": "", "src": "Légis. 2024", "an": "2024", "doc": "« Un projet, une méthode » - programme des élections législatives anticipées des 30 juin et 7 juillet 2024", "url": "https://rassemblementnational.fr/documents/202406-programme.pdf"}]}]}, "f4": {"loi": "Loi n° 2023-270 du 14 avril 2023 - réforme des retraites", "date": "14/04/2023 (promulgation)", "releve": "Scrutin de référence : motion de censure du 20 mars 2023 (scrutin n° 1240).\n278 voix pour, 287 requises : rejetée à 9 voix près.\n\nLe 49.3 ayant privé l'Assemblée d'un vote sur la loi, c'est le seul scrutin nominatif sur le fond.\n\nPour les sénateurs, absents de ce scrutin : vote du Sénat du 16 mars 2023 (scrutin n° 251), 193 pour, 114 contre.", "items": [{"nom": "Marine Le Pen", "court": "Le Pen", "parti": "Rassemblement National (RN)", "promesse": "**Elle veut revenir à 62 ans, voire 60 ans pour ceux qui ont commencé tôt.**\n\nAvec 40 à 42 ans de cotisation selon les cas. Position constante depuis 2022 : « Refuser tout allongement de l'âge de départ. » Elle veut aussi réindexer les pensions sur l'inflation et porter le minimum vieillesse à 1 000 euros.", "actes": "**Elle a déposé sa propre motion de censure, et voté celle des autres.**\n\nLe 17 mars 2023, elle est première signataire de la motion RN, avec 87 collègues : une réforme « injuste et inutile », et un 49.3 qui constitue « une atteinte grave aux principes démocratiques », tout en reconnaissant « la légalité du processus ».\n\n⚠️ Sa motion n'a recueilli que 94 voix, contre 278 pour la motion transpartisane déposée par LIOT le même jour. Aucun groupe de gauche ne l'a votée. Le RN, lui, a voté les deux.\n\nElle a ensuite voté l'abrogation en juin 2025, et contre le budget qui suspend la réforme en décembre 2025.", "perso": "Pour", "raison": "", "verdict": "aligne", "vlabel": "Aligné", "sources": "« 22 mesures pour 2022 » · Discours de rentrée à Hénin-Beaumont, septembre 2026"}, {"nom": "Bruno Retailleau", "court": "Retailleau", "parti": "Les Républicains (LR)", "promesse": "**Il veut lier l'âge de départ à l'espérance de vie, au-delà de 64 ans.**\n\n« Contrairement à beaucoup d'autres, j'assumerai le fait de repousser l'âge légal. » Interrogé sur un départ après 64 ans : « Oui. » Son calcul : on commence à 21-22 ans, on ajoute 43-44 ans, « vous êtes déjà à plus de 65 ans ».\n\n⚠️ En septembre 2026, il demande que la suspension soit levée et la réforme réintroduite dans le budget 2027.", "actes": "**Il a voté la réforme au Sénat et fait adopter un amendement sur les mères.**\n\nLe 16 mars 2023, il vote pour le texte final. Son amendement, retenu par la commission, permet aux femmes ayant une carrière complète de partir avec une pension majorée plutôt que de perdre leurs trimestres de maternité.\n\n⚠️ La veille du 49.3, il le justifie par avance : « Il vaut mieux le 49.3 que pas de réforme du tout. Il est parfaitement démocratique. »", "perso": "Non concerné", "raison": "Sénateur, il n'a pas voté la motion de censure à l'Assemblée. Il a voté la réforme au Sénat le 16 mars 2023.", "verdict": "aligne", "vlabel": "Aligné", "sources": "Débat du Medef et France 2, 27 et 28 août 2026 · franceinfo, 16 septembre 2026 · X, 29 août 2024"}, {"nom": "François Ruffin", "court": "Ruffin", "parti": "Debout !", "promesse": "**Il veut un droit à la retraite anticipée pour les métiers pénibles.**\n\nIl rappelle que quatre critères de pénibilité ont été supprimés : vibrations, port de charges, postures pénibles, produits chimiques.", "actes": "**Il a voté la censure, l'abrogation, et contre le budget qui suspend.**\n\nIl a pris parole en séance sur ce sujet, le 5 juin 2025 : « Vous avez le courage d'être faibles avec les forts, et forts contre les faibles. » Il y dénonce aussi la capitalisation comme « le projet commun à toutes les droites ».", "perso": "Pour", "raison": "", "verdict": "aligne", "vlabel": "Aligné", "sources": "Cahier de campagne n° 1, 2026, mesure PRO-103 · Séance du 5 juin 2025"}, {"nom": "Emmanuel Maurel", "court": "Maurel", "parti": "Gauche républicaine et socialiste (GRS)", "promesse": "**Il refuse la capitalisation et conteste que la répartition soit condamnée.**\n\nLe 24 septembre 2024, en commission à l'Assemblée : le discours sur le caractère « insoutenable » de la répartition est selon lui « un bruit de fond persistant destiné à justifier davantage de capitalisation ».\n\nSes trois arguments : la capitalisation existe déjà largement depuis les années 2000, accélérée par la loi Pacte, ses rendements sont illusoires, car plus les départs sont nombreux, plus il faut vendre d'actifs, ce qui fait baisser les cours, et elle profite aux cadres, pas aux plus modestes, « comme le montrent tous les exemples internationaux et historiques ».\n\n⚠️ Il se méfie d'un régime de capitalisation collective dans toutes les entreprises, par crainte qu'on force la main aux salariés.\n\nGRS : Aucune position publique identifiée à ce jour.", "actes": "Une fois élu député, il a voté l'abrogation, puis le budget qui suspend la réforme le 5 juin 2025 et le 16 décembre 2025.\n\nGRS : Le parti n'a pas de groupe propre au Parlement. Son député siège au groupe GDR, qui a voté la censure et l'abrogation.", "perso": "Non concerné", "raison": "Il n'était pas encore député.", "verdict": "aligne", "vlabel": "Aligné", "sources": "Intervention en commission à l'Assemblée nationale, 24 septembre 2024"}, {"nom": "Nicolas Dupont-Aignan", "court": "Dupont-Aignan", "parti": "Debout la France", "promesse": "**Il veut assouplir la validation des trimestres.**\n\nEn particulier pour les agriculteurs et les conjoints de commerçants et d'artisans, pour « mettre fin au scandale des retraites agricoles ».", "actes": "**Il a voté la censure.**\n\nLe 20 mars 2023, comme député non inscrit.", "perso": "Pour", "raison": "", "verdict": "aligne", "vlabel": "Aligné", "sources": "Programme, mesures PRO-030 et PRO-032"}, {"nom": "Fabien Roussel", "court": "Roussel", "parti": "Parti communiste français (PCF)", "promesse": "**Il veut abroger la réforme.**\n\n« Tourner définitivement la page de la réforme Macron de casse de notre système de retraites. » En 2022, il défendait la retraite à 60 ans à taux plein, une pension portée à 75 % du salaire, et un minimum de 1 200 euros.\n\nPCF : Le PCF combat la réforme depuis l'origine.", "actes": "Il a voté la censure le 20 mars 2023, avec l'ensemble de son groupe.", "perso": "Pour", "raison": "", "verdict": "aligne", "vlabel": "Aligné", "sources": "Programme présidentiel 2022, mesure PRO-093 · LCP, 16 septembre 2026"}, {"nom": "Édouard Philippe", "court": "Philippe", "parti": "Horizons", "promesse": "**Il veut travailler plus longtemps et créer une part de capitalisation.**\n\nIl chiffre ce pilier à 10-15 % des pensions d'ici quinze ans, et veut confier la gestion aux partenaires sociaux. En 2021, il proposait de reporter l'âge « à 65, 66 ou 67 ans ». Depuis, il ne donne plus de chiffre.\n\n⚠️ Il a promis de dévoiler sa réforme avant fin septembre 2026.", "actes": "**Il a porté la réforme des retraites de 2019, abandonnée pendant le covid.**\n\nLe 12 septembre 2019, comme Premier ministre, il annonce un système universel par points : « un euro cotisé ouvre les mêmes droits à tous ». Fin des régimes spéciaux, pension minimale à 85 % du SMIC, départ anticipé pour ceux ayant commencé avant 20 ans. Méthode annoncée : quatre cycles de concertation avec les syndicats.\n\n⚠️ Sa méthode a changé. En 2019, il voulait unifier tous les régimes dans un système par points, sans toucher à l'âge au départ. En 2026, il propose l'inverse : garder le système actuel, reporter l'âge, et ajouter une part de capitalisation. Le but reste le même, travailler plus longtemps, mais le moyen est différent.\n\n⚠️ Et il ne donne plus de chiffre. En 2021, il proposait 65, 66 ou 67 ans. Depuis, il s'en tient à « travailler plus longtemps ». Il a promis de dévoiler sa réforme avant fin septembre 2026.\n\n(Acte antérieur à 2021, retenu car il porte sur le même sujet.)", "perso": "Non concerné", "raison": "Maire du Havre, il ne siège pas au Parlement.", "verdict": "partiel", "vlabel": "Partiellement aligné", "sources": "Site de campagne, mesures PRO-139 et ECN-329 · Entretien à Challenges, 2021 · Chroniques radio des 8 et 12 septembre 2026"}, {"nom": "Olivier Faure", "court": "Faure", "parti": "Parti socialiste", "promesse": "**Il fixe à 4 000 euros de pension le seuil du « retraité riche ».**\n\nSur BFM politique, le 13 septembre 2026 : « on n'est pas riche avec une pension de 2 000 euros », et il serait injuste de faire contribuer les retraités à ce niveau à l'effort budgétaire.\n⚠️ Au-dessus de 4 000 euros, les 10 % de Français les plus aisés, il accepte de faire contribuer davantage, et n'est pas opposé à la désindexation de ces pensions.\nSur l'âge de départ, il s'en remet au programme issu de la primaire de la gauche socialiste et démocratique. Le projet du PS propose 62 ans, avec 43 ans de cotisation adaptables selon la pénibilité.", "actes": "Il a voté la censure et l'abrogation, puis le budget qui suspend la réforme.\nLe 20 mars 2023, le 5 juin 2025, et le 16 décembre 2025.\n\n⚠️ Ce dernier vote nuance les deux premiers : le budget ne fait que décaler la réforme d'un trimestre, sans l'abroger. Cinq députés de son groupe se sont abstenus.\n\nParti socialiste : Le parti a voté la censure et l'abrogation à l'unanimité.\n⚠️ En décembre 2025, le groupe a voté le budget qui suspend la réforme sans l'abroger. Six mois plus tôt, il votait une résolution demandant son abrogation. Cinq de ses députés se sont abstenus.", "perso": "Pour", "raison": "", "verdict": "partiel", "vlabel": "Partiellement aligné", "sources": "BFM politique, 13 septembre 2026, rapportée par BFM Business · Projet présidentiel du PS"}, {"nom": "Jérôme Guedj", "court": "Guedj", "parti": "Parti socialiste", "promesse": "En attente de la primaire de la gauche socialiste et démocratique : il adoptera le programme qui en sortira. Le projet du PS propose de revenir à 62 ans, avec 43 ans de cotisation adaptables selon la pénibilité.", "actes": "Il a voté la censure et l'abrogation, puis le budget qui suspend la réforme le 20 mars 2023, le 5 juin 2025, et le 16 décembre 2025.\n\nParti socialiste : Le parti a voté la censure et l'abrogation à l'unanimité.\n⚠️ En décembre 2025, le groupe a voté le budget qui suspend la réforme sans l'abroger. Six mois plus tôt, il votait une résolution demandant son abrogation. Cinq de ses députés se sont abstenus.", "perso": "Pour", "raison": "", "verdict": "partiel", "vlabel": "Partiellement aligné", "sources": "LCP, 16 septembre 2026"}, {"nom": "Gabriel Attal", "court": "Attal", "parti": "Renaissance", "promesse": "**Il veut supprimer l'âge légal de départ.**\n\nSa logique : « Vous partez très tôt, vous avez très peu. Vous partez plus tard, vous avez plus. » Il compte sur la durée de cotisation, et propose d'ajouter une dose de capitalisation, « bonne pour le système, et bonne pour les pensions ».", "actes": "**Il a défendu la réforme devant le Sénat, le jour du 49.3.**\n\nLe 16 mars 2023, comme ministre des Comptes publics : « C'est le travail qui crée la richesse, pas les impôts supplémentaires. » Il a ensuite voté le budget qui suspend la réforme, en décembre 2025.\n\n⚠️ Sa position a changé : il défendait le report à 64 ans en 2023, il veut supprimer l'âge légal en 2026.", "perso": "Non concerné", "raison": "Ministre en 2023, il ne pouvait pas voter.", "verdict": "partiel", "vlabel": "Partiellement aligné", "sources": "BFMTV, août 2026 · Site de campagne, mesure PRO-141 · LCP, 16 septembre 2026"}, {"nom": "Éric Zemmour", "court": "Zemmour", "parti": "Reconquête", "promesse": "**Il juge la retraite par répartition condamnée et veut passer à la capitalisation.**\n\nLe 17 septembre 2026 sur BFMTV : le système par répartition est « mort et condamné », faute d'un nombre d'enfants suffisant pour le financer. Il se prononce pour un système par capitalisation.\n\n⚠️ Son programme de 2022 disait autre chose : porter l'âge légal à 64 ans d'ici 2030, par paliers d'un trimestre par an, avec des aménagements pour les carrières longues et pénibles. Plus un index senior et un cumul emploi-retraite sans cotisations.\n\nDeux mesures qu'il maintient : porter la pension de réversion de 54 % à 75 % pour les veuves et les veufs, et exonérer de CSG les retraites sous 1 300 euros, jusqu'à 600 euros par an.\n\nReconquête : Reconquête veut passer à la retraite par capitalisation.\nSon programme de 2022 proposait pourtant les 64 ans en 2030, un index senior, et une revalorisation des pensions de réversion à 75 %.", "actes": "**Aucun acte.**\n\nSans mandat national sur la période : il n'a pu ni voter ni déposer d'amendement. Aucun mandat local ne permet d'agir sur les retraites, qui relèvent de la loi.", "perso": "Non concerné", "raison": "Sans mandat national sur la période : il n'a pu ni voter ni déposer d'amendement. Aucun mandat local ne permet d'agir sur les retraites, qui relèvent de la loi.", "verdict": "partiel", "vlabel": "Partiellement aligné", "sources": "Direct BFMTV, 17 septembre 2026 · Programme « Pour que la France reste la France », 2022, mesures PRO-169 à PRO-172, ECN-330"}]}, "f5": [{"cand": "Jean-Luc Mélenchon", "parti": "La France insoumise", "n": 859, "etat": "Programme publié, réactualisation annoncée", "consigne": "« L'Avenir en commun », édition 2025 - 854 mesures", "c2027": "Oui"}, {"cand": "Juan Branco", "parti": "Ruches Françaises", "n": 836, "etat": "Programme 2027 publié", "consigne": "« La Voie », 845 mesures en 24 thèmes", "c2027": "Oui"}, {"cand": "Marine Tondelier", "parti": "Les Écologistes", "n": 649, "etat": "Programme 2027 publié", "consigne": "« Pour une prospérité écologique », juillet 2026 - 557 mesures", "c2027": "Oui"}, {"cand": "Éric Zemmour", "parti": "Reconquête !", "n": 368, "etat": "Candidature confirmée oralement, programme non publié", "consigne": "Programme de 2022 - 363 mesures - et 9 déclarations issues de son entretien sur BFM-TV du 17 septembre 2026", "c2027": "Oui"}, {"cand": "Fabien Roussel", "parti": "Parti communiste français", "n": 347, "etat": "Candidature déclarée, programme 2027 à venir", "consigne": "Programme présidentiel de 2022 « Construisons la France en commun » - 90 mesures, et 65 mesures tirées de six cahiers thématiques des Jours heureux, plus 10 mesures de la base commune votée au 40e congrès", "c2027": "Oui"}, {"cand": "Nicolas Dupont-Aignan", "parti": "Debout la France", "n": 313, "etat": "Programme 2027 partiel", "consigne": "15 livrets thématiques à jour sur 32 - 308 mesures", "c2027": "Oui"}, {"cand": "Marine Le Pen", "parti": "Rassemblement national", "n": 281, "etat": "Pas de programme 2027", "consigne": "Programme présidentiel de 2022 (22 mesures + 16 livrets) et programme des européennes 2024 - 283 mesures", "c2027": "Oui"}, {"cand": "Valérie Pécresse", "parti": "Les Républicains", "n": 166, "etat": "Non candidate - archive de 2022", "consigne": "« Le courage de faire », présidentielle 2022 - 158 mesures", "c2027": "Non"}, {"cand": "François Asselineau", "parti": "Union populaire républicaine", "n": 123, "etat": "Programme 2027 en cours", "consigne": "Programme présidentiel de 2022 - 123 mesures en 27 engagements", "c2027": "Oui"}, {"cand": "Édouard Philippe", "parti": "Horizons", "n": 115, "etat": "Programme 2027 en construction", "consigne": "Quatre priorités publiées sur le site de campagne - 71 mesures, plus 24 mesures tirées des éditos qu'il signe dans la revue Horizons et dans les Notes d'Horizons. Le corps des revues et des notes n'engage pas le candidat ; 13 des 19 notes portent un édito signé de lui, les 6 autres non et sont écartées. Seul manque l'édito de la Revue 2024, numéro non téléchargeable et non détenu par la rédaction. Le manifeste fondateur de 2021, signé de lui, engage aussi le parti", "c2027": "Oui"}, {"cand": "Jordan Bardella", "parti": "Rassemblement national", "n": 92, "etat": "Non candidat - auteur d'un document consigné", "consigne": "Programme des législatives anticipées de 2024 - 92 mesures", "c2027": "Non"}, {"cand": "David Lisnard", "parti": "Nouvelle Énergie", "n": 87, "etat": "Programme 2027 en construction", "consigne": "Trois pages d'orientations sur le site du parti - 87 mesures, et 96 déclarations sourcées tirées des questions-réponses. Programme présidentiel non publié. Restent hors référentiel : son livre, que la rédaction ne possède pas, et le site lisnard2027.fr, annoncé mais pas encore en ligne", "c2027": "Oui"}, {"cand": "Bernard Cazeneuve", "parti": "La Convention", "n": 86, "etat": "Propositions publiées", "consigne": "« Aux Français », lettre du 15 juillet 2026 - 86 mesures en trente propositions", "c2027": "Oui"}, {"cand": "Bruno Retailleau", "parti": "Les Républicains", "n": 85, "etat": "Programme 2027 en construction", "consigne": "8 livrets « Nos propositions pour la France », décembre 2025 à septembre 2026 - 76 propositions, dont 5 seulement signées de sa main, plus 10 mesures affichées sur le site", "c2027": "Oui"}, {"cand": "Florian Philippot", "parti": "Les Patriotes", "n": 82, "etat": "Grandes orientations publiées", "consigne": "Livret « Grandes orientations pour un projet patriote », édition 2026-2027 - 82 mesures", "c2027": "Oui"}, {"cand": "[primaire en cours]", "parti": "Parti socialiste", "n": 80, "etat": "Primaire en cours - cinq candidatures", "consigne": "Cinq candidatures en lice : Raphaël Glucksmann, Olivier Faure, Ségolène Royal, Jérôme Guedj et Emmanuel Maurel. leurs programmes de campagne interne seront dépouillés après la primaire, celui du vainqueur devenant le corpus principal et les cinq autres des pièces de comparaison", "c2027": "À confirmer"}, {"cand": "Anne Hidalgo", "parti": "Parti socialiste", "n": 77, "etat": "Base provisoire - programme de 2022", "consigne": "« Mes 70 propositions pour la France » - 70 propositions retenues comme base provisoire pour le Parti socialiste", "c2027": "Non"}, {"cand": "Lydie Massard", "parti": "Union démocratique bretonne", "n": 67, "etat": "Programme 2027 en construction", "consigne": "67 mesures tirées des vingt et un onglets de la rubrique « Nos idées », dépouillée en entier ; livre-projet de 2018 non dépouillé", "c2027": "Oui"}, {"cand": "Benoît Mathieu", "parti": "Sans parti", "n": 58, "etat": "Programme en travaux sur un wiki", "consigne": "Programme citoyen publié sur le wiki « Cap 500 signatures » - 58 mesures ; 24 des 65 pages annoncées ne sont pas écrites", "c2027": "Oui"}, {"cand": "Anasse Kazib", "parti": "Révolution permanente", "n": 55, "etat": "Programme 2027 en construction", "consigne": "Dépliant de campagne 2027 - 27 premières mesures - et programme de 2022 - 28 propositions", "c2027": "Oui"}, {"cand": "François Ruffin", "parti": "Debout !", "n": 52, "etat": "Programme 2027 en construction", "consigne": "Quatre cahiers de campagne - 50 propositions, publiés sur nouspresident.fr", "c2027": "Oui"}, {"cand": "Philippe Poutou", "parti": "Nouveau Parti Anticapitaliste", "n": 45, "etat": "Non candidat - archive de 2022", "consigne": "Brochure-programme « Rompre avec le capitalisme, il y a urgence ! » - 37 mesures", "c2027": "Non"}, {"cand": "Nathalie Arthaud", "parti": "Lutte ouvrière", "n": 44, "etat": "Brochure de campagne publiée", "consigne": "Brochure de campagne de juin 2026 - 11 revendications ; le parti récuse la qualification de programme électoral", "c2027": "Oui"}, {"cand": "Gabriel Attal", "parti": "Renaissance", "n": 41, "etat": "Programme 2027 en construction", "consigne": "4 « chantiers capitaux » et 2 « dettes à résorber » publiés en ligne - 41 engagements", "c2027": "Oui"}, {"cand": "Francis Lalanne", "parti": "Sans parti", "n": 27, "etat": "Programme 2027 publié", "consigne": "« Le retour au bon-sens et aux valeurs de l'existence », page web sans date - 28 énoncés ; candidature officialisée par communiqué le 19 août 2026 ; sans parti, soutenu par le mouvement citoyen France Libre ; Dieudonné le soutient sans être candidat", "c2027": "Oui"}, {"cand": "Clara Egger", "parti": "Solution démocratique", "n": 15, "etat": "Propositions rédigées publiées", "consigne": "Deux propositions formalisées en texte de loi, un calendrier daté et trois positions thématiques - 15 mesures ; parti et date non renseignés", "c2027": "Oui"}, {"cand": "Manolo Mlekuz", "parti": "Trajectoire", "n": 6, "etat": "Programme 2027 publié", "consigne": "Programme du parti, page web sans date - 6 mesures", "c2027": "Oui"}, {"cand": "Antoine Mikolajczak", "parti": "Parti Équinoxe", "n": 6, "etat": "Programme 2027 en construction", "consigne": "Six mesures du tract de campagne 2027, plus 45 mesures des européennes 2024 et 97 des législatives 2024 rattachées au parti ; le manifeste de 2023 est doctrinal et n'en contient aucune", "c2027": "Oui"}, {"cand": "Delphine Batho", "parti": "Génération Écologie", "n": 5, "etat": "Candidature déclarée, programme 2027 à élaborer", "consigne": "Textes d'orientation du parti - 5 mesures concrètes seulement ; la motion d'orientation annonce que le programme de gouvernement reste à élaborer", "c2027": "Oui"}, {"cand": "Selma Labib", "parti": "NPA-Révolutionnaires", "n": 4, "etat": "Programme 2027 en construction", "consigne": "Quatre mesures d'urgence tirées de la profession de foi municipale de mars 2026 ; candidate désignée le 17 juin 2026", "c2027": "Oui"}, {"cand": "Karim Bouamrane", "parti": "Parti socialiste", "n": 3, "etat": "Programme 2027 en construction", "consigne": "Manifeste de candidature - 3 mesures concrètes retenues ; le texte est une profession de foi et ne mentionne pas son parti, renseigné depuis la fiche candidats", "c2027": "Oui"}, {"cand": "Xavier Bertrand", "parti": "Nous France", "n": 0, "etat": "Aucun programme publié", "consigne": "Aucune mesure programmatique : 10 déclarations consignées sur les retraites, rapportées par Les Échos", "c2027": "Oui"}, {"cand": "[pressentis]", "parti": "Parti socialiste · La France humaniste", "n": 0, "etat": "Candidatures pressenties, non déclarées", "consigne": "Aucune mesure consignée : François Hollande et Dominique de Villepin sont pressentis mais n'ont pas déclaré leur candidature", "c2027": "Non"}]};
+  </script>
+  <script>
+  (function () {
+    'use strict';
+    var RETOUR = 'jeannette@komunemedia.fr';
+    var D = window.KOMUNE_DEC;
+    var NL = String.fromCharCode(10);
+    var ESP = String.fromCharCode(8239);
+    var dec = function (x, k) { return x.toFixed(k).replace('.', ','); };
+    var fr = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ESP); };
+    var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); };
+    var gras = function (s) { return esc(s).replace(/\*\*([\s\S]+?)\*\*/g, '<strong>$1</strong>'); };
+
+    document.getElementById('h-mes').textContent = fr(D.nMesures);
+    document.getElementById('h-doc').textContent = fr(D.nDocs);
+    document.getElementById('h-loi').textContent = fr(D.nLois);
+    var m = D.maj.split('-');
+    document.getElementById('horodatage').textContent =
+      'Données arrêtées au ' + m[2] + '/' + m[1] + '/' + m[0] + ' · ' + fr(D.nMesures) +
+      ' mesures issues de ' + D.nDocs + ' documents, et ' + D.nLois + ' textes de loi suivis.';
+
+    /* ---------- infobulle ---------- */
+    var bulle = document.getElementById('bulle'), bOn = false;
+    function montre(html, ev) { bulle.innerHTML = html; bulle.classList.add('on'); bOn = true; place(ev); }
+    function place(ev) {
+      if (!bOn) { return; }
+      var r = bulle.getBoundingClientRect();
+      var x = Math.min(Math.max(10, ev.clientX + 14), window.innerWidth - r.width - 10);
+      var y = ev.clientY - r.height - 14; if (y < 10) { y = ev.clientY + 20; }
+      bulle.style.left = x + 'px'; bulle.style.top = y + 'px';
+    }
+    function cache() { bulle.classList.remove('on'); bOn = false; }
+    document.addEventListener('mousemove', place, { passive: true });
+    window.addEventListener('scroll', cache, { passive: true });
+
+    /* ====== 1. le classement des 18 sujets ====== */
+    (function () {
+      var T = D.f1.themes, max = T[0].n, dernier = T[T.length - 1];
+      document.getElementById('vue1').innerHTML = T.map(function (t, i) {
+        var saillant = i === T.length - 1;
+        return '<div class="bl' + (saillant ? ' saillant' : '') + '" data-i="' + i + '">' +
+          '<div class="bl-nom">' + esc(t.nom) + '<small>' + t.p + ' programmes sur ' + D.f1.nPorteurs + '</small></div>' +
+          '<div class="bl-piste"><span class="bl-barre" style="width:' + (t.n / max * 100).toFixed(1) + '%"></span>' +
+          '<span class="bl-val">' + fr(t.n) + '</span></div></div>';
+      }).join('');
+      document.getElementById('vue1').addEventListener('mouseover', function (e) {
+        var l = e.target.closest('.bl'); if (!l) { return; }
+        var t = T[+l.dataset.i];
+        montre('<b>' + esc(t.nom) + '</b><u>' + fr(t.n) + ' mesures, soit ' +
+          dec(t.n / D.f1.total * 100, 1) + ' % du total</u><u>' + t.p + ' programmes en parlent</u>', e);
+      });
+      document.getElementById('vue1').addEventListener('mouseleave', cache);
+
+      document.getElementById('muets1').innerHTML = D.f1.muets.map(function (o) {
+        return '<span>' + esc(o.nom) + ' <b>' + fr(o.n) + ' mesures</b></span>';
+      }).join('');
+
+      document.getElementById('cle1').textContent =
+        'Le pouvoir d' + String.fromCharCode(8217) + 'achat recueille ' + fr(dernier.n) + ' mesures sur ' +
+        fr(D.f1.total) + ', soit ' + dec(dernier.n / D.f1.total * 100, 1) + ' % de tout ce qui est écrit.';
+      document.getElementById('cle1p').textContent =
+        'Le premier sujet, « ' + T[0].nom + ' », en compte ' + fr(T[0].n) + ', soit ' +
+        Math.round(T[0].n / dernier.n) + ' fois plus. Et ' + D.f1.muets.length +
+        ' programmes ne contiennent aucune mesure de pouvoir d' + String.fromCharCode(8217) + 'achat.';
+
+      var t = ['<thead><tr><th>Thème</th><th>Mesures</th><th>Part</th><th>Programmes</th></tr></thead><tbody>'];
+      T.forEach(function (x) {
+        t.push('<tr><td>' + esc(x.nom) + '</td><td class="n">' + fr(x.n) + '</td><td class="n">' +
+          dec(x.n / D.f1.total * 100, 1) + ' %</td><td class="n">' + x.p + '</td></tr>');
+      });
+      document.getElementById('tab1').innerHTML = t.join('') + '</tbody>';
+    })();
+
+    /* ====== 2. le thème n°1 de chaque candidat ====== */
+    (function () {
+      var L = D.f2, max = 0;
+      L.forEach(function (o) { if (o.top[0][2] > max) { max = o.top[0][2]; } });
+      document.getElementById('vue2').innerHTML = L.map(function (o, i) {
+        return '<div class="bl" data-i="' + i + '">' +
+          '<div class="bl-nom">' + esc(o.nom) + '<small>' + fr(o.n) + ' mesures</small></div>' +
+          '<div class="bl-piste"><span class="bl-barre" style="width:' + (o.top[0][2] / max * 46).toFixed(1) + '%"></span>' +
+          '<span class="bl-val">' + o.top[0][2] + ' %</span>' +
+          '<span class="bl-apres">' + esc(o.top[0][0]) + '</span></div></div>';
+      }).join('');
+      document.getElementById('vue2').addEventListener('mouseover', function (e) {
+        var l = e.target.closest('.bl'); if (!l) { return; }
+        var o = L[+l.dataset.i];
+        montre('<b>' + esc(o.nom) + '</b><u>' + esc(o.parti) + ' · ' + fr(o.n) + ' mesures</u>' +
+          o.top.map(function (x, k) { return '<u style="margin-top:' + (k ? 0 : 6) + 'px">' + (k + 1) + '. ' +
+            esc(x[0]) + ' : ' + x[1] + ' (' + x[2] + ' %)</u>'; }).join(''), e);
+      });
+      document.getElementById('vue2').addEventListener('mouseleave', cache);
+
+      var gros = L.filter(function (o) { return o.n >= 100; })
+        .sort(function (a, b) { return b.top[0][2] - a.top[0][2]; })[0];
+      document.getElementById('cle2').textContent =
+        gros.nom + ' : ' + gros.top[0][2] + ' % de ses ' + fr(gros.n) +
+        ' mesures portent sur un seul thème, « ' + gros.top[0][0] + ' ».';
+      var pris = {};
+      L.forEach(function (o) { pris[o.top[0][0]] = 1; });
+      var jamais = D.f1.themes.map(function (t) { return t.nom; }).filter(function (x) { return !pris[x]; });
+      document.getElementById('cle2p').textContent =
+        'À l' + String.fromCharCode(8217) + 'inverse, ' + jamais.length + ' des 18 thèmes ne sont le sujet principal de personne : ' +
+        jamais.join(', ') + '.';
+
+      var t = ['<thead><tr><th>Candidat·e</th><th>Mesures</th><th>1er thème</th><th>2e</th><th>3e</th></tr></thead><tbody>'];
+      L.forEach(function (o) {
+        t.push('<tr><td>' + esc(o.nom) + '</td><td class="n">' + fr(o.n) + '</td>' +
+          o.top.map(function (x) { return '<td>' + esc(x[0]) + ' · ' + x[1] + ' (' + x[2] + ' %)</td>'; }).join('') +
+          (o.top.length < 3 ? '<td></td>' : '') + '</tr>');
+      });
+      document.getElementById('tab2').innerHTML = t.join('') + '</tbody>';
+    })();
+
+    /* ====== 3. le nucléaire, mot pour mot ====== */
+    (function () {
+      var G = D.f3.groupes;
+      function coupe(t, n) {
+        t = t || '';
+        if (t.length <= n) { return t; }
+        var c = t.slice(0, n), e = c.lastIndexOf(' ');
+        return (e > n * 0.6 ? c.slice(0, e) : c) + String.fromCharCode(8230);
+      }
+      document.getElementById('vue3').innerHTML = G.map(function (g) {
+        return '<article class="cit"><h3>' + esc(g.nom) + '<small>' + esc(g.parti) + ' · ' +
+          g.items.length + ' mesure' + (g.items.length > 1 ? 's' : '') + '</small></h3><ul>' +
+          g.items.map(function (it) {
+            var entier = it.texte || it.titre, court = coupe(it.titre, 180);
+            return '<li><q>' + esc(court) + '</q>' +
+              (entier.length > court.length
+                ? '<details><summary>Lire la mesure entière</summary><p>' + esc(entier) + '</p></details>' : '') +
+              '<em>' + esc(coupe(it.doc, 80)) + '</em></li>';
+          }).join('') + '</ul></article>';
+      }).join('');
+      document.getElementById('cle3').textContent =
+        D.f3.porteurs + ' programmes écrivent sur le nucléaire, pour ' + D.f3.n + ' mesures au total.';
+      document.getElementById('cle3p').textContent =
+        'Chaque mesure est reproduite avec le document dont elle est tirée. Aucune n' +
+        String.fromCharCode(8217) + 'est résumée ni reformulée.';
+    })();
+
+    /* ====== 4. retraites ====== */
+    (function () {
+      var F = D.f4, VL = { aligne: 'Aligné', partiel: 'Partiellement aligné' };
+      document.getElementById('vue4').innerHTML = F.items.map(function (o) {
+        return '<article class="ffc">' +
+          '<div class="ffc-tete"><span class="ffc-nom">' + esc(o.nom) + '</span>' +
+          '<span class="ffc-parti">' + esc(o.parti) + '</span>' +
+          '<span class="ffc-verdict v-' + o.verdict + '">' + (o.verdict === 'aligne' ? '&#9989;' : '&#9888;&#65039;') +
+          ' ' + esc(VL[o.verdict]) + '</span></div>' +
+          '<div class="ffc-corps">' +
+          '<div class="ffc-col"><h3>Ce qu' + String.fromCharCode(8217) + 'il ou elle promet</h3>' + para(o.promesse) + '</div>' +
+          '<div class="ffc-col"><h3>Ce qu' + String.fromCharCode(8217) + 'il ou elle a fait</h3>' + para(o.actes) +
+          '<p class="sec">Position au scrutin de référence : <strong>' + esc(o.perso) + '</strong>' +
+          (o.raison ? ' - ' + esc(o.raison) : '') + '</p></div></div>' +
+          (o.sources ? '<div class="ffc-pied">Sources : ' + esc(o.sources) + '</div>' : '') +
+          '</article>';
+      }).join('');
+      function para(t) {
+        return (t || '').split(NL + NL).filter(Boolean).map(function (b) {
+          return '<p>' + gras(b.replace(/\n/g, ' ')) + '</p>';
+        }).join('');
+      }
+      var na = F.items.filter(function (o) { return o.verdict === 'aligne'; }).length;
+      document.getElementById('cle4').textContent =
+        F.items.length + ' candidat·es peuvent être confronté·es à ce texte : ' + na +
+        ' sont aligné·es entre promesse et acte, ' + (F.items.length - na) + ' partiellement.';
+      document.getElementById('cle4p').textContent =
+        'Les autres candidat·es ne sont pas jugé·es ici : au printemps 2023, ils et elles n' + String.fromCharCode(8217) +
+        'avaient ni siège ni fonction permettant de peser sur ce texte.';
+    })();
+
+    /* ====== 5. l'état des programmes ====== */
+    (function () {
+      var L = D.f5, max = L[0].n;
+      document.getElementById('vue5').innerHTML = L.map(function (o, i) {
+        return '<div class="et" data-i="' + i + '">' +
+          '<div class="et-nom">' + esc(o.cand) + '<small>' + esc(o.parti) + '</small></div>' +
+          '<div class="et-n' + (o.n ? '' : ' zero') + '">' + fr(o.n) + '</div>' +
+          '<div class="et-etat"><b>' + esc(o.etat) + '</b><small>' +
+          esc(o.consigne.length > 150 ? o.consigne.slice(0, 150) + '...' : o.consigne) + '</small></div></div>';
+      }).join('');
+      document.getElementById('vue5').addEventListener('mouseover', function (e) {
+        var l = e.target.closest('.et'); if (!l) { return; }
+        var o = L[+l.dataset.i];
+        montre('<b>' + esc(o.cand) + '</b><u>' + esc(o.etat) + '</u><u style="margin-top:6px">' + esc(o.consigne) + '</u>', e);
+      });
+      document.getElementById('vue5').addEventListener('mouseleave', cache);
+      var gens = L.filter(function (o) { return o.cand.charAt(0) !== '['; });
+      var vides = gens.filter(function (o) { return o.n < 10; });
+      document.getElementById('cle5').textContent =
+        vides.length + ' des ' + gens.length + ' personnes suivies ont moins de dix mesures écrites : ' +
+        vides.map(function (o) { return o.cand + ' (' + o.n + ')'; }).join(', ') + '.';
+      document.getElementById('cle5p').textContent =
+        'Deux programmes dépassent huit cents mesures. Ce classement compte des mesures écrites : ' +
+        'il ne dit rien de leur contenu ni de leur portée.';
+    })();
+  })();
+  </script>
+</body>
+</html>
