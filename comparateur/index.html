@@ -2922,6 +2922,11 @@
     }
     .verdict-global .vg-sur { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 800;
       letter-spacing: .08em; text-transform: uppercase; opacity: .72; }
+    .verdict-global .vg-cadre { display: block; margin-bottom: 10px; }
+    .verdict-global .vg-liste { display: flex; flex-wrap: wrap; gap: 6px 10px; }
+    .verdict-global .vg-compte { font-size: 15px; font-weight: 650; padding: 5px 11px;
+      border: 1.5px solid var(--ink); border-radius: 999px; background: var(--cream); white-space: nowrap; }
+    .verdict-global .vg-compte b { background: none; padding: 0; font-weight: 800; }
     .verdict-global .vg-note { display: block; margin-top: 8px; font-size: 14px; font-weight: 650;
       line-height: 1.4; opacity: .82; }
     .verdict-global b { background: var(--yellow); padding: 0 .12em; border-radius: 4px; }
@@ -4639,7 +4644,7 @@
       var note = document.getElementById('bientot-note');
       if (note) {
         note.textContent = derriere.length
-          ? derriere.length + ' autres candidat·es sont dans la base : leurs votes et leurs promesses sont en cours de relevé, texte par texte.'
+          ? derriere.length + ' autres candidat·es : relevé en cours.'
           : '';
       }
     }
@@ -4841,7 +4846,7 @@
         '<span aria-hidden="true">➖</span> ' + ids.length + ' candidat·es sans promesse ni acte relevé sur ce texte' +
         '<span class="ar-fl" aria-hidden="true">▾</span></button>' +
         '<div class="ar-corps" id="ar-' + esc(l.id) + '" hidden><p>' + esc(noms) + '.</p>' +
-        '<p class="ar-note">Leur position n\'est pas encore relevée sur ce texte. Une case vide n\'est pas une position&nbsp;: tant que rien n\'est sourcé, on ne conclut rien.</p></div></div>');
+        '<p class="ar-note">Leur position n\'est pas encore relevée sur ce texte.</p></div></div>');
       var b = zone.querySelector('.ar-btn'), c = zone.querySelector('.ar-corps');
       b.addEventListener('click', function () {
         var va = b.getAttribute('aria-expanded') !== 'true';
@@ -5121,25 +5126,21 @@
       });
       if (!couples) { return; }
       var nbGens = Object.keys(gens).length;
-      var faits = [];
-      if (n.aligne) { faits.push('les actes ont suivi la promesse <b>' + n.aligne + ' fois</b>'); }
-      if (n.partiel) { faits.push('ils l\'ont suivie en partie <b>' + n.partiel + ' fois</b>'); }
-      if (n.contradictoire) { faits.push('ils ont fait <b>le contraire ' + n.contradictoire + ' fois</b>'); }
-      else if (faits.length) { faits.push('et <b>jamais</b> le contraire'); }
-      if (!faits.length) { return; }
-      var liste = faits.length > 1
-        ? faits.slice(0, -1).join(', ') + (faits[faits.length - 1].indexOf('et ') === 0 ? ', ' : ', et ') + faits[faits.length - 1]
-        : faits[0];
-      var phrase = 'Sur les <b>' + D.LOIS.length + ' textes</b> suivis et les <b>' + nbGens +
-        ' candidat·es</b> qui ont un vote, ' + liste + '.';
-      var note = '';
-      if (n.heterogene || n['non-testable']) {
-        var bouts = [];
-        if (n.heterogene) { bouts.push(n.heterogene + ' fois le groupe s\'est divisé'); }
-        if (n['non-testable']) { bouts.push(n['non-testable'] + ' fois la situation n\'était pas testable (pas de mandat, ministre qui ne vote pas, texte sans scrutin)'); }
-        note = '<span class="vg-note">' + bouts.join(', ') + '. Ce n\'est pas une mauvaise note.</span>';
-      }
-      zone.innerHTML = '<span class="vg-sur">Ce que disent les données aujourd\'hui</span>' + phrase + note;
+      var cadre = D.LOIS.length + ' textes suivis. ' + nbGens + ' candidat·es avec une position relevée.';
+      var lignes = [
+        ['Actes alignés sur la promesse', n.aligne],
+        ['Alignés en partie', n.partiel],
+        ['Contraires à la promesse', n.contradictoire],
+        ['Groupe divisé', n.heterogene],
+        ['Non testable', n['non-testable']]
+      ].filter(function (x) { return x[1]; }).map(function (x) {
+        return '<span class="vg-compte"><b>' + x[1] + '</b> ' + x[0] + '</span>';
+      }).join('');
+      var note = n['non-testable']
+        ? '<span class="vg-note">Non testable : pas de mandat, ministre qui ne vote pas, ou texte sans scrutin.</span>'
+        : '';
+      zone.innerHTML = '<span class="vg-sur">Les comptes</span>' +
+        '<span class="vg-cadre">' + cadre + '</span><span class="vg-liste">' + lignes + '</span>' + note;
       zone.hidden = false;
     }
 
