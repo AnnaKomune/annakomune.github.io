@@ -24,13 +24,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/decryptages/</loc>
+    <loc>https://www.komunemedia.fr/chiffres/</loc>
     <lastmod>2026-10-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://www.komunemedia.fr/img/og-comparateur.png</image:loc>
-      <image:title>Décryptages - les programmes de 2027 en cinq graphiques</image:title>
+      <image:title>Les programmes de 2027 en chiffres</image:title>
     </image:image>
   </url>
   <url>

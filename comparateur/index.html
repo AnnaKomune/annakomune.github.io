@@ -3408,7 +3408,7 @@
         <a href="../">Accueil</a>
         <a href="../articles/">Articles</a>
         <a class="est-ici" href="./" aria-current="page">Le comparateur présidentielles 2027</a>
-        <a href="../decryptages/">Décryptages</a>
+        <a href="../chiffres/">Les chiffres</a>
         <a href="../equipe/">L'équipe</a>
         <a href="../soutenir/">Nous soutenir</a>
         </div>
@@ -6733,7 +6733,7 @@
     var D = window.KOMUNE_CANDIDATS;
     if (!D) { return; }
     var C = D.candidats;
-    var TETES = ["anasse-kazib", "antoine-mikolajczak", "benoit-mathieu", "bernard-cazeneuve", "bruno-retailleau", "clara-egger", "david-lisnard", "delphine-batho", "edouard-philippe", "emmanuel-maurel", "fabien-roussel", "fabien-verdier", "florian-philippot", "francis-lalanne", "francois-asselineau", "francois-ruffin", "gabriel-attal", "jean-luc-melenchon", "jerome-guedj", "juan-branco", "karim-bouamrane", "lydie-massard", "manolo-mlekuz", "marine-le-pen", "marine-tondelier", "nathalie-arthaud", "nicolas-dupont-aignan", "olivier-faure", "philippe-brun", "raphael-glucksmann", "segolene-royal", "selma-labib", "xavier-bertrand"];
+    var TETES = ["anasse-kazib", "antoine-mikolajczak", "benoit-mathieu", "bernard-cazeneuve", "bruno-retailleau", "clara-egger", "david-lisnard", "delphine-batho", "dominique-de-villepin", "edouard-philippe", "emmanuel-maurel", "eric-zemmour", "fabien-roussel", "fabien-verdier", "florian-philippot", "francis-lalanne", "francois-asselineau", "francois-hollande", "francois-ruffin", "gabriel-attal", "jean-luc-melenchon", "jerome-guedj", "juan-branco", "karim-bouamrane", "lydie-massard", "manolo-mlekuz", "marine-le-pen", "marine-tondelier", "nathalie-arthaud", "nicolas-dupont-aignan", "olivier-faure", "philippe-brun", "raphael-glucksmann", "segolene-royal", "selma-labib", "xavier-bertrand"];
     var DANS_COMPARATEUR = ['jean-luc-melenchon', 'marine-le-pen', 'gabriel-attal', 'edouard-philippe', 'bruno-retailleau'];
 
     /* ---------- utilitaires ---------- */
@@ -6958,7 +6958,7 @@
     var P = window.KOMUNE_PROGRAMMES;
     if (!P) { return; }
     var C = (window.KOMUNE_CANDIDATS && window.KOMUNE_CANDIDATS.candidats) || [];
-    var TETES = ["anasse-kazib", "antoine-mikolajczak", "benoit-mathieu", "bernard-cazeneuve", "bruno-retailleau", "clara-egger", "david-lisnard", "delphine-batho", "edouard-philippe", "emmanuel-maurel", "fabien-roussel", "fabien-verdier", "florian-philippot", "francis-lalanne", "francois-asselineau", "francois-ruffin", "gabriel-attal", "jean-luc-melenchon", "jerome-guedj", "juan-branco", "karim-bouamrane", "lydie-massard", "manolo-mlekuz", "marine-le-pen", "marine-tondelier", "nathalie-arthaud", "nicolas-dupont-aignan", "olivier-faure", "philippe-brun", "raphael-glucksmann", "segolene-royal", "selma-labib", "xavier-bertrand"];
+    var TETES = ["anasse-kazib", "antoine-mikolajczak", "benoit-mathieu", "bernard-cazeneuve", "bruno-retailleau", "clara-egger", "david-lisnard", "delphine-batho", "dominique-de-villepin", "edouard-philippe", "emmanuel-maurel", "eric-zemmour", "fabien-roussel", "fabien-verdier", "florian-philippot", "francis-lalanne", "francois-asselineau", "francois-hollande", "francois-ruffin", "gabriel-attal", "jean-luc-melenchon", "jerome-guedj", "juan-branco", "karim-bouamrane", "lydie-massard", "manolo-mlekuz", "marine-le-pen", "marine-tondelier", "nathalie-arthaud", "nicolas-dupont-aignan", "olivier-faure", "philippe-brun", "raphael-glucksmann", "segolene-royal", "selma-labib", "xavier-bertrand"];
 
     /* ---------- utilitaires ---------- */
     function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -8123,7 +8123,7 @@
 
     /* ---------- depart ---------- */
     var SUJETS = [{"n": 1, "t": "Pouvoir d'achat & niveau de vie", "e": "💶"}, {"n": 2, "t": "Travail & emploi", "e": "💼"}, {"n": 3, "t": "Protection sociale & retraites", "e": "🛟"}, {"n": 4, "t": "Santé", "e": "🩺"}, {"n": 5, "t": "Écologie & climat", "e": "🌱"}, {"n": 6, "t": "Éducation & jeunesse", "e": "🎓"}, {"n": 7, "t": "Logement", "e": "🏠"}, {"n": 8, "t": "Services publics & territoires", "e": "🗺️"}, {"n": 9, "t": "Immigration, asile & nationalité", "e": "🛂"}, {"n": 10, "t": "Sécurité & justice", "e": "⚖️"}, {"n": 11, "t": "Droits, égalité & lutte contre les discriminations", "e": "✊"}, {"n": 12, "t": "Démocratie & institutions", "e": "🗳️"}, {"n": 13, "t": "Économie, entreprises & finances publiques", "e": "📈"}, {"n": 14, "t": "Agriculture & alimentation", "e": "🌾"}, {"n": 15, "t": "Culture, médias & information", "e": "🎭"}, {"n": 16, "t": "Numérique & technologies", "e": "💻"}, {"n": 17, "t": "International, Europe & défense", "e": "🌍"}, {"n": 18, "t": "Transports & mobilités", "e": "🚆"}];
-    var TETES = ["anasse-kazib", "antoine-mikolajczak", "benoit-mathieu", "bernard-cazeneuve", "bruno-retailleau", "clara-egger", "david-lisnard", "delphine-batho", "edouard-philippe", "emmanuel-maurel", "fabien-roussel", "fabien-verdier", "florian-philippot", "francis-lalanne", "francois-asselineau", "francois-ruffin", "gabriel-attal", "jean-luc-melenchon", "jerome-guedj", "juan-branco", "karim-bouamrane", "lydie-massard", "manolo-mlekuz", "marine-le-pen", "marine-tondelier", "nathalie-arthaud", "nicolas-dupont-aignan", "olivier-faure", "philippe-brun", "raphael-glucksmann", "segolene-royal", "selma-labib", "xavier-bertrand"];
+    var TETES = ["anasse-kazib", "antoine-mikolajczak", "benoit-mathieu", "bernard-cazeneuve", "bruno-retailleau", "clara-egger", "david-lisnard", "delphine-batho", "dominique-de-villepin", "edouard-philippe", "emmanuel-maurel", "eric-zemmour", "fabien-roussel", "fabien-verdier", "florian-philippot", "francis-lalanne", "francois-asselineau", "francois-hollande", "francois-ruffin", "gabriel-attal", "jean-luc-melenchon", "jerome-guedj", "juan-branco", "karim-bouamrane", "lydie-massard", "manolo-mlekuz", "marine-le-pen", "marine-tondelier", "nathalie-arthaud", "nicolas-dupont-aignan", "olivier-faure", "philippe-brun", "raphael-glucksmann", "segolene-royal", "selma-labib", "xavier-bertrand"];
 
     window.KP_PARCOURS = {
       /* le routeur passe l'adresse : rien, #guide, #loi=<id>, #sujets ou #d=<n> */
