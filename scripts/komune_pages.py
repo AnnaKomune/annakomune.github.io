@@ -94,7 +94,7 @@ def nav(ou, profondeur=2):
     r = "../" * profondeur
     liens = [("", "Accueil"), ("articles/", "Articles"),
              ("comparateur/", "Le comparateur présidentielles 2027"),
-             ("journalistes/", "Nos journalistes"), ("equipe/", "L'équipe"),
+             ("equipe/", "L'équipe"),
              ("soutenir/", "Nous soutenir")]
     out = []
     for cible, nom in liens:
@@ -343,7 +343,7 @@ def page_journaliste(f, articles, auteurs, par_article):
         "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
-            {"@type": "ListItem", "position": 2, "name": "Nos journalistes", "item": SITE + "/journalistes/"},
+            {"@type": "ListItem", "position": 2, "name": "L'\u00e9quipe", "item": SITE + "/equipe/"},
             {"@type": "ListItem", "position": 3, "name": f["nom"], "item": url}]}]}
 
     rond = ('<img src="%s" alt="%s" width="170" height="170" decoding="async">' % (e(f["photo"]), e(f["nom"]))
@@ -355,8 +355,8 @@ def page_journaliste(f, articles, auteurs, par_article):
              f["photo"] or "", '  <meta property="og:type" content="profile">\n')
         + ld(graphe)
         + "</head>\n<body>\n  <div class=\"page\">\n"
-        + nav("journalistes") + "\n"
-        + fil([("", "Accueil"), ("journalistes/", "Nos journalistes"), (None, f["nom"])]) + "\n"
+        + nav("equipe") + "\n"
+        + fil([("", "Accueil"), ("equipe/", "L'équipe"), (None, f["nom"])]) + "\n"
         + '    <main class="canvas">\n'
         + '      <header class="jour-tete panel">\n'
         + '        <div class="jour-photo">%s</div>\n' % rond
@@ -389,31 +389,24 @@ def page_liste_journalistes(fiches_comptees):
             {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
             {"@type": "ListItem", "position": 2, "name": "Nos journalistes", "item": url}]}]}
 
-    cartes = []
-    for f, n in fiches_comptees:
-        rond = ('<img src="%s" alt="" loading="lazy" decoding="async">' % e(f["photo"])
-                if f["photo"] else e(initiales(f["nom"])))
-        cartes.append('        <a class="jour-carte" href="%s/"><span class="rond">%s</span>'
-                      '<span><b>%s</b><small>%s · %d article%s</small></span></a>'
-                      % (e(f["slug"]), rond, e(f["nom"]), e(f["role"]), n, "s" if n > 1 else ""))
-
+    # Anna a demande que l'annuaire ne soit plus visible. On garde l'adresse
+    # pour ne casser aucun lien, mais elle renvoie vers la page de l'equipe et
+    # n'est plus indexee. Les 25 pages individuelles restent publiques.
     return (
-        tete("Les journalistes de Komune Média", description, url, "", "", profondeur=1)
-        + ld(graphe)
-        + "</head>\n<body>\n  <div class=\"page\">\n"
-        + nav("journalistes", profondeur=1) + "\n"
-        + fil([("", "Accueil"), (None, "Nos journalistes")], profondeur=1) + "\n"
-        + '    <main class="canvas">\n'
-        + '      <header class="art-tete panel">\n'
-        + '        <p class="eyebrow">L\'équipe qui écrit</p>\n'
-        + '        <h1>Nos journalistes</h1>\n'
-        + '        <p class="art-chapo">Komune Média est écrit par %d journalistes. '
-          'Chaque article est signé, et chaque signature mène à la liste de ce que la personne a publié.</p>\n'
-          % len(fiches_comptees)
-        + '      </header>\n'
-        + '      <div class="jours">\n%s\n      </div>\n' % "\n".join(cartes)
-        + '    </main>\n'
-        + pied(profondeur=1) + "\n  </div>\n</body>\n</html>\n")
+        '<!DOCTYPE html>\n<html lang="fr">\n<head>\n'
+        '<meta charset="utf-8">\n'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+        '<title>L\u2019\u00e9quipe de Komune M\u00e9dia</title>\n'
+        '<link rel="canonical" href="%s/equipe/">\n'
+        '<meta name="robots" content="noindex, follow">\n'
+        '<meta http-equiv="refresh" content="0; url=%s/equipe/">\n'
+        '<style>body{margin:0;min-height:100vh;display:grid;place-items:center;'
+        'background:#fcf7e8;color:#1a1a1a;font-family:ui-sans-serif,system-ui,'
+        '"Helvetica Neue",Arial,sans-serif;text-align:center;padding:24px}'
+        'a{color:#5423df}</style>\n'
+        '</head>\n<body>\n'
+        '<p>Rendez-vous sur <a href="%s/equipe/">la page de l\u2019\u00e9quipe</a>.</p>\n'
+        '</body>\n</html>\n' % (SITE, SITE, SITE))
 
 
 # ---------------------------------------------------------------- recuperation des corps
@@ -468,9 +461,6 @@ def plan_du_site(articles, fiches_comptees):
 
     recent = max([(a.get("date") or "")[:10] for a in articles] or [""])
     bouts = list(fixes)
-    bouts.append("  <url>\n    <loc>%s/journalistes/</loc>\n    <lastmod>%s</lastmod>\n"
-                 "    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>\n"
-                 % (SITE, recent))
     for f, _ in fiches_comptees:
         bouts.append("  <url>\n    <loc>%s/journalistes/%s/</loc>\n    <lastmod>%s</lastmod>\n"
                      "    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>\n"

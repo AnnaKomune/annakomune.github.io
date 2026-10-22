@@ -145,6 +145,18 @@ def signature_brute(texte_html):
     return re.sub(r"\s+", " ", m.group(1)).strip() if m else ""
 
 
+# Bloc de presentation que la redaction ajoute en fin de newsletter. Il fait
+# double emploi avec les encarts du site et serait identique d'une page a
+# l'autre, ce que les moteurs de recherche penalisent.
+PRESENTATION = re.compile(
+    r"<(h2|h3|h4)>\s*(?:<[^>]+>\s*)*Komune,\s*c[\u2019']est\s+quoi\s*\?", re.I)
+
+
+def coupe_presentation(corps):
+    m = PRESENTATION.search(corps)
+    return corps[:m.start()].rstrip() if m else corps
+
+
 def nettoie(html_page):
     """Rend le corps de l'article, sans la ligne de signature ni les blocs vides."""
     p = Corps()
@@ -154,4 +166,6 @@ def nettoie(html_page):
     corps = re.sub(r"<p[^>]*>\s*(?:<[^>]+>\s*)*✍️?[\s\S]{0,200}?</p>", "", corps, count=1)
     corps = re.sub(r"<(p|li|h2|h3|h4)>\s*</\1>", "", corps)
     corps = re.sub(r"(\s*<br>\s*){3,}", "<br><br>", corps)
+    corps = coupe_presentation(corps)
+    corps = re.sub(r"(?:\s*<hr>\s*)+$", "", corps)
     return corps.strip()

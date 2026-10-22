@@ -44,11 +44,13 @@ h1,h2,h3,h4,p,figure,blockquote{margin:0}
 .fil span[aria-hidden]{opacity:.5}
 
 /* en-tete d'article */
-.art-tete{padding:clamp(28px,4vw,54px);background:var(--white)}
-.art-tete h1{font-family:"Oswald",Impact,sans-serif;font-weight:400;letter-spacing:-.04em;line-height:.94;
-  font-size:clamp(34px,5vw,64px);margin:16px 0 0}
-.art-chapo{margin-top:18px;max-width:62ch;font-size:clamp(17px,1.6vw,21px);color:var(--muted);line-height:1.5}
-.art-meta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:24px;padding-top:20px;
+.art-tete{--mesure:680px;padding:clamp(28px,3.6vw,54px);background:var(--white)}
+.art-tete > *{max-width:var(--mesure);margin-left:auto;margin-right:auto}
+.art-tete h1{font-family:"Oswald",Impact,sans-serif;font-weight:400;letter-spacing:-.04em;line-height:.98;
+  font-size:clamp(32px,4vw,50px);margin:14px auto 0;text-wrap:balance}
+.art-chapo{margin:18px auto 0;font-size:clamp(17px,1.5vw,20px);color:var(--muted);line-height:1.55;
+  text-wrap:pretty}
+.art-meta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin:26px auto 0;padding-top:20px;
   border-top:1px solid var(--line)}
 .art-signature{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:800;text-decoration:none}
 .art-signature:hover{text-decoration:underline}
@@ -56,32 +58,45 @@ h1,h2,h3,h4,p,figure,blockquote{margin:0}
 .art-signature .ini{display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800}
 .art-signature small{display:block;font-size:12px;font-weight:600;color:var(--muted)}
 .art-date{font-size:14px;font-weight:700;color:var(--muted)}
-.art-couverture{margin-top:16px;overflow:hidden;border-radius:var(--radius-xl);border:1px solid var(--line);
-  box-shadow:var(--shadow);background:var(--sky)}
-.art-couverture img{width:100%}
+.art-couverture{display:block;width:fit-content;max-width:min(100%,980px);margin:16px auto 0;padding:0;
+  overflow:hidden;border-radius:var(--radius-xl);border:1px solid var(--line);
+  box-shadow:var(--shadow);background:var(--cream)}
+.art-couverture img{display:block;width:auto;max-width:100%;height:auto;max-height:min(56vh,460px)}
 
 /* corps de l'article */
-.art-corps{margin-top:16px;padding:clamp(26px,3.6vw,54px);background:var(--white)}
-.art-corps > *{max-width:68ch;margin-left:auto;margin-right:auto}
-.art-corps p{font-size:clamp(17px,1.5vw,19px);line-height:1.72;margin:0 auto 20px}
-.art-corps h2{font-family:"Oswald",Impact,sans-serif;font-weight:400;letter-spacing:-.03em;line-height:1;
-  font-size:clamp(27px,3.1vw,40px);margin:44px auto 16px}
-.art-corps h3{font-size:clamp(19px,2vw,24px);font-weight:800;letter-spacing:-.02em;margin:34px auto 12px}
+/* Une seule largeur de lecture pour tout le corps. Elle est en pixels et non
+   en ch : la mesure ch depend de la police de chaque element, ce qui donnait
+   aux titres une largeur differente de celle des paragraphes. */
+.art-corps{--mesure:680px;--mesure-image:820px;
+  margin-top:16px;padding:clamp(26px,3.6vw,54px);background:var(--white)}
+.art-corps > *{max-width:var(--mesure);margin-left:auto;margin-right:auto}
+.art-corps p{font-size:clamp(17px,1.4vw,18px);line-height:1.74;margin:0 auto 22px;
+  text-wrap:pretty}
+.art-corps > p:first-child{font-size:clamp(18px,1.5vw,20px);line-height:1.68}
+.art-corps h2{font-family:"Oswald",Impact,sans-serif;font-weight:400;letter-spacing:-.03em;line-height:1.04;
+  font-size:clamp(25px,2.6vw,33px);margin:48px auto 14px;text-wrap:balance}
+.art-corps h3{font-size:clamp(18px,1.8vw,21px);font-weight:800;letter-spacing:-.02em;
+  margin:34px auto 10px;text-wrap:balance}
 .art-corps h4{font-size:17px;font-weight:800;margin:26px auto 10px}
+.art-corps h2 + p,.art-corps h3 + p,.art-corps h4 + p{margin-top:0}
 .art-corps a{color:var(--purple);text-decoration:underline;text-underline-offset:2px}
 .art-corps a:hover{background:var(--gold);color:var(--ink)}
-.art-corps ul,.art-corps ol{font-size:clamp(17px,1.5vw,19px);line-height:1.7;margin:0 auto 22px;padding-left:24px}
+.art-corps ul,.art-corps ol{font-size:clamp(17px,1.4vw,18px);line-height:1.72;margin:0 auto 22px;padding-left:22px}
 .art-corps li{margin-bottom:9px}
-.art-corps blockquote{margin:28px auto;padding:18px 22px;border-left:5px solid var(--purple);
-  background:var(--cream);border-radius:0 18px 18px 0;font-size:clamp(18px,1.7vw,21px);font-weight:600}
+.art-corps blockquote{margin:30px auto;padding:18px 22px;border-left:5px solid var(--purple);
+  background:var(--cream);border-radius:0 18px 18px 0;font-size:clamp(18px,1.6vw,20px);font-weight:600}
 .art-corps blockquote p:last-child{margin-bottom:0}
-.art-corps figure{max-width:none;width:min(100%,900px);margin:32px auto}
-.art-corps figure img{width:100%;border-radius:22px;border:1px solid var(--line)}
-.art-corps figcaption{margin-top:9px;font-size:13px;color:var(--muted);text-align:center}
-.art-corps img{border-radius:22px}
-.art-corps hr{max-width:68ch;margin:36px auto;border:0;border-top:1px solid var(--line)}
+
+/* Images : jamais plus hautes qu'une portion d'ecran. Sans cette limite, une
+   photo verticale occupait a elle seule plus d'un ecran et demi. */
+.art-corps figure{max-width:var(--mesure-image);width:100%;margin:34px auto}
+.art-corps img{display:block;width:auto;max-width:100%;height:auto;
+  max-height:min(62vh,520px);margin-left:auto;margin-right:auto;
+  border-radius:20px;border:1px solid var(--line);background:var(--cream)}
+.art-corps figcaption{margin-top:10px;font-size:13px;line-height:1.5;color:var(--muted);text-align:center}
+.art-corps hr{max-width:var(--mesure);margin:38px auto;border:0;border-top:1px solid var(--line)}
 .art-corps strong,.art-corps b{font-weight:800}
-.art-corps table{width:100%;border-collapse:collapse;font-size:15px;margin:0 auto 24px}
+.art-corps table{width:100%;max-width:var(--mesure);border-collapse:collapse;font-size:15px;margin:0 auto 24px}
 .art-corps th,.art-corps td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
 
 /* encarts de fin */
@@ -164,6 +179,10 @@ h1,h2,h3,h4,p,figure,blockquote{margin:0}
   .page{width:min(100% - 18px,1220px);padding:10px 0 48px}
   .canvas{padding:10px;border-radius:24px}
   .panel,.encart,.voisin,.art-couverture{border-radius:24px}
-  .art-tete,.art-corps,.jour-tete{padding:26px 22px}
+  .art-tete,.art-corps,.jour-tete{padding:26px 20px}
+  .art-tete{--mesure:100%}
+  .art-corps{--mesure:100%;--mesure-image:100%}
+  .art-corps img{max-height:62vh}
+  .art-couverture img{max-height:42vh}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important}html{scroll-behavior:auto}}
