@@ -41,6 +41,44 @@ TEINTES = ("cover-pink", "cover-sky", "cover-gold", "cover-green", "cover-purple
 MOTS = ("Komune", "Lire", "Focus", "Récit", "Décryptage", "Regards", "À voir")
 
 
+def identifiant(article):
+    """L'identifiant de l'article, repris de son adresse Substack."""
+    return (article.get("url") or "").rstrip("/").rsplit("/p/", 1)[-1]
+
+
+def adresse(article):
+    """L'adresse de lecture : notre page quand elle existe, Substack sinon."""
+    ident = identifiant(article)
+    if ident and (RACINE / "articles" / ident / "index.html").exists():
+        return "../articles/%s/" % ident, False
+    return (article.get("url") or "").strip(), True
+
+
+def _signatures():
+    f = RACINE / "data" / "signatures.json"
+    g = RACINE / "data" / "auteurs.json"
+    sig = json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+    aut = json.loads(g.read_text(encoding="utf-8")) if g.exists() else {}
+    fus = aut.get("fusions", {})
+    fiches = aut.get("auteurs", {})
+    out = {}
+    for slug, noms in sig.items():
+        propres = [fus.get(x, x) for x in (noms if isinstance(noms, list) else [noms]) if x]
+        out[slug] = [(nom, (fiches.get(nom) or {}).get("slug") or sans_accent(nom).replace(" ", "-"))
+                     for nom in propres]
+    return out
+
+
+SIGNATURES = None
+
+
+def signature_de(article):
+    global SIGNATURES
+    if SIGNATURES is None:
+        SIGNATURES = _signatures()
+    return SIGNATURES.get(identifiant(article), [])
+
+
 def vignette(url, largeur):
     """Demande au CDN de Substack une version redimensionnee de la couverture.
 
@@ -106,21 +144,30 @@ def carte(article, rang, vedette):
         ) % (TEINTES[rang % len(TEINTES)], rang + 1, MOTS[rang % len(MOTS)])
 
     date_html = ('<p class="article-date"><time datetime="%s">%s</time></p>' % (e(iso), e(date_lisible(iso)))) if iso else ""
-    cherche = sans_accent(titre + " " + (article.get("excerpt") or ""))
+    gens = signature_de(article)
+    sig_html = ('<p class="article-sig">Par %s</p>'
+                % " et ".join(e(nom) for nom, _ in gens)) if gens else ""
+    cherche = sans_accent(titre + " " + (article.get("excerpt") or "")
+                          + " " + " ".join(nom for nom, _ in gens))
+    lien, dehors = adresse(article)
 
     return (
-        '        <a class="article-card%s" href="%s" target="_blank" rel="noopener" data-cherche="%s">\n'
+        '        <a class="article-card%s" href="%s"%s data-cherche="%s">\n'
         '          <div class="article-card-inner">\n'
         '            %s\n'
         '            <div class="article-body">\n'
         '              %s\n'
         '              <h3 class="article-title">%s</h3>\n'
+        '              %s\n'
         '              <p class="article-excerpt">%s</p>\n'
-        '              <span class="article-read">Lire l\'article sur Substack ↗</span>\n'
+        '              <span class="article-read">%s</span>\n'
         '            </div>\n'
         '          </div>\n'
         '        </a>'
-    ) % (" featured" if vedette else "", e(url), e(cherche), couverture, date_html, e(titre), e(extrait))
+    ) % (" featured" if vedette else "", e(lien),
+         ' target="_blank" rel="noopener"' if dehors else "", e(cherche),
+         couverture, date_html, e(titre), sig_html, e(extrait),
+         "Lire l\'article sur Substack ↗" if dehors else "Lire l\'article")
 
 
 def bloc_liste(articles):
@@ -156,8 +203,11 @@ def bloc_donnees(articles):
     """Donnees structurees : le blog, le fil d'Ariane, et la liste ordonnee des articles."""
     liste = []
     for i, article in enumerate(articles, start=1):
+        ident = identifiant(article)
+        interne = (RACINE / "articles" / ident / "index.html").exists()
         entree = {"@type": "ListItem", "position": i,
-                  "url": (article.get("url") or "").strip(),
+                  "url": (SITE + "/articles/%s/" % ident) if interne
+                         else (article.get("url") or "").strip(),
                   "name": (article.get("title") or "").strip()}
         liste.append(entree)
 

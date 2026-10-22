@@ -1,0 +1,237 @@
+{
+ "fusions": {
+  "Nesrine BOUZAR": "Nesrine Bouzar"
+ },
+ "auteurs": {
+  "Jeannette Marié": {
+   "slug": "jeannette-marie",
+   "role": "Fondatrice et rédactrice en chef",
+   "bio": [
+    "Je suis journaliste, rédactrice en chef de Komune Média et vidéaste. Diplômée d’un master en droits humains, je débute mon parcours professionnel dans l’action sociale avant de fonder Komune en 2022 et de me consacrer au journalisme."
+   ],
+   "photo": "https://drive.google.com/thumbnail?id=1hzzP1EMuBgEveb2gpeIjaf6dvEKpn1yc&sz=w1200",
+   "liens": [],
+   "articles": 13
+  },
+  "Hannah El Matribi": {
+   "slug": "hannah-el-matribi",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 13
+  },
+  "Sandra Inack": {
+   "slug": "sandra-inack",
+   "role": "Journaliste",
+   "bio": [
+    "Avant de me tourner vers le journalisme, j’ai suivi une licence puis un master de recherche en histoire. Au cours de ce master, je me suis spécialisée en histoire contemporaine. Mes travaux ont notamment porté sur le contrôle politique et l’encadrement des intimités des soldats coloniaux, de la Grande Guerre jusqu’aux processus d’indépendance.",
+    "Parallèlement à ce parcours académique, je porte un fort intérêt pour la mode et le style. J’ai ainsi prêté ma plume à Modzik et Kodd, deux médias indépendants : le premier avec une ligne éditoriale axée sur la mode et la musique, et le second davantage tourné vers le lifestyle, la beauté, la culture et la mode. J’aime également écrire sur des enjeux sociétaux plus larges.",
+    "Je viens de rejoindre Komune, où je travaille actuellement sur l’orientalisme et son impact dans l’espace public français. À travers mes futurs sujets, j’aimerais continuer à explorer ces thématiques en y apportant une approche historique, puisqu’il s’agit de mon domaine de spécialisation."
+   ],
+   "photo": "https://drive.google.com/thumbnail?id=1QmSs7SikKAygRXsEWG8GNQnNyI7pOZ4h&sz=w1200",
+   "liens": [],
+   "articles": 8
+  },
+  "Adélia Teixeira": {
+   "slug": "adelia-teixeira",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 6
+  },
+  "Badra Kebaili": {
+   "slug": "badra-kebaili",
+   "role": "Journaliste",
+   "bio": [
+    "Depuis toute petite, je vis au rythme des histoires : celles qu’on me racontait en arabe, puis celles que j’ai apprises à raconter moi-même.",
+    "En grandissant, j’ai compris que lorsqu’on ne ressemble pas à Blanche-Neige, la vie en Occident est loin d’être un conte de fées. Après un master spécialisé sur le Moyen-Orient, j’ai appris à nommer les discriminations et à inscrire dans la grande Histoire les vies trop souvent ignorées.",
+    "J’ai ensuite poussé les portes d’une école de journalisme pour continuer à apprendre, expliquer et contribuer à construire un monde plus juste.",
+    "J’ai rejoint Komune parce que nous partageons la conviction que le racisme ne se limite pas aux actes de haine : c’est aussi un héritage collectif qui nous traverse toutes et tous, et dont il est possible de se défaire.",
+    "Et si vous me cherchez, vous me trouverez probablement en train de sautiller dans une librairie."
+   ],
+   "photo": "https://drive.google.com/thumbnail?id=1BLXyo43tVcX_-yBfEuXBo7yOVbRHFc2D&sz=w1200",
+   "liens": [],
+   "articles": 6
+  },
+  "Nesrine Bourekba": {
+   "slug": "nesrine-bourekba",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 6
+  },
+  "Hanna Chmourrane": {
+   "slug": "hanna-chmourrane",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 6
+  },
+  "Lucas Bourguignon": {
+   "slug": "lucas-bourguignon",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 5
+  },
+  "Anna Jégo": {
+   "slug": "anna-jego",
+   "role": "Présidente et journaliste",
+   "bio": [
+    "Ancienne ingénieure en data et intelligence artificielle, formée sur le terrain, j’ai occupé plusieurs postes de management dans la tech avant de rejoindre Komune Média fin 2023, pour contribuer à son développement. J’en reprends la présidence en 2026. Également pilote de drone et journaliste, j’écris régulièrement pour la newsletter de Komune."
+   ],
+   "photo": "https://drive.google.com/thumbnail?id=1TMU2EKRHOreZtRAd-P38coq250Dfa5lw&sz=w1200",
+   "liens": [],
+   "articles": 5
+  },
+  "Ana Paula Stauffer": {
+   "slug": "ana-paula-stauffer",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 4
+  },
+  "Nesrine Bouzar": {
+   "slug": "nesrine-bouzar",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 4
+  },
+  "Nedjma Benissad": {
+   "slug": "nedjma-benissad",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 4
+  },
+  "Sourakata Kebe": {
+   "slug": "sourakata-kebe",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 3
+  },
+  "Grace Loubassa": {
+   "slug": "grace-loubassa",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 3
+  },
+  "Amina Mbelu Mbiya": {
+   "slug": "amina-mbelu-mbiya",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 3
+  },
+  "Eline Legiemble": {
+   "slug": "eline-legiemble",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 3
+  },
+  "Insaf Dafa": {
+   "slug": "insaf-dafa",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 3
+  },
+  "Laëtitia F.": {
+   "slug": "laetitia-f",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 2
+  },
+  "Ayumi Thibaut": {
+   "slug": "ayumi-thibaut",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 2
+  },
+  "Sofiane Descamps": {
+   "slug": "sofiane-descamps",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 2
+  },
+  "Mireille Ndoumbe": {
+   "slug": "mireille-ndoumbe",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 2
+  },
+  "Lucie Verdier": {
+   "slug": "lucie-verdier",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 1
+  },
+  "Ayumi Thibaud": {
+   "slug": "ayumi-thibaud",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 1
+  },
+  "Henri Imbault": {
+   "slug": "henri-imbault",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 1
+  },
+  "Maud Tardieux": {
+   "slug": "maud-tardieux",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 1
+  },
+  "Amina": {
+   "slug": "amina",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 1
+  },
+  "Sabrine Abba": {
+   "slug": "sabrine-abba",
+   "role": "Journaliste",
+   "bio": [],
+   "photo": "",
+   "liens": [],
+   "articles": 1
+  }
+ }
+}

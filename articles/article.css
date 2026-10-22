@@ -1,0 +1,169 @@
+/* Feuille de style commune aux pages d'article et aux pages de journaliste.
+   Un seul fichier, mis en cache par le navigateur : les pages restent legeres. */
+:root{
+  --blue:#0000ff; --purple:#5423df; --pink:#f099f9; --sky:#9abdff; --gold:#fee075;
+  --yellow:#ffff92; --green:#b0fda4; --cream:#fcf7e8; --ink:#332e32; --white:#fff;
+  --muted:rgba(51,46,50,.72); --line:rgba(51,46,50,.14);
+  --radius-xl:34px; --shadow:0 18px 48px rgba(51,46,50,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;overflow-x:hidden;background:var(--cream);color:var(--ink);
+  font-family:"Bricolage Grotesque",Inter,ui-sans-serif,system-ui,sans-serif;line-height:1.55}
+a{color:inherit}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3,h4,p,figure,blockquote{margin:0}
+.page{width:min(1220px,calc(100% - 28px));margin:0 auto;padding:28px 0 80px}
+.canvas{padding:clamp(14px,2.2vw,28px);border:1px solid rgba(51,46,50,.08);border-radius:38px;
+  background:rgba(255,255,255,.22);box-shadow:var(--shadow)}
+.eyebrow{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;
+  font-weight:800;line-height:1.2;letter-spacing:.085em;text-transform:uppercase;color:var(--muted)}
+.panel{border:1px solid var(--line);border-radius:var(--radius-xl);box-shadow:var(--shadow);background:var(--white)}
+.bouton{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:14px 20px;
+  border:1px solid var(--ink);border-radius:999px;background:var(--ink);color:var(--cream);
+  font-size:16px;font-weight:800;line-height:1;text-decoration:none;
+  transition:transform .18s ease,background .18s ease,color .18s ease}
+.bouton:hover{background:var(--pink);color:var(--ink);transform:translateY(-2px) rotate(-.5deg)}
+.bouton.clair{background:var(--gold);color:var(--ink)}
+.bouton.clair:hover{background:var(--pink)}
+
+/* navigation */
+.site-nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 22px;
+  padding:10px clamp(10px,2vw,22px) 18px}
+.site-brand img{width:clamp(132px,15vw,186px)}
+.site-liens{display:flex;flex-wrap:wrap;gap:8px 10px}
+.site-link{padding:9px 14px;border:1px solid var(--line);border-radius:999px;background:var(--white);
+  font-size:13px;font-weight:700;line-height:1;text-decoration:none;transition:background .18s ease,transform .18s ease}
+.site-link:hover{background:var(--gold);transform:translateY(-1px)}
+.site-link.is-current{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+
+/* fil d'Ariane */
+.fil{display:flex;flex-wrap:wrap;gap:6px;padding:4px clamp(10px,2vw,22px) 14px;font-size:12.5px;color:var(--muted)}
+.fil a{text-decoration:none;font-weight:700}
+.fil a:hover{text-decoration:underline}
+.fil span[aria-hidden]{opacity:.5}
+
+/* en-tete d'article */
+.art-tete{padding:clamp(28px,4vw,54px);background:var(--white)}
+.art-tete h1{font-family:"Oswald",Impact,sans-serif;font-weight:400;letter-spacing:-.04em;line-height:.94;
+  font-size:clamp(34px,5vw,64px);margin:16px 0 0}
+.art-chapo{margin-top:18px;max-width:62ch;font-size:clamp(17px,1.6vw,21px);color:var(--muted);line-height:1.5}
+.art-meta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:24px;padding-top:20px;
+  border-top:1px solid var(--line)}
+.art-signature{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:800;text-decoration:none}
+.art-signature:hover{text-decoration:underline}
+.art-signature img,.art-signature .ini{width:40px;height:40px;border-radius:50%;flex:none;object-fit:cover;background:var(--sky)}
+.art-signature .ini{display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800}
+.art-signature small{display:block;font-size:12px;font-weight:600;color:var(--muted)}
+.art-date{font-size:14px;font-weight:700;color:var(--muted)}
+.art-couverture{margin-top:16px;overflow:hidden;border-radius:var(--radius-xl);border:1px solid var(--line);
+  box-shadow:var(--shadow);background:var(--sky)}
+.art-couverture img{width:100%}
+
+/* corps de l'article */
+.art-corps{margin-top:16px;padding:clamp(26px,3.6vw,54px);background:var(--white)}
+.art-corps > *{max-width:68ch;margin-left:auto;margin-right:auto}
+.art-corps p{font-size:clamp(17px,1.5vw,19px);line-height:1.72;margin:0 auto 20px}
+.art-corps h2{font-family:"Oswald",Impact,sans-serif;font-weight:400;letter-spacing:-.03em;line-height:1;
+  font-size:clamp(27px,3.1vw,40px);margin:44px auto 16px}
+.art-corps h3{font-size:clamp(19px,2vw,24px);font-weight:800;letter-spacing:-.02em;margin:34px auto 12px}
+.art-corps h4{font-size:17px;font-weight:800;margin:26px auto 10px}
+.art-corps a{color:var(--purple);text-decoration:underline;text-underline-offset:2px}
+.art-corps a:hover{background:var(--gold);color:var(--ink)}
+.art-corps ul,.art-corps ol{font-size:clamp(17px,1.5vw,19px);line-height:1.7;margin:0 auto 22px;padding-left:24px}
+.art-corps li{margin-bottom:9px}
+.art-corps blockquote{margin:28px auto;padding:18px 22px;border-left:5px solid var(--purple);
+  background:var(--cream);border-radius:0 18px 18px 0;font-size:clamp(18px,1.7vw,21px);font-weight:600}
+.art-corps blockquote p:last-child{margin-bottom:0}
+.art-corps figure{max-width:none;width:min(100%,900px);margin:32px auto}
+.art-corps figure img{width:100%;border-radius:22px;border:1px solid var(--line)}
+.art-corps figcaption{margin-top:9px;font-size:13px;color:var(--muted);text-align:center}
+.art-corps img{border-radius:22px}
+.art-corps hr{max-width:68ch;margin:36px auto;border:0;border-top:1px solid var(--line)}
+.art-corps strong,.art-corps b{font-weight:800}
+.art-corps table{width:100%;border-collapse:collapse;font-size:15px;margin:0 auto 24px}
+.art-corps th,.art-corps td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+
+/* encarts de fin */
+.art-pied{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px}
+.encart{padding:clamp(24px,3vw,36px);border-radius:var(--radius-xl);border:1px solid var(--line);box-shadow:var(--shadow)}
+.encart.sombre{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.encart.jaune{background:var(--gold)}
+.encart.blanc{background:var(--white)}
+.encart h2{font-family:"Oswald",Impact,sans-serif;font-weight:400;letter-spacing:-.03em;
+  font-size:clamp(26px,2.8vw,36px);line-height:.95;margin-bottom:14px}
+.encart p{font-size:16px;line-height:1.5;margin-bottom:18px}
+.encart.sombre p{color:rgba(252,247,232,.86)}
+.encart.sombre .bouton{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.encart.sombre .bouton:hover{background:var(--pink)}
+
+/* navigation entre articles */
+.voisins{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px}
+.voisin{display:block;padding:22px 24px;border-radius:var(--radius-xl);border:1px solid var(--line);
+  background:var(--white);box-shadow:var(--shadow);text-decoration:none;transition:transform .18s ease}
+.voisin:hover{transform:translateY(-2px);background:var(--cream)}
+.voisin .eyebrow{margin-bottom:8px}
+.voisin b{display:block;font-size:17px;font-weight:800;line-height:1.3;letter-spacing:-.02em}
+
+/* grille de cartes (meme auteur, page journaliste) */
+.suite{margin-top:40px}
+.suite h2{font-family:"Oswald",Impact,sans-serif;font-weight:400;letter-spacing:-.03em;
+  font-size:clamp(28px,3.2vw,44px);line-height:.95;margin-bottom:18px}
+.cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:16px}
+.carte{display:flex;flex-direction:column;overflow:hidden;border-radius:26px;border:1px solid var(--line);
+  background:var(--white);box-shadow:var(--shadow);text-decoration:none;transition:transform .18s ease}
+.carte:hover{transform:translateY(-3px)}
+.carte-img{aspect-ratio:3/2;overflow:hidden;background:var(--sky)}
+.carte-img img{width:100%;height:100%;object-fit:cover}
+.carte-corps{padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.carte-date{font-size:12px;font-weight:700;color:var(--muted)}
+.carte-titre{font-size:17px;font-weight:800;line-height:1.3;letter-spacing:-.02em}
+.carte-sig{margin-top:auto;font-size:12.5px;font-weight:700;color:var(--purple)}
+
+.article-sig{font-size:12.5px;font-weight:700;color:var(--purple);margin:0}
+
+/* page journaliste */
+.jour-tete{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr);gap:clamp(20px,3vw,36px);
+  align-items:start;padding:clamp(28px,4vw,54px);background:var(--white)}
+.jour-photo{width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;background:var(--sky);
+  border:3px solid var(--ink)}
+.jour-photo img{width:100%;height:100%;object-fit:cover}
+.jour-photo .ini{display:flex;width:100%;height:100%;align-items:center;justify-content:center;
+  font-family:"Oswald",Impact,sans-serif;font-size:58px;font-weight:700}
+.jour-tete h1{font-family:"Oswald",Impact,sans-serif;font-weight:400;letter-spacing:-.04em;line-height:.92;
+  font-size:clamp(40px,5.6vw,76px);margin:10px 0 12px}
+.jour-role{display:inline-block;padding:7px 14px;border:1px solid var(--line);border-radius:999px;
+  background:var(--cream);font-size:13px;font-weight:800}
+.jour-bio{margin-top:18px;display:grid;gap:14px;max-width:62ch}
+.jour-bio p{font-size:clamp(16px,1.4vw,18px);color:var(--muted);line-height:1.6}
+.jour-compte{margin-top:16px;font-size:15px;font-weight:800}
+
+/* liste des journalistes */
+.jours{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:18px}
+.jour-carte{display:flex;align-items:center;gap:14px;padding:18px 20px;border-radius:26px;
+  border:1px solid var(--line);background:var(--white);box-shadow:var(--shadow);text-decoration:none;
+  transition:transform .18s ease}
+.jour-carte:hover{transform:translateY(-2px);background:var(--cream)}
+.jour-carte .rond{width:52px;height:52px;border-radius:50%;flex:none;overflow:hidden;background:var(--sky);
+  display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800}
+.jour-carte .rond img{width:100%;height:100%;object-fit:cover}
+.jour-carte b{display:block;font-size:16px;font-weight:800;letter-spacing:-.02em}
+.jour-carte small{display:block;font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+
+/* pied de page */
+.site-pied{margin-top:50px;padding:30px clamp(14px,2vw,24px) 10px}
+.site-foot-brand{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px}
+.site-foot-brand img{width:clamp(120px,13vw,160px)}
+.site-foot-brand span{font-size:13px;color:var(--muted)}
+
+@media (max-width:820px){
+  .jour-tete{grid-template-columns:1fr;text-align:left}
+  .jour-photo{width:132px}
+}
+@media (max-width:680px){
+  .page{width:min(100% - 18px,1220px);padding:10px 0 48px}
+  .canvas{padding:10px;border-radius:24px}
+  .panel,.encart,.voisin,.art-couverture{border-radius:24px}
+  .art-tete,.art-corps,.jour-tete{padding:26px 22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}html{scroll-behavior:auto}}

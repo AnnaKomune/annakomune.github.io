@@ -19,7 +19,7 @@ jobs:
       - name: Installer curl_cffi (empreinte navigateur pour passer Cloudflare)
         run: pip install --quiet curl_cffi
 
-      - name: Mettre à jour les articles et la page /articles/ depuis Substack
+      - name: Mettre à jour les articles, les pages d’article et les pages journalistes
         run: |
           # Substack et les relais publics refusent regulierement les adresses IP
           # des serveurs GitHub. L'echec est presque toujours passager : on retente
@@ -41,7 +41,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/articles.json articles/index.html sitemap.xml
+          git add data/articles.json data/signatures.json data/auteurs.json \
+                  data/corps articles journalistes sitemap.xml
           if git diff --cached --quiet; then
             echo "Rien de nouveau côté Substack."
           else

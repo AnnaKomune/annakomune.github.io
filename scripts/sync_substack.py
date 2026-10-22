@@ -139,6 +139,33 @@ def _fetch_proxy():
         return resp.read()
 
 
+RELAIS = (
+    ("codetabs", "https://api.codetabs.com/v1/proxy/?quest="),
+    ("allorigins", "https://api.allorigins.win/raw?url="),
+    ("corsproxy", "https://corsproxy.io/?url="),
+    ("jina", "https://r.jina.ai/"),
+)
+
+
+def recupere(url):
+    """Rapporte le contenu d'une adresse Substack, en essayant tous les chemins.
+
+    Substack refuse souvent les adresses IP des serveurs : on tente l'empreinte
+    Chrome, puis le direct, puis les relais publics. Le premier qui repond gagne."""
+    sources = [("empreinte Chrome", _get_cffi), ("direct", _get_urllib)]
+    sources += [(nom, _via(r)) for nom, r in RELAIS]
+    derniere = None
+    for nom, prendre in sources:
+        try:
+            contenu = prendre(url)
+            if contenu and len(contenu) > 500:
+                return contenu
+        except Exception as exc:  # noqa: BLE001 - on tente la methode suivante
+            derniere = exc
+        time.sleep(1)
+    raise RuntimeError("%s injoignable (%s)" % (url, derniere))
+
+
 def get_feed_items():
     # Un fichier XML déjà téléchargé peut être passé en argument (pratique pour tester).
     if len(sys.argv) > 1 and Path(sys.argv[1]).exists() and Path(sys.argv[1]).stat().st_size > 0:
@@ -147,12 +174,6 @@ def get_feed_items():
     # relais publics tombent regulierement (500, 522). On multiplie donc les chemins :
     # l'API d'archive d'abord (la plus riche), le flux RSS ensuite, en direct puis
     # par relais. Le premier qui repond quelque chose gagne.
-    RELAIS = (
-        ("codetabs", "https://api.codetabs.com/v1/proxy/?quest="),
-        ("allorigins", "https://api.allorigins.win/raw?url="),
-        ("corsproxy", "https://corsproxy.io/?url="),
-        ("jina", "https://r.jina.ai/"),
-    )
     # L'API d'archive donne toute la liste ; le flux RSS seulement les derniers
     # articles. On epuise donc tous les chemins vers l'archive (relais compris)
     # avant de se rabattre sur le flux.
@@ -240,6 +261,10 @@ def main():
 
     # La page /articles/ est ecrite en dur a partir de ces donnees (bon pour le referencement).
     page_articles.ecrire_page(merged)
+
+    # Une page par article et une page par journaliste, sur notre propre domaine.
+    import komune_pages
+    komune_pages.ecrire_tout(merged, chercheur=recupere)
 
 
 if __name__ == "__main__":

@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Découvrez l’équipe et le fonctionnement de Komune, média indépendant qui décrypte la société avec un regard antiraciste.">
-  <title>L’équipe et le fonctionnement - Komune Média</title>
+  <meta name="description" content="L’équipe de Komune Média : Jeannette Marié, fondatrice et rédactrice en chef, Anna Jégo, présidente et journaliste, Badra Kebaili et Sandra Inack, journalistes. Et le fonctionnement du média.">
+  <title>L’équipe de Komune Média - Jeannette Marié, Anna Jégo, Badra Kebaili, Sandra Inack</title>
   <link rel="canonical" href="https://www.komunemedia.fr/equipe/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"NewsMediaOrganization","@id":"https://www.komunemedia.fr/#organisation","name":"Komune Média","url":"https://www.komunemedia.fr/","sameAs":["https://komunemedia.substack.com/","https://www.instagram.com/komune.media/"],"logo":{"@type":"ImageObject","url":"https://www.komunemedia.fr/img/logo-rose-vert.webp"},"employee":[{"@type":"Person","@id":"https://www.komunemedia.fr/journalistes/badra-kebaili/#personne","name":"Badra Kebaili","url":"https://www.komunemedia.fr/journalistes/badra-kebaili/"},{"@type":"Person","@id":"https://www.komunemedia.fr/journalistes/sandra-inack/#personne","name":"Sandra Inack","url":"https://www.komunemedia.fr/journalistes/sandra-inack/"},{"@type":"Person","@id":"https://www.komunemedia.fr/journalistes/jeannette-marie/#personne","name":"Jeannette Marié","url":"https://www.komunemedia.fr/journalistes/jeannette-marie/"},{"@type":"Person","@id":"https://www.komunemedia.fr/journalistes/anna-jego/#personne","name":"Anna Jégo","url":"https://www.komunemedia.fr/journalistes/anna-jego/"}]},{"@type":"AboutPage","@id":"https://www.komunemedia.fr/equipe/#page","url":"https://www.komunemedia.fr/equipe/","name":"L’équipe de Komune Média","inLanguage":"fr-FR","isPartOf":{"@id":"https://www.komunemedia.fr/#organisation"},"about":{"@id":"https://www.komunemedia.fr/#organisation"},"mainEntity":[{"@type":"Person","@id":"https://www.komunemedia.fr/journalistes/badra-kebaili/#personne","name":"Badra Kebaili","url":"https://www.komunemedia.fr/journalistes/badra-kebaili/"},{"@type":"Person","@id":"https://www.komunemedia.fr/journalistes/sandra-inack/#personne","name":"Sandra Inack","url":"https://www.komunemedia.fr/journalistes/sandra-inack/"},{"@type":"Person","@id":"https://www.komunemedia.fr/journalistes/jeannette-marie/#personne","name":"Jeannette Marié","url":"https://www.komunemedia.fr/journalistes/jeannette-marie/"},{"@type":"Person","@id":"https://www.komunemedia.fr/journalistes/anna-jego/#personne","name":"Anna Jégo","url":"https://www.komunemedia.fr/journalistes/anna-jego/"}]},{"@type":"BreadcrumbList","@id":"https://www.komunemedia.fr/equipe/#fil","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://www.komunemedia.fr/"},{"@type":"ListItem","position":2,"name":"L’équipe","item":"https://www.komunemedia.fr/equipe/"}]}]}</script>
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Komune Média">
@@ -282,11 +283,29 @@
     }
 
     .person-name {
+      margin: 0;
       font-family: "Oswald", Impact, sans-serif;
       font-size: clamp(46px, 5.1vw, 68px);
       font-weight: 700;
       line-height: .85;
       letter-spacing: -.05em;
+    }
+
+    .person-name a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .person-name a:hover,
+    .person-name a:focus-visible {
+      color: var(--violet);
+    }
+
+    .person-nom {
+      display: block;
+      font-size: .4em;
+      letter-spacing: -.02em;
+      line-height: 1.05;
     }
 
     .person-role {
@@ -583,6 +602,7 @@
       <a class="site-link" href="../">Accueil</a>
       <a class="site-link" href="../articles/">Articles</a>
       <a class="site-link" href="../comparateur/">Le comparateur présidentielles 2027</a>
+      <a class="site-link" href="../journalistes/">Nos journalistes</a>
       <a class="site-link is-current" href="./" aria-current="page">L'équipe</a>
       <a class="site-link" href="../soutenir/">Nous soutenir</a>
       </div>
@@ -633,11 +653,11 @@
         <div class="team-grid">
           <article class="person">
             <div class="person-photo">
-              <img src="https://drive.google.com/thumbnail?id=1BLXyo43tVcX_-yBfEuXBo7yOVbRHFc2D&amp;sz=w1200" alt="Portrait de Badra, membre de l’équipe Komune" loading="lazy" referrerpolicy="no-referrer">
+              <img src="https://drive.google.com/thumbnail?id=1BLXyo43tVcX_-yBfEuXBo7yOVbRHFc2D&amp;sz=w1200" alt="Portrait de Badra Kebaili, journaliste à Komune Média" loading="lazy" referrerpolicy="no-referrer">
             </div>
             <div class="person-body">
               <div class="person-meta">
-                <div class="person-name">Badra</div>
+                <h3 class="person-name"><a href="../journalistes/badra-kebaili/" rel="author">Badra <span class="person-nom">Kebaili</span></a></h3>
                 <div class="person-role">Journaliste - Équipe éditoriale</div>
               </div>
               <div class="person-copy">
@@ -652,11 +672,11 @@
 
           <article class="person">
             <div class="person-photo">
-              <img src="https://drive.google.com/thumbnail?id=1QmSs7SikKAygRXsEWG8GNQnNyI7pOZ4h&amp;sz=w1200" alt="Portrait de Sandra, membre de l’équipe Komune" loading="lazy" referrerpolicy="no-referrer">
+              <img src="https://drive.google.com/thumbnail?id=1QmSs7SikKAygRXsEWG8GNQnNyI7pOZ4h&amp;sz=w1200" alt="Portrait de Sandra Inack, journaliste à Komune Média" loading="lazy" referrerpolicy="no-referrer">
             </div>
             <div class="person-body">
               <div class="person-meta">
-                <div class="person-name">Sandra</div>
+                <h3 class="person-name"><a href="../journalistes/sandra-inack/" rel="author">Sandra <span class="person-nom">Inack</span></a></h3>
                 <div class="person-role">Journaliste - Équipe éditoriale</div>
               </div>
               <div class="person-copy">
@@ -669,11 +689,11 @@
 
           <article class="person">
             <div class="person-photo">
-              <img src="https://drive.google.com/thumbnail?id=1hzzP1EMuBgEveb2gpeIjaf6dvEKpn1yc&amp;sz=w1200" alt="Portrait de Jeannette, fondatrice et rédactrice en chef de Komune" loading="lazy" referrerpolicy="no-referrer">
+              <img src="https://drive.google.com/thumbnail?id=1hzzP1EMuBgEveb2gpeIjaf6dvEKpn1yc&amp;sz=w1200" alt="Portrait de Jeannette Marié, fondatrice et rédactrice en chef de Komune Média" loading="lazy" referrerpolicy="no-referrer">
             </div>
             <div class="person-body">
               <div class="person-meta">
-                <div class="person-name">Jeannette</div>
+                <h3 class="person-name"><a href="../journalistes/jeannette-marie/" rel="author">Jeannette <span class="person-nom">Marié</span></a></h3>
                 <div class="person-role">Fondatrice &amp; rédactrice en chef</div>
               </div>
               <div class="person-copy">
@@ -684,11 +704,11 @@
 
           <article class="person">
             <div class="person-photo">
-              <img src="https://drive.google.com/thumbnail?id=1TMU2EKRHOreZtRAd-P38coq250Dfa5lw&amp;sz=w1200" alt="Portrait d’Anna, présidente de Komune" loading="lazy" referrerpolicy="no-referrer">
+              <img src="https://drive.google.com/thumbnail?id=1TMU2EKRHOreZtRAd-P38coq250Dfa5lw&amp;sz=w1200" alt="Portrait de Anna Jégo, présidente et journaliste à Komune Média" loading="lazy" referrerpolicy="no-referrer">
             </div>
             <div class="person-body">
               <div class="person-meta">
-                <div class="person-name">Anna</div>
+                <h3 class="person-name"><a href="../journalistes/anna-jego/" rel="author">Anna <span class="person-nom">Jégo</span></a></h3>
                 <div class="person-role">Présidente &amp; développement</div>
               </div>
               <div class="person-copy">
