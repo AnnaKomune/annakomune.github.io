@@ -11,6 +11,7 @@ conserve dans data/corps/. Les passages suivants ne retelechargent que les
 articles nouveaux.
 """
 import html
+import hashlib
 import json
 import re
 import sys
@@ -143,9 +144,21 @@ def tete(titre, description, url, image, extra_meta="", profondeur=2, robots="in
         '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         '  <link rel="preconnect" href="https://substackcdn.com" crossorigin>\n'
         '  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">\n'
-        '  <link rel="stylesheet" href="%sarticles/article.css">\n'
+        '  <link rel="stylesheet" href="%sarticles/article.css?v=%s">\n'
         % (e(description), e(titre), e(url), robots, e(url), e(titre), e(description),
-           e(img), e(img), extra_meta, r, r, r))
+           e(img), e(img), extra_meta, r, r, r, empreinte_css()))
+
+
+_EMPREINTE = []
+
+
+def empreinte_css():
+    """Huit caracteres tires du contenu de la feuille de style."""
+    if not _EMPREINTE:
+        f = RACINE / "articles" / "article.css"
+        brut = f.read_bytes() if f.exists() else b""
+        _EMPREINTE.append(hashlib.sha256(brut).hexdigest()[:8])
+    return _EMPREINTE[0]
 
 
 def ld(graphe):

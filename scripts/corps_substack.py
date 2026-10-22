@@ -152,6 +152,32 @@ PRESENTATION = re.compile(
     r"<(h2|h3|h4)>\s*(?:<[^>]+>\s*)*Komune,\s*c[\u2019']est\s+quoi\s*\?", re.I)
 
 
+# Textes d'interface de l'editeur Substack qui se retrouvent parfois dans le
+# corps de l'article.
+INTERFACE = (
+    u"Text within this block will maintain its original spacing when published",
+)
+
+# Appels a l'abonnement Substack. Le site a son propre encart en bas de page,
+# et ces blocs renvoient vers un bouton qui n'existe pas ici.
+ABONNEMENT = re.compile(
+    r"<(p|pre)\b[^>]*>(?P<dedans>(?:(?!</?\1\b).){0,260}?)</\1>", re.S | re.I)
+APPEL = re.compile(
+    r"(abonnez[- ]vous|abonne[- ]toi|subscribe now|pour recevoir de nouveaux (?:posts|articles))",
+    re.I)
+
+
+def coupe_abonnement(corps):
+    """Retire les blocs courts qui ne font qu'appeler a s'abonner."""
+    def remplace(m):
+        nu = re.sub(r"<[^>]+>", "", m.group("dedans"))
+        nu = re.sub(r"\s+", " ", nu).strip()
+        if len(nu) <= 220 and APPEL.search(nu):
+            return ""
+        return m.group(0)
+    return ABONNEMENT.sub(remplace, corps)
+
+
 def coupe_presentation(corps):
     m = PRESENTATION.search(corps)
     return corps[:m.start()].rstrip() if m else corps
@@ -166,6 +192,10 @@ def nettoie(html_page):
     corps = re.sub(r"<p[^>]*>\s*(?:<[^>]+>\s*)*✍️?[\s\S]{0,200}?</p>", "", corps, count=1)
     corps = re.sub(r"<(p|li|h2|h3|h4)>\s*</\1>", "", corps)
     corps = re.sub(r"(\s*<br>\s*){3,}", "<br><br>", corps)
+    for texte in INTERFACE:
+        corps = corps.replace(texte, "")
+    corps = coupe_abonnement(corps)
     corps = coupe_presentation(corps)
+    corps = re.sub(r"<(p|li|h2|h3|h4|pre)>\s*</\1>", "", corps)
     corps = re.sub(r"(?:\s*<hr>\s*)+$", "", corps)
     return corps.strip()
