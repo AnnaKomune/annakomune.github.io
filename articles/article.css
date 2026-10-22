@@ -96,6 +96,10 @@ h1,h2,h3,h4,p,figure,blockquote{margin:0}
 .art-corps figcaption{margin-top:10px;font-size:13px;line-height:1.5;color:var(--muted);text-align:center}
 .art-corps hr{max-width:var(--mesure);margin:38px auto;border:0;border-top:1px solid var(--line)}
 .art-corps strong,.art-corps b{font-weight:800}
+/* Un bloc preformate ne doit jamais depasser de la colonne. */
+.art-corps pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px 18px;margin:0 auto 22px;
+  background:var(--cream);border:1px solid var(--line);border-radius:14px;font-size:15px;line-height:1.6}
+.art-corps code{background:var(--cream);padding:1px 5px;border-radius:5px;font-size:.92em}
 .art-corps table{width:100%;max-width:var(--mesure);border-collapse:collapse;font-size:15px;margin:0 auto 24px}
 .art-corps th,.art-corps td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
 
