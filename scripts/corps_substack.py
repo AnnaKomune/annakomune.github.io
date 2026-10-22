@@ -81,6 +81,13 @@ class Corps(HTMLParser):
                 continue
             if cle == "href" and val.startswith(("javascript:", "data:")):
                 continue
+            if cle in ("width", "height"):
+                # Substack ecrit parfois une hauteur a virgule : l'attribut HTML
+                # n'accepte qu'un entier.
+                try:
+                    val = str(int(round(float(val))))
+                except ValueError:
+                    continue
             bons.append('%s="%s"' % (cle, val.replace('"', "&quot;")))
         if nom == "img":
             bons += ['loading="lazy"', 'decoding="async"']

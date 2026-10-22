@@ -1,6 +1,8 @@
 {
  "fusions": {
-  "Nesrine BOUZAR": "Nesrine Bouzar"
+  "Nesrine BOUZAR": "Nesrine Bouzar",
+  "Ayumi Thibaud": "Ayumi Thibaut",
+  "Amina": "Amina Mbelu Mbiya"
  },
  "auteurs": {
   "Jeannette Marié": {
@@ -193,14 +195,6 @@
    "liens": [],
    "articles": 1
   },
-  "Ayumi Thibaud": {
-   "slug": "ayumi-thibaud",
-   "role": "Journaliste",
-   "bio": [],
-   "photo": "",
-   "liens": [],
-   "articles": 1
-  },
   "Henri Imbault": {
    "slug": "henri-imbault",
    "role": "Journaliste",
@@ -211,14 +205,6 @@
   },
   "Maud Tardieux": {
    "slug": "maud-tardieux",
-   "role": "Journaliste",
-   "bio": [],
-   "photo": "",
-   "liens": [],
-   "articles": 1
-  },
-  "Amina": {
-   "slug": "amina",
    "role": "Journaliste",
    "bio": [],
    "photo": "",
