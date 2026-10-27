@@ -408,7 +408,19 @@
       .person-photo { height: min(124vw, 500px); }
       .person-name { font-size: clamp(50px, 17vw, 70px); }
     }
-  </style>
+  
+    .site-foot-liens, .foot-liens-legal {
+      display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 16px;
+    }
+    .site-foot-liens a, .foot-liens-legal a {
+      font-size: 13px; font-weight: 800; color: inherit; text-decoration: none;
+      border-bottom: 2px solid rgba(51, 46, 50, .14); padding-bottom: 1px;
+    }
+    .site-foot-liens a:hover, .site-foot-liens a:focus-visible,
+    .foot-liens-legal a:hover, .foot-liens-legal a:focus-visible {
+      color: #5423df; border-color: #5423df;
+    }
+</style>
   <style>
     .site-foot-brand span { color: var(--muted); }
   </style>
@@ -740,6 +752,10 @@
   <div class="site-foot-brand">
     <img src="../img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">
     <span>© Komune Média - Le média indépendant qui décrypte la société avec un regard antiraciste</span>
+  </div>
+  <div class="site-foot-liens">
+    <a href="../mentions-legales/">Mentions légales</a>
+    <a href="../signaler/">Signaler un contenu</a>
   </div>
   </footer>
 </body>
