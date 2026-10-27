@@ -547,11 +547,14 @@ def page_signaler():
 # Tant qu'une valeur vaut None, la page affiche la mention a completer plutot
 # qu'une information inventee.
 IDENTITE = {
-    "forme": None,          # ex. "association loi 1901" ou "SAS au capital de ... euros"
-    "siege": None,          # adresse postale du siege
-    "immatriculation": None,  # numero RNA, SIRET ou RCS
-    "publication": None,    # nom du directeur ou de la directrice de la publication
-    "cppap": None,          # numero CPPAP, si la publication en a un
+    "denomination": u"KOMUNE.MEDIA",
+    "forme": u"soci\u00e9t\u00e9 par actions simplifi\u00e9e au capital de 1 000 euros",
+    "siege": u"61 rue de Lyon, 75012 Paris",
+    "immatriculation": u"RCS Paris 948 729 272",
+    "publication": u"Anna J\u00e9go, pr\u00e9sidente",
+    "redaction": u"Jeannette Mari\u00e9",
+    "cppap": u"1026 Z 95337",
+    "telephone": None,      # numero de la redaction, a fournir
 }
 
 
@@ -573,8 +576,10 @@ def page_mentions():
             {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
             {"@type": "ListItem", "position": 2, "name": u"Mentions l\u00e9gales", "item": url}]}]}
 
-    cppap = ('        <p><strong>Num\u00e9ro CPPAP</strong> : %s</p>\n' % e(IDENTITE["cppap"])
-             if IDENTITE["cppap"] else "")
+    cppap = ('        <h2>Service de presse en ligne</h2>\n'
+             '        <p>Komune M\u00e9dia est reconnu service de presse en ligne par la Commission '
+             u'paritaire des publications et agences de presse, certificat n\u00b0 %s.</p>\n'
+             % e(IDENTITE["cppap"]) if IDENTITE["cppap"] else "")
 
     return (
         tete(u"Mentions l\u00e9gales", description, url, "", "", profondeur=1)
@@ -591,18 +596,21 @@ def page_mentions():
         + '      </header>\n'
         + '      <div class="art-corps panel">\n'
         + '        <h2>\u00c9diteur</h2>\n'
-        + '        <p>Le site komunemedia.fr est \u00e9dit\u00e9 par <strong>Komune M\u00e9dia</strong>.</p>\n'
-        + '        <p><strong>Forme juridique</strong> : %s</p>\n' % _valeur("forme")
-        + '        <p><strong>Si\u00e8ge</strong> : %s</p>\n' % _valeur("siege")
+        + '        <p>Le site komunemedia.fr est \u00e9dit\u00e9 par <strong>%s</strong>, %s.</p>\n'
+          % (e(IDENTITE["denomination"]), _valeur("forme"))
+        + '        <p><strong>Si\u00e8ge social</strong> : %s</p>\n' % _valeur("siege")
         + '        <p><strong>Immatriculation</strong> : %s</p>\n' % _valeur("immatriculation")
+        + '        <p><strong>T\u00e9l\u00e9phone</strong> : %s</p>\n' % _valeur("telephone")
         + '        <p><strong>Courriel</strong> : <a href="mailto:%s">%s</a></p>\n'
           % (ADRESSE_SIGNALEMENT, ADRESSE_SIGNALEMENT)
-        + '        <h2>Direction de la publication</h2>\n'
-        + '        <p>%s</p>\n' % _valeur("publication")
+        + '        <h2>Direction de la publication et r\u00e9daction</h2>\n'
+        + '        <p><strong>Directrice de la publication</strong> : %s</p>\n' % _valeur("publication")
+        + '        <p><strong>R\u00e9dactrice en chef</strong> : %s</p>\n' % _valeur("redaction")
         + cppap
         + '        <h2>H\u00e9bergement</h2>\n'
         + '        <p><strong>Le site</strong> est h\u00e9berg\u00e9 par GitHub, Inc. (GitHub Pages), '
-          u'88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, \u00c9tats-Unis.</p>\n'
+          u'88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, \u00c9tats-Unis. '
+          u'T\u00e9l\u00e9phone : +1 877 448 4820.</p>\n'
         + '        <p><strong>La newsletter</strong> est diffus\u00e9e par Substack Inc., San Francisco, '
           u'\u00c9tats-Unis. <strong>Les dons</strong> passent par Donorbox.</p>\n'
         + '        <h2>Traceurs et donn\u00e9es</h2>\n'
