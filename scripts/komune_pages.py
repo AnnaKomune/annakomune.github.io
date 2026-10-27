@@ -109,12 +109,24 @@ def nav(ou, profondeur=2):
             '      <div class="site-liens">\n%s\n      </div>\n    </nav>' % (r, r, "\n".join(out)))
 
 
-def pied(profondeur=2):
+def pied(profondeur=2, note=False):
+    """note=True ajoute l'adresse de signalement en toutes lettres, pour les
+    pages d'article : elles sont reprises et transferees, le lien seul ne suffit
+    pas toujours."""
     r = "../" * profondeur
     return ('    <footer class="site-pied">\n      <div class="site-foot-brand">\n'
             '        <img src="%simg/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">\n'
             '        <span>© Komune Média - Le média indépendant qui décrypte la société avec un regard antiraciste</span>\n'
-            '      </div>\n    </footer>' % r)
+            '      </div>\n'
+            '      <div class="site-foot-liens">\n'
+            '        <a href="%smentions-legales/">Mentions légales</a>\n'
+            '        <a href="%ssignaler/">Signaler un contenu</a>\n'
+            '      </div>\n'
+            '%s'
+            '    </footer>' % (
+                r, r, r,
+                ('      <p class="site-foot-note">Signaler un contenu : '
+                 '<a href="%ssignaler/">komunemedia.fr/signaler</a></p>\n' % r) if note else ""))
 
 
 def tete(titre, description, url, image, extra_meta="", profondeur=2, robots="index, follow, max-image-preview:large, max-snippet:-1"):
@@ -314,7 +326,7 @@ def page_article(article, corps, auteurs, par_article, precedent, suivant, memes
         + ('      <div class="voisins">\n%s\n      </div>\n' % "\n".join(voisins) if voisins else "")
         + suite
         + '    </main>\n'
-        + pied() + "\n  </div>\n</body>\n</html>\n")
+        + pied(note=True) + "\n  </div>\n</body>\n</html>\n")
 
 
 
@@ -422,6 +434,202 @@ def page_liste_journalistes(fiches_comptees):
         '</body>\n</html>\n' % (SITE, SITE, SITE))
 
 
+# ---------------------------------------------------------------- signalement
+ADRESSE_SIGNALEMENT = "komune.contact@gmail.com"
+
+MOTIFS = [
+    u"Injure",
+    u"Diffamation",
+    u"Incitation \u00e0 la haine ou \u00e0 la violence",
+    u"Atteinte \u00e0 la vie priv\u00e9e",
+    u"Harc\u00e8lement",
+    u"Contenu mettant en danger un mineur",
+    u"Autre contenu que j\u2019estime illicite",
+]
+
+
+def page_signaler():
+    """La page qui explique comment nous signaler un contenu illicite."""
+    url = SITE + "/signaler/"
+    description = (u"Signaler \u00e0 Komune M\u00e9dia un commentaire ou un contenu que vous estimez "
+                   u"illicite. Accus\u00e9 de r\u00e9ception et r\u00e9ponse sous 48 heures.")
+    graphe = {"@context": "https://schema.org", "@graph": [ORG, {
+        "@type": "WebPage", "@id": url + "#page", "url": url,
+        "name": u"Signaler un contenu", "description": description,
+        "inLanguage": "fr-FR", "isPartOf": {"@id": SITE + "/#organisation"}}, {
+        "@type": "BreadcrumbList", "@id": url + "#fil", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
+            {"@type": "ListItem", "position": 2, "name": u"Signaler un contenu", "item": url}]}]}
+
+    options = "".join(u'<option>%s</option>' % e(m) for m in MOTIFS)
+
+    return (
+        tete(u"Signaler un contenu", description, url, "", "", profondeur=1)
+        + ld(graphe)
+        + "</head>\n<body>\n  <div class=\"page\">\n"
+        + nav("", profondeur=1) + "\n"
+        + fil([("", "Accueil"), (None, u"Signaler un contenu")], profondeur=1) + "\n"
+        + '    <main class="canvas">\n'
+        + '      <header class="art-tete panel">\n'
+        + '        <p class="eyebrow">Komune M\u00e9dia</p>\n'
+        + '        <h1>Signaler un contenu</h1>\n'
+        + '        <p class="art-chapo">Un commentaire ou un contenu publi\u00e9 par Komune vous para\u00eet '
+          u'illicite ? Dites-le-nous. Nous accusons r\u00e9ception et nous retirons le contenu, ou nous vous '
+          u'r\u00e9pondons, sous 48 heures.</p>\n'
+        + '      </header>\n'
+        + '      <div class="art-corps panel">\n'
+        + '        <h2>Qui peut signaler</h2>\n'
+        + '        <p>Tout le monde. Il n\u2019est pas n\u00e9cessaire d\u2019\u00eatre abonn\u00e9, inscrit, '
+          u'ni d\u2019\u00eatre la personne vis\u00e9e par le contenu. Un signalement anonyme est recevable, mais '
+          u'sans adresse de retour nous ne pourrons pas vous dire ce que nous en avons fait.</p>\n'
+        + '        <h2>Ce qui peut \u00eatre signal\u00e9</h2>\n'
+        + '        <p>Un commentaire ou un contenu que vous estimez illicite : injure, diffamation, '
+          u'incitation \u00e0 la haine, atteinte \u00e0 la vie priv\u00e9e. Cela vaut pour les commentaires '
+          u'laiss\u00e9s sous nos publications comme pour nos propres contenus, sur ce site, dans la newsletter '
+          u'et sur nos r\u00e9seaux.</p>\n'
+        + '        <p>Le d\u00e9saccord \u00e9ditorial n\u2019entre pas dans ce cadre. Si vous pensez qu\u2019une '
+          u'information est inexacte, \u00e9crivez-nous \u00e0 la m\u00eame adresse en l\u2019indiquant : nous '
+          u'traitons les corrections, mais ce n\u2019est pas la m\u00eame proc\u00e9dure.</p>\n'
+        + '        <h2>Comment signaler</h2>\n'
+        + '        <p>Par le formulaire ci-dessous, ou directement par courriel \u00e0 '
+          u'<a href="mailto:%s">%s</a>. Dans les deux cas, donnez-nous <strong>le lien du contenu</strong> et '
+          u'<strong>le motif</strong> : ce sont les deux \u00e9l\u00e9ments sans lesquels nous ne pouvons rien '
+          u'faire.</p>\n' % (ADRESSE_SIGNALEMENT, ADRESSE_SIGNALEMENT)
+        + '        <form class="signal-form" id="signal-form" novalidate>\n'
+        + '          <p class="signal-champ"><label for="signal-lien">Lien du contenu</label>\n'
+          '            <input type="url" id="signal-lien" name="lien" required '
+          'placeholder="https://..." autocomplete="url"></p>\n'
+        + '          <p class="signal-champ"><label for="signal-motif">Motif</label>\n'
+          '            <select id="signal-motif" name="motif">%s</select></p>\n' % options
+        + '          <p class="signal-champ"><label for="signal-texte">Pr\u00e9cisions '
+          u'<span>(facultatif)</span></label>\n'
+          '            <textarea id="signal-texte" name="texte" rows="5" '
+          'placeholder="Ce qui vous para\u00eet illicite, et pourquoi."></textarea></p>\n'
+        + '          <p class="signal-envoi"><button type="submit">Pr\u00e9parer le signalement</button></p>\n'
+        + '          <p class="signal-note">Ce formulaire n\u2019envoie rien tout seul : il ouvre votre '
+          u'logiciel de courrier avec le message d\u00e9j\u00e0 r\u00e9dig\u00e9, que vous relisez avant '
+          u'd\u2019envoyer. Aucune donn\u00e9e ne quitte votre navigateur avant cela.</p>\n'
+        + '        </form>\n'
+        + '        <h2>Ce que nous nous engageons \u00e0 faire</h2>\n'
+        + '        <p>Nous accusons r\u00e9ception de votre signalement, puis nous retirons le contenu ou '
+          u'nous vous r\u00e9pondons en expliquant pourquoi nous ne le retirons pas. Dans les deux cas, '
+          u'<strong>sous 48 heures</strong>.</p>\n'
+        + '        <p>Les commentaires publi\u00e9s sous nos contenus sont mod\u00e9r\u00e9s par la '
+          u'r\u00e9daction. Cette proc\u00e9dure de signalement s\u2019inscrit dans l\u2019article 6 de la '
+          u'loi du 21 juin 2004 pour la confiance dans l\u2019\u00e9conomie num\u00e9rique.</p>\n'
+        + '      </div>\n'
+        + '    </main>\n'
+        + '    <script>\n'
+        + '      (function () {\n'
+        + '        var f = document.getElementById("signal-form");\n'
+        + '        if (!f) { return; }\n'
+        + '        f.addEventListener("submit", function (ev) {\n'
+        + '          ev.preventDefault();\n'
+        + '          var lien = f.lien.value.trim();\n'
+        + '          var motif = f.motif.value;\n'
+        + '          var texte = f.texte.value.trim();\n'
+        + '          var saut = String.fromCharCode(10);\n'
+        + '          var corps = "Lien du contenu : " + (lien || "(a completer)") + saut\n'
+        + '            + "Motif : " + motif + saut + saut\n'
+        + '            + (texte ? "Precisions :" + saut + texte + saut + saut : "")\n'
+        + '            + "Signale depuis komunemedia.fr/signaler";\n'
+        + '          window.location.href = "mailto:%s"\n' % ADRESSE_SIGNALEMENT
+        + '            + "?subject=" + encodeURIComponent("Signalement de contenu")\n'
+        + '            + "&body=" + encodeURIComponent(corps);\n'
+        + '        });\n'
+        + '      }());\n'
+        + '    </script>\n'
+        + pied(profondeur=1) + "\n  </div>\n</body>\n</html>\n")
+
+
+# ---------------------------------------------------------------- mentions legales
+# Les informations que seule la redaction peut fournir sont rassemblees ici.
+# Tant qu'une valeur vaut None, la page affiche la mention a completer plutot
+# qu'une information inventee.
+IDENTITE = {
+    "forme": None,          # ex. "association loi 1901" ou "SAS au capital de ... euros"
+    "siege": None,          # adresse postale du siege
+    "immatriculation": None,  # numero RNA, SIRET ou RCS
+    "publication": None,    # nom du directeur ou de la directrice de la publication
+    "cppap": None,          # numero CPPAP, si la publication en a un
+}
+
+
+def _valeur(cle):
+    v = IDENTITE.get(cle)
+    return e(v) if v else '<span class="a-completer">\u00c0 compl\u00e9ter</span>'
+
+
+def page_mentions():
+    """Mentions legales du site."""
+    url = SITE + "/mentions-legales/"
+    description = (u"Mentions l\u00e9gales de Komune M\u00e9dia : \u00e9diteur, directeur de la publication, "
+                   u"h\u00e9bergeur, traceurs, et mod\u00e9ration des commentaires.")
+    graphe = {"@context": "https://schema.org", "@graph": [ORG, {
+        "@type": "WebPage", "@id": url + "#page", "url": url,
+        "name": u"Mentions l\u00e9gales", "description": description,
+        "inLanguage": "fr-FR", "isPartOf": {"@id": SITE + "/#organisation"}}, {
+        "@type": "BreadcrumbList", "@id": url + "#fil", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
+            {"@type": "ListItem", "position": 2, "name": u"Mentions l\u00e9gales", "item": url}]}]}
+
+    cppap = ('        <p><strong>Num\u00e9ro CPPAP</strong> : %s</p>\n' % e(IDENTITE["cppap"])
+             if IDENTITE["cppap"] else "")
+
+    return (
+        tete(u"Mentions l\u00e9gales", description, url, "", "", profondeur=1)
+        + ld(graphe)
+        + "</head>\n<body>\n  <div class=\"page\">\n"
+        + nav("", profondeur=1) + "\n"
+        + fil([("", "Accueil"), (None, u"Mentions l\u00e9gales")], profondeur=1) + "\n"
+        + '    <main class="canvas">\n'
+        + '      <header class="art-tete panel">\n'
+        + '        <p class="eyebrow">Komune M\u00e9dia</p>\n'
+        + '        <h1>Mentions l\u00e9gales</h1>\n'
+        + '        <p class="art-chapo">Qui \u00e9dite ce site, qui l\u2019h\u00e9berge, ce qu\u2019il '
+          u'd\u00e9pose sur votre appareil, et comment nous signaler un contenu.</p>\n'
+        + '      </header>\n'
+        + '      <div class="art-corps panel">\n'
+        + '        <h2>\u00c9diteur</h2>\n'
+        + '        <p>Le site komunemedia.fr est \u00e9dit\u00e9 par <strong>Komune M\u00e9dia</strong>.</p>\n'
+        + '        <p><strong>Forme juridique</strong> : %s</p>\n' % _valeur("forme")
+        + '        <p><strong>Si\u00e8ge</strong> : %s</p>\n' % _valeur("siege")
+        + '        <p><strong>Immatriculation</strong> : %s</p>\n' % _valeur("immatriculation")
+        + '        <p><strong>Courriel</strong> : <a href="mailto:%s">%s</a></p>\n'
+          % (ADRESSE_SIGNALEMENT, ADRESSE_SIGNALEMENT)
+        + '        <h2>Direction de la publication</h2>\n'
+        + '        <p>%s</p>\n' % _valeur("publication")
+        + cppap
+        + '        <h2>H\u00e9bergement</h2>\n'
+        + '        <p><strong>Le site</strong> est h\u00e9berg\u00e9 par GitHub, Inc. (GitHub Pages), '
+          u'88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, \u00c9tats-Unis.</p>\n'
+        + '        <p><strong>La newsletter</strong> est diffus\u00e9e par Substack Inc., San Francisco, '
+          u'\u00c9tats-Unis. <strong>Les dons</strong> passent par Donorbox.</p>\n'
+        + '        <h2>Traceurs et donn\u00e9es</h2>\n'
+        + '        <p>Ce site ne d\u00e9pose aucun cookie et n\u2019utilise aucun outil de mesure '
+          u'd\u2019audience, de publicit\u00e9 ou de profilage. Nous ne savons pas qui vous \u00eates '
+          u'ni ce que vous lisez.</p>\n'
+        + '        <p>Deux exceptions, limit\u00e9es et v\u00e9rifiables. Le comparateur garde dans la '
+          u'm\u00e9moire locale de votre navigateur le niveau d\u2019affichage et le candidat que vous avez '
+          u'choisis, pour vous les retrouver \u00e0 votre retour : ces deux valeurs restent sur votre appareil '
+          u'et ne nous sont jamais transmises. Et les polices de caract\u00e8res sont charg\u00e9es depuis '
+          u'Google Fonts, qui re\u00e7oit donc votre adresse IP.</p>\n'
+        + '        <p>Les vid\u00e9os YouTube et Instagram ne se chargent qu\u2019\u00e0 votre clic : avant '
+          u'cela, aucune requ\u00eate n\u2019est envoy\u00e9e \u00e0 ces plateformes.</p>\n'
+        + '        <h2>Commentaires et signalement</h2>\n'
+        + '        <p>Les commentaires publi\u00e9s sous nos contenus sont mod\u00e9r\u00e9s par la '
+          u'r\u00e9daction. Si un commentaire ou un contenu vous para\u00eet illicite, vous pouvez nous le '
+          u'signaler : la marche \u00e0 suivre et nos d\u00e9lais de r\u00e9ponse sont sur la page '
+          u'<a href="../signaler/">Signaler un contenu</a>.</p>\n'
+        + '        <h2>Propri\u00e9t\u00e9 intellectuelle</h2>\n'
+        + '        <p>Les contenus publi\u00e9s par Komune M\u00e9dia sont prot\u00e9g\u00e9s par le droit '
+          u'd\u2019auteur. Toute reprise suppose notre accord, sauf courte citation avec mention de la source '
+          u'et lien vers l\u2019article.</p>\n'
+        + '      </div>\n'
+        + '    </main>\n'
+        + pied(profondeur=1) + "\n  </div>\n</body>\n</html>\n")
+
+
 # ---------------------------------------------------------------- recuperation des corps
 def recupere_corps(slug, chercheur):
     """Telecharge l'article sur Substack et en garde le corps nettoye."""
@@ -470,10 +678,17 @@ def plan_du_site(articles, fiches_comptees):
             continue
         if "/journalistes/" in m.group(1):
             continue
+        if m.group(1).rstrip("/").endswith(("/signaler", "/mentions-legales")):
+            continue
         fixes.append(m.group(0))
 
     recent = max([(a.get("date") or "")[:10] for a in articles] or [""])
     bouts = list(fixes)
+    # Les deux pages d'information legale, toujours presentes.
+    for chemin in ("signaler", "mentions-legales"):
+        bouts.append("  <url>\n    <loc>%s/%s/</loc>\n    <lastmod>%s</lastmod>\n"
+                     "    <changefreq>yearly</changefreq>\n    <priority>0.3</priority>\n  </url>\n"
+                     % (SITE, chemin, recent))
     for f, _ in fiches_comptees:
         bouts.append("  <url>\n    <loc>%s/journalistes/%s/</loc>\n    <lastmod>%s</lastmod>\n"
                      "    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>\n"
@@ -558,6 +773,12 @@ def ecrire_tout(articles=None, chercheur=None):
             cible.write_text(page, encoding="utf-8")
     (DOSSIER_JOURNALISTES / "index.html").write_text(
         page_liste_journalistes(fiches_comptees), encoding="utf-8")
+
+    for dossier, contenu in (("signaler", page_signaler()),
+                             ("mentions-legales", page_mentions())):
+        d = RACINE / dossier
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(contenu, encoding="utf-8")
 
     plan_du_site([a for a in articles if (CORPS / (identifiant(a) + ".html")).exists()], fiches_comptees)
 
