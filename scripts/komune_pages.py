@@ -554,7 +554,7 @@ IDENTITE = {
     "publication": u"Anna J\u00e9go, pr\u00e9sidente",
     "redaction": u"Jeannette Mari\u00e9",
     "cppap": u"1026 Z 95337",
-    "telephone": None,      # numero de la redaction, a fournir
+    "telephone": u"07 77 06 64 32",
 }
 
 
@@ -600,7 +600,9 @@ def page_mentions():
           % (e(IDENTITE["denomination"]), _valeur("forme"))
         + '        <p><strong>Si\u00e8ge social</strong> : %s</p>\n' % _valeur("siege")
         + '        <p><strong>Immatriculation</strong> : %s</p>\n' % _valeur("immatriculation")
-        + '        <p><strong>T\u00e9l\u00e9phone</strong> : %s</p>\n' % _valeur("telephone")
+        + '        <p><strong>T\u00e9l\u00e9phone</strong> : %s</p>\n'
+          % ('<a href="tel:+33777066432">%s</a>' % e(IDENTITE["telephone"])
+             if IDENTITE["telephone"] else _valeur("telephone"))
         + '        <p><strong>Courriel</strong> : <a href="mailto:%s">%s</a></p>\n'
           % (ADRESSE_SIGNALEMENT, ADRESSE_SIGNALEMENT)
         + '        <h2>Direction de la publication et r\u00e9daction</h2>\n'
