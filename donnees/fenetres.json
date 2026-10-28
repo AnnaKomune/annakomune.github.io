@@ -1,0 +1,334 @@
+{
+ "candidats": {
+  "Anasse Kazib": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "N'a jamais exerce de fonction legislative ou executive.",
+   "verbatim": "N'a jamais exercé de fonction législative ou exécutive donc pas de vote à son actif."
+  },
+  "Antoine Mikolajczak": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "Aucun mandat.",
+   "verbatim": "Pas de mandat pour le mesurer"
+  },
+  "Benoît Mathieu": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "Aucun mandat.",
+   "verbatim": "-Pas de mandat donc pas de vote"
+  },
+  "Bernard Cazeneuve": {
+   "empeches": [],
+   "etat": "a_borner",
+   "fenetres": [],
+   "note": "la fiche ecarte ses votes sans donner de bornes. A trancher.",
+   "verbatim": "Aucun, ses mandats ont été trop court entre ces fonctions gouvernementales"
+  },
+  "Bruno Retailleau": {
+   "empeches": [
+    {
+     "debut": "2024-09-21",
+     "fin": "2025-10-12",
+     "motif": "membre du gouvernement"
+    }
+   ],
+   "etat": "borne",
+   "fenetres": [
+    {
+     "chambre": "SENAT",
+     "debut": "2004-09-26",
+     "fin": null,
+     "note": ""
+    }
+   ],
+   "note": "",
+   "verbatim": "• Sénat : depuis 2004. Seul des cinq dont les votes se jouent au Sénat.\n• Sur les scrutins de l'Assemblée : « non concerné ». Ce n'est pas une absence, c'est une autre chambre. Quand un vote existe au Sénat sur le même texte, nous l'indiquons.\n• Aucun vote possible pendant la période ministérielle 21/09/2024 – 12/10/2025.\n• Notre limite affichée sur la couverture du Sénat pèse le plus sur cette fiche."
+  },
+  "Clara Egger": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "Aucun mandat.",
+   "verbatim": "Au vu du fait de l'absence de mandat, elle n'a pas voté pour une quelconque loi"
+  },
+  "David Lisnard": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "N'a jamais ete depute ni senateur.",
+   "verbatim": "• Aucun vote parlementaire, à aucun moment : il n'a jamais été député ni sénateur.\n• ATTENTION, cas particulier : Nouvelle Énergie n'a pas de groupe parlementaire. Contrairement à Édouard Philippe, on ne peut donc regarder ni ses votes personnels, ni les votes de son groupe. Sa colonne « votes » est structurellement vide.\n• Tout ce qui est documentable chez lui est local : arrêtés municipaux, délibérations, décisions de la ville de Cannes et de l'agglomération Cannes Pays de Lérins depuis 2014.\n• C'est le profil qui teste le plus notre méthode : il faut expliquer au lecteur qu'un ➖ ici ne dit rien de ses positions."
+  },
+  "Delphine Batho": {
+   "empeches": [
+    {
+     "debut": "2012-05-16",
+     "fin": "2013-08-03",
+     "motif": "membre du gouvernement"
+    }
+   ],
+   "etat": "borne",
+   "fenetres": [
+    {
+     "chambre": "AN",
+     "debut": "2007-06-17",
+     "fin": null,
+     "note": ""
+    }
+   ],
+   "note": "",
+   "verbatim": "• Assemblée nationale : de 2007 à aujourd'hui, avec un seul trou, la période gouvernementale de juin 2012 au 3 août 2013, où sa suppléance siégeait. Sa fenêtre de votes personnels est donc l'une des plus longues du tableau, sur cinq législatures.\n\n• Aucun vote possible entre sa nomination de mai 2012 et le 3 août 2013 : elle était membre du gouvernement. Les ➖ de cette période sont motivés par la fonction.\n\n• Aucun mandat local, donc aucun acte local documentable.\n\n• LE PARCOURS DE GROUPE LE PLUS COMPLIQUÉ DU TABLEAU : sept appartenances successives, dont deux périodes de non-inscrite où il n'existe aucun vote de groupe à afficher. Notre colonne parti doit être datée pour elle, comme pour Ruffin, et sur les périodes de non-inscription la case groupe doit rester vide avec une explication, pas un ➖ sec.\n\n• ANOMALIE À SIGNALER : elle préside Génération écologie mais son rattachement financier à l'Assemblée est Les Écologistes – EELV, un autre parti. Le rattachement financier n'est donc pas un indicateur d'appartenance chez elle.\n\n• C'est la candidate dont les actes sont les plus denses sur notre thème écologie déjà publié : ministre de l'Écologie, et une longue série d'amendements et de propositions de loi sur les pesticides, le climat et l'aviation. Voir faits importants."
+  },
+  "Fabien Roussel": {
+   "empeches": [],
+   "etat": "borne",
+   "fenetres": [
+    {
+     "chambre": "AN",
+     "debut": "2017-06-21",
+     "fin": "2024-06-09",
+     "note": ""
+    }
+   ],
+   "note": "",
+   "verbatim": "• Assemblée nationale : 21/06/2017 – 09/06/2024, sans interruption. Deux législatures pleines, donc une fenêtre de votes personnels dense.\n\n• Aucune fonction gouvernementale, donc aucun trou de ce type.\n\n• Depuis juin 2024 : aucun mandat national, donc aucun vote personnel. Seuls les votes de groupe sont documentables.\n\n• ATTENTION, subtilité propre au PCF : le groupe auquel il appartenait n'est pas un groupe communiste au sens strict, mais le groupe de la Gauche démocrate et républicaine, un groupe composite qui réunit les députés communistes et des élus ultramarins non communistes. Un vote « du groupe GDR » n'équivaut donc pas à un vote « du PCF ». Sur les textes où le groupe s'est divisé, il faut le dire, et notre seuil de 20 % de divergence s'applique pleinement ici.\n\n• Ses actes locaux ne sont documentables que depuis janvier 2025 comme maire, et depuis 2014 comme conseiller municipal délégué."
+  },
+  "Florian Philippot": {
+   "empeches": [],
+   "etat": "a_borner",
+   "fenetres": [],
+   "note": "des votes au Parlement europeen sont cites sans dates de mandat. A borner.",
+   "verbatim": "-Octobre 2016 : Florian Philippot a voté pour la résolution contre la désindustrialisation en Europe \n- Votre contre le texte encadrant les contrats de produits dérivés de gré à gré, au motif qu'il retirerait de la souveraineté économique aux Etats \n- Votre contre le renforcement de l'Autorité européenne des marchés financiers qu'il juge illégitime \n-Vote pour la mise à jour de la liste des polluants suite aux conclusions de la Convention de Stockholm de 2017 \n- Vote pour une résolution demandant davantage de pouvoir législatif pour le Parlement européen face à la Commission et au Conseil \n-Vote contre une interprétation de l'article encadrant la formation des groupes politiques au Parlement européenes qu'il juge attentatoire à la liberté d'opposition \n-Votre pour l'extension du système Eurodac au Danemark"
+  },
+  "Francis Lalanne": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "N'a jamais exerce de mandat.",
+   "verbatim": "-n'a jamais eu l'occasion de voté"
+  },
+  "François Asselineau": {
+   "empeches": [],
+   "etat": "a_borner",
+   "fenetres": [],
+   "note": "la case est vide dans le classeur : rien a deriver.",
+   "verbatim": ""
+  },
+  "François Ruffin": {
+   "empeches": [],
+   "etat": "borne",
+   "fenetres": [
+    {
+     "chambre": "AN",
+     "debut": "2017-06-18",
+     "fin": null,
+     "note": ""
+    }
+   ],
+   "note": "",
+   "verbatim": "• Assemblée nationale : depuis juin 2017, sans interruption, trois législatures. Sa fenêtre de votes personnels est l'une des plus longues et des plus continues du tableau, et elle est ouverte.\n\n• Aucune fonction gouvernementale et aucun mandat local : aucun acte exécutif ni local à documenter. Chez lui, tout se joue sur les votes, les amendements et les propositions de loi.\n\n• PIÈGE MAJEUR SUR LE VOTE DE GROUPE : son groupe change en cours de période. Groupe La France insoumise de 2017 à juin 2024, groupe écologiste depuis juillet 2024. Afficher « son groupe » sans préciser la période attribuerait à LFI des votes postérieurs à sa rupture, et inversement. Il faut deux périodes distinctes dans sa colonne parti.\n\n• Et une deuxième couche : il n'a jamais été membre de LFI, dont il a seulement rejoint le groupe. Aujourd'hui il siège chez les écologistes sans adhérer aux Écologistes. Son parti, Debout !, n'a pas de groupe parlementaire. Le vote du groupe ne reflète donc jamais la position de son parti.\n\n• Volume de travail parlementaire élevé et documenté : plus de 4 000 amendements déposés sur la seule législature 2017-2022, dont la quasi-totalité rejetés, et plusieurs propositions de loi en son nom (hôpitaux psychiatriques, burn-out comme maladie professionnelle, interdiction des vols intérieurs court-courriers, métiers du lien). C'est un candidat dont la colonne « actes » sera dense, mais faite de textes déposés et rejetés plutôt que de lois adoptées : à qualifier avec soin."
+  },
+  "Gabriel Attal": {
+   "empeches": [],
+   "etat": "a_borner",
+   "fenetres": [
+    {
+     "chambre": "AN",
+     "debut": "2024-07-07",
+     "fin": null,
+     "note": ""
+    }
+   ],
+   "note": "la prose borne la periode recente mais ne dit pas si les mandats anterieurs a 2024 ouvrent des votes. A trancher avant tout derive.",
+   "verbatim": "• AN : à partir de juillet 2024 seulement pour la période récente.\n• Ministre sur presque toute la période antérieure : un membre du gouvernement n'est pas parlementaire, donc aucun vote possible. Les ➖ de cette période sont motivés par la fonction.\n• Sur plusieurs scrutins récents, il n'a pas pris part au vote alors qu'il le pouvait : nous le signalons à chaque fois.\n• Ses actes 2020-2024 sont des actes d'exécutif."
+  },
+  "Jean-Luc Mélenchon": {
+   "empeches": [
+    {
+     "debut": "2000-03-27",
+     "fin": "2002-05-06",
+     "motif": "membre du gouvernement"
+    }
+   ],
+   "etat": "borne",
+   "fenetres": [
+    {
+     "chambre": "AN",
+     "debut": "2017-06-18",
+     "fin": "2022-06-21",
+     "note": ""
+    },
+    {
+     "chambre": "SENAT",
+     "debut": "1986-10-02",
+     "fin": "2000-03-27",
+     "note": ""
+    },
+    {
+     "chambre": "PE",
+     "debut": "2009-07-14",
+     "fin": "2017-06-18",
+     "note": "votes europeens uniquement"
+    }
+   ],
+   "note": "",
+   "verbatim": "• AN : 06/2017 – 06/2022\n• Parlement européen : 2009 – 2017 (votes européens uniquement)\n• Sénat : 1986-2000\n• Aucun vote possible pendant la période ministérielle 2000-2002\n• Aucun mandat depuis 06/2022 : seuls les votes du groupe LFI sont documentables. Les deux ne sont jamais mélangés."
+  },
+  "Juan Branco": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "Aucun mandat.",
+   "verbatim": "Pas concerné"
+  },
+  "Karim Bouamrane": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "Aucun mandat de depute ou de senateur enregistre.",
+   "verbatim": "PAS DE MANDAT COMME DEPUTE OU SENATEUR ENREGISTREE"
+  },
+  "Lydie Massard": {
+   "empeches": [],
+   "etat": "a_borner",
+   "fenetres": [],
+   "note": "des votes au Parlement europeen sont cites sans dates de mandat. A borner.",
+   "verbatim": "* Voté contre le dérégulation des nouvelles techniques génomiques contestant la mise sur le marché d'OGM sans étiquetage strict ni évaluation environnementale préalable \n* Votre pour le renforcement des règles européennes contre le greenwashing exigeant que les entreprises étayant scientifiquement leurs arguments écologiques sur leurs produits \n* Elle a voté pour des normes environnementales renfocées sur la rénovation thermique et la réducation de l'empreinte carbone des batiments \n* Elle a voté contre la libéralisation accrue des échanges commerciaux qui ne respectaient pas selon son groupes les normes environnementales et sociales suffisantes \n* Elle a voté pour des normes environnementale renforcées sur la rénovation thermique et la reduction de l'empreinte carbone des batiments \n*Voté en faveur des résolutions visant la préservation de la diversité linguistique, le soutien aux zones rurales et la décentralisation \n\nhttps://www.europarl.europa.eu/meps/fr/249285/LYDIE_MASSARD/history/9 \n\nhttps://amendeu.com/meps/249285"
+  },
+  "Manolo Mlekuz": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "Aucun mandat.",
+   "verbatim": "Comme il n'a pas eu de mandat dernièrement, il n'y a pas de vote"
+  },
+  "Marine Le Pen": {
+   "empeches": [],
+   "etat": "borne",
+   "fenetres": [
+    {
+     "chambre": "AN",
+     "debut": "2017-06-18",
+     "fin": null,
+     "note": ""
+    },
+    {
+     "chambre": "PE",
+     "debut": "2004-07-20",
+     "fin": "2017-06-18",
+     "note": "votes europeens uniquement"
+    }
+   ],
+   "note": "",
+   "verbatim": "• AN : depuis juin 2017, sans interruption. Seule des cinq dans ce cas : ses votes sont presque tous enregistrés, y compris les scrutins où elle n'a pas pris part au vote, que nous affichons tels quels, sans interprétation.\n• Parlement européen : 2004 – 18/06/2017 (votes européens uniquement)\n• Aucune fonction gouvernementale.\n• Présider un groupe ne dispense pas de voter."
+  },
+  "Marine Tondelier": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "N'a exerce aucun mandat parlementaire.",
+   "verbatim": "• Aucun vote personnel, jamais : elle n'a exercé aucun mandat parlementaire. Sa colonne de votes personnels est vide sur toute la période, et pour une raison simple à expliquer.\n\n• EN REVANCHE, contrairement à Lisnard ou à Dupont-Aignan, son parti a un groupe à l'Assemblée : le groupe Écologiste et Social. Les votes de groupe sont donc documentables sur tous nos textes. C'est le même cas de figure qu'Édouard Philippe.\n\n• Aucune fonction gouvernementale, donc rien de ce côté.\n\n• Ses actes sont exclusivement locaux, sur deux niveaux : conseil municipal d'Hénin-Beaumont depuis 2014 et conseil régional des Hauts-de-France depuis 2021.\n\n• NUANCE IMPORTANTE SUR CES ACTES : elle est élue d'opposition, pas aux commandes. Ses actes municipaux sont des votes, des vœux et des prises de position, pas des décisions exécutées. À ne pas mettre sur le même plan que les arrêtés d'un maire comme Lisnard ou Dupont-Aignan, sinon la comparaison est faussée."
+  },
+  "Mira Markovic": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "Aucun mandat parlementaire.",
+   "verbatim": "• Aucun mandat parlementaire : aucun vote possible.\n• Conseillère municipale du 18e arrondissement de Paris puis conseillère de Paris, 2014 – 2020.\n• Le Parti animaliste n'a pas d'élu au Parlement : seuls ses programmes sont documentables."
+  },
+  "Natacha Polony": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "Aucun mandat electif.",
+   "verbatim": "• Aucun mandat électif : aucun vote possible.\n• Candidate aux législatives de 2002 dans la 9e circonscription de Paris, non élue.\n• Aucune formation déclarée : son mouvement, lancé en septembre 2026, n'a pas d'élu."
+  },
+  "Nathalie Arthaud": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "Aucun mandat local ou national.",
+   "verbatim": "Aucun mandat local ou naional, donc aucun vote documentable"
+  },
+  "Nicolas Dupont-Aignan": {
+   "empeches": [],
+   "etat": "borne",
+   "fenetres": [
+    {
+     "chambre": "AN",
+     "debut": "1997-06-01",
+     "fin": "2024-06-09",
+     "note": ""
+    }
+   ],
+   "note": "",
+   "verbatim": "• Assemblée nationale : de juin 1997 à juin 2024, sans interruption. VINGT-SEPT ANS de votes personnels, la fenêtre la plus longue du tableau à ce jour.\n\n• Aucune fonction gouvernementale, donc aucun trou de ce type.\n\n• Depuis juin 2024 : aucun mandat parlementaire, donc aucun vote personnel sur les textes récents.\n\n• CAS INVERSE DE LISNARD, et tout aussi problématique : il a beaucoup de votes personnels mais pratiquement aucun vote de groupe, puisqu'il a siégé comme non-inscrit et que Debout la France n'a jamais eu de groupe à l'Assemblée. Sur les textes antérieurs à 2024, sa colonne personnelle sera pleine et sa colonne groupe vide. Sur les textes postérieurs, l'inverse : les deux vides. Il faut l'expliquer, sinon le contraste sera illisible.\n\n• Ses actes locaux sont documentables sur deux périodes distinctes : 1995-2017 comme maire d'Yerres et président d'agglomération, puis depuis mars 2026. Vingt-deux ans de décisions municipales, c'est beaucoup de matière, mais ancienne."
+  },
+  "Olivier Becht": {
+   "empeches": [
+    {
+     "debut": "2022-07-04",
+     "fin": "2024-01-11",
+     "motif": "membre du gouvernement"
+    }
+   ],
+   "etat": "borne",
+   "fenetres": [
+    {
+     "chambre": "AN",
+     "debut": "2017-06-18",
+     "fin": "2022-08-04",
+     "note": ""
+    },
+    {
+     "chambre": "AN",
+     "debut": "2024-02-12",
+     "fin": null,
+     "note": ""
+    }
+   ],
+   "note": "",
+   "verbatim": "• AN : 06/2017 – 04/08/2022, puis depuis le 12/02/2024.\n• Ministre délégué chargé du Commerce extérieur du 04/07/2022 au 11/01/2024 : aucun vote possible, son suppléant occupait le siège.\n• Pour l'analyse des votes du groupe, on retient le groupe Renaissance, auquel il est apparenté."
+  },
+  "Raphaël Glucksmann": {
+   "empeches": [],
+   "etat": "a_borner",
+   "fenetres": [],
+   "note": "des votes au Parlement europeen sont cites sans dates de mandat. A borner.",
+   "verbatim": "* vote pour l'ensemble des sanctions européennes contre le gouvernement russe, l'envoie d'aide militaire à l'Ukraine et la création d'un tribunal spécial pour les crime d'agression \n* vote pour la directive CS3D \n*vote pour l'interdiction sur le marché européen des produits issus du travail forcé ciblant la région du Xinjiang ou les Ouighours sont persécuté \n*votree pour les objectif de réduction des émissions de carbonne \n*vote contre l'accord commercial UE-Mercosus"
+  },
+  "Selma Labib": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "Aucun mandat de depute ou de senateur enregistre.",
+   "verbatim": "PAS DE MANDAT COMME DEPUTE OU SENATEUR ENREGISTREE"
+  },
+  "Xavier Bertrand": {
+   "empeches": [],
+   "etat": "a_borner",
+   "fenetres": [],
+   "note": "la fiche demande elle-meme de borner precisement les trois fenetres 2002-2004, 2009-2010 et 2012-2016 avant publication.",
+   "verbatim": "• Assemblée nationale : de 2002 à 2016, MAIS avec trois trous correspondant à ses périodes ministérielles, où sa suppléante Pascale Gruny siégeait à sa place. Ses votes personnels n'existent donc que sur environ trois fenêtres : 2002-2004, 2009-2010 et 2012-2016. À borner précisément avant publication.\n\n• Aucun vote possible du 31/03/2004 au 31/05/2005, du 02/06/2005 au 26/03/2007, du 18/05/2007 au 15/01/2009 et du 14/11/2010 au 10/05/2012 : il était membre du gouvernement.\n\n• Depuis 2016 : aucun mandat parlementaire, donc aucun vote personnel.\n\n• Question éditoriale à trancher : Nous France n'a pas de groupe parlementaire. Faut-il afficher le groupe LR, dont il est membre, ou rien ? Voir notes internes.\n\n• Ses actes documentables sont massivement exécutifs et locaux : cinq portefeuilles ministériels entre 2004 et 2012, et la présidence de la région Hauts-de-France depuis 2016."
+  },
+  "Édouard Philippe": {
+   "empeches": [],
+   "etat": "a_borner",
+   "fenetres": [],
+   "note": "« ni depute ni senateur depuis 2020 » ne dit rien de la periode anterieure. A borner avant tout derive.",
+   "verbatim": "• Aucun vote au Parlement : ni député ni sénateur depuis 2020\n• Sur les votes, on ne peut regarder que son groupe, Horizons depuis 2021\n• Pour lui personnellement : actes de Premier ministre (05/2017 – 07/2020) et actes de maire du Havre."
+  },
+  "Éric Zemmour": {
+   "empeches": [],
+   "etat": "jamais",
+   "fenetres": [],
+   "note": "N'a jamais occupe de mandat electif.",
+   "verbatim": "n'ayant jamais occupé de mandat électif, il n'existe aucun registre de votes personnels le concernant."
+  }
+ },
+ "maj": "2026-10-28",
+ "source": "COMPARATEUR_V2.xlsx, onglet 3_CANDIDATS, colonne « Fenêtre de votes personnels »"
+}
