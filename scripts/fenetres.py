@@ -6,8 +6,15 @@ Usage :
 
 La colonne « Fenetre de votes personnels » de l'onglet 3_CANDIDATS est ecrite en
 prose. Ce script ne la lit pas automatiquement : les bornes ci-dessous ont ete
-relevees a la main depuis cette prose, et chaque fiche garde le verbatim dont
-elle est tiree pour que la redaction puisse verifier d'un coup d'oeil.
+relevees a la main depuis cette prose.
+
+Deux sorties, et la distinction compte :
+  --sortie   le referentiel publie. Il ne porte QUE les bornes de dates. Le
+             depot est public : la prose de travail de la redaction n'y entre
+             pas.
+  --audit    la meme chose avec, pour chaque fiche, le verbatim dont les bornes
+             sont tirees, pour verifier d'un coup d'oeil. Ce fichier reste sur
+             le poste de la redaction et ne se publie jamais.
 
 Trois etats possibles :
   jamais    aucun mandat parlementaire, a aucun moment. Toujours « non concerne ».
@@ -121,6 +128,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--comparateur", required=True)
     ap.add_argument("--sortie", required=True)
+    ap.add_argument("--audit", help=u"copie locale avec le verbatim. Ne jamais publier.")
     a = ap.parse_args()
 
     prose = verbatim(a.comparateur)
@@ -138,7 +146,6 @@ def main():
             "fenetres": [{"chambre": c, "debut": d, "fin": f, "note": n or ""} for c, d, f, n in fen],
             "empeches": [{"debut": d, "fin": f, "motif": m} for d, f, m in trous],
             "note": note,
-            "verbatim": prose[nom],
         }
 
     sortie = {
@@ -146,9 +153,22 @@ def main():
         "source": u"COMPARATEUR_V2.xlsx, onglet 3_CANDIDATS, colonne « Fenêtre de votes personnels »",
         "candidats": fiches,
     }
+    corps = json.dumps(sortie, ensure_ascii=False, indent=1, sort_keys=True)
+    for n in prose:
+        extrait = prose[n][:40]
+        assert not extrait or extrait not in corps, \
+            u"du verbatim s'est glisse dans le fichier publie : %s" % n
     Path(a.sortie).parent.mkdir(parents=True, exist_ok=True)
-    Path(a.sortie).write_text(
-        json.dumps(sortie, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+    Path(a.sortie).write_text(corps, encoding="utf-8")
+
+    if a.audit:
+        complet = dict(sortie)
+        complet["avertissement"] = (u"Copie de verification. Contient la prose de "
+                                    u"travail de la redaction : ne pas publier.")
+        complet["candidats"] = {n: dict(f, verbatim=prose[n]) for n, f in fiches.items()}
+        Path(a.audit).parent.mkdir(parents=True, exist_ok=True)
+        Path(a.audit).write_text(
+            json.dumps(complet, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
 
     compte = {}
     for f in fiches.values():
@@ -159,6 +179,9 @@ def main():
     reste = sorted(n for n, f in fiches.items() if f["etat"] == A_BORNER)
     if reste:
         print(u"a borner avant tout derive : %s" % ", ".join(reste))
+    print(u"\npublie  : %s  (bornes seules)" % a.sortie)
+    if a.audit:
+        print(u"local   : %s  (avec le verbatim, ne pas publier)" % a.audit)
 
 
 if __name__ == "__main__":
