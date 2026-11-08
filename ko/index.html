@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Et vous, vous auriez voté comment ? - Komune</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Huit lois déjà documentées par Komune. Votez comme si vous étiez à l'Assemblée, puis comparez avec ce que les candidat·es ont réellement fait.">
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#0000ff; --purple:#5423df; --pink:#f099f9; --sky:#9abdff; --gold:#fee075;
+  --cream:#fcf7e8; --ink:#332e32; --white:#fff;
+  --line:rgba(51,46,50,.16); --muted:rgba(51,46,50,.68);
+  --pour:#5423df; --contre:#c2308f; --abst:#8a6a00;
+  --vide:#e6e0d2; --absent:#cfc7b4;
+  --radius:22px; --hard:5px 5px 0 var(--ink);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);
+  font-family:"Bricolage Grotesque",Inter,system-ui,sans-serif;font-size:17px;line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;line-height:1.05;margin:0;
+  letter-spacing:.01em}
+h1{font-size:clamp(34px,7vw,64px);font-weight:700}
+h2{font-size:clamp(24px,4.4vw,38px);font-weight:700;margin-bottom:10px}
+h3{font-size:clamp(17px,2.4vw,21px);font-weight:700}
+p{margin:0 0 14px}
+a{color:var(--purple)}
+.ban{background:var(--purple);color:var(--cream);padding:9px 0;font-size:14px}
+.ban .wrap{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.ban a{color:var(--cream)}
+header.top{padding:48px 0 22px}
+.kick{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.chapo{font-size:clamp(18px,2.5vw,21px);max-width:62ch;margin-top:18px}
+section{padding:40px 0;border-top:2px solid var(--ink)}
+.card{background:var(--white);border:2px solid var(--ink);border-radius:var(--radius);
+  box-shadow:var(--hard);padding:22px}
+.compteur{font-family:"Oswald",Impact,sans-serif;font-size:13px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)}
+.q-nom{font-family:"Oswald",Impact,sans-serif;font-size:clamp(20px,3.2vw,27px);text-transform:uppercase;
+  line-height:1.1;margin:8px 0 6px}
+.q-meta{font-size:14px;color:var(--muted);margin-bottom:14px}
+.q-txt{margin-bottom:18px}
+.choix{display:flex;gap:10px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer}
+.b{border:2px solid var(--ink);border-radius:999px;padding:11px 20px;background:var(--white);
+  font-weight:600;box-shadow:3px 3px 0 var(--ink);transition:transform .08s}
+.b:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink)}
+.b:active{transform:translate(3px,3px);box-shadow:none}
+.b.pour[aria-pressed="true"]{background:var(--pour);color:#fff}
+.b.contre[aria-pressed="true"]{background:var(--contre);color:#fff}
+.b.abstention[aria-pressed="true"]{background:var(--abst);color:#fff}
+.b.passe[aria-pressed="true"]{background:var(--ink);color:var(--cream)}
+.b.ghost{background:transparent;box-shadow:none;border-color:var(--line)}
+.reveal{margin-top:20px;padding-top:18px;border-top:2px dashed var(--line)}
+.resultat-off{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;font-size:15px;
+  letter-spacing:.06em;margin-bottom:10px}
+.liste-votes{display:grid;gap:8px;margin:12px 0 0}
+.lv{display:flex;gap:10px;align-items:flex-start;font-size:15px;padding:8px 10px;
+  border:1px solid var(--line);border-radius:12px;background:var(--cream)}
+.pastille{flex:0 0 auto;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;color:#fff;white-space:nowrap}
+.p-pour{background:var(--pour)} .p-contre{background:var(--contre)}
+.p-abstention{background:var(--abst)} .p-npppv{background:#5d5750}
+.nav{display:flex;gap:10px;justify-content:space-between;margin-top:22px;align-items:center;flex-wrap:wrap}
+.barre{height:10px;background:var(--vide);border:2px solid var(--ink);border-radius:999px;overflow:hidden}
+.barre i{display:block;height:100%;background:var(--purple)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;font-size:13px;letter-spacing:.05em}
+td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.score{display:inline-block;min-width:86px}
+.jauge{display:inline-block;width:76px;height:8px;background:var(--vide);border-radius:999px;
+  overflow:hidden;vertical-align:middle;margin-right:8px}
+.jauge i{display:block;height:100%;background:var(--purple)}
+.legende{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:14px 0}
+.legende span{display:flex;align-items:center;gap:6px}
+.pz{width:13px;height:13px;border-radius:3px;border:1px solid rgba(51,46,50,.3)}
+.mur{overflow-x:auto;padding-bottom:6px}
+.mur table{border-collapse:separate;border-spacing:2px;width:auto;min-width:100%}
+.mur th{font-family:"Bricolage Grotesque",sans-serif;font-size:12px;text-transform:none;
+  letter-spacing:0;font-weight:600;padding:2px 8px 2px 0;white-space:nowrap;border:0}
+.mur thead th{font-size:11px;color:var(--muted);text-align:center;max-width:62px;white-space:normal;
+  line-height:1.15;font-weight:600;vertical-align:bottom}
+.mur td{padding:0;border:0}
+.c{width:30px;height:22px;border-radius:4px;background:var(--vide);display:block}
+.c.pour{background:var(--pour)} .c.contre{background:var(--contre)}
+.c.abstention{background:var(--abst)} .c.npppv{background:var(--absent)}
+.chiffres{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:18px 0}
+.chiffre{background:var(--white);border:2px solid var(--ink);border-radius:var(--radius);padding:16px}
+.chiffre b{display:block;font-family:"Oswald",Impact,sans-serif;font-size:34px;line-height:1;
+  color:var(--purple)}
+.chiffre span{font-size:14px;color:var(--muted)}
+.note{font-size:14px;color:var(--muted)}
+.cta{display:inline-block;background:var(--gold);border:2px solid var(--ink);border-radius:999px;
+  padding:13px 24px;font-weight:700;text-decoration:none;color:var(--ink);box-shadow:var(--hard)}
+footer{padding:36px 0 60px;font-size:14px;color:var(--muted);border-top:2px solid var(--ink)}
+.cachee{display:none}
+@media(max-width:620px){ .c{width:22px;height:18px} .mur thead th{font-size:10px;max-width:46px} }
+</style>
+</head>
+<body>
+
+<div class="ban"><div class="wrap">
+  <span>Page de test, pas encore reliée au menu du site.</span>
+  <a href="../">Retour à l'accueil</a>
+</div></div>
+
+<header class="top"><div class="wrap">
+  <p class="kick">Komune · Comparateur 2027</p>
+  <h1>Et vous,<br>vous auriez voté comment ?</h1>
+  <p class="chapo">Huit lois sont documentées, vote par vote, pour les 31 candidat·es à la
+  présidentielle. Six ont été votées directement : ce sont les questions. Répondez comme si
+  vous siégiez à l'Assemblée, puis comparez avec ce que les candidat·es ont réellement fait.
+  Pas ce qu'ils disent : ce qu'ils ont voté.</p>
+</div></header>
+
+<section id="test"><div class="wrap">
+  <h2>Le test</h2>
+  <p class="note" id="intro-test">Chaque loi est résumée avant que vous répondiez. Le résultat
+  du vote réel ne s'affiche qu'après votre réponse.</p>
+  <div class="barre" style="margin:18px 0"><i id="jauge" style="width:0%"></i></div>
+  <div id="quiz"></div>
+</div></section>
+
+<section id="resultat" class="cachee"><div class="wrap">
+  <h2>Votre résultat</h2>
+  <p class="note">Chaque score est donné sur le nombre de votes réellement comparables.
+  Un·e candidat·e qui ne siégeait pas n'a pas de vote à comparer : son score n'existe pas,
+  il n'est pas de zéro.</p>
+  <div id="classement"></div>
+  <div class="nav">
+    <button class="b" id="copier">Copier mon résultat</button>
+    <button class="b ghost" id="recommencer">Recommencer</button>
+  </div>
+</div></section>
+
+<section id="mur"><div class="wrap">
+  <h2>Les 8 lois, les 31 candidat·es</h2>
+  <p>Voici l'état réel de ce qui est documenté aujourd'hui. Chaque carré est une personne
+  sur une loi.</p>
+  <div class="legende" id="legende"></div>
+  <div class="mur" id="grille"></div>
+  <p class="note" id="note-mur"></p>
+</div></section>
+
+<section id="censure"><div class="wrap">
+  <h2>Deux lois ne sont pas dans le test</h2>
+  <p id="txt-censure"></p>
+  <p class="note">C'est exactement ce que le comparateur sert à éviter : un vote est un vote sur
+  un objet précis, à une date précise. Le confondre avec une opinion générale produit un faux
+  verdict.</p>
+</div></section>
+
+<section id="suite"><div class="wrap">
+  <h2>Ce qui arrive</h2>
+  <p>Ces 8 lois sont la partie finie d'un tableau beaucoup plus grand : 192 textes, 31
+  candidat·es, 5 952 cases. Chaque case dit ce que la personne a promis, ce qu'elle a voté,
+  ce qu'elle a fait, et renvoie au document officiel.</p>
+  <div class="chiffres" id="chiffres"></div>
+  <p>Tant qu'une ligne n'est pas complète sur les 31, elle n'est pas publiée. C'est lent, et
+  c'est la raison pour laquelle le comparateur complet arrive en avril.</p>
+  <p style="margin-top:22px"><a class="cta" href="../soutenir/">Nous soutenir</a></p>
+</div></section>
+
+<footer><div class="wrap">
+  <p>Komune Média. Les votes viennent de l'open data de l'Assemblée nationale et des
+  scrutins publics du Sénat. Chaque loi renvoie à son dossier législatif et à son scrutin.</p>
+  <p>Cette page ne dépose aucun cookie et ne mesure pas l'audience. Vos réponses restent
+  dans votre navigateur et ne sont envoyées nulle part.</p>
+</div></footer>
+
+<script src="../comparateur/data.js"></script>
+<script>
+(function(){
+  var D = window.KOMUNE_DATA;
+  if (!D) { document.getElementById('quiz').textContent =
+    "Les données du comparateur n'ont pas pu être chargées."; return; }
+  var CANDS = D.CANDIDATS;
+  function estCensure(l){ return /motion de censure/i.test(l.releve||''); }
+  var LOIS = D.LOIS.filter(function(l){ return !estCensure(l); });
+  var CENSURE = D.LOIS.filter(estCensure);
+  var REEL = {pour:1, contre:1, abstention:1};
+  var LIB = {pour:'Pour', contre:'Contre', abstention:'Abstention', npppv:"N'a pas pris part"};
+  var reponses = {}, etape = 0;
+
+  function el(t, cls, txt){ var e=document.createElement(t); if(cls)e.className=cls;
+    if(txt!=null)e.textContent=txt; return e; }
+  function phrase(s){
+    var p=(s||'').split('\n').map(function(x){return x.trim();}).filter(Boolean);
+    var o=p[0]||'';
+    if (o.length < 110 && p[1]) o += ' ' + p[1];
+    return o;
+  }
+  function coupe(s, n){
+    s=(s||'').trim();
+    if (s.length<=n) return s;
+    var c=s.slice(0,n), k=c.lastIndexOf(' ');
+    return (k>n*0.6 ? c.slice(0,k) : c) + '…';
+  }
+  function code(v){ return ((v||{}).perso||{}).code || 'na'; }
+
+  // ---------- le test ----------
+  function dessineEtape(){
+    var q = document.getElementById('quiz'); q.innerHTML='';
+    document.getElementById('jauge').style.width = (etape/LOIS.length*100)+'%';
+    if (etape >= LOIS.length){ fin(); return; }
+    var l = LOIS[etape];
+    var c = el('div','card');
+    c.appendChild(el('p','compteur','Question '+(etape+1)+' sur '+LOIS.length));
+    c.appendChild(el('h3','q-nom', l.nom));
+    c.appendChild(el('p','q-meta', [l.date, l.chambre, l.sousTheme].filter(Boolean).join(' · ')));
+    c.appendChild(el('p','q-txt', phrase(l.chapo) || l.soustitre || l.engros));
+    var ch = el('div','choix');
+    ['pour','contre','abstention','passe'].forEach(function(k){
+      var b = el('button','b '+k, k==='passe' ? 'Je passe'
+        : k.charAt(0).toUpperCase()+k.slice(1));
+      b.setAttribute('aria-pressed', reponses[l.id]===k ? 'true':'false');
+      b.onclick = function(){ reponses[l.id]=k; dessineReveal(c, l); };
+      ch.appendChild(b);
+    });
+    c.appendChild(ch);
+    q.appendChild(c);
+    if (reponses[l.id]) dessineReveal(c, l);
+  }
+
+  function dessineReveal(carte, l){
+    [].forEach.call(carte.querySelectorAll('.b'), function(b){
+      b.setAttribute('aria-pressed', b.classList.contains(reponses[l.id]) ? 'true':'false'); });
+    var vieux = carte.querySelector('.reveal'); if (vieux) vieux.remove();
+    var r = el('div','reveal');
+    var officiel = (l.releve||'').split('\n').filter(function(x){return x.trim();})[0] || '';
+    r.appendChild(el('p','resultat-off', 'Résultat du scrutin'));
+    if (officiel) r.appendChild(el('p', null, officiel));
+    var avec = CANDS.filter(function(c){ return REEL[code(l.votes[c.id])]; });
+    if (avec.length){
+      r.appendChild(el('p','resultat-off', avec.length+' candidat·es pouvaient voter'));
+      var ul = el('div','liste-votes');
+      avec.forEach(function(c){
+        var v = l.votes[c.id], cd = code(v);
+        var li = el('div','lv');
+        li.appendChild(el('span','pastille p-'+cd, LIB[cd]||cd));
+        var d = el('div'); d.appendChild(el('strong', null, c.nom));
+        d.appendChild(document.createTextNode(' · '+c.parti));
+        li.appendChild(d);
+        ul.appendChild(li);
+      });
+      r.appendChild(ul);
+    }
+    var npppv = CANDS.filter(function(c){ return code(l.votes[c.id])==='npppv'; });
+    if (npppv.length) r.appendChild(el('p','note',
+      npppv.map(function(c){return c.nom;}).join(', ')+
+      (npppv.length>1 ? " siégeaient et n'ont pas pris part au vote."
+                      : " siégeait et n'a pas pris part au vote.")));
+    if (l.liens && l.liens.length){
+      var p = el('p','note'); p.appendChild(document.createTextNode('Sources : '));
+      l.liens.forEach(function(k,i){
+        var a = el('a',null,k.label); a.href=k.url; a.target='_blank'; a.rel='noopener';
+        if(i) p.appendChild(document.createTextNode(' · '));
+        p.appendChild(a);
+      });
+      r.appendChild(p);
+    }
+    var nav = el('div','nav');
+    var prec = el('button','b ghost','Précédente');
+    prec.onclick=function(){ if(etape>0){etape--; dessineEtape();} };
+    if (etape===0) prec.style.visibility='hidden';
+    var suiv = el('button','b', etape===LOIS.length-1 ? 'Voir mon résultat' : 'Suivante');
+    suiv.onclick=function(){ etape++; dessineEtape();
+      document.getElementById(etape>=LOIS.length?'resultat':'test')
+        .scrollIntoView({block:'start'}); };
+    nav.appendChild(prec); nav.appendChild(suiv);
+    r.appendChild(nav);
+    carte.appendChild(r);
+  }
+
+  // ---------- resultat ----------
+  function fin(){
+    document.getElementById('jauge').style.width='100%';
+    document.getElementById('quiz').innerHTML='';
+    var sec = document.getElementById('resultat'); sec.classList.remove('cachee');
+    var rep = 0; for (var k in reponses) if (reponses[k]!=='passe') rep++;
+    var lignes = CANDS.map(function(c){
+      var comp=0, acc=0;
+      LOIS.forEach(function(l){
+        var r = reponses[l.id]; if (!r || r==='passe') return;
+        var cd = code(l.votes[c.id]); if (!REEL[cd]) return;
+        comp++; if (cd===r) acc++;
+      });
+      return {c:c, comp:comp, acc:acc};
+    });
+    var avec = lignes.filter(function(x){return x.comp>0;})
+                     .sort(function(a,b){ return (b.acc/b.comp)-(a.acc/a.comp) || b.comp-a.comp; });
+    var sans = lignes.filter(function(x){return x.comp===0;});
+    var box = document.getElementById('classement'); box.innerHTML='';
+    if (!rep){
+      box.appendChild(el('p',null,"Vous avez passé les huit questions : il n'y a rien à comparer."));
+    } else {
+      var t = el('table');
+      t.innerHTML = '<thead><tr><th>Candidat·e</th><th>Parti</th>'+
+        '<th class="n">Accords</th><th class="n">Votes comparables</th></tr></thead>';
+      var tb = el('tbody');
+      avec.forEach(function(x){
+        var tr = el('tr');
+        tr.appendChild(el('td',null,x.c.nom));
+        tr.appendChild(el('td',null,x.c.parti));
+        var td = el('td','n');
+        var j = el('span','jauge'); var i = el('i');
+        i.style.width = Math.round(x.acc/x.comp*100)+'%'; j.appendChild(i);
+        td.appendChild(j);
+        td.appendChild(el('span','score', x.acc+' sur '+x.comp));
+        tr.appendChild(td);
+        tr.appendChild(el('td','n', String(x.comp)));
+        tb.appendChild(tr);
+      });
+      t.appendChild(tb); box.appendChild(t);
+      box.appendChild(el('p','note',
+        'Vous avez répondu à '+rep+' question'+(rep>1?'s':'')+'. '+
+        avec.length+' candidat·es ont au moins un vote comparable avec vos réponses.'));
+      if (sans.length) box.appendChild(el('p','note',
+        'Aucun vote comparable pour '+sans.length+' candidat·es : '+
+        sans.map(function(x){return x.c.nom;}).join(', ')+
+        '. Ils et elles ne siégeaient dans aucune chambre au moment de ces votes.'));
+    }
+  }
+
+  document.getElementById('recommencer').onclick=function(){
+    reponses={}; etape=0;
+    document.getElementById('resultat').classList.add('cachee');
+    dessineEtape(); document.getElementById('test').scrollIntoView({block:'start'});
+  };
+  document.getElementById('copier').onclick=function(){
+    var l=[]; LOIS.forEach(function(x){ if(reponses[x.id]&&reponses[x.id]!=='passe')
+      l.push('- '+x.nom+' : '+(LIB[reponses[x.id]]||reponses[x.id])); });
+    var txt="Et vous, vous auriez voté comment ? Mes réponses sur 8 lois :\n"+l.join('\n')+
+      "\n\nLe comparateur de Komune : www.komunemedia.fr";
+    navigator.clipboard && navigator.clipboard.writeText(txt);
+    this.textContent='Copié';
+    var b=this; setTimeout(function(){b.textContent='Copier mon résultat';},1800);
+  };
+
+  // ---------- le mur ----------
+  (function(){
+    var TOUTES = D.LOIS;
+    var ordre = ['pour','contre','abstention','npppv','na'];
+    var nom = {pour:'Pour', contre:'Contre', abstention:'Abstention',
+               npppv:"N'a pas pris part", na:'Ne siégeait pas'};
+    var leg = document.getElementById('legende');
+    ordre.forEach(function(k){
+      var s=el('span'); var p=el('i','pz'); p.style.background =
+        k==='pour'?'var(--pour)':k==='contre'?'var(--contre)':k==='abstention'?'var(--abst)':
+        k==='npppv'?'var(--absent)':'var(--vide)';
+      p.style.display='inline-block';
+      s.appendChild(p); s.appendChild(document.createTextNode(nom[k])); leg.appendChild(s);
+    });
+    var t = el('table');
+    var thead = el('thead'); var tr = el('tr'); tr.appendChild(el('th',null,''));
+    TOUTES.forEach(function(l){ tr.appendChild(el('th',null,coupe(l.engros||l.nom,40))); });
+    thead.appendChild(tr); t.appendChild(thead);
+    var tb = el('tbody'); var n = {pour:0,contre:0,abstention:0,npppv:0,na:0};
+    CANDS.forEach(function(c){
+      var r = el('tr'); r.appendChild(el('th',null,c.nom));
+      TOUTES.forEach(function(l){
+        var cd = code(l.votes[c.id]); n[cd] = (n[cd]||0)+1;
+        var td = el('td'); var d = el('i','c '+(cd==='na'?'':cd));
+        d.title = c.nom+' · '+(l.engros||l.nom)+' : '+(nom[cd]||cd);
+        td.appendChild(d); r.appendChild(td);
+      });
+      tb.appendChild(r);
+    });
+    t.appendChild(tb);
+    document.getElementById('grille').appendChild(t);
+    var reels = n.pour+n.contre+n.abstention;
+    document.getElementById('note-mur').textContent =
+      TOUTES.length+' lois sur 192, '+CANDS.length+' candidat·es, soit '+(TOUTES.length*CANDS.length)+
+      ' cases. '+reels+' portent un vote personnel, '+n.npppv+
+      ' une non-participation, et '+n.na+' une personne qui ne siégeait dans aucune chambre '+
+      'au moment du vote. Ces dernières ne sont pas des trous : ce sont des réponses.';
+    var ch = document.getElementById('chiffres');
+    [[TOUTES.length+' sur 192','lignes complètes et publiées'],
+     [(TOUTES.length*CANDS.length),'cases déjà documentées'],
+     ['5 952','cases au total une fois le tableau fini'],
+     ['31','candidat·es suivi·es']].forEach(function(x){
+      var d = el('div','chiffre'); d.appendChild(el('b',null,String(x[0])));
+      d.appendChild(el('span',null,x[1])); ch.appendChild(d);
+    });
+  })();
+
+  (function(){
+    if (!CENSURE.length) return;
+    var cible = document.getElementById('txt-censure');
+    var ul = el('ul'); ul.style.margin = '0 0 14px'; ul.style.paddingLeft = '20px';
+    CENSURE.forEach(function(l){
+      var li = el('li'); li.appendChild(el('strong', null, l.nom));
+      ul.appendChild(li);
+    });
+    cible.parentNode.insertBefore(ul, cible);
+    cible.textContent =
+      'Ces deux textes sont passés par le 49.3 : l\'Assemblée n\'a jamais voté dessus. Le seul '+
+      'scrutin nominatif est celui de la motion de censure qui a suivi, et voter la censure veut '+
+      'dire s\'opposer au texte. Les positions existent donc, elles sont dans le tableau '+
+      'ci-dessus, mais elles ne répondent pas à la question « pour ou contre ce texte ». Les '+
+      'mettre dans le test inverserait le sens de la comparaison.';
+  })();
+
+  dessineEtape();
+})();
+</script>
+</body>
+</html>
