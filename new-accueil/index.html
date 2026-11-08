@@ -5,38 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Komune : un média indépendant qui décrypte la société</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Komune est un média indépendant qui décrypte la société avec un regard antiraciste. Vidéos, articles, et le comparateur de la présidentielle 2027.">
+<meta name="description" content="Komune est un média indépendant qui décrypte la société avec un regard antiraciste.">
 <link rel="icon" type="image/png" href="../img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../new/komune.css">
 <style>
-.hero{padding:52px 0 40px}
-.hero .grille{align-items:center}
-.hero h1{font-size:clamp(36px,5.6vw,72px)}
-.hero .chapo{margin-top:18px}
-.outil{background:var(--white);border:2.5px solid var(--ink);border-radius:22px;box-shadow:var(--hard);padding:22px 24px}
-.outil h3{font-size:clamp(19px,2.6vw,24px);margin-bottom:6px}
-.outil .res{margin-top:14px;border-top:2px solid var(--line);padding-top:14px;min-height:92px}
-.outil .res b{font-family:"Oswald",Impact,sans-serif;font-size:clamp(30px,4vw,44px);line-height:1;display:block}
-.outil .res .ligne{display:grid;gap:14px;grid-template-columns:repeat(3,1fr);align-items:start}
-.outil .res span{display:block;font-size:13.5px;color:var(--muted);margin-top:4px}
-.outil .prop{display:flex;flex-direction:column;gap:2px;margin-top:8px;max-height:232px;overflow:auto}
-.outil .prop button{text-align:left;border:0;background:transparent;padding:7px 10px;border-radius:10px;font-size:15px;display:flex;flex-direction:column;gap:1px}
-.outil .prop button:hover,.outil .prop button.on{background:rgba(84,35,223,.1)}
-.outil .prop button small{color:var(--muted);font-size:12.5px}
-.modes4{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
+.hero{padding:56px 0 44px}
+.hero h1{font-size:clamp(48px,8vw,104px)}
+.baseline{font-size:clamp(20px,2.8vw,28px);line-height:1.3;margin:20px 0 26px;max-width:22ch}
+.baseline .mark{background:var(--pink);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.stats{display:grid;gap:12px}
+.stats div{border:2.5px solid var(--ink);border-radius:var(--r);background:var(--white);padding:18px 22px;box-shadow:var(--hard);display:flex;align-items:baseline;gap:16px}
+.stats b{font-family:"Oswald",Impact,sans-serif;font-size:clamp(36px,4.6vw,56px);line-height:1}
+.stats span{font-size:16px;color:var(--muted)}
+.manifeste p{font-size:clamp(17px,2.1vw,20px);line-height:1.5}
+.manifeste p:first-child{font-size:clamp(20px,2.8vw,27px);font-weight:500;line-height:1.3}
+.carte-cmp{display:block;text-decoration:none;color:inherit;background:var(--gold);border:2.5px solid var(--ink);border-radius:var(--r);padding:22px 24px;box-shadow:var(--hard);transition:transform .08s,box-shadow .08s}
+.carte-cmp:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.carte-cmp h3{font-size:clamp(24px,3.4vw,34px);margin:6px 0 8px}
+.carte-cmp .lien{font-weight:700;color:var(--purple);margin-top:10px;display:block}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 22px}
+.tags span{border:2px solid var(--ink);border-radius:999px;padding:6px 14px;background:var(--white);font-weight:600;font-size:14.5px}
+.modes4{display:grid;gap:14px;grid-template-columns:repeat(4,1fr);margin-top:26px}
 @media(max-width:860px){.modes4{grid-template-columns:repeat(2,1fr)}}
-.modes4 a{text-decoration:none;color:inherit;border:2.5px solid var(--ink);border-radius:var(--r);padding:18px;box-shadow:var(--hard);display:flex;flex-direction:column;gap:6px;min-height:150px;transition:transform .08s,box-shadow .08s}
+.modes4 a{text-decoration:none;color:inherit;border:2.5px solid var(--ink);border-radius:var(--r);padding:16px 18px;box-shadow:var(--hard);display:flex;flex-direction:column;gap:6px;min-height:130px;transition:transform .08s,box-shadow .08s}
 .modes4 a:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
 .modes4 .n{font-family:"Oswald",Impact,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.modes4 h3{font-size:clamp(20px,2.8vw,27px)} .modes4 p{margin:0;font-size:14.5px;line-height:1.4}
-.manifeste{font-size:clamp(20px,3vw,30px);line-height:1.3;font-weight:500;max-width:30ch}
-.manifeste b{background:var(--gold);padding:0 .15em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.socials{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.modes4 h3{font-size:clamp(19px,2.6vw,25px)} .modes4 p{margin:0;font-size:14.5px;line-height:1.4}
+.liens-cmp{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.contact{display:grid;gap:14px;grid-template-columns:1fr 1fr} @media(max-width:620px){.contact{grid-template-columns:1fr}}
+.contact a{font-size:clamp(17px,2.2vw,21px);font-weight:600;word-break:break-all}
 </style>
-<script src="../new/sujets.js"></script>
 </head>
 <body>
 <div class="test"><div class="wrap">
@@ -44,7 +45,7 @@
   <a href="../">Site actuel</a>
 </div></div>
 <header class="site"><div class="wrap">
-  <a class="logo" href="../new-accueil/"><i></i>Komune</a>
+  <a class="logo" href="../new-accueil/" aria-label="Komune Média, retour à l'accueil"><img src="../img/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>
   <button class="burger" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   <nav class="principale" id="nav" aria-label="Navigation principale">
     <a href="../new-accueil/" class="ici">Accueil</a>
@@ -59,54 +60,44 @@
 <main id="contenu">
 
 <section class="hero"><div class="wrap">
-  <div class="grille">
-    <div class="c6">
-      <p class="kick">Komune · média indépendant</p>
-      <h1>On décrypte<br>la société,<br>avec un regard antiraciste</h1>
-      <p class="chapo">Des vidéos, des enquêtes, des témoignages. Et pour 2027, un comparateur qui met chaque promesse face à chaque vote.</p>
-      <div class="socials">
-        <a class="b" href="https://www.instagram.com/komune.media/" target="_blank" rel="noopener">Instagram</a>
-        <a class="b" href="https://www.youtube.com/@komune4882" target="_blank" rel="noopener">YouTube</a>
-        <a class="b" href="https://komunemedia.substack.com/" target="_blank" rel="noopener">Newsletter</a>
-      </div>
+  <div class="grille" style="align-items:center">
+    <div class="c7" style="grid-column:span 7">
+      <p class="kick">Komune média</p>
+      <h1>Bienvenue<br>sur Komune</h1>
+      <p class="baseline">Komune est un média indépendant qui décrypte la société avec un <span class="mark">regard antiraciste</span>.</p>
+      <a class="b plein gros" href="../new-noussoutenir/">Nous soutenir</a>
     </div>
-    <div class="c6">
-      <div class="outil">
-        <p class="kick">Essayez tout de suite</p>
-        <h3>Sur quel sujet voulez-vous comparer les candidat·es ?</h3>
-        <input type="search" id="q" placeholder="Retraites, naturalisation, nucléaire, cannabis…" aria-label="Chercher un sujet" autocomplete="off">
-        <div class="prop" id="prop"></div>
-        <div class="res" id="res"></div>
-      </div>
+    <div class="c5 stats" style="grid-column:span 5">
+      <div><b>250K+</b><span>abonnés sur nos réseaux</span></div>
+      <div><b>2M</b><span>de vues par mois</span></div>
+      <div><b>4 ans</b><span>de décryptages</span></div>
     </div>
-  </div>
-  <div class="chiffres" style="margin-top:36px">
-    <div class="chiffre"><b>250 K+</b><span>abonné·es sur nos réseaux</span></div>
-    <div class="chiffre"><b>2 M</b><span>vues par mois</span></div>
-    <div class="chiffre"><b>4 ans</b><span>de décryptages</span></div>
-    <div class="chiffre"><b id="n-mes">7 232</b><span>mesures de programmes relevées pour 2027</span></div>
-    <div class="chiffre"><b id="n-lois">8</b><span>lois documentées vote par vote</span></div>
   </div>
 </div></section>
 
-<section class="ciel"><div class="wrap">
-  <div class="tete-section">
-    <div><p class="kick">Présidentielle 2027</p><h2>Le terrain de jeu politique</h2>
-      <p>Les données que Komune a déjà vérifiées, à prendre en main en deux minutes. Chaque entrée sert dès aujourd'hui, et le comparateur complet arrive en avril 2027.</p></div>
-    <a class="b plein" href="../new-comparateur/">Ouvrir le terrain de jeu</a>
-  </div>
-  <div class="modes4">
-    <a href="../new-comparateur/#jouer" style="background:var(--gold)"><span class="n">1 · Jouer</span><h3>Devinez le vote</h3><p>Une loi, une personne : pour, contre, abstention ou pas de vote possible ?</p></a>
-    <a href="../new-comparateur/#comparer" style="background:var(--white)"><span class="n">2 · Comparer</span><h3>Côte à côte</h3><p>Jusqu'à quatre candidat·es, mandats, programme et votes. Sans classement.</p></a>
-    <a href="../new-comparateur/#debattre" style="background:var(--pink)"><span class="n">3 · Débattre</span><h3>Une fiche par sujet</h3><p>Qui propose quoi, mot pour mot, avec la source.</p></a>
-    <a href="../new-comparateur/#comprendre" style="background:var(--white)"><span class="n">4 · Comprendre</span><h3>Les bases</h3><p>Les 500 parrainages, le calendrier, ce qu'un président peut faire.</p></a>
+<section class="bord"><div class="wrap">
+  <div class="grille" style="align-items:start">
+    <div class="c7 manifeste" style="grid-column:span 7">
+      <p>Nous analysons l’actualité et les récits dominants pour comprendre comment les rapports de pouvoir, notamment raciaux, structurent notre société et influencent son fonctionnement.</p>
+      <p>À travers des décryptages, des analyses et des récits de personnes concernées, nous documentons des réalités souvent invisibilisées et éclairons des sujets instrumentalisés dans le débat politico-médiatique, comme l’immigration.</p>
+      <p>Parce qu’aujourd’hui, ces questions sont partout : dans les médias, dans les discours politiques, dans les conversations du quotidien.</p>
+      <p>Et parce que dans un monde où les inégalités se creusent et où le racisme progresse, il devient essentiel de pouvoir s’informer avec rigueur et comprendre les mécanismes qui façonnent notre société.</p>
+    </div>
+    <div class="c5" style="grid-column:span 5">
+      <a class="carte-cmp" href="../new-comparateur/">
+        <p class="kick">Présidentielle 2027</p>
+        <h3>Promesses VS actes</h3>
+        <p style="margin:0">Ce qui a été promis, ce qui a été voté. Texte par texte, avec les sources.</p>
+        <span class="lien">Ouvrir le comparateur →</span>
+      </a>
+    </div>
   </div>
 </div></section>
 
 <section class="bord"><div class="wrap">
   <div class="tete-section">
-    <div><p class="kick">Nos formats courts</p><h2>Sur Instagram</h2><p>Les vidéos ne se chargent qu'au clic.</p></div>
-    <a class="b" href="https://www.instagram.com/komune.media/" target="_blank" rel="noopener">Tout voir sur Instagram</a>
+    <div><p class="kick">Nos formats courts</p><h2>Sur Instagram</h2></div>
+    <a class="b" href="https://www.instagram.com/komune.media/" target="_blank" rel="noopener">Notre compte Instagram</a>
   </div>
   <div class="grille-vid ig"><div class="vid ig"><button type="button" data-ig="p/Dc5g-tHxXfv" aria-label="Lire la vidéo Instagram : Comment repérer les publicités racistes ? Avec Britanie de @culturedorée"><img src="../img/ig-Dc5g-tHxXfv.webp" alt="" loading="lazy" decoding="async" width="288" height="512"><span class="lire">Lire</span></button><div class="leg">Comment repérer les publicités racistes ? Avec Britanie de @culturedorée</div></div>
 <div class="vid ig"><button type="button" data-ig="reel/DdLk-CzRmSt" aria-label="Lire la vidéo Instagram : « Je vais aider dans un orphelinat » : le problème du volontourisme"><img src="../img/ig-DdLk-CzRmSt.webp" alt="" loading="lazy" decoding="async" width="288" height="512"><span class="lire">Lire</span></button><div class="leg">« Je vais aider dans un orphelinat » : le problème du volontourisme</div></div>
@@ -116,7 +107,7 @@
 <div class="vid ig"><button type="button" data-ig="reel/DXMlQI4DXh4" aria-label="Lire la vidéo Instagram : « Je ne suis pas raciste » : est-ce que ça suffit vraiment ?"><img src="../img/ig-DXMlQI4DXh4.webp" alt="" loading="lazy" decoding="async" width="288" height="512"><span class="lire">Lire</span></button><div class="leg">« Je ne suis pas raciste » : est-ce que ça suffit vraiment ?</div></div></div>
   <div class="tete-section" style="margin-top:44px">
     <div><p class="kick">Nos formats longs</p><h2>Sur YouTube</h2><p>Enquêtes, reportages et décryptages.</p></div>
-    <a class="b" href="https://www.youtube.com/@komune4882" target="_blank" rel="noopener">La chaîne</a>
+    <a class="b" href="https://www.youtube.com/@komune4882" target="_blank" rel="noopener">Notre chaîne YouTube</a>
   </div>
   <div class="grille-vid"><div class="vid"><button type="button" data-yt="_AR48pR6zyE" aria-label="Lire la vidéo : POURQUOI LA RD CONGO EST EN GUERRE ? Bingo EP4"><img src="https://i.ytimg.com/vi/_AR48pR6zyE/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="270"><span class="lire">Lire</span></button><div class="leg">POURQUOI LA RD CONGO EST EN GUERRE ? Bingo EP4</div></div>
 <div class="vid"><button type="button" data-yt="ikmgwLqigAE" aria-label="Lire la vidéo : Enfants placés : que vivent-ils vraiment ? Bingo EP3"><img src="https://i.ytimg.com/vi/ikmgwLqigAE/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="270"><span class="lire">Lire</span></button><div class="leg">Enfants placés : que vivent-ils vraiment ? Bingo EP3</div></div>
@@ -126,7 +117,7 @@
 <section class="bord"><div class="wrap">
   <div class="tete-section">
     <div><p class="kick">La newsletter</p><h2>Nos derniers articles</h2></div>
-    <a class="b" href="../new-articles/">Tous les articles</a>
+    <a class="b" href="../new-articles/">Explorer tous les articles</a>
   </div>
   <div style="margin-bottom:18px"><a class="art grande" href="../articles/amilcar-cabral-une-pensee-revolutionnaire/"><span class="cover"><img src="https://substackcdn.com/image/fetch/w_900,c_limit,$s_!LI-T!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc9ed93d9-227c-41e3-b88e-6d5648786ddf_5480x4110.jpeg" alt="" loading="lazy" decoding="async"></span><span class="corps"><time datetime="2026-10-28">28 octobre 2026</time><strong>Amílcar Cabral, une pensée révolutionnaire toujours vivante</strong><span>Figure de l’indépendance de la Guinée-Bissau et du Cap-Vert, Amílcar Cabral est à l’honneur à la MansA du 16 octobre au 13 décembre. Neuf artistes revisitent sa pensée et son héritage.</span><em>Par Inès Florimond</em></span></a></div>
   <div class="grille-art"><a class="art" href="../articles/jaimerais-etre-lesbienne-ce-serait/"><span class="cover"><img src="https://substackcdn.com/image/fetch/w_560,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F344a75e6-4864-4450-854b-9141d61b18d3_2849x1678.jpeg" alt="" loading="lazy" decoding="async"></span><span class="corps"><time datetime="2026-10-15">15 octobre 2026</time><strong>« J’aimerais être lesbienne, ce serait plus simple »</strong><em>Par Anna Jégo</em></span></a>
@@ -136,28 +127,42 @@
 <a class="art" href="../articles/pourquoi-exotique-nest-pas-un-compliment/"><span class="cover"><img src="https://substackcdn.com/image/fetch/w_560,c_limit,$s_!0h46!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd25a5c70-9297-4e8c-a133-7b606e1e8a1a_4160x6240.heic" alt="" loading="lazy" decoding="async"></span><span class="corps"><time datetime="2026-09-15">15 septembre 2026</time><strong>Pourquoi « exotique » n&amp;#x27;est pas un compliment neutre ? - DÉBUNK DES MOTS</strong><em>Par Sandra Inack et Badra Kebaili</em></span></a></div>
 </div></section>
 
-<section class="or"><div class="wrap">
+<section class="ciel"><div class="wrap">
+  <p class="kick">Présidentielle 2027</p>
+  <h2>On construit un comparateur politique pour enfin choisir sur du concret</h2>
   <div class="grille">
-    <div class="c6"><p class="kick">Ce qu'on fait</p>
-      <p class="manifeste">Nous analysons l'actualité et les récits dominants pour comprendre comment les rapports de pouvoir, <b>notamment raciaux</b>, structurent notre société.</p></div>
-    <div class="c6"><p>À travers des décryptages, des analyses et des récits de personnes concernées, nous documentons des réalités souvent invisibilisées et éclairons des sujets instrumentalisés dans le débat politique et médiatique, comme l'immigration.</p>
-      <p>Ces questions sont partout : dans les médias, dans les discours politiques, dans les conversations du quotidien. Pouvoir s'informer avec rigueur et comprendre les mécanismes qui façonnent notre société, c'est ce qu'on essaie de rendre possible.</p>
-      <a class="b" href="../equipe/">Qui fait Komune</a></div>
+    <div class="c6"><p>Pour la présidentielle de 2027, on développe une plateforme gratuite pour comparer les candidat·es autrement : pas seulement à partir des promesses, mais aussi des votes, des actes, des contradictions, des sources et de ce que leurs propositions changent concrètement dans nos vies.</p></div>
+    <div class="c6"><p>L’objectif : sortir des clashs, des sondages et des petites phrases pour donner un outil clair, sourcé et accessible à celles et ceux qui veulent comprendre avant de voter.</p></div>
+  </div>
+  <div class="tags"><span>programmes</span><span>votes réels</span><span>actes au pouvoir</span><span>contradictions</span><span>impacts concrets</span><span>sources</span></div>
+  <div class="modes4">
+    <a href="../new-comparateur/#jouer" style="background:var(--gold)"><span class="n">1 · Jouer</span><h3>Devinez le vote</h3><p>Une loi, une personne : pour, contre, abstention ou pas de vote possible ?</p></a>
+    <a href="../new-comparateur/#comparer" style="background:var(--white)"><span class="n">2 · Comparer</span><h3>Côte à côte</h3><p>Jusqu'à quatre candidat·es, mandats, programme et votes. Sans classement.</p></a>
+    <a href="../new-comparateur/#debattre" style="background:var(--pink)"><span class="n">3 · Débattre</span><h3>Une fiche par sujet</h3><p>Qui propose quoi, mot pour mot, avec la source.</p></a>
+    <a href="../new-comparateur/#comprendre" style="background:var(--white)"><span class="n">4 · Comprendre</span><h3>Les bases</h3><p>Les 500 parrainages, le calendrier, ce qu'un président peut faire.</p></a>
+  </div>
+  <div class="liens-cmp">
+    <a class="b plein" href="../new-comparateur/">Ouvrir le comparateur de la présidentielle 2027</a>
+    <a class="b" href="../comparateur/#programmes">Les programmes, mesure par mesure</a>
+    <a class="b" href="../comparateur/#candidats">Les fiches des candidat·es</a>
+    <a class="b nu" href="../comparateur-2027/">Lire votre cahier des charges pour le comparateur</a>
   </div>
 </div></section>
 
 <section class="violet"><div class="wrap">
   <div class="grille" style="align-items:center">
-    <div class="c6">
-      <p class="kick">Nous soutenir</p>
-      <h2>800 soutiens mensuels, chaque mois, jusqu'à la présidentielle</h2>
-      <p>C'est ce qu'il faut pour développer le comparateur, vérifier chaque mesure et le tenir à jour. Ni annonceur, ni parti, ni argent public derrière ce travail.</p>
-      <p>66 % de votre don est déductible des impôts : 7 € par mois reviennent à environ 2,40 € après réduction fiscale.</p>
-      <a class="b or gros" href="../new-noussoutenir/">Je soutiens Komune</a>
+    <div class="c7" style="grid-column:span 7">
+      <p class="kick">Soutenir Komune</p>
+      <h2>Soutenir Komune</h2>
+      <p>Dans moins d'un an, il y aura l'élection présidentielle. Immigration, islam, identité nationale : les sujets que nous traitons au quotidien vont être encore plus présents dans les médias, les discours politiques et les discussions du quotidien.</p>
+      <p>Et plus ces sujets occupent l'espace public, plus il y a besoin de faits, de contexte et d'informations vérifiées.</p>
+      <p>Nous voulons passer à la vitesse supérieure : produire davantage de décryptages et de témoignages, réaliser plus de reportages de terrain partout en France, donner davantage la parole aux expert·es et rendre leur savoir accessible au plus grand nombre.</p>
+      <p>Pour y parvenir, il n'y a pas de solution miracle : nous devons pouvoir consacrer plus de temps au média, moins aux prestations extérieures qui nous font vivre actuellement, et surtout recruter pour renforcer l'équipe.</p>
+      <a class="b plein gros" href="../new-noussoutenir/">Nous soutenir ↗</a>
     </div>
-    <div class="c6">
-      <div class="jauge" style="color:var(--ink)">
-        <p class="kick">Jauge en direct · mise à jour 4 fois par jour</p>
+    <div class="c5" style="grid-column:span 5">
+      <div class="jauge">
+        <p class="kick">Soutiens mensuels · mis à jour 4 fois par jour</p>
         <div class="n"><span data-jauge="n">…</span><small>/ 800</small></div>
         <div class="piste"><i data-jauge="barre"></i></div>
         <p class="pet" style="margin:0"><b data-jauge="etat">Chargement</b> · <span data-jauge="reste"></span></p>
@@ -166,37 +171,17 @@
   </div>
 </div></section>
 
+<section class="bord"><div class="wrap">
+  <div class="contact">
+    <div class="encadre"><h3>Nous contacter</h3><a href="mailto:anna@komunemedia.fr">anna@komunemedia.fr</a></div>
+    <div class="encadre"><h3>Nous contacter</h3><a href="mailto:komune.contact@gmail.com">komune.contact@gmail.com</a></div>
+  </div>
+</div></section>
+
 </main>
 <script src="../new/jauge.js"></script>
 <script>
 (function(){
-  "use strict";
-  var S = window.KOMUNE_SUJETS; var el = function(t, c, x){ var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
-  function pli(s){ return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
-  function nb(n){ return Number(n).toLocaleString('fr-FR'); }
-  if (S){
-    document.getElementById('n-mes').textContent = nb(S.mesures); document.getElementById('n-lois').textContent = S.lois;
-    var q = document.getElementById('q'), prop = document.getElementById('prop'), res = document.getElementById('res');
-    var sujets = S.s.slice().sort(function(a, b){ return b[3] - a[3]; });
-    function montre(s){
-      res.innerHTML = '';
-      var l = el('div', 'ligne');
-      var d1 = el('div'); d1.appendChild(el('b', null, s[3])); d1.appendChild(el('span', null, 'candidat·es ont au moins une mesure sur « ' + s[1] + ' »')); l.appendChild(d1);
-      var d2 = el('div'); d2.appendChild(el('b', null, S.cand - s[3])); d2.appendChild(el('span', null, 'n\'en ont aucune, et on dit pourquoi')); l.appendChild(d2);
-      var d3 = el('div'); d3.appendChild(el('b', null, s[4])); d3.appendChild(el('span', null, 'mesures, mot pour mot, avec la source')); l.appendChild(d3);
-      res.appendChild(l);
-      var a = el('a', 'b plein', 'Ouvrir la fiche « ' + s[1] + ' »'); a.href = '../new-comparateur/#debattre=' + s[0]; a.style.marginTop = '14px'; res.appendChild(a);
-    }
-    function liste(f){
-      prop.innerHTML = ''; f = pli(f).trim();
-      var ss = sujets.filter(function(s){ return !f || pli(s[1]).indexOf(f) >= 0 || pli(s[2]).indexOf(f) >= 0; }).slice(0, f ? 8 : 5);
-      ss.forEach(function(s){ var b = el('button'); b.type = 'button'; b.appendChild(document.createTextNode(s[1])); b.appendChild(el('small', null, s[3] + ' candidat·es · ' + s[2])); b.onclick = function(){ montre(s); [].forEach.call(prop.children, function(x){ x.classList.toggle('on', x === b); }); }; prop.appendChild(b); });
-      if (!ss.length) prop.appendChild(el('p', 'pet mut', 'Aucun sujet ne correspond.'));
-    }
-    q.addEventListener('input', function(){ liste(q.value); });
-    liste(''); montre(sujets.filter(function(s){ return s[1] === 'Retraites'; })[0] || sujets[0]);
-  }
-  /* videos chargees au clic, sans cookie avant */
   [].forEach.call(document.querySelectorAll('.vid [data-yt]'), function(b){ b.onclick = function(){
     var f = document.createElement('iframe'); f.title = b.getAttribute('aria-label'); f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.setAttribute('allowfullscreen', '');
     f.src = 'https://www.youtube-nocookie.com/embed/' + b.getAttribute('data-yt') + '?autoplay=1&rel=0'; b.replaceWith(f); }; });
@@ -207,10 +192,10 @@
 </script>
 
 <footer class="site"><div class="wrap">
-  <div>
-    <h3>Komune Média</h3>
+  <div class="marque">
+    <img src="../img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy">
     <p>Média indépendant qui décrypte la société avec un regard antiraciste. Ni annonceur, ni parti, ni argent public derrière le comparateur.</p>
-    <p>Ce site ne dépose aucun cookie et ne mesure pas l'audience. Les vidéos ne se chargent qu'au clic.</p>
+    <p>Ce site ne dépose aucun cookie et ne mesure pas l'audience.</p>
   </div>
   <div>
     <h3>Nous suivre</h3>

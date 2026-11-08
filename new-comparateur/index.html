@@ -79,7 +79,7 @@ td .raison{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line
 .bloc h3{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font-size:clamp(22px,3.4vw,30px);margin-bottom:12px}
 .bloc h3 small{font-size:14px;font-family:"Bricolage Grotesque",sans-serif;text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted)}
 .cand{border:2px solid var(--ink);border-radius:var(--r);background:var(--white);margin:0 0 14px;overflow:hidden}
-.cand .tete{padding:14px 18px 10px;display:flex;gap:10px 16px;align-items:baseline;flex-wrap:wrap;border-bottom:2px solid var(--line)}
+.cand .tete{padding:14px 18px 10px;display:flex;gap:10px 14px;align-items:center;flex-wrap:wrap;border-bottom:2px solid var(--line)}
 .cand .tete h4{font-family:"Oswald",Impact,sans-serif;font-size:clamp(18px,3vw,23px);text-transform:uppercase;margin:0}
 .cand .tete .parti{color:var(--muted);font-size:14.5px}
 .cand .tete .etat{font-family:"Oswald",Impact,sans-serif;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;background:var(--gold);border:1.5px solid var(--ink);border-radius:999px;padding:3px 10px;margin-left:auto}
@@ -122,14 +122,16 @@ td .raison{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line
 /* avril */
 .ligne-avril{display:grid;gap:0;grid-template-columns:repeat(4,1fr);border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;background:var(--white);box-shadow:var(--hard)}
 @media(max-width:860px){.ligne-avril{grid-template-columns:1fr 1fr}} @media(max-width:520px){.ligne-avril{grid-template-columns:1fr}}
+.ligne-avril{color:var(--ink)}
 .ligne-avril > div{padding:16px 18px;border-right:2px solid var(--line);border-bottom:2px solid var(--line)}
+.ligne-avril .av{margin-bottom:10px}
 .ligne-avril .k{font-family:"Oswald",Impact,sans-serif;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .ligne-avril .t{font-size:15px;line-height:1.45;white-space:pre-line}
 .ligne-avril .verdict{font-family:"Oswald",Impact,sans-serif;font-size:26px;text-transform:uppercase}
 .ligne-avril .fantome{background:repeating-linear-gradient(135deg,rgba(51,46,50,.05) 0 8px,transparent 8px 16px)}
 .ligne-avril .fantome .t{color:var(--faint)}
 .sujets-avril{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:18px}
-.sujets-avril div{border:2px solid var(--ink);border-radius:12px;padding:12px 14px;background:var(--white)}
+.sujets-avril div{border:2px solid var(--ink);border-radius:12px;padding:12px 14px;background:var(--white);color:var(--ink)}
 .sujets-avril b{font-family:"Oswald",Impact,sans-serif;font-size:26px;display:block;line-height:1}
 .sujets-avril span{font-size:14px}
 </style>
@@ -143,7 +145,7 @@ td .raison{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line
   <a href="../">Site actuel</a>
 </div></div>
 <header class="site"><div class="wrap">
-  <a class="logo" href="../new-accueil/"><i></i>Komune</a>
+  <a class="logo" href="../new-accueil/" aria-label="Komune Média, retour à l'accueil"><img src="../img/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>
   <button class="burger" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   <nav class="principale" id="nav" aria-label="Navigation principale">
     <a href="../new-accueil/">Accueil</a>
@@ -312,12 +314,20 @@ function pli(s){ return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
 function melange(a){ for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 function famille(n){ var p = n.split(' '); return pli(p[p.length - 1]) + ' ' + pli(n); }
 function texteBrut(s){ return String(s || '').replace(/\*\*/g, ''); }
+function avatar(c, taille){
+  var d = c.d || c, a = el('span', 'av' + (taille ? ' ' + taille : '')); a.setAttribute('aria-hidden', 'true');
+  if (d.bg) a.style.background = d.bg;
+  if (d.photo){ var i = el('img'); i.src = '../comparateur/' + d.photo; i.alt = ''; i.loading = 'lazy'; a.appendChild(i); }
+  else a.textContent = d.initiales || '';
+  return a;
+}
+function avatarHtml(c, taille){ return avatar(c, taille).outerHTML; }
 
 /* ---------- identites : D (comparateur), K (fiches), P (programmes) relies par le nom ---------- */
 var CAND = D.CANDIDATS.map(function(c){
   var k = null; for (var i = 0; i < K.candidats.length; i++) if (K.candidats[i].nom === c.nom) k = K.candidats[i];
   var e = null; for (var j = 0; j < P.etat.length; j++) if (P.etat[j].cand === c.nom) e = P.etat[j];
-  return {id: c.id, nom: c.nom, parti: c.parti, k: k, e: e, slug: k ? k.slug : ''};
+  return {id: c.id, nom: c.nom, parti: c.parti, k: k, e: e, slug: k ? k.slug : '', d: c};
 });
 var PAR_ID = {}; CAND.forEach(function(c){ PAR_ID[c.id] = c; });
 var PAR_NOM = {}; CAND.forEach(function(c){ PAR_NOM[c.nom] = c; });
@@ -390,7 +400,8 @@ function dessineManche(){
   carte.appendChild(el('span', 'etiq', l.sousTheme || l.sujet || 'Loi'));
   carte.appendChild(el('p', 'loi', l.nom));
   carte.appendChild(el('p', 'resume', premierePhrase(l.chapo) || l.soustitre || ''));
-  carte.appendChild(el('p', 'qui', c.nom + ', ' + c.parti + '. Quel a été son vote ?'));
+  var qui = el('p', 'qui'); qui.style.display = 'flex'; qui.style.alignItems = 'center'; qui.style.gap = '12px';
+  qui.appendChild(avatar(c, 'g')); qui.appendChild(el('span', null, c.nom + ', ' + c.parti + '. Quel a été son vote ?')); carte.appendChild(qui);
   var ch = el('div', 'choix');
   ['pour', 'contre', 'abstention', 'na'].forEach(function(code){
     var b = el('button', 'b', LIB[code]); b.type = 'button';
@@ -457,7 +468,7 @@ function dessineCitation(){
   var options = melange(bons.concat(autres));
   var ch = el('div', 'choix');
   options.forEach(function(id){
-    var b = el('button', 'b', PAR_ID[id] ? PAR_ID[id].nom : id); b.type = 'button';
+    var b = el('button', 'b'); b.type = 'button'; if (PAR_ID[id]) b.appendChild(avatar(PAR_ID[id], 'p')); b.appendChild(el('span', null, PAR_ID[id] ? PAR_ID[id].nom : id));
     b.onclick = function(){
       var bon = id === q.reponse; if (bon) citPts++;
       [].forEach.call(ch.querySelectorAll('.b'), function(x, i){ x.disabled = true; x.classList.add(options[i] === q.reponse ? 'bon' : 'faux'); });
@@ -481,7 +492,8 @@ dessineCitation();
 var choisis = [];
 var zChoix = document.getElementById('c-choix');
 CAND.slice().sort(function(a, b){ return famille(a.nom).localeCompare(famille(b.nom), 'fr'); }).forEach(function(c){
-  var b = el('button', 'puce', c.nom); b.type = 'button'; b.setAttribute('aria-pressed', 'false'); b.setAttribute('data-id', c.id);
+  var b = el('button', 'puce'); b.type = 'button'; b.setAttribute('aria-pressed', 'false'); b.setAttribute('data-id', c.id);
+  b.appendChild(avatar(c, 'p')); b.appendChild(el('span', null, c.nom));
   b.onclick = function(){
     var i = choisis.indexOf(c.id);
     if (i >= 0) choisis.splice(i, 1); else { if (choisis.length >= 4){ choisis.shift(); } choisis.push(c.id); }
@@ -504,7 +516,7 @@ function dessineTable(){
   if (choisis.length < 2){ z.innerHTML = '<p class="encadre mut">Choisissez au moins deux personnes dans la liste.</p>'; return; }
   var cs = choisis.map(function(id){ return PAR_ID[id]; });
   var h = '<div class="tableau"><table class="cmp"><thead><tr><th scope="col" style="font-size:13px;letter-spacing:.1em;color:var(--muted)">Ce qu\'on peut vérifier</th>';
-  cs.forEach(function(c){ h += '<th scope="col">' + esc(c.nom) + '<small>' + esc(c.parti) + '</small></th>'; });
+  cs.forEach(function(c){ h += '<th scope="col"><div style="display:flex;gap:10px;align-items:center">' + avatarHtml(c, '') + '<div>' + esc(c.nom) + '<small>' + esc(c.parti) + '</small></div></div></th>'; });
   h += '</tr></thead><tbody>';
   h += '<tr><th scope="row">Candidature<em>date de l\'annonce</em></th>' + cs.map(function(c){ return '<td>' + esc(c.k ? (c.k.statut + (c.k.date ? ', ' + c.k.date : '')) : 'non renseigné') + '</td>'; }).join('') + '</tr>';
   h += '<tr><th scope="row">Mandats<em>vérifiés dans les sources</em></th>' + cs.map(function(c){ var k = c.k; if (!k) return '<td>?</td>';
@@ -657,7 +669,7 @@ function ouvreSujet(id, pousse){
     var h2 = el('h3', null, 'Ce qu\'ils proposent'); h2.appendChild(el('small', null, 'mot pour mot, par ordre alphabétique')); zm.appendChild(h2);
     avec.forEach(function(cid){
       var c = PAR_ID[cid], bloc = el('div', 'cand'), t = el('div', 'tete');
-      t.appendChild(el('h4', null, c.nom)); t.appendChild(el('span', 'parti', c.parti));
+      t.appendChild(avatar(c, '')); t.appendChild(el('h4', null, c.nom)); t.appendChild(el('span', 'parti', c.parti));
       var ms = parCand[cid], tousVieux = ms.every(function(x){ return vieux(x.d); });
       if (c.e && c.e.etat) t.appendChild(el('span', 'etat' + (tousVieux ? ' vieux' : ''), c.e.etat.length > 60 ? (tousVieux ? 'Document antérieur' : 'Programme en construction') : c.e.etat));
       bloc.appendChild(t);
@@ -683,8 +695,8 @@ function ouvreSujet(id, pousse){
       var h3 = el('h3', null, 'Rien de relevé sur ce sujet'); h3.appendChild(el('small', null, 'ce qui ne veut pas dire « pas de position »')); zz.appendChild(h3);
       var g2 = el('div', 'vide');
       sans.sort(function(a, b){ return famille(a.nom).localeCompare(famille(b.nom), 'fr'); }).forEach(function(c){
-        var d = el('div'); d.appendChild(el('b', null, c.nom));
-        d.appendChild(el('span', null, c.parti + (c.e && c.e.etat ? ' · ' + c.e.etat : ''))); g2.appendChild(d);
+        var d = el('div'); d.style.display = 'flex'; d.style.gap = '10px'; d.style.alignItems = 'center'; d.appendChild(avatar(c, 'p'));
+        var dd = el('div'); dd.appendChild(el('b', null, c.nom)); dd.appendChild(el('span', null, c.parti + (c.e && c.e.etat ? ' · ' + c.e.etat : ''))); d.appendChild(dd); g2.appendChild(d);
       });
       zz.appendChild(g2);
     }
@@ -785,7 +797,7 @@ dessineCarte();
   var z = document.getElementById('ligne-avril'); if (!choix){ z.style.display = 'none'; return; }
   var c = PAR_ID[choix.cid], v = choix.v;
   function bloc(k, t, cls){ var d = el('div', cls || ''); d.appendChild(el('div', 'k', k)); var p = el('div', 't'); p.textContent = t; d.appendChild(p); return d; }
-  z.appendChild(bloc('Promesse · ' + c.nom, texteBrut(premierePhrase(v.promesse).replace(/^[^:]*:\s*/, ''))));
+  var b1 = bloc('Promesse · ' + c.nom, texteBrut(premierePhrase(v.promesse).replace(/^[^:]*:\s*/, ''))); b1.insertBefore(avatar(c, ''), b1.children[1]); z.appendChild(b1);
   z.appendChild(bloc('Vote · ' + choix.l.nom, v.perso.label + (v.detail ? '. ' + v.detail : '')));
   z.appendChild(bloc('Actes', texteBrut(premierePhrase(v.actes).replace(/^[^:]*:\s*/, ''))));
   var d = el('div'); d.appendChild(el('div', 'k', 'Verdict')); d.appendChild(el('div', 'verdict', v.alignCandidat.icon + ' ' + v.alignCandidat.label));
@@ -810,10 +822,10 @@ route();
 </script>
 
 <footer class="site"><div class="wrap">
-  <div>
-    <h3>Komune Média</h3>
+  <div class="marque">
+    <img src="../img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy">
     <p>Média indépendant qui décrypte la société avec un regard antiraciste. Ni annonceur, ni parti, ni argent public derrière le comparateur.</p>
-    <p>Ce site ne dépose aucun cookie et ne mesure pas l'audience. Les vidéos ne se chargent qu'au clic.</p>
+    <p>Ce site ne dépose aucun cookie et ne mesure pas l'audience.</p>
   </div>
   <div>
     <h3>Nous suivre</h3>
