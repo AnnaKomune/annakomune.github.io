@@ -2,146 +2,136 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Le test à l'aveugle - Komune</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qui propose quoi - Komune</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Douze mesures tirées de douze programmes, sans le nom de leur auteur. Vous gardez celles que vous approuvez. À la fin, vous voyez de quels programmes le vôtre est fait.">
+<meta name="description" content="Sur un sujet précis, ce que chaque candidat·e à la présidentielle de 2027 propose, mot pour mot, avec le document source. Et ce qu'ils ont voté quand Komune l'a documenté.">
 <link rel="icon" type="image/png" href="../img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --purple:#5423df; --pink:#f099f9; --sky:#9abdff; --gold:#fee075;
-  --cream:#fcf7e8; --ink:#332e32; --white:#fff; --rose:#c2308f;
+  --cream:#fcf7e8; --ink:#332e32; --white:#fff;
   --line:rgba(51,46,50,.15); --muted:rgba(51,46,50,.66); --faint:rgba(51,46,50,.42);
-  --radius:20px; --hard:5px 5px 0 var(--ink); --hard-s:3px 3px 0 var(--ink);
+  --radius:18px; --hard:4px 4px 0 var(--ink); --hard-s:3px 3px 0 var(--ink);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{background:var(--cream);color:var(--ink);
   font-family:"Bricolage Grotesque",Inter,system-ui,-apple-system,sans-serif;
-  font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-.wrap{max-width:880px;margin:0 auto;padding:0 18px}
-h1,h2,h3{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;line-height:1.04;
+  font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+h1,h2,h3,h4{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;line-height:1.05;
   margin:0;letter-spacing:.01em;font-weight:700}
-h1{font-size:clamp(38px,8.6vw,74px)}
-h2{font-size:clamp(23px,4.4vw,36px);margin-bottom:12px}
-h3{font-size:clamp(16px,2.6vw,20px)}
+h1{font-size:clamp(34px,7.5vw,66px)}
+h2{font-size:clamp(22px,4vw,34px);margin-bottom:12px}
+h3{font-size:clamp(17px,2.8vw,22px)}
+h4{font-size:15px;font-weight:500;letter-spacing:.06em;color:var(--muted)}
 p{margin:0 0 14px}
 a{color:var(--purple);text-underline-offset:3px}
 button{font:inherit;cursor:pointer;color:inherit}
-button[disabled]{opacity:.42;cursor:not-allowed}
 .kick{font-family:"Oswald",Impact,sans-serif;font-size:12px;letter-spacing:.17em;
   text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:10px}
 .mut{color:var(--muted)} .pet{font-size:14px;line-height:1.45}
 .ban{background:var(--purple);color:var(--cream);padding:8px 0;font-size:13px}
 .ban .wrap{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;align-items:center}
 .ban a{color:var(--cream)}
-.b{border:2px solid var(--ink);border-radius:999px;padding:12px 22px;background:var(--white);
-  font-weight:600;box-shadow:var(--hard-s);transition:transform .07s,box-shadow .07s;
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1.1}
+.b{border:2px solid var(--ink);border-radius:999px;padding:10px 18px;background:var(--white);
+  font-weight:600;box-shadow:var(--hard-s);display:inline-flex;align-items:center;gap:8px;
+  line-height:1.1;text-decoration:none;color:var(--ink);transition:transform .07s,box-shadow .07s}
 .b:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
 .b:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
 .b.plein{background:var(--purple);color:var(--cream)}
-.b.gros{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;font-size:20px;
-  padding:15px 32px;letter-spacing:.02em;box-shadow:var(--hard)}
-.b.nu{box-shadow:none;border-color:var(--line);background:transparent;padding:8px 15px;font-size:14px}
+.b.nu{box-shadow:none;border-color:var(--line);background:transparent;padding:7px 14px;font-size:14px}
 .b.nu:hover{border-color:var(--ink);transform:none;box-shadow:none}
 :focus-visible{outline:3px solid var(--purple);outline-offset:3px}
-section{padding:38px 0;border-top:2px solid var(--ink)}
+section{padding:36px 0;border-top:2px solid var(--ink)}
 section.pink{background:var(--pink);border-top:2.5px solid var(--ink)}
-section.sky{background:var(--sky);border-top:2.5px solid var(--ink)}
 .deux{display:grid;gap:22px;grid-template-columns:1fr}
 @media(min-width:720px){.deux{grid-template-columns:1fr 1fr;gap:30px}}
 .encadre{border:2px solid var(--ink);border-radius:var(--radius);background:var(--white);padding:18px 20px}
 footer{padding:30px 0 44px;font-size:13.5px;color:var(--muted);border-top:2px solid var(--ink)}
-
-/* ---------- accueil ---------- */
 .ecran{display:none} .ecran.on{display:block}
-header.top{padding:40px 0 8px}
-.chapo{font-size:clamp(17px,2.4vw,21px);max-width:56ch;margin-top:18px}
-.chiffres{display:flex;gap:26px;flex-wrap:wrap;margin:24px 0 0;padding-top:18px;
-  border-top:2px solid var(--ink)}
-.chiffre b{font-family:"Oswald",Impact,sans-serif;font-size:29px;display:block;line-height:1}
-.chiffre span{font-size:13px;color:var(--muted)}
-.themes{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
-.th{border:2px solid var(--line);border-radius:999px;padding:8px 15px;background:transparent;
-  font-size:14.5px;font-weight:500;transition:.12s}
-.th:hover{border-color:var(--ink)}
-.th[aria-pressed="true"]{background:var(--ink);color:var(--cream);border-color:var(--ink)}
-.outils{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-.lancer{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:22px 0 2px}
-@media(max-width:620px){ .lancer .b{flex:1 1 100%} }
 
-/* ---------- partie ---------- */
-#e-partie{min-height:calc(100vh - 38px);display:none}
-#e-partie.on{display:flex;align-items:center}
-#e-partie .wrap{max-width:660px;width:100%;padding-bottom:24px}
-.hud{display:flex;align-items:center;gap:12px;padding:18px 0 14px;flex-wrap:wrap}
-@media(max-width:560px){
-  .hud{gap:9px}
-  .segs{flex:1 1 100%;order:-1}
-  .cpt{flex:1}
-  .hud .b.nu{padding:7px 12px;font-size:13px}
-}
-.segs{flex:1;display:flex;gap:3px}
-.segs i{flex:1;height:9px;background:var(--white);border:1.5px solid var(--ink);border-radius:2px}
-.segs i.ok{background:var(--purple);border-color:var(--purple)}
-.segs i.now{background:var(--gold)}
-.cpt{font-family:"Oswald",Impact,sans-serif;font-size:15px;letter-spacing:.05em;white-space:nowrap}
-.scene{position:relative;height:min(58vh,440px);min-height:330px}
-.fiche{position:absolute;inset:0;background:var(--white);border:2.5px solid var(--ink);
-  border-radius:26px;box-shadow:var(--hard);padding:22px 22px 18px;display:flex;flex-direction:column;
-  touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
-.fiche.pile{pointer-events:none}
-.fiche .etiq{display:inline-flex;align-self:flex-start;background:var(--gold);
-  border:2px solid var(--ink);border-radius:999px;padding:5px 13px;
-  font-family:"Oswald",Impact,sans-serif;font-size:12.5px;letter-spacing:.09em;text-transform:uppercase}
-.fiche .mesure{font-size:clamp(20px,3.6vw,27px);line-height:1.25;font-weight:500;
-  margin:auto 0;padding:14px 0;overflow:hidden}
-.fiche .pied{font-size:12.5px;color:var(--faint);border-top:2px solid var(--line);padding-top:10px}
-.verdict{position:absolute;top:66px;font-family:"Oswald",Impact,sans-serif;font-size:25px;
-  letter-spacing:.06em;border:3px solid;border-radius:12px;padding:4px 13px;opacity:0;
-  pointer-events:none}
-.verdict.g{right:20px;color:var(--purple);border-color:var(--purple);transform:rotate(9deg)}
-.verdict.l{left:20px;color:var(--rose);border-color:var(--rose);transform:rotate(-9deg)}
-.manettes{display:flex;gap:12px;margin-top:16px}
-.manettes .b{flex:1;font-weight:700;padding:16px 18px;font-size:17px}
-.aide{text-align:center;font-size:13px;color:var(--faint);margin:14px 0 0}
-kbd{font:inherit;font-size:12px;border:1.5px solid var(--line);border-radius:5px;padding:1px 6px;
-  background:var(--white)}
+/* ---------- accueil : choix du sujet ---------- */
+header.top{padding:38px 0 6px}
+.chapo{font-size:clamp(17px,2.4vw,21px);max-width:58ch;margin-top:16px}
+.cherche{display:flex;gap:10px;align-items:center;margin:22px 0 6px;flex-wrap:wrap}
+.cherche input{flex:1 1 260px;font:inherit;font-size:17px;padding:12px 16px;border:2px solid var(--ink);
+  border-radius:999px;background:var(--white);box-shadow:var(--hard-s)}
+.cherche input:focus{outline:3px solid var(--purple);outline-offset:2px}
+.exemples{font-size:14px;color:var(--muted);margin:10px 0 0}
+.exemples button{background:none;border:0;padding:0;color:var(--purple);text-decoration:underline;
+  text-underline-offset:3px;font-size:14px}
+.groupe{padding:22px 0 6px;border-top:2px solid var(--line)}
+.groupe:first-of-type{border-top:0}
+.groupe h3{margin-bottom:10px}
+.sujets{display:flex;flex-wrap:wrap;gap:8px}
+.suj{border:2px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--white);
+  font-size:14.5px;font-weight:500;display:inline-flex;gap:8px;align-items:baseline;text-align:left}
+.suj:hover{border-color:var(--ink)}
+.suj small{font-family:"Oswald",Impact,sans-serif;font-size:12px;color:var(--muted);letter-spacing:.04em}
+.suj.faible{opacity:.62}
 
-/* ---------- resultat ---------- */
-.titre-res{font-size:clamp(30px,6.4vw,58px)}
-.punch{font-size:clamp(18px,2.6vw,23px);max-width:48ch;margin:16px 0 0}
-.mosaique{display:grid;gap:9px;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));
-  margin:14px 0 0}
-#legende{padding-top:22px;border-top:2px solid var(--ink)}
-.tuile{border:2px solid var(--ink);border-radius:14px;padding:12px 13px;background:var(--purple);
-  color:var(--cream);min-height:78px;display:flex;flex-direction:column;justify-content:space-between}
-.tuile.off{background:transparent;border-color:var(--line);color:var(--faint)}
-.tuile b{font-size:15px;font-weight:700;line-height:1.18;display:block}
-.tuile em{font-style:normal;font-size:12px;opacity:.82;display:block;margin-top:3px}
-.tuile .sig{font-family:"Oswald",Impact,sans-serif;font-size:11px;letter-spacing:.1em;
-  text-transform:uppercase;margin-top:8px}
-.detail{margin:30px 0 0;border-top:2px solid var(--ink);padding-top:24px}
-.item{border:2px solid var(--ink);border-radius:16px;background:var(--white);margin-bottom:12px;
+/* ---------- sujet ---------- */
+.entete{padding:30px 0 20px}
+.entete h1{font-size:clamp(30px,6.4vw,58px)}
+.compte{font-size:clamp(17px,2.3vw,20px);margin:14px 0 0;max-width:60ch}
+.outils{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.bloc{padding:26px 0;border-top:2px solid var(--ink)}
+.bloc h2{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.bloc h2 small{font-size:14px;font-family:"Bricolage Grotesque",sans-serif;text-transform:none;
+  letter-spacing:0;font-weight:400;color:var(--muted)}
+.cand{border:2px solid var(--ink);border-radius:var(--radius);background:var(--white);
+  margin:0 0 14px;overflow:hidden}
+.cand .tete{padding:14px 18px 10px;display:flex;gap:10px 16px;align-items:baseline;flex-wrap:wrap;
+  border-bottom:2px solid var(--line)}
+.cand .tete h3{font-size:clamp(18px,3vw,23px)}
+.cand .tete .parti{color:var(--muted);font-size:14.5px}
+.cand .tete .etat{font-family:"Oswald",Impact,sans-serif;font-size:11.5px;letter-spacing:.09em;
+  text-transform:uppercase;background:var(--gold);border:1.5px solid var(--ink);border-radius:999px;
+  padding:3px 10px;margin-left:auto}
+.cand .tete .etat.vieux{background:var(--pink)}
+.mesure{padding:14px 18px;border-bottom:2px solid var(--line)}
+.mesure:last-child{border-bottom:0}
+.mesure .txt{font-size:16.5px;line-height:1.48;margin:0 0 8px;white-space:pre-line}
+.mesure .txt.coupe{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.mesure .plus{background:none;border:0;padding:0;color:var(--purple);font-size:14px;
+  text-decoration:underline;text-underline-offset:3px;margin:0 0 8px}
+.mesure .src{font-size:12.5px;color:var(--muted);line-height:1.45;margin:0}
+.mesure .src b{font-weight:600;color:var(--ink)}
+.cand .note{font-size:12.5px;background:rgba(254,224,117,.55);padding:9px 18px;margin:0;
+  line-height:1.42;border-top:2px solid var(--line)}
+.vide{display:grid;gap:8px;grid-template-columns:1fr}
+@media(min-width:640px){.vide{grid-template-columns:1fr 1fr}}
+.vide div{border:2px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14.5px;
+  background:transparent}
+.vide b{display:block}
+.vide span{color:var(--muted);font-size:13px}
+.loi{border:2px solid var(--ink);border-radius:var(--radius);background:var(--white);margin:0 0 14px;
   overflow:hidden}
-.item.laissee{background:transparent;border-color:var(--line)}
-.item .haut{padding:16px 18px}
-.item .marq{font-family:"Oswald",Impact,sans-serif;font-size:11.5px;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--purple);margin-bottom:7px}
-.item.laissee .marq{color:var(--muted)}
-.item .mes{font-size:17px;line-height:1.38;margin-bottom:10px}
-.item .qui{font-weight:700;font-size:15.5px;margin:0}
-.item .qui span{font-weight:400;color:var(--muted)}
-.item .src{font-size:12.5px;color:var(--muted);margin:8px 0 0;line-height:1.45}
-.item .note{font-size:12.5px;background:var(--gold);border-top:2px solid var(--ink);
-  padding:10px 18px;margin:0;line-height:1.42}
-.item.laissee .note{background:rgba(254,224,117,.4);border-top-color:var(--line)}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 0}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.loi .tete{padding:14px 18px;border-bottom:2px solid var(--line)}
+.loi .tete h3{font-size:clamp(16px,2.6vw,20px);text-transform:none;letter-spacing:0;
+  font-family:"Bricolage Grotesque",sans-serif;font-weight:700;line-height:1.3}
+.loi .ref{font-size:13px;color:var(--muted);margin:6px 0 0}
+.votes{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:640px){.votes{grid-template-columns:1fr 1fr}}
+.votes div{display:flex;gap:10px;justify-content:space-between;align-items:baseline;padding:8px 18px;
+  border-bottom:1.5px solid var(--line);font-size:14.5px}
+.votes div em{font-style:normal;color:var(--muted);font-size:12.5px;display:block}
+.votes .v{font-family:"Oswald",Impact,sans-serif;letter-spacing:.05em;text-transform:uppercase;
+  font-size:13px;white-space:nowrap}
+.votes .pour{color:#5423df} .votes .contre{color:#c2308f} .votes .abst{color:#8a6a00}
+.votes .na{color:var(--faint)}
+.loi .nc{font-size:13.5px;color:var(--muted);padding:12px 18px;margin:0;line-height:1.5;
+  border-top:2px solid var(--line)}
+.loi .nc b{color:var(--ink);font-weight:600}
+.loi .nc em{font-style:normal;display:block;margin-top:4px;font-size:12.5px}
+@media print{.ban,.outils,.b,footer,#commun{display:none!important}
+  .cand,.loi{break-inside:avoid;box-shadow:none}
+  .mesure .txt.coupe{display:block;-webkit-line-clamp:unset}}
 </style>
 </head>
 <body>
@@ -151,95 +141,45 @@ kbd{font:inherit;font-size:12px;border:1.5px solid var(--line);border-radius:5px
   <a href="../">Retour à l'accueil</a>
 </div></div>
 
-<!-- ================= ACCUEIL ================= -->
+<!-- ================= CHOIX DU SUJET ================= -->
 <div class="ecran on" id="e-accueil">
 <header class="top"><div class="wrap">
   <p class="kick">Komune · Comparateur 2027</p>
-  <h1>Le test<br>à l'aveugle</h1>
-  <p class="chapo">Douze mesures, tirées de douze programmes différents. Les noms sont cachés.
-    Vous gardez celles que vous approuvez, vous laissez les autres. À la fin, vous découvrez
-    de quels programmes le vôtre est fait.</p>
-  <div class="chiffres">
-    <div class="chiffre"><b id="n-mes">0</b><span>mesures jouables</span></div>
-    <div class="chiffre"><b id="n-cand">0</b><span>candidat·es</span></div>
-    <div class="chiffre"><b>18</b><span>thématiques</span></div>
-    <div class="chiffre"><b>5 oct.</b><span>dernier relevé</span></div>
+  <h1>Qui propose quoi</h1>
+  <p class="chapo">Choisissez un sujet. Vous lisez ce que chaque candidat·e propose, mot pour mot,
+    avec le document d'où ça vient. Et, quand Komune l'a déjà documenté, ce qu'ils ont voté.</p>
+  <div class="cherche">
+    <input type="search" id="q" placeholder="Retraites, naturalisation, nucléaire, cannabis…"
+      aria-label="Chercher un sujet" autocomplete="off">
   </div>
+  <p class="exemples">Par exemple :
+    <button type="button" data-s="retraites">Retraites</button>,
+    <button type="button" data-s="politique-migratoire">Politique migratoire</button>,
+    <button type="button" data-s="energie">Énergie</button>,
+    <button type="button" data-s="fin-de-vie-soins-palliatifs">Fin de vie</button>,
+    <button type="button" data-s="fiscalite-finances-publiques">Fiscalité</button>.
+  </p>
 </div></header>
-
-<div class="wrap" style="padding-top:24px">
-  <div class="lancer">
-    <button class="b plein gros" id="go" type="button">Commencer</button>
-    <span class="pet mut" id="dispo"></span>
-  </div>
+<div class="wrap" id="liste" style="padding-top:10px"></div>
 </div>
 
-<section><div class="wrap">
-  <h2>Affiner le tirage</h2>
-  <p class="mut pet" style="max-width:56ch;margin-bottom:0">Les dix-huit thématiques sont cochées
-    par défaut. Décochez pour cibler un sujet, par exemple avant un cours ou un débat.</p>
-  <div class="outils">
-    <button class="b nu" id="tout" type="button">Tout cocher</button>
-    <button class="b nu" id="rien" type="button">Tout décocher</button>
-    <button class="b nu" id="hasard" type="button">Trois au hasard</button>
-  </div>
-  <div class="themes" id="themes" role="group" aria-label="Thématiques"></div>
-  <div class="lancer">
-    <button class="b plein gros" id="go2" type="button">Commencer</button>
-  </div>
-</div></section>
-
-<section class="sky"><div class="wrap">
-  <h2>Comment ça marche</h2>
-  <div class="deux">
-    <div>
-      <p>Chaque partie tire douze mesures dans douze programmes différents, une par candidat·e,
-        au hasard parmi les thématiques choisies. Rien n'indique qui a écrit quoi tant que la
-        partie n'est pas finie.</p>
-      <p>À la fin, chaque mesure est rendue à son auteur·rice, avec le document dont elle vient
-        et le lien vers ce document.</p>
-    </div>
-    <div>
-      <p>Ce test porte sur des <b>promesses</b> : ce que les candidat·es écrivent dans leurs
-        programmes. Il ne dit rien de ce qu'ils ont fait une fois élus.</p>
-      <p>C'est le travail du comparateur, en construction, présenté en bas de cette page.</p>
+<!-- ================= UN SUJET ================= -->
+<div class="ecran" id="e-sujet">
+<div class="wrap">
+  <div class="entete">
+    <p class="kick" id="s-theme"></p>
+    <h1 id="s-nom"></h1>
+    <p class="compte" id="s-compte"></p>
+    <div class="outils">
+      <button class="b nu" id="retour" type="button">Changer de sujet</button>
+      <button class="b nu" id="copier" type="button">Copier le lien de ce sujet</button>
+      <button class="b nu" id="deplier" type="button">Tout déplier</button>
     </div>
   </div>
-</div></section>
+  <div id="s-votes"></div>
+  <div class="bloc" id="s-mesures"></div>
+  <div class="bloc" id="s-vide"></div>
 </div>
-
-<!-- ================= PARTIE ================= -->
-<div class="ecran" id="e-partie"><div class="wrap">
-  <div class="hud">
-    <div class="segs" id="segs" aria-hidden="true"></div>
-    <div class="cpt" id="cpt" aria-live="polite">1 / 12</div>
-    <button class="b nu" id="retour" type="button">Annuler</button>
-    <button class="b nu" id="quitter" type="button">Quitter</button>
-  </div>
-  <div class="scene" id="scene"></div>
-  <div class="manettes">
-    <button class="b" id="laisse" type="button">Je laisse</button>
-    <button class="b plein" id="garde" type="button">Je garde</button>
-  </div>
-  <p class="aide">Faites glisser la carte, ou utilisez les deux boutons.
-    Au clavier : <kbd>←</kbd> laisser, <kbd>→</kbd> garder.</p>
-</div></div>
-
-<!-- ================= RESULTAT ================= -->
-<div class="ecran" id="e-fin">
-<header class="top"><div class="wrap">
-  <p class="kick">Votre résultat</p>
-  <h1 class="titre-res" id="res-titre"></h1>
-  <p class="punch" id="res-punch"></p>
-  <p class="pet mut" id="legende" style="margin:22px 0 0"></p>
-  <div class="mosaique" id="mosaique"></div>
-  <div class="actions">
-    <button class="b plein" id="rejouer" type="button">Rejouer avec d'autres mesures</button>
-    <button class="b" id="partager" type="button">Copier mon résultat</button>
-    <button class="b nu" id="changer" type="button">Changer de thématiques</button>
-  </div>
-  <div class="detail" id="detail"></div>
-</div></header>
 </div>
 
 <!-- ================= BAS DE PAGE ================= -->
@@ -248,59 +188,55 @@ kbd{font:inherit;font-size:12px;border:1.5px solid var(--line);border-radius:5px
   <h2>Et ce qu'ils ont fait ?</h2>
   <div class="deux">
     <div>
-      <p>Un programme est une promesse. Le comparateur Komune sert à savoir ce qu'il en reste
-        une fois le vote passé.</p>
-      <p>Huit lois sont déjà documentées, vote par vote, pour les 31 candidat·es à la
-        présidentielle. On vous résume la loi, vous votez comme si vous siégiez à l'Assemblée,
-        puis vous comparez.</p>
+      <p>Un programme est une promesse. Le comparateur Komune sert à savoir ce qu'il en reste une
+        fois le vote passé.</p>
+      <p>Huit lois sont déjà documentées, vote par vote, pour les 31 candidat·es. Elles apparaissent
+        ici sur les sujets qu'elles concernent. Vous pouvez aussi vous y essayer : on vous résume la
+        loi, vous votez comme si vous siégiez à l'Assemblée, puis vous comparez.</p>
       <p style="margin:0"><a class="b" href="votes/">Faire le test des votes</a></p>
     </div>
     <div class="encadre">
       <h3>Le comparateur complet</h3>
       <p class="pet">Ces 8 lois sont la partie finie d'un tableau beaucoup plus grand :
-        <b>192 textes, 31 candidat·es, 5 952 cases</b>. Chaque case dit ce que la personne a
-        promis, ce qu'elle a voté, ce qu'elle a fait, et renvoie au document officiel.</p>
-      <p class="pet">Tant qu'une ligne n'est pas complète sur les 31, elle n'est pas publiée.
-        C'est lent, et c'est la raison pour laquelle le comparateur complet arrive en avril.</p>
+        <b>192 textes, 31 candidat·es, 5 952 cases</b>. Chaque case dit ce que la personne a promis,
+        ce qu'elle a voté, ce qu'elle a fait, et renvoie au document officiel.</p>
+      <p class="pet">Tant qu'une ligne n'est pas complète sur les 31, elle n'est pas publiée. C'est
+        lent, et c'est la raison pour laquelle le comparateur complet arrive en avril.</p>
       <p class="pet" style="margin:0"><a href="../soutenir/">Nous soutenir</a></p>
     </div>
   </div>
 </div></section>
 
 <section><div class="wrap">
-  <h2>D'où viennent ces mesures</h2>
+  <h2>D'où ça vient, et ce qu'il faut savoir</h2>
   <div class="deux">
     <div>
-      <p class="pet">Toutes les mesures viennent du référentiel programmatique de Komune, relevé
-        dans les documents publiés par les candidat·es et leurs partis. Chaque mesure est citée
-        telle qu'elle est écrite, sans reformulation, et renvoie à son document source.</p>
-      <p class="pet">Le référentiel compte <b id="n-total">0</b> mesures. Toutes ne sont pas
-        jouables : une mesure n'entre dans le jeu que si son intitulé se tient seul sur une carte.
-        Sont écartées celles qui sont coupées en pleine phrase, celles qui ne sont qu'un titre de
-        livret, celles qui restent à trancher en rédaction, et celles de personnes qui ne sont
-        pas candidates en 2027.</p>
+      <p class="pet">Les mesures viennent du référentiel programmatique de Komune, relevé dans les
+        documents publiés par les candidat·es et leurs partis : <b id="n-mes">0</b> mesures sur
+        <b id="n-sujets">0</b> sujets, relevées au 5 octobre 2026. Chaque mesure est citée telle
+        qu'elle est écrite, sans reformulation, et renvoie à son document source.</p>
+      <p class="pet">Le classement par sujet est celui de Komune. C'est une première passe,
+        encore en relecture : une mesure peut manquer sur un sujet où elle aurait sa place.</p>
+      <p class="pet">Les candidat·es sont classé·es par ordre alphabétique, sans autre ordre.</p>
     </div>
     <div>
-      <p class="pet"><b>Ce que ce test ne fait pas.</b> Il ne mesure aucune proximité politique et
-        ne classe personne. Il ne pondère pas non plus : garder une mesure de dépense et une
-        mesure d'économie n'est signalé nulle part comme une contradiction.</p>
-      <p class="pet">Certain·es candidat·es n'ont pas encore publié de programme pour 2027. Les
-        mesures relevées sont alors celles de leur dernière campagne, et la date du document est
-        affichée au moment de la révélation.</p>
-      <p class="pet" id="horsjeu"></p>
+      <p class="pet"><b>Une case vide n'est pas une position.</b> Plusieurs candidat·es n'ont pas
+        encore publié de programme pour 2027. Quand les mesures relevées viennent d'une campagne
+        passée, la date du document est indiquée et l'étiquette le signale.</p>
+      <p class="pet"><b>Un vote n'est pas une opinion générale.</b> Chaque vote porte sur un texte
+        précis, à une date précise, et plusieurs scrutins peuvent exister pour une même loi.
+        Le scrutin retenu est indiqué sous chaque loi. Quand il s'agit d'une motion de censure,
+        voter « pour » la motion, c'est voter contre le texte.</p>
+      <p class="pet" id="ecartees"></p>
     </div>
   </div>
-  <details style="margin-top:16px">
-    <summary class="pet" style="cursor:pointer"><b>Le détail des mesures écartées</b></summary>
-    <div id="rejets" class="pet mut" style="margin-top:12px"></div>
-  </details>
 </div></section>
 
 <footer><div class="wrap">
   <p>Komune Média. Les mesures proviennent des programmes publiés par les candidat·es et leurs
-    partis, relevés au 5 octobre 2026.</p>
-  <p style="margin:0">Cette page ne dépose aucun cookie et ne mesure pas l'audience. Vos réponses
-    restent dans votre navigateur et ne sont envoyées nulle part.</p>
+    partis. Les votes viennent de l'open data de l'Assemblée nationale et des scrutins publics du
+    Sénat.</p>
+  <p style="margin:0">Cette page ne dépose aucun cookie et ne mesure pas l'audience.</p>
 </div></footer>
 </div>
 
@@ -313,261 +249,234 @@ if (!B){ document.getElementById('e-accueil').innerHTML =
   '<div class="wrap" style="padding:60px 18px"><h1>Données indisponibles</h1>' +
   '<p>La base des mesures n\'a pas pu être chargée.</p></div>'; return; }
 
-var TAILLE = 12;
 function el(t, c, x){ var e = document.createElement(t); if (c) e.className = c;
   if (x != null) e.textContent = x; return e; }
-function par(n, m, f){ return n <= 1 ? m : f; }
 function nb(n){ return n.toLocaleString('fr-FR'); }
-function melange(a){ for (var i = a.length - 1; i > 0; i--){
-  var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function par(n, s, p){ return n <= 1 ? s : p; }
+function pli(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
 
 /* ---------- index ---------- */
-var JOUABLES = B.m.filter(function(m){ return B.cand[m[2]].t; });
-var PAR_TH = {};
-JOUABLES.forEach(function(m){ (PAR_TH[m[4]] = PAR_TH[m[4]] || []).push(m); });
-
-document.getElementById('n-mes').textContent = nb(JOUABLES.length);
-document.getElementById('n-cand').textContent = B.cand.filter(function(c){ return c.t; }).length;
-document.getElementById('n-total').textContent = nb(B.total);
-document.getElementById('horsjeu').innerHTML = '<b>Hors tirage.</b> ' +
-  B.cand.filter(function(c){ return !c.t; }).map(function(c){
-    return c.n + ' (' + c.c + ' ' + par(c.c, 'mesure jouable', 'mesures jouables') + ')'; }).join(', ') +
-  '. Raphaël Glucksmann également : les mesures relevées à son nom sont celles de la campagne ' +
-  'européenne de 2024 et sont rédigées en propositions subordonnées, qui ne tiennent pas seules ' +
-  'sur une carte. La primaire socialiste n\'est pas tranchée.';
-document.getElementById('rejets').innerHTML = B.rejets.map(function(r){
-  return '<div>' + nb(r[1]) + ' · ' + r[0] + '</div>'; }).join('');
-
-/* ---------- choix des themes ---------- */
-var choisis = {}, zTh = document.getElementById('themes');
-B.th.forEach(function(nom, i){
-  var b = el('button', 'th', nom);
-  b.type = 'button'; b.setAttribute('aria-pressed', 'true'); choisis[i] = true;
-  b.onclick = function(){ choisis[i] = !choisis[i];
-    b.setAttribute('aria-pressed', choisis[i] ? 'true' : 'false'); majDispo(); };
-  zTh.appendChild(b);
+var PAR_SUJ = {}, CAND_SUJ = {};
+B.m.forEach(function(m){
+  (PAR_SUJ[m[1]] = PAR_SUJ[m[1]] || []).push(m);
+  (CAND_SUJ[m[1]] = CAND_SUJ[m[1]] || {})[m[0]] = 1;
 });
-function coche(v){
-  [].forEach.call(zTh.children, function(b, i){ choisis[i] = v;
-    b.setAttribute('aria-pressed', v ? 'true' : 'false'); });
-  majDispo();
-}
-document.getElementById('tout').onclick = function(){ coche(true); };
-document.getElementById('rien').onclick = function(){ coche(false); };
-document.getElementById('hasard').onclick = function(){
-  coche(false);
-  melange(B.th.map(function(_, i){ return i; })).slice(0, 3).forEach(function(i){
-    choisis[i] = true; zTh.children[i].setAttribute('aria-pressed', 'true'); });
-  majDispo();
-};
-function bassin(){
-  var out = [];
-  for (var i in choisis) if (choisis[i] && PAR_TH[i]) out = out.concat(PAR_TH[i]);
-  return out;
-}
-function majDispo(){
-  var b = bassin(), vus = {};
-  b.forEach(function(m){ vus[m[2]] = 1; });
-  var k = Object.keys(vus).length;
-  document.getElementById('go').disabled = k < 4;
-  document.getElementById('go2').disabled = k < 4;
-  document.getElementById('dispo').textContent = k < 4
-    ? 'Cochez au moins une thématique de plus.'
-    : nb(b.length) + ' mesures disponibles, ' + k + ' programmes.';
-}
-majDispo();
+var SUJ_ID = {}; B.suj.forEach(function(s, i){ SUJ_ID[s.id] = i; });
+var LOIS_SUJ = {}; B.lois.forEach(function(l){ (LOIS_SUJ[l.s] = LOIS_SUJ[l.s] || []).push(l); });
+var CID = {}; B.cand.forEach(function(c, i){ if (c.cid) CID[c.cid] = i; });
+document.getElementById('n-mes').textContent = nb(B.m.length);
+document.getElementById('n-sujets').textContent = B.suj.length;
+var ec = B.ecartees;
+document.getElementById('ecartees').innerHTML = '<b>Ce qui n\'est pas affiché.</b> Sur les ' +
+  nb(B.total) + ' lignes du référentiel : ' + nb(ec['hors candidature 2027']) +
+  ' viennent de personnes qui ne sont pas candidates en 2027, ' + nb(ec['à trancher']) +
+  ' sont encore à trancher en rédaction, ' + nb(ec['sans sujet']) + ' n\'ont pas de sujet attribué.';
 
-/* ---------- tirage : une mesure par programme ---------- */
-function tirer(){
-  var parCand = {};
-  bassin().forEach(function(m){ (parCand[m[2]] = parCand[m[2]] || []).push(m); });
-  var ids = melange(Object.keys(parCand)), choix = [];
-  function pioche(l){ return l[Math.floor(Math.random() * l.length)]; }
-  ids.forEach(function(c){ if (choix.length < TAILLE) choix.push(pioche(parCand[c])); });
-  var essai = 0;
-  while (choix.length < TAILLE && essai < 60){
-    var m = pioche(parCand[ids[essai % ids.length]]);
-    if (m && choix.indexOf(m) === -1) choix.push(m);
-    essai++;
-  }
-  return melange(choix);
+/* ---------- liste des sujets ---------- */
+var zone = document.getElementById('liste');
+function dessineListe(filtre){
+  zone.innerHTML = '';
+  var f = pli(filtre || '').trim(), total = 0;
+  B.th.forEach(function(th, ti){
+    var ss = B.suj.map(function(s, i){ return {s: s, i: i}; })
+      .filter(function(x){ return x.s.t === ti && (!f || pli(x.s.n).indexOf(f) >= 0 || pli(th).indexOf(f) >= 0); });
+    if (!ss.length) return;
+    var g = el('div', 'groupe');
+    g.appendChild(el('h3', null, th));
+    var w = el('div', 'sujets');
+    ss.forEach(function(x){
+      var nc = Object.keys(CAND_SUJ[x.i] || {}).length;
+      var b = el('button', 'suj' + (nc < 5 ? ' faible' : ''));
+      b.type = 'button';
+      b.appendChild(document.createTextNode(x.s.n));
+      b.appendChild(el('small', null, nc + ' ' + par(nc, 'candidat·e', 'candidat·es')));
+      b.onclick = function(){ ouvre(x.s.id, true); };
+      w.appendChild(b); total++;
+    });
+    g.appendChild(w); zone.appendChild(g);
+  });
+  if (!total) zone.appendChild(el('p', 'mut', 'Aucun sujet ne correspond. Essayez un autre mot.'));
 }
+document.getElementById('q').addEventListener('input', function(e){ dessineListe(e.target.value); });
+[].forEach.call(document.querySelectorAll('.exemples button'), function(b){
+  b.onclick = function(){ ouvre(b.getAttribute('data-s'), true); };
+});
+dessineListe('');
 
-/* ---------- la partie ---------- */
-var main = [], pos = 0, rep = [], scene = document.getElementById('scene');
-var zSeg = document.getElementById('segs');
-
+/* ---------- un sujet ---------- */
 function montre(id){
-  ['e-accueil', 'e-partie', 'e-fin'].forEach(function(x){
+  ['e-accueil', 'e-sujet'].forEach(function(x){
     document.getElementById(x).classList.toggle('on', x === id); });
-  document.getElementById('commun').style.display = (id === 'e-partie') ? 'none' : '';
   window.scrollTo(0, 0);
 }
-function demarrer(){ main = tirer(); pos = 0; rep = []; montre('e-partie'); dessine(); }
+function nomFamille(n){ var p = n.split(' '); return pli(p[p.length - 1]) + ' ' + pli(n); }
+function vieux(ver){ return /^20(1\d|2[0-4])/.test(ver || ''); }
+function classeVote(l){
+  var s = pli(l);
+  if (/^pour/.test(s)) return 'pour';
+  if (/^contre/.test(s)) return 'contre';
+  if (/^abstention/.test(s)) return 'abst';
+  return 'na';
+}
+var deplie = false;
 
-function dessine(){
-  if (pos >= main.length){ fin(); return; }
-  scene.innerHTML = ''; zSeg.innerHTML = '';
-  for (var s = 0; s < main.length; s++){
-    zSeg.appendChild(el('i', s < pos ? 'ok' : (s === pos ? 'now' : '')));
+function ouvre(id, pousse){
+  var si = SUJ_ID[id];
+  if (si == null){ montre('e-accueil'); return; }
+  var s = B.suj[si], th = B.th[s.t];
+  deplie = false; document.getElementById('deplier').textContent = 'Tout déplier';
+  document.title = s.n + ' : qui propose quoi - Komune';
+  if (pousse && history.pushState) history.pushState({s: id}, '', '#' + id);
+
+  document.getElementById('s-theme').textContent = th;
+  document.getElementById('s-nom').textContent = s.n;
+
+  /* mesures par candidat·e */
+  var parCand = {};
+  (PAR_SUJ[si] || []).forEach(function(m){ (parCand[m[0]] = parCand[m[0]] || []).push(m); });
+  var avec = Object.keys(parCand).map(Number).sort(function(a, b){
+    return nomFamille(B.cand[a].n).localeCompare(nomFamille(B.cand[b].n), 'fr'); });
+  var sans = B.cand.map(function(c, i){ return i; }).filter(function(i){ return !parCand[i]; });
+  var nm = (PAR_SUJ[si] || []).length;
+  document.getElementById('s-compte').innerHTML =
+    '<b>' + avec.length + ' ' + par(avec.length, 'candidat·e a', 'candidat·es ont') +
+    '</b> au moins une mesure relevée sur ce sujet, ' + nb(nm) + ' ' + par(nm, 'mesure', 'mesures') +
+    ' en tout. <b>' + sans.length + '</b> n\'en ' + par(sans.length, 'a', 'ont') + ' aucune.';
+
+  /* votes deja documentes */
+  var zv = document.getElementById('s-votes'); zv.innerHTML = '';
+  var lois = LOIS_SUJ[id] || [];
+  if (lois.length){
+    var bv = el('div', 'bloc');
+    var h = el('h2', null, 'Ce qu\'ils ont voté');
+    h.appendChild(el('small', null, lois.length + ' ' + par(lois.length, 'loi déjà documentée', 'lois déjà documentées') +
+      ' par Komune sur ce sujet'));
+    bv.appendChild(h);
+    lois.forEach(function(l){
+      var L = el('div', 'loi');
+      var t = el('div', 'tete');
+      t.appendChild(el('h3', null, l.nom));
+      var r = el('p', 'ref', (l.date ? l.date + ' · ' : '') + l.ref + ' ');
+      if (l.lien){ var a = el('a', null, 'dossier législatif'); a.href = l.lien; a.target = '_blank'; a.rel = 'noopener'; r.appendChild(a); }
+      t.appendChild(r); L.appendChild(t);
+      var censure = /motion de censure/i.test(l.ref);
+      if (censure) t.appendChild(el('p', 'ref',
+        'Le scrutin retenu est une motion de censure : voter « pour » la motion, c\'est voter contre le texte.'));
+      var g = el('div', 'votes'), nc = [], raisons = {};
+      B.cand.forEach(function(c){
+        if (!c.cid || !l.v[c.cid]) return;
+        var v = l.v[c.cid], k = classeVote(v.l);
+        if (k === 'na'){ nc.push({c: c, v: v}); raisons[v.r] = (raisons[v.r] || 0) + 1; return; }
+        var d = el('div');
+        var n = el('span'); n.appendChild(document.createTextNode(c.n));
+        if (v.r) n.appendChild(el('em', null, v.r));
+        d.appendChild(n);
+        var lab = v.l, cls = k;
+        if (censure && (k === 'pour' || k === 'contre')){
+          lab = v.l + ' la censure'; cls = (k === 'pour') ? 'contre' : 'pour';
+        }
+        d.appendChild(el('span', 'v ' + cls, lab));
+        g.appendChild(d);
+      });
+      L.appendChild(g);
+      if (nc.length){
+        var commune = Object.keys(raisons).sort(function(a, b){ return raisons[b] - raisons[a]; })[0] || '';
+        var pnc = el('p', 'nc');
+        pnc.appendChild(el('b', null, 'Non concerné·es (' + nc.length + ') : '));
+        pnc.appendChild(document.createTextNode(nc.map(function(x){
+          return x.c.n + (x.v.r && x.v.r !== commune ? ' (' + x.v.r.replace(/\.$/, '') + ')' : ''); }).join(', ') + '.'));
+        if (commune) pnc.appendChild(el('em', null, ' Pour les autres : ' + commune));
+        L.appendChild(pnc);
+      }
+      bv.appendChild(L);
+    });
+    zv.appendChild(bv);
   }
-  document.getElementById('cpt').textContent = (pos + 1) + ' / ' + main.length;
-  document.getElementById('retour').disabled = pos === 0;
-  var reste = main.length - pos;
-  for (var k = Math.min(reste, 3) - 1; k >= 0; k--){
-    var m = main[pos + k];
-    var f = el('div', 'fiche' + (k ? ' pile' : ''));
-    if (k){ f.style.transform = 'translateY(' + (k * 9) + 'px) scale(' + (1 - k * 0.03) + ')';
-            f.style.opacity = 1 - k * 0.24; }
-    f.appendChild(el('div', 'etiq', B.th[m[4]]));
-    f.appendChild(el('p', 'mesure', m[1]));
-    var st = B.sth[m[5]];
-    f.appendChild(el('p', 'pied', st ? 'Sous-thème : ' + st : 'Mesure tirée d\'un programme publié'));
-    if (!k){
-      f.appendChild(el('div', 'verdict g', 'Gardée'));
-      f.appendChild(el('div', 'verdict l', 'Laissée'));
-      glisser(f);
-    }
-    scene.appendChild(f);
+
+  /* ce qu'ils proposent */
+  var zm = document.getElementById('s-mesures'); zm.innerHTML = '';
+  var h2 = el('h2', null, 'Ce qu\'ils proposent');
+  h2.appendChild(el('small', null, 'mot pour mot, par ordre alphabétique'));
+  zm.appendChild(h2);
+  if (!avec.length) zm.appendChild(el('p', 'mut', 'Aucune mesure relevée sur ce sujet.'));
+  avec.forEach(function(ci){
+    var c = B.cand[ci], bloc = el('div', 'cand');
+    var t = el('div', 'tete');
+    t.appendChild(el('h3', null, c.n));
+    t.appendChild(el('span', 'parti', c.p));
+    var ms = parCand[ci];
+    var tousVieux = ms.every(function(m){ return vieux(B.ver[m[5]]); });
+    if (c.e) t.appendChild(el('span', 'etat' + (tousVieux ? ' vieux' : ''), c.e));
+    bloc.appendChild(t);
+    ms.forEach(function(m){
+      var d = el('div', 'mesure');
+      var long = m[2].length > 330 || (m[2].match(/\n/g) || []).length > 3;
+      var p = el('p', 'txt' + (long && !deplie ? ' coupe' : ''), m[2]);
+      d.appendChild(p);
+      if (long){
+        var plus = el('button', 'plus', 'Lire la suite'); plus.type = 'button';
+        plus.onclick = function(){ var c2 = p.classList.toggle('coupe');
+          plus.textContent = c2 ? 'Lire la suite' : 'Replier'; };
+        d.appendChild(plus);
+      }
+      var src = el('p', 'src');
+      src.appendChild(el('b', null, 'Source : '));
+      src.appendChild(document.createTextNode(B.doc[m[3]] + (B.ver[m[5]] ? ' · ' + B.ver[m[5]] : '') + ' '));
+      var a = el('a', null, 'voir le document'); a.href = B.url[m[4]]; a.target = '_blank'; a.rel = 'noopener';
+      src.appendChild(a);
+      d.appendChild(src);
+      bloc.appendChild(d);
+    });
+    if (c.m) bloc.appendChild(el('p', 'note', c.m));
+    zm.appendChild(bloc);
+  });
+
+  /* rien de releve */
+  var zz = document.getElementById('s-vide'); zz.innerHTML = '';
+  if (sans.length){
+    var h3 = el('h2', null, 'Rien de relevé sur ce sujet');
+    h3.appendChild(el('small', null, 'ce qui ne veut pas dire « pas de position »'));
+    zz.appendChild(h3);
+    var g2 = el('div', 'vide');
+    sans.sort(function(a, b){ return nomFamille(B.cand[a].n).localeCompare(nomFamille(B.cand[b].n), 'fr'); })
+      .forEach(function(ci){
+        var c = B.cand[ci], d = el('div');
+        d.appendChild(el('b', null, c.n));
+        d.appendChild(el('span', null, c.p + (c.e ? ' · ' + c.e : '')));
+        g2.appendChild(d);
+      });
+    zz.appendChild(g2);
   }
+  montre('e-sujet');
 }
-function repondre(garde){
-  if (pos >= main.length) return;
-  var f = scene.querySelector('.fiche:not(.pile)');
-  rep[pos] = garde;
-  if (f){
-    f.style.transition = 'transform .26s ease-in, opacity .26s ease-in';
-    f.style.transform = 'translateX(' + (garde ? 1 : -1) * window.innerWidth +
-      'px) rotate(' + (garde ? 15 : -15) + 'deg)';
-    f.style.opacity = '0';
-    setTimeout(function(){ pos++; dessine(); }, 175);
-  } else { pos++; dessine(); }
-}
-function glisser(f){
-  var x0 = 0, dx = 0, actif = false;
-  var vg = f.querySelector('.verdict.g'), vl = f.querySelector('.verdict.l');
-  f.addEventListener('pointerdown', function(e){
-    if (e.pointerType === 'mouse' && e.button !== 0) return;
-    x0 = e.clientX; actif = true; dx = 0;
-    try { f.setPointerCapture(e.pointerId); } catch (x){}
-    f.style.transition = 'none';
-  });
-  f.addEventListener('pointermove', function(e){
-    if (!actif) return;
-    dx = e.clientX - x0;
-    f.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx / 26) + 'deg)';
-    vg.style.opacity = dx > 22 ? Math.min(1, (dx - 22) / 58) : 0;
-    vl.style.opacity = dx < -22 ? Math.min(1, (-dx - 22) / 58) : 0;
-  });
-  function lache(){
-    if (!actif) return; actif = false;
-    if (Math.abs(dx) > 84){ repondre(dx > 0); return; }
-    f.style.transition = 'transform .18s'; f.style.transform = '';
-    vg.style.opacity = 0; vl.style.opacity = 0; dx = 0;
-  }
-  f.addEventListener('pointerup', lache);
-  f.addEventListener('pointercancel', lache);
-}
-document.getElementById('garde').onclick = function(){ repondre(true); };
-document.getElementById('laisse').onclick = function(){ repondre(false); };
-document.getElementById('retour').onclick = function(){ if (pos > 0){ pos--; dessine(); } };
-document.getElementById('quitter').onclick = function(){ montre('e-accueil'); };
-document.addEventListener('keydown', function(e){
-  if (!document.getElementById('e-partie').classList.contains('on')) return;
-  if (e.key === 'ArrowRight'){ e.preventDefault(); repondre(true); }
-  else if (e.key === 'ArrowLeft'){ e.preventDefault(); repondre(false); }
-  else if (e.key === 'Backspace'){ e.preventDefault(); if (pos > 0){ pos--; dessine(); } }
-});
 
-/* ---------- resultat ---------- */
-var texteCopie = '';
-function fin(){
-  var parCand = {}, ordre = [];
-  main.forEach(function(m, i){
-    var c = m[2];
-    if (!parCand[c]){ parCand[c] = {n: B.cand[c].n, p: B.cand[c].p, g: 0, t: 0, th: []}; ordre.push(c); }
-    parCand[c].t++;
-    if (rep[i]){ parCand[c].g++; parCand[c].th.push(B.th[m[4]]); }
-    else if (parCand[c].g === 0) parCand[c].th = [B.th[m[4]]];
-  });
-  var n = rep.filter(Boolean).length;
-  var gardes = ordre.map(function(c){ return parCand[c]; })
-                    .filter(function(x){ return x.g > 0; })
-                    .sort(function(a, b){ return b.g - a.g || a.n.localeCompare(b.n, 'fr'); });
-  var laisses = ordre.map(function(c){ return parCand[c]; })
-                     .filter(function(x){ return x.g === 0; })
-                     .sort(function(a, b){ return a.n.localeCompare(b.n, 'fr'); });
-  var partis = {}; gardes.forEach(function(x){ partis[x.p] = 1; });
-  var np = Object.keys(partis).length;
-
-  document.getElementById('res-titre').textContent = n === 0
-    ? 'Vous n\'avez rien gardé.'
-    : 'Vous avez gardé ' + n + ' ' + par(n, 'mesure', 'mesures') + ' sur ' + main.length + '.';
-  document.getElementById('res-punch').innerHTML = n === 0
-    ? 'Les douze mesures venaient de ' + ordre.length +
-      ' programmes différents. Vous pouvez relancer une partie sur d\'autres thématiques.'
-    : 'Votre programme emprunte à <b>' + np + ' ' + par(np, 'parti', 'partis') + ' ' +
-      par(np, 'différent', 'différents') + '</b>.';
-
-  document.getElementById('legende').textContent = n === 0 ? '' :
-    'En plein, les programmes dont vous avez gardé une mesure, avec sa thématique. ' +
-    'En creux, ceux que vous avez laissés.';
-  var mo = document.getElementById('mosaique'); mo.innerHTML = '';
-  gardes.concat(laisses).forEach(function(x){
-    var t = el('div', 'tuile' + (x.g ? '' : ' off'));
-    var h = el('div');
-    h.appendChild(el('b', null, x.n));
-    h.appendChild(el('em', null, x.p));
-    t.appendChild(h);
-    t.appendChild(el('div', 'sig', x.t > 1
-      ? x.g + ' sur ' + x.t + '  ·  ' + x.th.join(', ')
-      : x.th.join(', ')));
-    mo.appendChild(t);
-  });
-
-  var d = document.getElementById('detail'); d.innerHTML = '';
-  d.appendChild(el('h3', null, 'Les douze mesures, rendues à leurs auteur·rices'));
-  d.appendChild(el('p', 'pet mut',
-    'Dans l\'ordre où elles vous ont été présentées. Chaque mesure est citée telle qu\'elle est écrite dans son document source.'));
-  main.forEach(function(m, i){
-    var c = B.cand[m[2]], garde = !!rep[i];
-    var it = el('div', 'item' + (garde ? '' : ' laissee'));
-    var h = el('div', 'haut');
-    h.appendChild(el('div', 'marq', (garde ? 'Gardée' : 'Laissée') + '  ·  ' + B.th[m[4]]));
-    h.appendChild(el('p', 'mes', m[1]));
-    var q = el('p', 'qui', c.n);
-    q.appendChild(el('span', null, '  ' + c.p + (B.ver[m[8]] ? '  ·  document ' + B.ver[m[8]] : '')));
-    h.appendChild(q);
-    var s = el('p', 'src');
-    s.appendChild(document.createTextNode('Source : ' + B.doc[m[6]] + ' '));
-    var a = el('a', null, 'voir le document');
-    a.href = B.url[m[7]]; a.target = '_blank'; a.rel = 'noopener';
-    s.appendChild(a);
-    h.appendChild(s);
-    it.appendChild(h);
-    if (c.m) it.appendChild(el('p', 'note', c.m));
-    d.appendChild(it);
-  });
-
-  texteCopie = 'Test à l\'aveugle de Komune. J\'ai gardé ' + n + ' ' +
-    par(n, 'mesure', 'mesures') + ' sur ' + main.length +
-    (n ? ', dans les programmes de : ' + gardes.map(function(x){ return x.n; }).join(', ') + '.' : '.') +
-    ' À faire sur komunemedia.fr/ko';
-  montre('e-fin');
-}
-document.getElementById('go').onclick = demarrer;
-document.getElementById('go2').onclick = demarrer;
-document.getElementById('rejouer').onclick = demarrer;
-document.getElementById('changer').onclick = function(){ montre('e-accueil'); };
-document.getElementById('partager').onclick = function(){
-  var b = document.getElementById('partager');
-  function dit(t){ b.textContent = t; setTimeout(function(){
-    b.textContent = 'Copier mon résultat'; }, 1800); }
-  if (navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(texteCopie).then(function(){ dit('Copié'); },
-      function(){ dit('Copie impossible'); });
-  } else dit('Copie impossible');
+document.getElementById('retour').onclick = function(){
+  if (history.pushState) history.pushState({}, '', location.pathname);
+  montre('e-accueil');
 };
+document.getElementById('deplier').onclick = function(){
+  deplie = !deplie;
+  [].forEach.call(document.querySelectorAll('#s-mesures .txt'), function(p){
+    if (p.nextElementSibling && p.nextElementSibling.classList.contains('plus')){
+      p.classList.toggle('coupe', !deplie);
+      p.nextElementSibling.textContent = deplie ? 'Replier' : 'Lire la suite';
+    }
+  });
+  this.textContent = deplie ? 'Tout replier' : 'Tout déplier';
+};
+document.getElementById('copier').onclick = function(){
+  var b = this;
+  function dit(t){ b.textContent = t; setTimeout(function(){ b.textContent = 'Copier le lien de ce sujet'; }, 1800); }
+  if (navigator.clipboard && navigator.clipboard.writeText)
+    navigator.clipboard.writeText(location.href).then(function(){ dit('Lien copié'); }, function(){ dit('Copie impossible'); });
+  else dit('Copie impossible');
+};
+window.addEventListener('popstate', function(){
+  var id = location.hash.replace(/^#/, '');
+  if (id && SUJ_ID[id] != null) ouvre(id, false); else montre('e-accueil');
+});
+var h0 = location.hash.replace(/^#/, '');
+if (h0 && SUJ_ID[h0] != null) ouvre(h0, false);
 })();
 </script>
 </body>
