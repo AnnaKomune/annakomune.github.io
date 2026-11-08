@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relecture des mesures programmatiques - Komune</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="../../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#5423df;--pink:#f099f9;--gold:#fee075;--cream:#fcf7e8;--ink:#332e32;--white:#fff;
+  --line:rgba(51,46,50,.16);--muted:rgba(51,46,50,.68);--vide:#e6e0d2;
+  --ok:#2f6b3a;--ko:#c2308f;--hs:#8a6a00;--radius:16px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);
+  font-family:"Bricolage Grotesque",Inter,system-ui,sans-serif;font-size:16px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+h1{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;font-size:clamp(26px,4vw,40px);
+  margin:0 0 6px;line-height:1.05}
+h2{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;font-size:19px;margin:0 0 8px}
+p{margin:0 0 12px}
+a{color:var(--purple)}
+.ban{background:var(--purple);color:var(--cream);padding:9px 0;font-size:14px}
+.ban a{color:var(--cream)}
+header{padding:28px 0 16px;border-bottom:2px solid var(--ink)}
+.note{font-size:14px;color:var(--muted)}
+.alerte{background:var(--gold);border:2px solid var(--ink);border-radius:var(--radius);
+  padding:14px 16px;margin:16px 0;font-size:15px}
+.filtres{position:sticky;top:0;z-index:20;background:var(--cream);padding:14px 0 12px;
+  border-bottom:2px solid var(--ink)}
+.rang{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select,input[type=search],input[type=text]{font:inherit;padding:9px 12px;border:2px solid var(--ink);
+  border-radius:999px;background:var(--white);color:var(--ink);max-width:100%}
+input[type=search]{min-width:260px}
+button{font:inherit;cursor:pointer}
+.b{border:2px solid var(--ink);border-radius:999px;padding:8px 16px;background:var(--white);
+  font-weight:600}
+.b.on{background:var(--ink);color:var(--cream)}
+.compte{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;font-size:14px;
+  letter-spacing:.05em;color:var(--muted);margin:12px 0}
+.etat{background:var(--white);border:2px solid var(--ink);border-radius:var(--radius);
+  padding:14px 16px;margin:14px 0;font-size:15px}
+.etat b{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase;letter-spacing:.03em}
+.m{background:var(--white);border:2px solid var(--ink);border-radius:var(--radius);padding:14px 16px;
+  margin-bottom:10px}
+.m.v-ok{border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok)}
+.m.v-ko{border-color:var(--ko);box-shadow:inset 4px 0 0 var(--ko)}
+.m.v-hs{border-color:var(--hs);box-shadow:inset 4px 0 0 var(--hs);opacity:.75}
+.m-haut{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.m-id{font-family:"Oswald",Impact,sans-serif;letter-spacing:.04em;color:var(--ink)}
+.m-court{font-size:17px;font-weight:600;margin:6px 0 4px}
+.m-cand{font-size:14px}
+.etq{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+  padding:2px 8px;border-radius:999px;background:var(--vide);color:var(--ink)}
+.etq.tr{background:var(--pink)}
+.plus{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:15px}
+.plus dt{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  margin-top:8px}
+.plus dd{margin:2px 0 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.a{border:2px solid var(--ink);border-radius:999px;padding:5px 13px;background:var(--white);
+  font-size:14px;font-weight:600}
+.a.sel-ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.a.sel-ko{background:var(--ko);color:#fff;border-color:var(--ko)}
+.a.sel-hs{background:var(--hs);color:#fff;border-color:var(--hs)}
+.actions input[type=text]{flex:1;min-width:200px;padding:6px 12px;font-size:14px}
+.pager{display:flex;gap:10px;justify-content:center;align-items:center;margin:22px 0 40px}
+footer{padding:26px 0 50px;font-size:14px;color:var(--muted);border-top:2px solid var(--ink)}
+.rien{padding:30px 0;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="ban"><div class="wrap">Outil interne de relecture. Page non référencée.
+  <a href="../">Le test de vote</a> · <a href="../../">Accueil</a></div></div>
+
+<header><div class="wrap">
+  <h1>Relecture des mesures programmatiques</h1>
+  <p class="note" id="entete">Chargement…</p>
+</div></header>
+
+<div class="wrap">
+  <div class="alerte">
+    Aucune de ces mesures n'a été relue contre son document. Les sous-thèmes et les tags sont
+    attribués automatiquement par mots-clés, c'est une première passe. Rien de ce qui est ici ne
+    doit être publié avant d'avoir été ouvert sur la source et validé.
+  </div>
+</div>
+
+<div class="filtres"><div class="wrap">
+  <div class="rang">
+    <select id="f-th"></select>
+    <select id="f-cand"></select>
+    <select id="f-verdict">
+      <option value="">Tous les verdicts</option>
+      <option value="non">Pas encore relues</option>
+      <option value="ok">Vérifiées</option>
+      <option value="ko">À corriger</option>
+      <option value="hs">Hors sujet</option>
+    </select>
+    <input type="search" id="f-q" placeholder="Chercher dans le texte, l'intitulé, les tags">
+    <button class="b" id="f-tr">À trancher</button>
+    <button class="b" id="f-raz">Tout afficher</button>
+  </div>
+  <p class="compte" id="compte"></p>
+</div></div>
+
+<div class="wrap">
+  <div id="ecarts"></div>
+  <div id="etat-cand"></div>
+  <div id="liste"></div>
+  <div class="pager" id="pager"></div>
+  <div class="rang" style="margin-bottom:30px">
+    <button class="b" id="export">Télécharger le relevé en CSV</button>
+    <button class="b" id="copier">Copier les identifiants signalés</button>
+    <button class="b" id="oublier">Effacer mes marques</button>
+  </div>
+</div>
+
+<footer><div class="wrap">
+  <p id="pied"></p>
+  <p>Cette page garde vos marques de relecture dans le stockage local de votre navigateur, pour
+  que vous puissiez fermer l'onglet sans les perdre. Rien n'est envoyé nulle part. Le bouton
+  « Effacer mes marques » les supprime.</p>
+</div></footer>
+
+<script src="data.js"></script>
+<script src="../../candidats/data.js"></script>
+<script>
+(function(){
+  var D = window.KOMUNE_MESURES;
+  if (!D){ document.getElementById('entete').textContent =
+    "Le référentiel n'a pas pu être chargé."; return; }
+  var CH = D.champs, dic = D.dic;
+  var k = {}; CH.forEach(function(c,i){ k[c]=i; });
+  var DICO = {cand:1,parti:1,th:1,sth:1,dbl:1,doc:1,url:1,ver:1,part:1,chap:1,st:1};
+  function val(l, c){
+    var v = l[k[c]];
+    if (DICO[c]) return (v>=0 && dic[c]) ? dic[c][v] : '';
+    return v || '';
+  }
+  var M = D.lignes;
+  var CLE = 'komune_relecture_mesures';
+  var marques = {};
+  try { marques = JSON.parse(localStorage.getItem(CLE)||'{}'); } catch(e){ marques = {}; }
+  function sauver(){ try{ localStorage.setItem(CLE, JSON.stringify(marques)); }catch(e){} }
+
+  function el(t,c,x){ var e=document.createElement(t); if(c)e.className=c;
+    if(x!=null)e.textContent=x; return e; }
+  function norm(s){ return (s||'').toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g,''); }
+
+  // --- filtres
+  var fTh=document.getElementById('f-th'), fCa=document.getElementById('f-cand'),
+      fVe=document.getElementById('f-verdict'), fQ=document.getElementById('f-q'),
+      bTr=document.getElementById('f-tr');
+  var trOnly=false, page=0, PAR_PAGE=40;
+  function remplir(sel, titre, liste){
+    sel.appendChild(new Option(titre, ''));
+    liste.slice().sort(function(a,b){ return a.localeCompare(b,'fr'); })
+      .forEach(function(x){ sel.appendChild(new Option(x, x)); });
+  }
+  remplir(fTh, 'Tous les thèmes', dic.th.filter(Boolean));
+  remplir(fCa, 'Tous les candidat·es', dic.cand.filter(Boolean));
+
+  function filtrer(){
+    var th=fTh.value, ca=fCa.value, ve=fVe.value, q=norm(fQ.value.trim());
+    return M.filter(function(l){
+      if (th && val(l,'th')!==th) return false;
+      if (ca && val(l,'cand')!==ca) return false;
+      if (trOnly && !l[k.tr]) return false;
+      if (ve){
+        var v=(marques[l[k.id]]||{}).v||'non';
+        if (ve==='non' ? v!=='non' : v!==ve) return false;
+      }
+      if (q){
+        var foin = norm([l[k.court], l[k.long], l[k.txt], l[k.tags],
+                         val(l,'sth'), val(l,'cand')].join(' '));
+        if (foin.indexOf(q)<0) return false;
+      }
+      return true;
+    });
+  }
+
+  function dessine(){
+    var res = filtrer();
+    var nOk=0,nKo=0,nHs=0;
+    res.forEach(function(l){ var v=(marques[l[k.id]]||{}).v;
+      if(v==='ok')nOk++; else if(v==='ko')nKo++; else if(v==='hs')nHs++; });
+    document.getElementById('compte').textContent =
+      res.length+' mesure'+(res.length>1?'s':'')+' sur '+M.length+
+      ' · '+nOk+' vérifiée'+(nOk>1?'s':'')+', '+nKo+' à corriger, '+nHs+' hors sujet';
+
+    // etat du programme si un candidat est choisi
+    var box=document.getElementById('etat-cand'); box.innerHTML='';
+    if (fCa.value && D.etat[fCa.value]){
+      var e=D.etat[fCa.value];
+      var d=el('div','etat');
+      d.appendChild(el('b',null,fCa.value+' · '+(e.etat||'état non renseigné')));
+      if (e.consigne) d.appendChild(el('p',null,e.consigne));
+      if (e.mention && e.mention!=='—')
+        d.appendChild(el('p','note','Mention à afficher si on publie une de ses cellules : '+e.mention));
+      box.appendChild(d);
+    }
+
+    var total=res.length;
+    if (page*PAR_PAGE >= total) page=0;
+    var vue = res.slice(page*PAR_PAGE, page*PAR_PAGE+PAR_PAGE);
+    var liste=document.getElementById('liste'); liste.innerHTML='';
+    if (!vue.length){ liste.appendChild(el('p','rien','Aucune mesure ne correspond.')); }
+    vue.forEach(function(l){ liste.appendChild(carte(l)); });
+
+    var pg=document.getElementById('pager'); pg.innerHTML='';
+    var pages=Math.ceil(total/PAR_PAGE);
+    if (pages>1){
+      var p1=el('button','b','Précédentes'); p1.disabled=(page===0);
+      p1.onclick=function(){ page--; dessine(); window.scrollTo(0,0); };
+      var p2=el('button','b','Suivantes'); p2.disabled=(page>=pages-1);
+      p2.onclick=function(){ page++; dessine(); window.scrollTo(0,0); };
+      pg.appendChild(p1);
+      pg.appendChild(el('span','note','page '+(page+1)+' sur '+pages));
+      pg.appendChild(p2);
+    }
+  }
+
+  function carte(l){
+    var id=l[k.id], mk=marques[id]||{};
+    var c=el('div','m'+(mk.v&&mk.v!=='non'?' v-'+mk.v:''));
+    var h=el('div','m-haut');
+    h.appendChild(el('span','m-id',id));
+    h.appendChild(el('span',null,val(l,'th')));
+    if (val(l,'sth')) h.appendChild(el('span',null,'· '+val(l,'sth')));
+    if (l[k.tr]) h.appendChild(el('span','etq tr','à trancher'));
+    c.appendChild(h);
+    c.appendChild(el('p','m-court', l[k.court] || l[k.long] || '(intitulé vide)'));
+    c.appendChild(el('p','m-cand', (val(l,'cand')||'sans candidat·e')+' · '+(val(l,'parti')||'sans parti')
+      + (val(l,'ver')?' · version '+val(l,'ver'):'')));
+    var det=el('details'); det.appendChild(el('summary','note','Le texte et la source'));
+    var dl=el('dl','plus');
+    function ajoute(t,v){ if(!v) return; dl.appendChild(el('dt',null,t)); dl.appendChild(el('dd',null,v)); }
+    ajoute('Intitulé long', l[k.long]);
+    ajoute('Texte intégral', l[k.txt]);
+    ajoute('Document source', val(l,'doc'));
+    ajoute('Emplacement', [val(l,'part'), val(l,'chap')].filter(Boolean).join(' · '));
+    ajoute('Tags', l[k.tags]);
+    ajoute('Double étiquette', val(l,'dbl'));
+    if (val(l,'url')){
+      dl.appendChild(el('dt',null,'Ouvrir la source'));
+      var dd=el('dd'); var a=el('a',null,val(l,'url')); a.href=val(l,'url');
+      a.target='_blank'; a.rel='noopener'; dd.appendChild(a); dl.appendChild(dd);
+    }
+    det.appendChild(dl); c.appendChild(det);
+
+    var act=el('div','actions');
+    [['ok','Vérifiée'],['ko','À corriger'],['hs','Hors sujet']].forEach(function(x){
+      var b=el('button','a'+(mk.v===x[0]?' sel-'+x[0]:''), x[1]);
+      b.onclick=function(){
+        var m=marques[id]||{}; m.v = (m.v===x[0] ? 'non' : x[0]);
+        marques[id]=m; sauver(); dessine();
+      };
+      act.appendChild(b);
+    });
+    var note=el('input'); note.type='text'; note.placeholder='Note de relecture';
+    note.value=mk.n||'';
+    note.oninput=function(){ var m=marques[id]||{}; m.n=note.value; marques[id]=m; sauver(); };
+    act.appendChild(note);
+    c.appendChild(act);
+    return c;
+  }
+
+  [fTh,fCa,fVe].forEach(function(s){ s.onchange=function(){ page=0; dessine(); }; });
+  var t=null;
+  fQ.oninput=function(){ clearTimeout(t); t=setTimeout(function(){ page=0; dessine(); }, 220); };
+  bTr.onclick=function(){ trOnly=!trOnly; bTr.classList.toggle('on',trOnly); page=0; dessine(); };
+  document.getElementById('f-raz').onclick=function(){
+    fTh.value=''; fCa.value=''; fVe.value=''; fQ.value='';
+    trOnly=false; bTr.classList.remove('on'); page=0; dessine(); };
+
+  document.getElementById('export').onclick=function(){
+    var l=['ID mesure;Verdict;Note;Candidat;Theme;Intitule court'];
+    M.forEach(function(x){
+      var m=marques[x[k.id]]; if(!m||!m.v||m.v==='non') return;
+      function c(s){ return '"'+String(s||'').replace(/"/g,'""')+'"'; }
+      l.push([c(x[k.id]), c(m.v), c(m.n), c(val(x,'cand')), c(val(x,'th')), c(x[k.court])].join(';'));
+    });
+    var b=new Blob(['﻿'+l.join('\n')], {type:'text/csv;charset=utf-8'});
+    var a=document.createElement('a'); a.href=URL.createObjectURL(b);
+    a.download='relecture_mesures.csv'; a.click();
+  };
+  document.getElementById('copier').onclick=function(){
+    var ids=Object.keys(marques).filter(function(i){
+      return marques[i].v==='ko'||marques[i].v==='hs'; });
+    navigator.clipboard && navigator.clipboard.writeText(ids.join('\n'));
+    this.textContent = ids.length ? ids.length+' identifiants copiés' : 'rien à copier';
+    var b=this; setTimeout(function(){b.textContent='Copier les identifiants signalés';},1800);
+  };
+  document.getElementById('oublier').onclick=function(){
+    if (!confirm('Effacer toutes vos marques de relecture ?')) return;
+    marques={}; sauver(); dessine();
+  };
+
+  // --- controle : les trois comptages concordent-ils ?
+  (function(){
+    var S = window.KOMUNE_CANDIDATS;
+    if (!S || !S.candidats) return;
+    var site = {}; S.candidats.forEach(function(c){ site[c.nom] = c.n_mesures; });
+    var ref = {};
+    M.forEach(function(l){ var n = val(l,'cand') || '(sans candidat·e)';
+      ref[n] = (ref[n]||0)+1; });
+    var lignes = [];
+    Object.keys(D.etat).forEach(function(nom){
+      var e = D.etat[nom];
+      var m = /(\d[\d\s]*)\s*mesures/.exec(String(e.consigne||''));
+      var o5 = m ? parseInt(m[1].replace(/\s/g,''),10) : null;
+      var r = ref[nom] || 0, s = site[nom];
+      var vals = [r, o5, s].filter(function(x){ return x!==null && x!==undefined; });
+      var distinctes = vals.filter(function(x,i){ return vals.indexOf(x)===i; });
+      if (distinctes.length > 1) lignes.push([nom, r, o5, s]);
+    });
+    if (!lignes.length) return;
+    lignes.sort(function(a,b){ return Math.max(b[1],b[2]||0,b[3]||0) - Math.max(a[1],a[2]||0,a[3]||0); });
+    var det = el('details','etat');
+    var s1 = el('summary');
+    s1.appendChild(el('b',null,'Écarts de comptage : '+lignes.length+' candidat·es'));
+    det.appendChild(s1);
+    det.appendChild(el('p','note',
+      'Le nombre de mesures diffère selon le fichier consulté : le référentiel lui-même, la '+
+      'phrase de l\'onglet 05, et le fichier des candidat·es déjà en ligne sur le site. '+
+      'Tant que ces trois chiffres divergent, aucun total ne peut être publié.'));
+    var tb = el('table'); tb.style.width='100%'; tb.style.borderCollapse='collapse';
+    tb.style.fontSize='14px';
+    var tr = el('tr');
+    ['Candidat·e','Référentiel','Onglet 05','Fichier du site'].forEach(function(x){
+      var th = el('th',null,x); th.style.textAlign = x==='Candidat·e' ? 'left':'right';
+      th.style.padding='6px 8px'; th.style.borderBottom='1px solid rgba(51,46,50,.2)';
+      tr.appendChild(th); });
+    tb.appendChild(tr);
+    lignes.forEach(function(x){
+      var r2 = el('tr');
+      x.forEach(function(v,i){
+        var td = el('td',null, v===null||v===undefined ? '-' : String(v));
+        td.style.textAlign = i===0 ? 'left':'right'; td.style.padding='6px 8px';
+        td.style.borderBottom='1px solid rgba(51,46,50,.1)';
+        r2.appendChild(td); });
+      tb.appendChild(r2);
+    });
+    det.appendChild(tb);
+    document.getElementById('ecarts').appendChild(det);
+  })();
+
+  document.getElementById('entete').textContent =
+    M.length+' mesures, '+dic.th.filter(Boolean).length+' thèmes, '+
+    dic.cand.filter(Boolean).length+' candidat·es, tirées de '+
+    dic.doc.filter(Boolean).length+' documents. Référentiel du '+D.maj+'.';
+  document.getElementById('pied').textContent =
+    'Source : '+D.source+'. Chaque mesure porte le document dont elle est tirée et son adresse.';
+  dessine();
+})();
+</script>
+</body>
+</html>
