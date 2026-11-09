@@ -119,6 +119,28 @@ td .raison{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line
 .sommaire{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
 .sommaire button{border:1.5px solid var(--line);background:transparent;border-radius:999px;padding:5px 11px;font-size:13px}
 .sommaire button.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+/* candidat·es */
+.tetes{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.tete-c{border:2px solid var(--ink);border-radius:var(--r);background:var(--white);padding:14px 12px 12px;text-align:center;
+  box-shadow:var(--hard-s);display:flex;flex-direction:column;align-items:center;gap:6px;transition:transform .08s,box-shadow .08s}
+.tete-c:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+.tete-c .av{width:72px;height:72px;font-size:20px;border-width:2.5px}
+.tete-c b{font-size:15px;line-height:1.2;display:block}
+.tete-c span{font-size:12.5px;color:var(--muted);line-height:1.25;display:block}
+.tete-c .cases{margin-top:4px}
+.tete-c .case{width:22px;height:22px;font-size:11px;border-radius:6px}
+.fiche-tete{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:8px 0 22px}
+.fiche-tete .av{width:112px;height:112px;font-size:30px;border-width:3px}
+.fiche-tete h2{font-size:clamp(30px,5.6vw,56px);margin-bottom:4px}
+.fiche-grille{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+@media(max-width:760px){.fiche-grille{grid-template-columns:1fr}}
+.fiche-bloc{border:2px solid var(--ink);border-radius:var(--r);background:var(--white);padding:18px 20px}
+.fiche-bloc.large{grid-column:1 / -1}
+.fiche-bloc h3{font-size:17px;margin-bottom:10px;display:flex;gap:10px;align-items:center}
+.fiche-bloc p{white-space:pre-line;font-size:15px;line-height:1.5;margin:0}
+.fiche-bloc p + p{margin-top:10px}
+.fiche-bloc .k{font-family:"Oswald",Impact,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin:12px 0 4px}
+.fiche-bloc .k:first-child{margin-top:0}
 /* avril */
 .ligne-avril{display:grid;gap:0;grid-template-columns:repeat(4,1fr);border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;background:var(--white);box-shadow:var(--hard)}
 @media(max-width:860px){.ligne-avril{grid-template-columns:1fr 1fr}} @media(max-width:520px){.ligne-avril{grid-template-columns:1fr}}
@@ -169,6 +191,9 @@ td .raison{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line
     <button class="mode c" type="button" role="tab" data-mode="comparer" aria-pressed="false"><span class="n">2 · Comparer</span><h3>Côte à côte</h3><p>Jusqu'à quatre candidat·es : mandats, programme, et leurs votes sur 8 lois. Sans classement.</p></button>
     <button class="mode d" type="button" role="tab" data-mode="debattre" aria-pressed="false"><span class="n">3 · Débattre</span><h3>Une fiche par sujet</h3><p>Qui propose quoi, mot pour mot, avec la source. À envoyer avant un dîner ou un cours.</p></button>
     <button class="mode k" type="button" role="tab" data-mode="comprendre" aria-pressed="false"><span class="n">4 · Comprendre</span><h3>Les bases</h3><p>Qui peut se présenter, les 500 parrainages, le calendrier, ce qu'un président peut faire.</p></button>
+  </div>
+  <div style="margin-top:14px">
+    <button class="b" type="button" data-mode="candidats" id="vers-candidats">Les fiches des 31 candidat·es : mandats, parcours, programme, sources</button>
   </div>
   <div class="chiffres" style="margin-top:30px">
     <div class="chiffre"><b id="n-cand">31</b><span>candidat·es déclaré·es, une fiche chacun·e</span></div>
@@ -266,6 +291,29 @@ td .raison{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line
   <div class="don"><p><b>Komune est un média qui explique.</b> Ces cartes seront complétées au fil de la campagne : décret de convocation, liste officielle, règles de parole dans les médias.</p><a class="b plein" href="../new-noussoutenir/">Soutenir Komune</a></div>
 </div></section>
 
+<!-- ===================== CANDIDAT·ES ===================== -->
+<section class="panneau bord" id="p-candidats"><div class="wrap">
+  <div id="c-liste">
+    <div class="tete-section">
+      <div><p class="kick">Les candidat·es</p><h2>Une fiche chacun·e</h2>
+        <p>Touchez une tête pour ouvrir sa fiche. Sous chaque nom, cinq cases résument ce qu'on peut vérifier : au Parlement aujourd'hui,
+          au Parlement hier, au gouvernement, mandat local aujourd'hui, mandat local hier. Une fonction n'est pas un mandat.</p></div>
+    </div>
+    <div class="tetes" id="tetes"></div>
+    <p class="legende"><span class="case oui" style="width:22px;height:22px;font-size:11px">✓</span> oui,
+      <span class="case non" style="width:22px;height:22px;font-size:11px">-</span> non,
+      <span class="case inc" style="width:22px;height:22px;font-size:11px">?</span> pas encore vérifié.
+      Classement par ordre alphabétique, sans autre ordre.</p>
+  </div>
+  <div id="c-fiche" style="display:none">
+    <div class="outils" style="margin:0 0 6px"><button class="b nu" id="f-retour" type="button">Toutes les fiches</button>
+      <button class="b nu" id="f-copier" type="button">Copier le lien de cette fiche</button></div>
+    <div class="fiche-tete" id="f-tete"></div>
+    <div class="fiche-grille" id="f-corps"></div>
+    <div class="don"><p><b>Chaque ligne de cette fiche est datée et sourcée.</b> Un mandat oublié, une date fausse, une source qui manque ? On corrige et on le dit.</p><a class="b plein" href="../new-noussoutenir/">Soutenir Komune</a></div>
+  </div>
+</div></section>
+
 <!-- ===================== AVRIL ===================== -->
 <section class="violet" id="avril"><div class="wrap">
   <p class="kick">Ce qui arrive en avril 2027</p>
@@ -344,17 +392,18 @@ function dateFr(iso, longue){ var m = String(iso || '').split('-'); if (m.length
 document.getElementById('n-maj').textContent = dateFr(P.maj || K.maj);
 
 /* ---------- modes ---------- */
-var MODES = ['jouer', 'comparer', 'debattre', 'comprendre'];
+var MODES = ['jouer', 'comparer', 'debattre', 'comprendre', 'candidats'];
 function montreMode(m, pousse){
   if (MODES.indexOf(m) < 0) m = 'jouer';
   MODES.forEach(function(x){
     document.getElementById('p-' + x).classList.toggle('on', x === m);
-    document.querySelector('.mode[data-mode="' + x + '"]').setAttribute('aria-pressed', x === m ? 'true' : 'false');
+    var b = document.querySelector('.mode[data-mode="' + x + '"]'); if (b) b.setAttribute('aria-pressed', x === m ? 'true' : 'false');
   });
+  document.getElementById('vers-candidats').classList.toggle('plein', m === 'candidats');
   if (pousse && history.pushState) history.pushState({m: m}, '', '#' + m);
   if (pousse){ var y = document.getElementById('p-' + m).getBoundingClientRect().top + window.scrollY - 70; window.scrollTo({top: y, behavior: 'smooth'}); }
 }
-[].forEach.call(document.querySelectorAll('.mode'), function(b){ b.onclick = function(){ montreMode(b.getAttribute('data-mode'), true); }; });
+[].forEach.call(document.querySelectorAll('.mode, #vers-candidats'), function(b){ b.onclick = function(){ montreMode(b.getAttribute('data-mode'), true); }; });
 
 /* ============================================================
    1. JOUER : devinez le vote
@@ -536,7 +585,7 @@ function dessineTable(){
     });
     h += '</tr>';
   });
-  h += '<tr><th scope="row">Fiche complète</th>' + cs.map(function(c){ return '<td><a href="../comparateur/#f=' + esc(c.slug) + '">mandats, parcours, sources</a></td>'; }).join('') + '</tr>';
+  h += '<tr><th scope="row">Fiche complète</th>' + cs.map(function(c){ return '<td><a href="#fiche=' + esc(c.slug) + '">mandats, parcours, sources</a></td>'; }).join('') + '</tr>';
   h += '</tbody></table></div>';
   z.innerHTML = h;
 }
@@ -786,6 +835,73 @@ document.addEventListener('keydown', function(e){
 dessineCarte();
 
 /* ============================================================
+   LES FICHES
+   ============================================================ */
+var CAND_TRI = CAND.slice().sort(function(a, b){ return famille(a.nom).localeCompare(famille(b.nom), 'fr'); });
+var PAR_SLUG = {}; CAND.forEach(function(c){ if (c.slug) PAR_SLUG[c.slug] = c; });
+(function(){
+  var z = document.getElementById('tetes');
+  CAND_TRI.forEach(function(c){
+    var b = el('button', 'tete-c'); b.type = 'button';
+    b.appendChild(avatar(c, ''));
+    b.appendChild(el('b', null, c.nom)); b.appendChild(el('span', null, c.parti));
+    if (c.k){ var cs = el('div', 'cases'); cs.innerHTML = [c.k.p_parl_now, c.k.p_parl_past, c.k.p_gouv, c.k.p_loc_now, c.k.p_loc_past].map(caseMandat).join(''); b.appendChild(cs); }
+    b.onclick = function(){ ouvreFiche(c.slug, true); };
+    z.appendChild(b);
+  });
+})();
+function blocFiche(titre, contenu, large){
+  var d = el('div', 'fiche-bloc' + (large ? ' large' : ''));
+  d.appendChild(el('h3', null, titre));
+  if (typeof contenu === 'string'){ d.appendChild(el('p', null, contenu || 'Non renseigné.')); }
+  else contenu.forEach(function(x){ if (x.k) d.appendChild(el('span', 'k', x.k)); if (x.t != null) d.appendChild(el('p', null, x.t || 'Non renseigné.')); if (x.n) d.appendChild(x.n); });
+  return d;
+}
+function ouvreFiche(slug, pousse){
+  var c = PAR_SLUG[slug]; if (!c || !c.k){ fermeFiche(false); return; }
+  var k = c.k, e = c.e;
+  document.getElementById('c-liste').style.display = 'none';
+  document.getElementById('c-fiche').style.display = '';
+  document.title = c.nom + ' : la fiche - Komune';
+  if (pousse && history.pushState) history.pushState({m: 'candidats', f: slug}, '', '#fiche=' + slug);
+  var t = document.getElementById('f-tete'); t.innerHTML = '';
+  t.appendChild(avatar(c, ''));
+  var d = el('div'); d.appendChild(el('p', 'kick', (k.statut || '') + (k.date ? ' · annonce : ' + k.date : '')));
+  d.appendChild(el('h2', null, c.nom)); d.appendChild(el('p', 'mut', c.parti));
+  var cs = el('div', 'cases'); cs.innerHTML = [k.p_parl_now, k.p_parl_past, k.p_gouv, k.p_loc_now, k.p_loc_past].map(caseMandat).join(''); d.appendChild(cs);
+  t.appendChild(d);
+  var z = document.getElementById('f-corps'); z.innerHTML = '';
+  z.appendChild(blocFiche('Mandats', [
+    {k: 'Au Parlement aujourd\'hui', t: k.parl_now}, {k: 'Au Parlement hier', t: k.parl_past},
+    {k: 'Au gouvernement', t: k.gouv}, {k: 'Mandats locaux', t: k.local}]));
+  var prog = [{k: 'État', t: (k.prog || '') + (e && e.etat ? ' · ' + e.etat : '')}];
+  if (k.prog_detail) prog.push({k: 'Sur quoi on se base', t: k.prog_detail});
+  if (e && e.consigne) prog.push({k: 'Ce qui est consigné', t: e.consigne});
+  var liens = el('p');
+  if (k.prog_url){ var a1 = el('a', null, 'Le programme'); a1.href = k.prog_url; a1.target = '_blank'; a1.rel = 'noopener'; liens.appendChild(a1); }
+  if (k.site){ if (liens.childNodes.length) liens.appendChild(document.createTextNode(' · ')); var a2 = el('a', null, 'Le site de campagne'); a2.href = k.site; a2.target = '_blank'; a2.rel = 'noopener'; liens.appendChild(a2); }
+  if (k.n_mesures){ if (liens.childNodes.length) liens.appendChild(document.createTextNode(' · ')); var a3 = el('a', null, nb(k.n_mesures) + ' mesures relevées'); a3.href = '../comparateur/#programmes'; liens.appendChild(a3); }
+  prog.push({n: liens});
+  z.appendChild(blocFiche('Programme 2027', prog));
+  z.appendChild(blocFiche('Comment lire ses votes', k.votes || ''));
+  z.appendChild(blocFiche('Fonctions', k.fonctions || 'Aucune fonction relevée.'));
+  z.appendChild(blocFiche('Parcours', k.profession || '', true));
+  z.appendChild(blocFiche('Les faits, dans l\'ordre', k.faits || '', true));
+  z.appendChild(blocFiche('Judiciaire', k.judiciaire || 'Rien de relevé.'));
+  z.appendChild(blocFiche('Sources', [{t: k.sources || ''}, {n: (function(){ var p = el('p'); var a = el('a', null, 'La fiche sur le comparateur actuel'); a.href = '../comparateur/#f=' + slug; p.appendChild(a); return p; })()}]));
+  montreMode('candidats', false);
+  window.scrollTo({top: document.getElementById('p-candidats').getBoundingClientRect().top + window.scrollY - 70});
+}
+function fermeFiche(pousse){
+  document.getElementById('c-liste').style.display = '';
+  document.getElementById('c-fiche').style.display = 'none';
+  document.title = 'Le terrain de jeu politique - Komune';
+  if (pousse && history.pushState) history.pushState({m: 'candidats'}, '', '#candidats');
+}
+document.getElementById('f-retour').onclick = function(){ fermeFiche(true); };
+document.getElementById('f-copier').onclick = function(){ copie(location.href, this, 'Copier le lien de cette fiche'); };
+
+/* ============================================================
    APERCU D'AVRIL : une ligne terminee, prise telle quelle
    ============================================================ */
 (function(){
@@ -811,6 +927,8 @@ dessineCarte();
 function route(){
   var h = location.hash.replace(/^#/, ''), m = h.split('=')[0], arg = h.split('=').slice(1).join('=');
   if (m === 'debattre' && arg && SOUS_ID[arg]){ ouvreSujet(arg, false); return; }
+  if (m === 'fiche' && arg && PAR_SLUG[arg]){ ouvreFiche(arg, false); return; }
+  if (m === 'candidats') fermeFiche(false);
   if (m === 'comparer'){ choisis = arg ? arg.split(',').filter(function(id){ return PAR_ID[id]; }).slice(0, 4) : []; majChoix(false); }
   if (m === 'comprendre' && arg){ var n = parseInt(arg, 10); if (n >= 1 && n <= CARTES.length){ carteN = n - 1; dessineCarte(); } }
   if (m === 'debattre') fermeSujet(false);
