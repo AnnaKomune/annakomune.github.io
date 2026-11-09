@@ -329,6 +329,10 @@ td .raison{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line
       <p>Pour chaque loi documentée, le vote de chaque groupe de l'Assemblée, en part des votes exprimés. Les chiffres viennent
         directement des fichiers de scrutin publiés par l'Assemblée nationale. Chaque image se télécharge au format story ou publication.</p></div>
   </div>
+  <div class="puces" style="margin-bottom:16px" role="group" aria-label="Style des visuels par scrutin">
+    <button class="puce on" type="button" data-style="barres">Barres par groupe</button>
+    <button class="puce" type="button" data-style="camemberts">Camemberts par groupe</button>
+  </div>
   <div class="visuels" id="visuels"></div>
   <p class="legende">Votes exprimés : pour, contre et abstention. Les député·es non votant·es ne sont pas comptés. Pour une motion de censure,
     l'Assemblée ne compte que les voix pour la motion : on montre alors la part des membres de chaque groupe qui l'ont votée.</p>
@@ -922,6 +926,8 @@ function fermeFiche(pousse){
   if (pousse && history.pushState) history.pushState({m: 'candidats'}, '', '#candidats');
 }
 document.getElementById('f-retour').onclick = function(){ fermeFiche(true); };
+[].forEach.call(document.querySelectorAll('[data-style]'), function(b){ b.onclick = function(){ STYLE_SCRUTIN = b.getAttribute('data-style');
+  [].forEach.call(document.querySelectorAll('[data-style]'), function(x){ x.classList.toggle('on', x === b); }); redessineScrutins(); }; });
 document.getElementById('f-copier').onclick = function(){ copie(location.href, this, 'Copier le lien de cette fiche'); };
 
 /* ============================================================
@@ -933,7 +939,31 @@ function pose_logo(ctx, W, H, bandeH, m){
   if (LOGO){ var h = W * 0.085, w = h * LOGO.width / LOGO.height; ctx.drawImage(LOGO, W - m - w, H - bandeH + (bandeH - h) / 2, w, h); }
   else { ctx.fillStyle = COUL.gold; ctx.font = '700 ' + Math.round(W * 0.04) + 'px Oswald, Impact, sans-serif'; ctx.textAlign = 'right'; ctx.fillText('KOMUNE', W - m, H - bandeH + W * 0.06); ctx.textAlign = 'left'; }
 }
-var COUL = {pour: '#5423df', contre: '#c2308f', abst: '#8a6a00', cream: '#fcf7e8', ink: '#332e32', white: '#ffffff', sand: '#e6e0d2', gold: '#fee075'};
+var COUL = {pour: '#5423df', contre: '#f099f9', abst: '#fee075', cream: '#fcf7e8', ink: '#332e32', white: '#ffffff', sand: '#e6e0d2', gold: '#fee075', sky: '#9abdff'};
+function texteSur(couleur){ return couleur === COUL.pour ? COUL.white : COUL.ink; }
+/* logos des groupes : fichiers de Wikimedia Commons, charges au moment du dessin */
+var WM = 'https://upload.wikimedia.org/wikipedia/commons/thumb/';
+var LOGO_FICHIERS = {rn: ['d/d5', 'Logo_Rassemblement_National.svg'], lfi: ['3/3a', 'Logo_France_Insoumise.svg'], ps: ['b/b4', 'Le_Parti_socialiste_wordmark.svg'],
+  lr: ['0/00', 'Les_R%C3%A9publicains_-_logo_%28France%2C_2023%29.svg'], lr2015: ['8/8b', 'Les_R%C3%A9publicains_-_logo_%28France%2C_2015-2023%29.svg'],
+  re: ['b/b3', 'Renaissance_parti_logo.svg'], modem: ['9/96', 'MoDem_logo_2019.svg'], hor: ['2/21', 'Logo_Horizons.svg'], udr: ['d/d3', 'UDR_logo.svg'],
+  liot: ['4/49', 'LIOT_Group.png'], udi: ['7/77', 'Logo_UDI_2019.svg'], epr: ['7/75', 'Groupe_EPR.png'], gdr: ['e/e9', 'Logo_GDR.svg'],
+  ecos: ['6/62', 'Logo-Groupe_%C3%A9cologiste_et_Social-AN.webp'], dr: ['f/f3', 'La_Droite_R%C3%A9publicaine_logo_2024.png']};
+function urlLogo(k){ var f = LOGO_FICHIERS[k]; return WM + f[0] + '/' + f[1] + '/300px-' + f[1] + (/\.png$/.test(f[1]) ? '' : '.png'); }
+/* groupe de l'Assemblee -> logo, par legislature. Pas de logo quand il serait anachronique ou qu'il n'en existe pas. */
+var LOGO_GROUPE = {17: {'RN': 'rn', 'EPR': 'epr', 'LFI-NFP': 'lfi', 'SOC': 'ps', 'DR': 'dr', 'EcoS': 'ecos', 'Dem': 'modem', 'HOR': 'hor', 'LIOT': 'liot', 'GDR': 'gdr', 'UDR': 'udr'},
+  16: {'RE': 're', 'RN': 'rn', 'LFI - NUPES': 'lfi', 'LR': 'lr2015', 'Dem': 'modem', 'SOC': 'ps', 'HOR': 'hor', 'GDR - NUPES': 'gdr', 'LIOT': 'liot'},
+  15: {'LR': 'lr2015', 'Dem': 'modem', 'SOC': 'ps', 'FI': 'lfi', 'GDR': 'gdr', 'UDI-I': 'udi'}};
+var LOGOS = {};
+function chargeLogos(){
+  var cles = Object.keys(LOGO_FICHIERS);
+  return Promise.all(cles.map(function(k){ return new Promise(function(res){ if (LOGOS[k]) return res(); var im = new Image(); im.crossOrigin = 'anonymous';
+    im.onload = function(){ LOGOS[k] = im; res(); }; im.onerror = function(){ res(); }; im.src = urlLogo(k); }); }));
+}
+function poseLogo(ctx, k, cx, cy, maxW, maxH){
+  var im = LOGOS[k]; if (!im) return false;
+  var r = Math.min(maxW / im.width, maxH / im.height), w = im.width * r, h = im.height * r;
+  ctx.drawImage(im, cx - w / 2, cy - h / 2, w, h); return true;
+}
 function lignes(ctx, texte, x, y, max, lh){
   var mots = texte.split(' '), l = '', n = 0;
   for (var i = 0; i < mots.length; i++){
@@ -943,7 +973,9 @@ function lignes(ctx, texte, x, y, max, lh){
   if (l){ ctx.fillText(l, x, y + n * lh); n++; }
   return n;
 }
+var STYLE_SCRUTIN = 'barres';
 function dessineVisuel(v, cv, W, H){
+  if (STYLE_SCRUTIN === 'camemberts') return dessineCamemberts(v, cv, W, H);
   var ctx = cv.getContext('2d'); cv.width = W; cv.height = H;
   var m = Math.round(W * 0.055), y = m;
   ctx.fillStyle = COUL.cream; ctx.fillRect(0, 0, W, H);
@@ -966,7 +998,7 @@ function dessineVisuel(v, cv, W, H){
   var gs = v.g.map(function(g){ var ex = g.pour + g.contre + g.abst; var base = v.censure ? g.membres : ex;
     return {ab: g.ab, n: ex, base: base, pPour: base ? g.pour / base : 0, pContre: base ? g.contre / base : 0, pAbst: base ? g.abst / base : 0, membres: g.membres, pour: g.pour}; });
   gs.sort(function(a, b){ return b.pPour - a.pPour || b.n - a.n; });
-  var piedH = W * 0.2, hautBarres = H - y - piedH - W * 0.09, bas = y + hautBarres;
+  var piedH = W * 0.2, hautBarres = H - y - piedH - W * 0.12, bas = y + hautBarres;
   var gap = W * 0.012, larg = (W - 2 * m - gap * (gs.length - 1)) / gs.length;
   ctx.strokeStyle = 'rgba(51,46,50,.25)'; ctx.lineWidth = 1; ctx.setLineDash([6, 6]);
   [0.25, 0.5, 0.75, 1].forEach(function(p){ var yy = bas - hautBarres * p; ctx.beginPath(); ctx.moveTo(m, yy); ctx.lineTo(W - m, yy); ctx.stroke(); });
@@ -978,14 +1010,15 @@ function dessineVisuel(v, cv, W, H){
     var yy = bas;
     ctx.fillStyle = COUL.sand; ctx.fillRect(x, bas - hautBarres, larg, hautBarres);
     segs.forEach(function(sg){ var h = hautBarres * sg[0]; if (h <= 0) return; ctx.fillStyle = sg[1]; ctx.fillRect(x, yy - h, larg, h);
-      if (h > W * 0.032){ ctx.fillStyle = COUL.white; ctx.font = '700 ' + Math.round(Math.min(W * 0.024, larg * 0.42)) + 'px Oswald, Impact, sans-serif'; ctx.textAlign = 'center';
+      if (h > W * 0.032){ ctx.fillStyle = texteSur(sg[1]); ctx.font = '700 ' + Math.round(Math.min(W * 0.024, larg * 0.42)) + 'px Oswald, Impact, sans-serif'; ctx.textAlign = 'center';
         ctx.fillText(Math.round(sg[0] * 100), x + larg / 2, yy - h / 2 + W * 0.008); ctx.textAlign = 'left'; }
       yy -= h; });
     ctx.strokeStyle = COUL.ink; ctx.lineWidth = 2; ctx.strokeRect(x, bas - hautBarres, larg, hautBarres);
-    ctx.fillStyle = COUL.ink; ctx.textAlign = 'center'; ctx.font = '700 ' + Math.round(Math.min(W * 0.021, larg * 0.36)) + 'px Oswald, Impact, sans-serif';
-    ctx.fillText(g.ab.toUpperCase().replace(' - NUPES', '').replace('-NFP', ''), x + larg / 2, bas + W * 0.03);
-    ctx.fillStyle = 'rgba(51,46,50,.62)'; ctx.font = '500 ' + Math.round(Math.min(W * 0.017, larg * 0.3)) + 'px "Bricolage Grotesque", system-ui, sans-serif';
-    ctx.fillText(v.censure ? g.pour + ' sur ' + g.membres : g.n + ' votes', x + larg / 2, bas + W * 0.055);
+    var k = (LOGO_GROUPE[v.leg] || {})[g.ab], aLogo = k && poseLogo(ctx, k, x + larg / 2, bas + W * 0.032, larg - 6, W * 0.04);
+    ctx.fillStyle = COUL.ink; ctx.textAlign = 'center'; ctx.font = '700 ' + Math.round(Math.min(aLogo ? W * 0.015 : W * 0.021, larg * 0.36)) + 'px Oswald, Impact, sans-serif';
+    ctx.fillText(g.ab.toUpperCase().replace(' - NUPES', '').replace('-NFP', ''), x + larg / 2, bas + (aLogo ? W * 0.07 : W * 0.03));
+    ctx.fillStyle = 'rgba(51,46,50,.62)'; ctx.font = '500 ' + Math.round(Math.min(W * 0.016, larg * 0.3)) + 'px "Bricolage Grotesque", system-ui, sans-serif';
+    ctx.fillText(v.censure ? g.pour + ' sur ' + g.membres : g.n + ' votes', x + larg / 2, bas + (aLogo ? W * 0.092 : W * 0.055));
     ctx.textAlign = 'left';
   });
   /* pied */
@@ -1020,7 +1053,7 @@ function legende(c, W, items){
     ctx.fillStyle = COUL.ink; ctx.fillText(L[0], lx + W * 0.036, c.y + W * 0.022); lx += w; });
   c.y += W * 0.06;
 }
-var CODES = {pour: ['Pour', COUL.pour], contre: ['Contre', COUL.contre], abstention: ['Abstention', COUL.abst], npppv: ['N\'a pas pris part', '#9abdff'], na: ['N\'a pas pu voter', COUL.sand]};
+var CODES = {pour: ['Pour', COUL.pour], contre: ['Contre', COUL.contre], abstention: ['Abstention', COUL.abst], npppv: ['N\'a pas pris part', COUL.sky], na: ['N\'a pas pu voter', COUL.sand]};
 function nomCourt(c){ var p = c.nom.split(' '); return p.length > 2 ? p.slice(1).join(' ') : p[p.length - 1]; }
 var COURT_LOI = {'aide-a-mourir': 'Aide à mourir (2026)', 'pma': 'PMA pour toutes (2021)', 'ivg-constitution': 'IVG dans la Constitution (2024)', 'gaillot': 'IVG à 14 semaines (2022)', 'plfss-2022': 'Budget de la Sécu 2022', 'plfss-2023': 'Censure du budget Sécu 2023', 'retraites': 'Censure, réforme des retraites (2023)', 'mineurs-reseaux': 'Mineurs et réseaux sociaux (2026)'};
 function courtLoi(l){ return COURT_LOI[l.id] || l.nom; }
@@ -1038,7 +1071,7 @@ function visuelPuVoter(cv, W, H){
     lignes(ctx, courtLoi(l).toUpperCase(), c.m, y + lignesH * 0.36, x0 - c.m - W * 0.03, W * 0.026);
     var x = x0; ['pour', 'contre', 'abstention', 'npppv', 'na'].forEach(function(k){ var w = larg * cnt[k] / 31; if (!w) return;
       ctx.fillStyle = CODES[k][1]; ctx.fillRect(x, y + lignesH * 0.2, w, barreH); ctx.strokeStyle = COUL.ink; ctx.lineWidth = 2; ctx.strokeRect(x, y + lignesH * 0.2, w, barreH);
-      if (w > W * 0.03){ ctx.fillStyle = k === 'na' || k === 'npppv' ? COUL.ink : COUL.white; ctx.font = '700 ' + Math.round(W * 0.022) + 'px Oswald, Impact, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(cnt[k], x + w / 2, y + lignesH * 0.2 + barreH * 0.66); ctx.textAlign = 'left'; }
+      if (w > W * 0.03){ ctx.fillStyle = texteSur(CODES[k][1]); ctx.font = '700 ' + Math.round(W * 0.022) + 'px Oswald, Impact, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(cnt[k], x + w / 2, y + lignesH * 0.2 + barreH * 0.66); ctx.textAlign = 'left'; }
       x += w; });
   });
 }
@@ -1102,11 +1135,34 @@ function visuelDeclarations(cv, W, H){
 var MAISON = [
   {id: 'pu-voter', f: visuelPuVoter}, {id: 'grille-votes', f: visuelGrille}, {id: 'mandats', f: visuelMandats}, {id: 'declarations', f: visuelDeclarations}
 ];
+function dessineCamemberts(v, cv, W, H){
+  var c = cadre(cv, W, H, v.q, v.s, 'Source : Assemblée nationale, scrutin public n° ' + v.num + ' du ' + dateFr(v.date, true) + ', données ouvertes. ' + (v.censure ? 'Part des membres de chaque groupe ayant voté la motion.' : 'En % des votes exprimés par groupe, non-votants exclus.'));
+  var ctx = c.ctx;
+  legende(c, W, v.censure ? [['A voté la censure', COUL.contre], ['N\'a pas voté la censure', COUL.sand]] : [['Pour', COUL.pour], ['Contre', COUL.contre], ['Abstention', COUL.abst]]);
+  var gs = v.g.map(function(g){ var ex = g.pour + g.contre + g.abst, base = v.censure ? g.membres : ex;
+    return {ab: g.ab, n: ex, pour: g.pour, membres: g.membres, parts: v.censure ? [[g.pour / (base || 1), COUL.contre], [1 - g.pour / (base || 1), COUL.sand]] : [[g.pour / (base || 1), COUL.pour], [g.contre / (base || 1), COUL.contre], [g.abst / (base || 1), COUL.abst]], pPour: base ? g.pour / base : 0}; });
+  gs.sort(function(a, b){ return b.pPour - a.pPour || b.n - a.n; });
+  var cols = gs.length > 9 ? 4 : 3, rows = Math.ceil(gs.length / cols), cellW = (W - 2 * c.m) / cols, cellH = (c.bas - c.y) / rows, R = Math.min(cellW, cellH) * 0.27;
+  gs.forEach(function(g, i){
+    var cx = c.m + (i % cols) * cellW + cellW / 2, cy = c.y + Math.floor(i / cols) * cellH + cellH * 0.56;
+    var k = (LOGO_GROUPE[v.leg] || {})[g.ab], aLogo = k && poseLogo(ctx, k, cx, cy - R - W * 0.04, cellW * 0.8, W * 0.045);
+    if (!aLogo){ ctx.fillStyle = COUL.ink; ctx.textAlign = 'center'; ctx.font = '700 ' + Math.round(W * 0.022) + 'px Oswald, Impact, sans-serif'; ctx.fillText(g.ab.toUpperCase().replace(' - NUPES', '').replace('-NFP', ''), cx, cy - R - W * 0.03); }
+    var a0 = -Math.PI / 2;
+    g.parts.forEach(function(pt){ if (pt[0] <= 0) return; var a1 = a0 + pt[0] * 2 * Math.PI; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, a0, a1); ctx.closePath(); ctx.fillStyle = pt[1]; ctx.fill(); ctx.strokeStyle = COUL.ink; ctx.lineWidth = 2; ctx.stroke(); a0 = a1; });
+    ctx.beginPath(); ctx.arc(cx, cy, R * 0.55, 0, 2 * Math.PI); ctx.fillStyle = COUL.cream; ctx.fill(); ctx.strokeStyle = COUL.ink; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = COUL.ink; ctx.textAlign = 'center'; ctx.font = '700 ' + Math.round(R * 0.4) + 'px Oswald, Impact, sans-serif'; ctx.fillText(Math.round(g.pPour * 100) + ' %', cx, cy + R * 0.14);
+    ctx.fillStyle = 'rgba(51,46,50,.62)'; ctx.font = '500 ' + Math.round(W * 0.016) + 'px "Bricolage Grotesque", system-ui, sans-serif';
+    ctx.fillText((aLogo ? g.ab.toUpperCase().replace(' - NUPES', '').replace('-NFP', '') + ' · ' : '') + (v.censure ? g.pour + ' sur ' + g.membres : g.n + ' votes'), cx, cy + R + W * 0.03);
+    ctx.textAlign = 'left';
+  });
+}
+var SCR_CANVAS = [];
+function redessineScrutins(){ SCR_CANVAS.forEach(function(x){ dessineVisuel(x.v, x.cv, 1080, 1350); }); }
 function dessineVisuels(){
   if (visuelsFaits || !SCR.length) return; visuelsFaits = true;
   var z = document.getElementById('visuels');
   var prete = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-  prete.then(chargeLogo).then(function(){
+  prete.then(chargeLogo).then(chargeLogos).then(function(){
     MAISON.forEach(function(v){
       var bloc = el('div', 'visuel'), cv = document.createElement('canvas');
       v.f(cv, 1080, 1350); bloc.appendChild(cv);
@@ -1119,7 +1175,7 @@ function dessineVisuels(){
     });
     SCR.forEach(function(v){
       var bloc = el('div', 'visuel'), cv = document.createElement('canvas');
-      dessineVisuel(v, cv, 1080, 1350); bloc.appendChild(cv);
+      dessineVisuel(v, cv, 1080, 1350); bloc.appendChild(cv); SCR_CANVAS.push({v: v, cv: cv});
       var pied = el('div', 'pied');
       var b1 = el('button', 'b plein', 'Télécharger (publication 1080×1350)'); b1.type = 'button';
       b1.onclick = function(){ telecharge(v, 1080, 1350, 'komune-vote-' + v.id + '-publication.png'); };
