@@ -948,7 +948,7 @@ var LOGO_FICHIERS = {rn: ['d/d5', 'Logo_Rassemblement_National.svg'], lfi: ['3/3
   re: ['b/b3', 'Renaissance_parti_logo.svg'], modem: ['9/96', 'MoDem_logo_2019.svg'], hor: ['2/21', 'Logo_Horizons.svg'], udr: ['d/d3', 'UDR_logo.svg'],
   liot: ['4/49', 'LIOT_Group.png'], udi: ['7/77', 'Logo_UDI_2019.svg'], epr: ['7/75', 'Groupe_EPR.png'], gdr: ['e/e9', 'Logo_GDR.svg'],
   ecos: ['6/62', 'Logo-Groupe_%C3%A9cologiste_et_Social-AN.webp'], dr: ['f/f3', 'La_Droite_R%C3%A9publicaine_logo_2024.png']};
-function urlLogo(k){ var f = LOGO_FICHIERS[k]; return WM + f[0] + '/' + f[1] + '/300px-' + f[1] + (/\.png$/.test(f[1]) ? '' : '.png'); }
+function urlLogo(k){ var f = LOGO_FICHIERS[k]; return WM + f[0] + '/' + f[1] + '/250px-' + f[1] + (/\.png$/.test(f[1]) ? '' : '.png'); }
 /* groupe de l'Assemblee -> logo, par legislature. Pas de logo quand il serait anachronique ou qu'il n'en existe pas. */
 var LOGO_GROUPE = {17: {'RN': 'rn', 'EPR': 'epr', 'LFI-NFP': 'lfi', 'SOC': 'ps', 'DR': 'dr', 'EcoS': 'ecos', 'Dem': 'modem', 'HOR': 'hor', 'LIOT': 'liot', 'GDR': 'gdr', 'UDR': 'udr'},
   16: {'RE': 're', 'RN': 'rn', 'LFI - NUPES': 'lfi', 'LR': 'lr2015', 'Dem': 'modem', 'SOC': 'ps', 'HOR': 'hor', 'GDR - NUPES': 'gdr', 'LIOT': 'liot'},
