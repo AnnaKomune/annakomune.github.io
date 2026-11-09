@@ -927,7 +927,12 @@ document.getElementById('f-copier').onclick = function(){ copie(location.href, t
 /* ============================================================
    EN IMAGES : un visuel par scrutin, dessine sur canvas
    ============================================================ */
-var SCR = window.KOMUNE_SCRUTINS || [], visuelsFaits = false;
+var SCR = window.KOMUNE_SCRUTINS || [], visuelsFaits = false, LOGO = null;
+function chargeLogo(){ return new Promise(function(res){ if (LOGO) return res(); var im = new Image(); im.onload = function(){ LOGO = im; res(); }; im.onerror = function(){ res(); }; im.src = '../img/logo-brun-or.webp'; }); }
+function pose_logo(ctx, W, H, bandeH, m){
+  if (LOGO){ var h = W * 0.085, w = h * LOGO.width / LOGO.height; ctx.drawImage(LOGO, W - m - w, H - bandeH + (bandeH - h) / 2, w, h); }
+  else { ctx.fillStyle = COUL.gold; ctx.font = '700 ' + Math.round(W * 0.04) + 'px Oswald, Impact, sans-serif'; ctx.textAlign = 'right'; ctx.fillText('KOMUNE', W - m, H - bandeH + W * 0.06); ctx.textAlign = 'left'; }
+}
 var COUL = {pour: '#5423df', contre: '#c2308f', abst: '#8a6a00', cream: '#fcf7e8', ink: '#332e32', white: '#ffffff', sand: '#e6e0d2', gold: '#fee075'};
 function lignes(ctx, texte, x, y, max, lh){
   var mots = texte.split(' '), l = '', n = 0;
@@ -988,14 +993,130 @@ function dessineVisuel(v, cv, W, H){
   ctx.fillStyle = COUL.ink; ctx.fillRect(0, H - bandeH, W, bandeH);
   ctx.fillStyle = COUL.cream; ctx.font = '500 ' + Math.round(W * 0.021) + 'px "Bricolage Grotesque", system-ui, sans-serif';
   lignes(ctx, 'Source : Assemblée nationale, scrutin public n° ' + v.num + ' du ' + dateFr(v.date, true) + ', données ouvertes. ' + (v.censure ? 'Part des membres de chaque groupe ayant voté la motion.' : 'En % des votes exprimés par groupe, non-votants exclus.'), m, H - bandeH + W * 0.04, W - 2 * m - W * 0.22, W * 0.03);
-  ctx.fillStyle = COUL.gold; ctx.font = '700 ' + Math.round(W * 0.04) + 'px Oswald, Impact, sans-serif'; ctx.textAlign = 'right';
-  ctx.fillText('KOMUNE', W - m, H - bandeH + W * 0.06); ctx.textAlign = 'left';
+  pose_logo(ctx, W, H, bandeH, m);
 }
+/* ---------- cadre commun aux visuels « maison » ---------- */
+function cadre(cv, W, H, titre, sous, source){
+  var ctx = cv.getContext('2d'); cv.width = W; cv.height = H; var m = Math.round(W * 0.055), y = m;
+  ctx.fillStyle = COUL.cream; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = COUL.ink; ctx.font = '500 ' + Math.round(W * 0.022) + 'px Oswald, Impact, sans-serif';
+  ctx.fillText('KOMUNE · PRÉSIDENTIELLE 2027', m, y + W * 0.02); y += W * 0.055;
+  ctx.font = '700 ' + Math.round(W * 0.068) + 'px Oswald, Impact, sans-serif';
+  var n = lignes(ctx, titre.toUpperCase(), m, y + W * 0.06, W - 2 * m, W * 0.072); y += n * W * 0.072 + W * 0.02;
+  ctx.fillStyle = 'rgba(51,46,50,.72)'; ctx.font = '500 ' + Math.round(W * 0.026) + 'px "Bricolage Grotesque", system-ui, sans-serif';
+  n = lignes(ctx, sous, m, y + W * 0.03, W - 2 * m, W * 0.036); y += n * W * 0.036 + W * 0.03;
+  var bandeH = W * 0.14;
+  ctx.fillStyle = COUL.ink; ctx.fillRect(0, H - bandeH, W, bandeH);
+  ctx.fillStyle = COUL.cream; ctx.font = '500 ' + Math.round(W * 0.021) + 'px "Bricolage Grotesque", system-ui, sans-serif';
+  lignes(ctx, source, m, H - bandeH + W * 0.04, W - 2 * m - W * 0.22, W * 0.03);
+  pose_logo(ctx, W, H, bandeH, m);
+  return {ctx: ctx, m: m, y: y, bas: H - bandeH - W * 0.04};
+}
+function legende(c, W, items){
+  var ctx = c.ctx, lx = c.m; ctx.font = '600 ' + Math.round(W * 0.024) + 'px "Bricolage Grotesque", system-ui, sans-serif';
+  items.forEach(function(L){ var w = W * 0.036 + ctx.measureText(L[0]).width + W * 0.035;
+    if (lx + w > W - c.m){ lx = c.m; c.y += W * 0.04; }
+    ctx.fillStyle = L[1]; ctx.fillRect(lx, c.y, W * 0.026, W * 0.026); ctx.strokeStyle = COUL.ink; ctx.lineWidth = 2; ctx.strokeRect(lx, c.y, W * 0.026, W * 0.026);
+    ctx.fillStyle = COUL.ink; ctx.fillText(L[0], lx + W * 0.036, c.y + W * 0.022); lx += w; });
+  c.y += W * 0.06;
+}
+var CODES = {pour: ['Pour', COUL.pour], contre: ['Contre', COUL.contre], abstention: ['Abstention', COUL.abst], npppv: ['N\'a pas pris part', '#9abdff'], na: ['N\'a pas pu voter', COUL.sand]};
+function nomCourt(c){ var p = c.nom.split(' '); return p.length > 2 ? p.slice(1).join(' ') : p[p.length - 1]; }
+var COURT_LOI = {'aide-a-mourir': 'Aide à mourir (2026)', 'pma': 'PMA pour toutes (2021)', 'ivg-constitution': 'IVG dans la Constitution (2024)', 'gaillot': 'IVG à 14 semaines (2022)', 'plfss-2022': 'Budget de la Sécu 2022', 'plfss-2023': 'Censure du budget Sécu 2023', 'retraites': 'Censure, réforme des retraites (2023)', 'mineurs-reseaux': 'Mineurs et réseaux sociaux (2026)'};
+function courtLoi(l){ return COURT_LOI[l.id] || l.nom; }
+/* V1 : combien ont pu voter */
+function visuelPuVoter(cv, W, H){
+  var c = cadre(cv, W, H, 'Sur 8 lois, combien de candidat·es ont pu voter ?',
+    'Pour chaque loi documentée, le vote personnel des 31 candidat·es. Sans mandat au Parlement au moment du vote, ou au gouvernement, on ne peut pas voter : ce n\'est pas une abstention.',
+    'Source : Komune, votes lus dans les scrutins officiels de l\'Assemblée nationale et du Sénat, un par un. Pour les deux motions de censure, « pour » signifie pour la censure, donc contre le texte.');
+  legende(c, W, ['pour', 'contre', 'abstention', 'npppv', 'na'].map(function(k){ return CODES[k]; }));
+  var ctx = c.ctx, lignesH = (c.bas - c.y) / D.LOIS.length, barreH = lignesH * 0.42, x0 = c.m + W * 0.34, larg = W - c.m - x0;
+  D.LOIS.forEach(function(l, i){
+    var y = c.y + i * lignesH, cnt = {pour: 0, contre: 0, abstention: 0, npppv: 0, na: 0};
+    Object.keys(l.votes).forEach(function(id){ var k = ((l.votes[id].perso || {}).code) || 'na'; cnt[k] = (cnt[k] || 0) + 1; });
+    ctx.fillStyle = COUL.ink; ctx.font = '700 ' + Math.round(W * 0.021) + 'px Oswald, Impact, sans-serif';
+    lignes(ctx, courtLoi(l).toUpperCase(), c.m, y + lignesH * 0.36, x0 - c.m - W * 0.03, W * 0.026);
+    var x = x0; ['pour', 'contre', 'abstention', 'npppv', 'na'].forEach(function(k){ var w = larg * cnt[k] / 31; if (!w) return;
+      ctx.fillStyle = CODES[k][1]; ctx.fillRect(x, y + lignesH * 0.2, w, barreH); ctx.strokeStyle = COUL.ink; ctx.lineWidth = 2; ctx.strokeRect(x, y + lignesH * 0.2, w, barreH);
+      if (w > W * 0.03){ ctx.fillStyle = k === 'na' || k === 'npppv' ? COUL.ink : COUL.white; ctx.font = '700 ' + Math.round(W * 0.022) + 'px Oswald, Impact, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(cnt[k], x + w / 2, y + lignesH * 0.2 + barreH * 0.66); ctx.textAlign = 'left'; }
+      x += w; });
+  });
+}
+/* V2 : la grille des votes */
+function visuelGrille(cv, W, H){
+  var c = cadre(cv, W, H, 'Leurs votes, loi par loi', 'Le vote personnel de chaque candidat·e sur les 8 lois déjà documentées. Une case grise n\'est pas une abstention : la personne ne siégeait pas, ou ne pouvait pas voter.',
+    'Source : Komune, votes lus dans les scrutins officiels. Motions de censure (Sécu 2023, retraites) : « pour » signifie pour la censure. Par ordre alphabétique.');
+  legende(c, W, ['pour', 'contre', 'abstention', 'npppv', 'na'].map(function(k){ return CODES[k]; }));
+  var ctx = c.ctx, x0 = c.m + W * 0.24, colW = (W - c.m - W * 0.06 - x0) / D.LOIS.length, enteteH = W * 0.2, rowH = (c.bas - c.y - enteteH) / CAND_TRI.length;
+  ctx.fillStyle = COUL.ink; ctx.font = '700 ' + Math.round(W * 0.015) + 'px Oswald, Impact, sans-serif';
+  D.LOIS.forEach(function(l, j){ ctx.save(); ctx.translate(x0 + j * colW + colW * 0.62, c.y + enteteH - W * 0.01); ctx.rotate(-Math.PI / 3); ctx.fillText(courtLoi(l).toUpperCase(), 0, 0); ctx.restore(); });
+  CAND_TRI.forEach(function(cd, i){
+    var y = c.y + enteteH + i * rowH;
+    ctx.fillStyle = COUL.ink; ctx.font = '600 ' + Math.round(Math.min(W * 0.019, rowH * 0.7)) + 'px "Bricolage Grotesque", system-ui, sans-serif'; ctx.fillText(nomCourt(cd), c.m, y + rowH * 0.7);
+    D.LOIS.forEach(function(l, j){ var v = l.votes[cd.id], k = v && v.perso ? v.perso.code : 'na'; if (!CODES[k]) k = 'na';
+      ctx.fillStyle = CODES[k][1]; ctx.fillRect(x0 + j * colW + 2, y + 2, colW - 4, rowH - 4); ctx.strokeStyle = COUL.ink; ctx.lineWidth = 1.5; ctx.strokeRect(x0 + j * colW + 2, y + 2, colW - 4, rowH - 4); });
+  });
+}
+/* V3 : qui a deja siege */
+function visuelMandats(cv, W, H){
+  var cols = [['Parlement, aujourd\'hui', 'p_parl_now'], ['Parlement, hier', 'p_parl_past'], ['Gouvernement', 'p_gouv'], ['Mandat local, aujourd\'hui', 'p_loc_now'], ['Mandat local, hier', 'p_loc_past']];
+  var c = cadre(cv, W, H, 'Qui a déjà siégé ?', 'Pour chaque candidat·e, cinq cases : un mandat au Parlement aujourd\'hui ou hier, un passage au gouvernement, un mandat local aujourd\'hui ou hier. Une fonction dans un parti n\'est pas un mandat.',
+    'Source : Komune, fiches des candidat·es, vérifiées dans les sources officielles au ' + dateFr(K.maj, true) + '. Case jaune : pas encore vérifié. Par ordre alphabétique.');
+  legende(c, W, [['Oui', COUL.pour], ['Non', COUL.sand], ['Pas encore vérifié', COUL.gold]]);
+  var ctx = c.ctx, x0 = c.m + W * 0.3, colW = (W - c.m - W * 0.08 - x0) / cols.length, enteteH = W * 0.16, rowH = (c.bas - c.y - enteteH) / CAND_TRI.length;
+  ctx.fillStyle = COUL.ink; ctx.font = '700 ' + Math.round(W * 0.015) + 'px Oswald, Impact, sans-serif';
+  cols.forEach(function(col, j){ ctx.save(); ctx.translate(x0 + j * colW + colW * 0.55, c.y + enteteH - W * 0.01); ctx.rotate(-Math.PI / 3); ctx.fillText(col[0].toUpperCase(), 0, 0); ctx.restore(); });
+  CAND_TRI.forEach(function(cd, i){
+    var y = c.y + enteteH + i * rowH, k = cd.k || {};
+    ctx.fillStyle = COUL.ink; ctx.font = '600 ' + Math.round(Math.min(W * 0.019, rowH * 0.7)) + 'px "Bricolage Grotesque", system-ui, sans-serif'; ctx.fillText(cd.nom, c.m, y + rowH * 0.7);
+    cols.forEach(function(col, j){ var v = k[col[1]]; ctx.fillStyle = v === '✅' ? COUL.pour : v === '➖' ? COUL.sand : COUL.gold;
+      ctx.fillRect(x0 + j * colW + 3, y + 2, colW - 6, rowH - 4); ctx.strokeStyle = COUL.ink; ctx.lineWidth = 1.5; ctx.strokeRect(x0 + j * colW + 3, y + 2, colW - 6, rowH - 4);
+      if (v === '✅'){ ctx.fillStyle = COUL.white; ctx.font = '700 ' + Math.round(rowH * 0.6) + 'px "Bricolage Grotesque", system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('✓', x0 + j * colW + colW / 2, y + rowH * 0.72); ctx.textAlign = 'left'; } });
+  });
+}
+/* V4 : qui s'est declare quand */
+function dateIso(s){
+  var m = String(s || '').match(/^(\d{2})\/(\d{2})\/(\d{4})/); if (m) return m[3] + '-' + m[2] + '-' + m[1];
+  m = String(s || '').match(/^(\d{4})-(\d{2})-(\d{2})/); if (m) return m[1] + '-' + m[2] + '-' + m[3];
+  return null;
+}
+function visuelDeclarations(cv, W, H){
+  var avec = [], sans = [];
+  CAND.forEach(function(cd){ var d = cd.k && dateIso(cd.k.date); if (d) avec.push({c: cd, d: d}); else sans.push(cd); });
+  avec.sort(function(a, b){ return a.d < b.d ? -1 : 1; });
+  var c = cadre(cv, W, H, 'Qui s\'est déclaré·e quand ?', 'La date retenue est celle de l\'annonce de la candidature, pas celle d\'une investiture par un parti. ' + avec.length + ' dates connues au jour près.' + (sans.length ? ' Date à préciser : ' + sans.map(function(x){ return x.nom; }).join(', ') + '.' : ''),
+    'Source : Komune, fiches des candidat·es au ' + dateFr(K.maj, true) + ', d\'après les annonces publiques.');
+  var ctx = c.ctx, rowH = (c.bas - c.y) / avec.length, dernier = '';
+  avec.forEach(function(x, i){
+    var y = c.y + i * rowH, mois = x.d.slice(0, 7);
+    if (mois !== dernier){ ctx.fillStyle = COUL.purple; ctx.font = '700 ' + Math.round(W * 0.02) + 'px Oswald, Impact, sans-serif';
+      var mo = ['JANV.', 'FÉVR.', 'MARS', 'AVR.', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'][parseInt(mois.slice(5), 10) - 1] + ' ' + mois.slice(0, 4);
+      ctx.fillText(mo, c.m, y + rowH * 0.72); dernier = mois; }
+    ctx.fillStyle = COUL.ink; ctx.font = '500 ' + Math.round(Math.min(W * 0.02, rowH * 0.7)) + 'px "Bricolage Grotesque", system-ui, sans-serif';
+    ctx.fillText(dateFr(x.d), c.m + W * 0.17, y + rowH * 0.72);
+    ctx.font = '600 ' + Math.round(Math.min(W * 0.02, rowH * 0.7)) + 'px "Bricolage Grotesque", system-ui, sans-serif';
+    ctx.fillText(x.c.nom + '  ·  ' + x.c.parti.replace(/\s*\(.*$/, ''), c.m + W * 0.3, y + rowH * 0.72);
+    ctx.strokeStyle = 'rgba(51,46,50,.15)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(c.m, y + rowH); ctx.lineTo(W - c.m, y + rowH); ctx.stroke();
+  });
+}
+var MAISON = [
+  {id: 'pu-voter', f: visuelPuVoter}, {id: 'grille-votes', f: visuelGrille}, {id: 'mandats', f: visuelMandats}, {id: 'declarations', f: visuelDeclarations}
+];
 function dessineVisuels(){
   if (visuelsFaits || !SCR.length) return; visuelsFaits = true;
   var z = document.getElementById('visuels');
   var prete = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-  prete.then(function(){
+  prete.then(chargeLogo).then(function(){
+    MAISON.forEach(function(v){
+      var bloc = el('div', 'visuel'), cv = document.createElement('canvas');
+      v.f(cv, 1080, 1350); bloc.appendChild(cv);
+      var pied = el('div', 'pied');
+      var b1 = el('button', 'b plein', 'Télécharger (publication 1080×1350)'); b1.type = 'button';
+      b1.onclick = function(){ var c2 = document.createElement('canvas'); v.f(c2, 1080, 1350); c2.toBlob(function(b){ var u = URL.createObjectURL(b), a = document.createElement('a'); a.href = u; a.download = 'komune-' + v.id + '-publication.png'; document.body.appendChild(a); a.click(); a.remove(); }, 'image/png'); };
+      var b2 = el('button', 'b', 'Format story (1080×1920)'); b2.type = 'button';
+      b2.onclick = function(){ var c2 = document.createElement('canvas'); v.f(c2, 1080, 1920); c2.toBlob(function(b){ var u = URL.createObjectURL(b), a = document.createElement('a'); a.href = u; a.download = 'komune-' + v.id + '-story.png'; document.body.appendChild(a); a.click(); a.remove(); }, 'image/png'); };
+      pied.appendChild(b1); pied.appendChild(b2); bloc.appendChild(pied); z.appendChild(bloc);
+    });
     SCR.forEach(function(v){
       var bloc = el('div', 'visuel'), cv = document.createElement('canvas');
       dessineVisuel(v, cv, 1080, 1350); bloc.appendChild(cv);
