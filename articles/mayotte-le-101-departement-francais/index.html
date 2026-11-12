@@ -26,8 +26,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://substackcdn.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../articles/article.css?v=f230037c">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../articles/article.css?v=ee3ad56a">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -43,7 +43,7 @@
       ],
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.komunemedia.fr/img/logo-rose-vert.webp"
+        "url": "https://www.komunemedia.fr/img/logo-komune.png"
       }
     },
     {
@@ -110,18 +110,14 @@
 </head>
 <body>
   <div class="page">
-    <nav class="site-nav" aria-label="Navigation du site">
-      <a class="site-brand" href="../../" aria-label="Komune Média - retour à l'accueil"><img src="../../img/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>
-      <div class="site-liens">
-      <a class="site-link" href="../../">Accueil</a>
-      <a class="site-link is-current" href="../../articles/" aria-current="page">Articles</a>
-      <a class="site-link" href="../../comparateur/">Le comparateur présidentielles 2027</a>
-      <a class="site-link" href="../../equipe/">L&#x27;équipe</a>
-      <a class="site-link" href="../../soutenir/">Nous soutenir</a>
-      </div>
-    </nav>
+    <a class="saut" href="#contenu">Aller au contenu</a>
+    <header class="tete"><div class="wrap">
+      <a class="logo" href="../../" aria-label="Komune Média, retour à l'accueil"><img src="../../img/logo-komune.webp" alt="Komune Média" width="600" height="229"></a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="nav-site" aria-label="Menu du site"><span></span></button>
+      <nav class="nav-site" id="nav-site" aria-label="Navigation du site"><a href="../../">Accueil</a><a href="../../articles/" class="ici" aria-current="page">Articles</a><a href="../../comparateur/">Le comparateur 2027</a><a href="../../equipe/">L&#x27;équipe</a><a class="don" href="../../soutenir/">Nous soutenir</a></nav>
+    </div></header>
     <nav class="fil" aria-label="Fil d'Ariane"><a href="../../">Accueil</a><span aria-hidden="true">›</span><a href="../../articles/">Nos articles</a><span aria-hidden="true">›</span><span aria-current="page">Mayotte : le 101ᵉ département français oublié</span></nav>
-    <main class="canvas">
+    <main class="canvas" id="contenu">
       <article>
       <header class="art-tete panel">
         <p class="eyebrow">Article de Komune Média</p>
@@ -135,8 +131,8 @@
       </div>
       </article>
       <div class="art-pied">
-        <div class="encart sombre"><h2>Cet article vous a appris quelque chose&nbsp;?</h2><p>Komune est un média indépendant, sans publicité et sans actionnaire. Nos enquêtes vivent de vos dons.</p><a class="bouton" href="../../soutenir/">Nous soutenir 💛</a></div>
-        <div class="encart jaune"><h2>La newsletter</h2><p>Un décryptage chaque semaine sur l'immigration, le racisme et les discriminations, directement dans votre boîte mail.</p><a class="bouton" href="https://komunemedia.substack.com/subscribe" target="_blank" rel="noopener noreferrer">S'abonner gratuitement</a></div>
+        <div class="encart sombre"><h2>Cet article vous a appris quelque chose&nbsp;?</h2><p>Komune est un média indépendant, sans publicité et sans actionnaire. Nos enquêtes vivent de vos dons.</p><a class="bouton" href="../../soutenir/">Nous soutenir</a></div>
+        <div class="encart jaune"><h2>La newsletter</h2><p>Chaque semaine, on décortique l'actualité, les récits dominants et les mécanismes qui façonnent notre société.</p><a class="bouton" href="https://komunemedia.substack.com/subscribe" target="_blank" rel="noopener noreferrer">S'abonner gratuitement</a></div>
         <div class="encart blanc"><h2>Lire ailleurs</h2><p>Cet article a d'abord paru dans notre newsletter. Vous pouvez le lire et le commenter là-bas.</p><a class="bouton clair" href="https://komunemedia.substack.com/p/mayotte-le-101-departement-francais" target="_blank" rel="noopener noreferrer">Voir sur Substack ↗</a></div>
       </div>
       <div class="voisins">
@@ -152,17 +148,29 @@
       </div>
     </section>
     </main>
-    <footer class="site-pied">
-      <div class="site-foot-brand">
-        <img src="../../img/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">
-        <span>© Komune Média - Le média indépendant qui décrypte la société avec un regard antiraciste</span>
+    <footer class="pied"><div class="wrap">
+      <div>
+        <img src="../../img/logo-komune.webp" alt="Komune Média" width="600" height="229" loading="lazy">
+        <p>Média indépendant qui décrypte la société avec un regard antiraciste.</p>
+        <p>Ce site ne dépose aucun cookie et ne mesure pas l'audience.</p>
+        <p>Signaler un contenu : <a href="../../signaler/" style="display:inline;text-decoration:underline">komunemedia.fr/signaler</a></p>
       </div>
-      <div class="site-foot-liens">
+      <div>
+        <h3>Nous suivre</h3>
+        <a href="https://komunemedia.substack.com/" target="_blank" rel="noopener">La newsletter</a>
+        <a href="https://www.instagram.com/komune.media/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/@komune4882" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.tiktok.com/@komune.media" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://open.spotify.com/show/6PRIhaKZNhTfmutTcKahdt" target="_blank" rel="noopener">Le podcast</a>
+      </div>
+      <div>
+        <h3>Nous écrire</h3>
+        <a href="mailto:komune.contact@gmail.com">komune.contact@gmail.com</a>
         <a href="../../mentions-legales/">Mentions légales</a>
         <a href="../../signaler/">Signaler un contenu</a>
       </div>
-      <p class="site-foot-note">Signaler un contenu : <a href="../../signaler/">komunemedia.fr/signaler</a></p>
-    </footer>
+    </div></footer>
+    <script src="../../assets/komune.js?v=473816db"></script>
   </div>
 </body>
 </html>
