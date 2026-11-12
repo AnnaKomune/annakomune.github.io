@@ -224,3 +224,11 @@
   .cand-carte b{font-size:17px}
   .cand-carte span:not(.av){font-size:13px}
 }
+
+/* meetings : un seul orateur, le contexte avant la citation */
+.debat-prises.seul{grid-template-columns:minmax(0,1fr)}
+.debat-prises.seul .prise{max-width:860px}
+.cit-bloc{margin:0 0 14px}
+.cit-ctx{margin:0 0 5px;font-size:14px;color:var(--doux)}
+.cit-bloc .cit{margin-bottom:0}
+.debat-prises.seul .cit{font-size:16.5px;margin-bottom:16px}

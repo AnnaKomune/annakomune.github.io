@@ -8,11 +8,13 @@
   function citation(deb, cit){
     var bq = K.el('blockquote', 'cit'); bq.appendChild(document.createTextNode('« ' + cit.texte + ' » ')); bq.appendChild(lienTs(deb, cit));
     if (cit.corr) bq.appendChild(K.el('small', null, 'Correction : ' + cit.corr));
-    return bq;
+    if (!cit.ctx) return bq;
+    /* une phrase de contexte : ce qui est dit juste avant, à quoi la citation répond */
+    var w = K.el('div', 'cit-bloc'); w.appendChild(K.el('p', 'cit-ctx', cit.ctx)); w.appendChild(bq); return w;
   }
   function carte(deb){
     var d = K.el('details', 'pli debat'); d.id = deb.id;
-    var s = K.el('summary'), t = K.el('div', 'pli-titre'); t.appendChild(K.el('h3', null, deb.titre)); t.appendChild(K.el('p', null, deb.date)); s.appendChild(t);
+    var s = K.el('summary'), t = K.el('div', 'pli-titre'); t.appendChild(K.el('h3', null, deb.titre)); t.appendChild(K.el('p', null, deb.type + ' · ' + deb.date)); s.appendChild(t);
     var tetes = K.el('div', 'tetes'); deb.participants.forEach(function(id){ var a = K.avatar(CAND[id]); a.title = CAND[id].nom; tetes.appendChild(a); }); s.appendChild(tetes);
     s.appendChild(K.el('span', 'chev')); d.appendChild(s);
     var corps = K.el('div', 'pli-corps'); d.appendChild(corps);
@@ -20,14 +22,15 @@
     d.addEventListener('toggle', function(){ if (!d.open || fait) return; fait = true;
       var meta = K.el('p', 'pet'); meta.appendChild(document.createTextNode(deb.lieu + ' · ' + deb.duree + '. ' + deb.animation + ' '));
       var v = K.el('a', null, 'Voir la vidéo intégrale ↗'); v.href = deb.video; v.target = '_blank'; v.rel = 'noopener'; meta.appendChild(v); corps.appendChild(meta);
-      var ch = K.el('input', 'champ'); ch.type = 'search'; ch.placeholder = 'Chercher dans le débat : retraites, salaires, dette, un nom…'; ch.setAttribute('aria-label', 'Chercher dans le débat'); corps.appendChild(ch);
+      var ch = K.el('input', 'champ'); ch.type = 'search'; var quoi = deb.type === 'Meeting' ? 'le meeting' : 'le débat'; ch.placeholder = 'Chercher dans ' + quoi + ' : retraites, salaires, dette, un nom…'; ch.setAttribute('aria-label', 'Chercher dans ' + quoi); corps.appendChild(ch);
       var onglets = K.el('div', 'puces onglets'); onglets.setAttribute('role', 'group'); onglets.setAttribute('aria-label', 'Thèmes du débat'); corps.appendChild(onglets);
       var z = K.el('div', 'debat-corps'); corps.appendChild(z);
       var actif = deb.themes[0].id;
       function theme(th){
         z.innerHTML = '';
         if (th.question){ var qq = K.el('div', 'debat-question'); qq.textContent = th.question; z.appendChild(qq); }
-        var g = K.el('div', 'debat-prises');
+        if (th.contexte){ var cx = K.el('div', 'debat-question'); cx.appendChild(K.el('b', null, 'Le contexte. ')); cx.appendChild(document.createTextNode(th.contexte)); z.appendChild(cx); }
+        var g = K.el('div', 'debat-prises' + (th.prises.length === 1 ? ' seul' : ''));
         th.prises.forEach(function(pr){ var c = CAND[pr.cand], b = K.el('article', 'prise'); var h = K.el('div', 'prise-tete'); h.appendChild(K.avatar(c)); h.appendChild(K.el('b', null, c.nom)); b.appendChild(h);
           pr.citations.forEach(function(ci){ b.appendChild(citation(deb, ci)); }); g.appendChild(b); });
         z.appendChild(g);
@@ -36,10 +39,10 @@
       function cherche(){
         var f = K.pli(ch.value).trim(); if (f.length < 2){ onglets.hidden = false; theme(deb.themes.filter(function(t){ return t.id === actif; })[0]); return; }
         onglets.hidden = true; z.innerHTML = ''; var n = 0, g = K.el('div', 'debat-prises');
-        deb.themes.forEach(function(th){ th.prises.forEach(function(pr){ var c = CAND[pr.cand]; var bons = pr.citations.filter(function(ci){ return K.pli(ci.texte + ' ' + c.nom + ' ' + th.titre).indexOf(f) >= 0; }); if (!bons.length) return;
+        deb.themes.forEach(function(th){ th.prises.forEach(function(pr){ var c = CAND[pr.cand]; var bons = pr.citations.filter(function(ci){ return K.pli(ci.texte + ' ' + (ci.ctx || '') + ' ' + c.nom + ' ' + th.titre).indexOf(f) >= 0; }); if (!bons.length) return;
           var b = K.el('article', 'prise'); var h = K.el('div', 'prise-tete'); h.appendChild(K.avatar(c)); var hh = K.el('div'); hh.appendChild(K.el('b', null, c.nom)); hh.appendChild(K.el('span', null, th.titre)); h.appendChild(hh); b.appendChild(h);
           bons.forEach(function(ci){ b.appendChild(citation(deb, ci)); n++; }); g.appendChild(b); }); });
-        if (!n) z.appendChild(K.el('p', null, 'Rien ne correspond dans ce débat.')); else z.appendChild(g);
+        if (!n) z.appendChild(K.el('p', null, 'Rien ne correspond ici.')); else z.appendChild(g);
       }
       deb.themes.forEach(function(th){ var b = K.el('button', 'puce', th.titre); b.type = 'button'; b.setAttribute('aria-pressed', String(th.id === actif));
         b.onclick = function(){ actif = th.id; [].forEach.call(onglets.children, function(x){ x.setAttribute('aria-pressed', String(x === b)); }); theme(th); }; onglets.appendChild(b); });
