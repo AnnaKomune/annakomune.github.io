@@ -36,10 +36,6 @@ MOIS = ("janvier", "fevrier", "mars", "avril", "mai", "juin",
 MOIS_FR = ("janvier", "février", "mars", "avril", "mai", "juin",
            "juillet", "août", "septembre", "octobre", "novembre", "décembre")
 
-# Couvertures de secours pour les rares articles sans image.
-TEINTES = ("cover-pink", "cover-sky", "cover-gold", "cover-green", "cover-purple", "cover-blue", "cover-dark")
-MOTS = ("Komune", "Lire", "Focus", "Récit", "Décryptage", "Regards", "À voir")
-
 
 def identifiant(article):
     """L'identifiant de l'article, repris de son adresse Substack."""
@@ -120,83 +116,39 @@ def extrait_court(valeur, limite=190):
 
 
 def carte(article, rang, vedette):
+    """Une carte d'article. La premiere (vedette) est plus grande et porte l'extrait."""
     titre = (article.get("title") or "").strip()
-    url = (article.get("url") or "").strip()
     image = (article.get("image") or "").strip()
-    extrait = extrait_court(article.get("excerpt") or "")
+    extrait = extrait_court(article.get("excerpt") or "", 260)
     iso = (article.get("date") or "")[:10]
 
     if image:
-        petite, grande = vignette(image, 900 if vedette else 560), vignette(image, 1200 if vedette else 900)
-        couverture = (
-            '<div class="article-cover cover-photo">'
-            '<img src="%s" srcset="%s 560w, %s 900w" sizes="%s" alt="" %s decoding="async"></div>'
-        ) % (
-            e(petite), e(vignette(image, 560)), e(vignette(image, 900)),
-            "(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 31vw" if not vedette else "(max-width: 700px) 92vw, 48vw",
-            'fetchpriority="high"' if rang == 0 else 'loading="lazy"',
-        )
+        couverture = '<span class="cover"><img src="%s" alt="" %s decoding="async"></span>' % (
+            e(vignette(image, 900 if vedette else 560)),
+            'fetchpriority="high"' if rang == 0 else 'loading="lazy"')
     else:
-        couverture = (
-            '<div class="article-cover %s"><div class="cover-meta">'
-            '<span class="cover-number">%02d</span><span class="cover-label">Komune Média</span>'
-            '<span class="cover-word">%s</span></div></div>'
-        ) % (TEINTES[rang % len(TEINTES)], rang + 1, MOTS[rang % len(MOTS)])
+        couverture = '<span class="cover"></span>'
 
-    date_html = ('<p class="article-date"><time datetime="%s">%s</time></p>' % (e(iso), e(date_lisible(iso)))) if iso else ""
     gens = signature_de(article)
-    sig_html = ('<p class="article-sig">Par %s</p>'
-                % " et ".join(e(nom) for nom, _ in gens)) if gens else ""
-    cherche = sans_accent(titre + " " + (article.get("excerpt") or "")
-                          + " " + " ".join(nom for nom, _ in gens))
     lien, dehors = adresse(article)
-
     return (
-        '        <a class="article-card%s" href="%s"%s data-cherche="%s">\n'
-        '          <div class="article-card-inner">\n'
-        '            %s\n'
-        '            <div class="article-body">\n'
-        '              %s\n'
-        '              <h3 class="article-title">%s</h3>\n'
-        '              %s\n'
-        '              <p class="article-excerpt">%s</p>\n'
-        '              <span class="article-read">%s</span>\n'
-        '            </div>\n'
-        '          </div>\n'
-        '        </a>'
-    ) % (" featured" if vedette else "", e(lien),
-         ' target="_blank" rel="noopener"' if dehors else "", e(cherche),
-         couverture, date_html, e(titre), sig_html, e(extrait),
-         "Lire l\'article sur Substack ↗" if dehors else "Lire l\'article")
+        '<a class="art%s" href="%s"%s>%s<span class="corps">%s<strong>%s</strong>%s%s</span></a>'
+    ) % (" grande" if vedette else "", e(lien),
+         ' target="_blank" rel="noopener"' if dehors else "", couverture,
+         ('<time datetime="%s">%s</time>' % (e(iso), e(date_lisible(iso)))) if iso else "",
+         e(titre),
+         ("<span>%s</span>" % e(extrait)) if (vedette and extrait) else "",
+         ("<em>Par %s</em>" % " et ".join(e(nom) for nom, _ in gens)) if gens else "")
 
 
 def bloc_liste(articles):
-    """La liste visible, groupee par annee (une section et un h2 par annee)."""
-    annees = []
-    for article in articles:
-        an = (article.get("date") or "")[:4] or "Archives"
-        if not annees or annees[-1][0] != an:
-            annees.append((an, []))
-        annees[-1][1].append(article)
-
-    morceaux = []
-    rang = 0
-    for an, lot in annees:
-        cartes = []
-        for article in lot:
-            cartes.append(carte(article, rang, vedette=(rang == 0)))
-            rang += 1
-        pluriel = "s" if len(lot) > 1 else ""
-        morceaux.append(
-            '    <section class="annee" data-annee="%s" aria-labelledby="annee-%s">\n'
-            '      <div class="annee-tete">\n'
-            '        <h2 id="annee-%s">%s</h2>\n'
-            '        <p class="annee-compte"><span data-compte-annee>%d</span> article%s</p>\n'
-            '      </div>\n'
-            '      <div class="articles-grid">\n%s\n      </div>\n'
-            '    </section>' % (e(an), e(an), e(an), e(an), len(lot), pluriel, "\n".join(cartes))
-        )
-    return "\n".join(morceaux)
+    """La liste visible : le dernier article en grand, puis tous les autres en grille."""
+    if not articles:
+        return '  <div id="une"></div>\n  <div id="liste" class="grille-art" style="margin-top:22px"></div>'
+    reste = "\n".join(carte(a, i, False) for i, a in enumerate(articles[1:], start=1))
+    return ('  <div id="une">%s</div>\n'
+            '  <div id="liste" class="grille-art" style="margin-top:22px">%s</div>'
+            % (carte(articles[0], 0, True), reste))
 
 
 def bloc_donnees(articles):
@@ -219,13 +171,13 @@ def bloc_donnees(articles):
                 "@id": SITE + "/articles/#blog",
                 "url": SITE + "/articles/",
                 "name": "Les articles de Komune Média",
-                "description": "Décryptages, enquêtes et débunks des mots publiés par Komune Média.",
+                "description": "Des récits, des reportages et des décryptages pour mieux comprendre la société et la regarder autrement.",
                 "inLanguage": "fr-FR",
                 "publisher": {
                     "@type": "Organization",
                     "name": "Komune Média",
                     "url": SITE + "/",
-                    "logo": {"@type": "ImageObject", "url": SITE + "/img/logo-rose-vert.webp"},
+                    "logo": {"@type": "ImageObject", "url": SITE + "/img/logo-komune.png"},
                 },
             },
             {

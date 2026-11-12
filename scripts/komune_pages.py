@@ -35,7 +35,7 @@ SITEMAP = RACINE / "sitemap.xml"
 ORG = {"@type": "NewsMediaOrganization", "@id": SITE + "/#organisation", "name": "Komune Média",
        "url": SITE + "/", "sameAs": ["https://komunemedia.substack.com/",
                                      "https://www.instagram.com/komune.media/"],
-       "logo": {"@type": "ImageObject", "url": SITE + "/img/logo-rose-vert.webp"}}
+       "logo": {"@type": "ImageObject", "url": SITE + "/img/logo-komune.png"}}
 
 
 # ---------------------------------------------------------------- outils
@@ -92,46 +92,64 @@ def fiche(auteurs, nom):
 
 # ---------------------------------------------------------------- morceaux communs
 def nav(ou, profondeur=2):
+    """L'en-tete du site : le meme que sur les pages ecrites a la main (accueil, comparateur...)."""
     r = "../" * profondeur
     liens = [("", "Accueil"), ("articles/", "Articles"),
-             ("comparateur/", "Le comparateur présidentielles 2027"),
-             ("equipe/", "L'équipe"),
-             ("soutenir/", "Nous soutenir")]
+             ("comparateur/", "Le comparateur 2027"),
+             ("equipe/", "L'équipe")]
     out = []
     for cible, nom in liens:
-        actif = (cible.rstrip("/") == ou)
-        out.append('      <a class="site-link%s" href="%s%s"%s>%s</a>' % (
-            " is-current" if actif else "", r, cible,
-            ' aria-current="page"' if actif else "", e(nom)))
-    return ('    <nav class="site-nav" aria-label="Navigation du site">\n'
-            '      <a class="site-brand" href="%s" aria-label="Komune Média - retour à l\'accueil">'
-            '<img src="%simg/logo-rose-vert.webp" alt="Komune Média" width="360" height="137"></a>\n'
-            '      <div class="site-liens">\n%s\n      </div>\n    </nav>' % (r, r, "\n".join(out)))
+        actif = bool(ou) and (cible.rstrip("/") == ou)
+        out.append('<a href="%s%s"%s>%s</a>' % (
+            r, cible, ' class="ici" aria-current="page"' if actif else "", e(nom)))
+    out.append('<a class="don" href="%ssoutenir/">Nous soutenir</a>' % r)
+    return ('    <a class="saut" href="#contenu">Aller au contenu</a>\n'
+            '    <header class="tete"><div class="wrap">\n'
+            '      <a class="logo" href="%s" aria-label="Komune Média, retour à l\'accueil">'
+            '<img src="%simg/logo-komune.webp" alt="Komune Média" width="600" height="229"></a>\n'
+            '      <button class="burger" type="button" aria-expanded="false" aria-controls="nav-site" '
+            'aria-label="Menu du site"><span></span></button>\n'
+            '      <nav class="nav-site" id="nav-site" aria-label="Navigation du site">%s</nav>\n'
+            '    </div></header>' % (r, r, "".join(out)))
 
 
 def pied(profondeur=2, note=False):
-    """note=True ajoute l'adresse de signalement en toutes lettres, pour les
+    """Le pied du site. note=True ajoute l'adresse de signalement en toutes lettres, pour les
     pages d'article : elles sont reprises et transferees, le lien seul ne suffit
     pas toujours."""
     r = "../" * profondeur
-    return ('    <footer class="site-pied">\n      <div class="site-foot-brand">\n'
-            '        <img src="%simg/logo-brun-or.webp" alt="Komune Média" width="360" height="137" loading="lazy" decoding="async">\n'
-            '        <span>© Komune Média - Le média indépendant qui décrypte la société avec un regard antiraciste</span>\n'
+    return ('    <footer class="pied"><div class="wrap">\n'
+            '      <div>\n'
+            '        <img src="%simg/logo-komune.webp" alt="Komune Média" width="600" height="229" loading="lazy">\n'
+            '        <p>Média indépendant qui décrypte la société avec un regard antiraciste.</p>\n'
+            '        <p>Ce site ne dépose aucun cookie et ne mesure pas l\'audience.</p>\n'
+            '%s'
             '      </div>\n'
-            '      <div class="site-foot-liens">\n'
+            '      <div>\n'
+            '        <h3>Nous suivre</h3>\n'
+            '        <a href="https://komunemedia.substack.com/" target="_blank" rel="noopener">La newsletter</a>\n'
+            '        <a href="https://www.instagram.com/komune.media/" target="_blank" rel="noopener">Instagram</a>\n'
+            '        <a href="https://www.youtube.com/@komune4882" target="_blank" rel="noopener">YouTube</a>\n'
+            '        <a href="https://www.tiktok.com/@komune.media" target="_blank" rel="noopener">TikTok</a>\n'
+            '        <a href="https://open.spotify.com/show/6PRIhaKZNhTfmutTcKahdt" target="_blank" rel="noopener">Le podcast</a>\n'
+            '      </div>\n'
+            '      <div>\n'
+            '        <h3>Nous écrire</h3>\n'
+            '        <a href="mailto:komune.contact@gmail.com">komune.contact@gmail.com</a>\n'
             '        <a href="%smentions-legales/">Mentions légales</a>\n'
             '        <a href="%ssignaler/">Signaler un contenu</a>\n'
             '      </div>\n'
-            '%s'
-            '    </footer>' % (
-                r, r, r,
-                ('      <p class="site-foot-note">Signaler un contenu : '
-                 '<a href="%ssignaler/">komunemedia.fr/signaler</a></p>\n' % r) if note else ""))
+            '    </div></footer>\n'
+            '    <script src="%sassets/komune.js?v=%s"></script>' % (
+                r,
+                ('        <p>Signaler un contenu : <a href="%ssignaler/" style="display:inline;text-decoration:underline">'
+                 'komunemedia.fr/signaler</a></p>\n' % r) if note else "",
+                r, r, r, empreinte_js()))
 
 
 def tete(titre, description, url, image, extra_meta="", profondeur=2, robots="index, follow, max-image-preview:large, max-snippet:-1"):
     r = "../" * profondeur
-    img = image or (SITE + "/img/og-comparateur.png")
+    img = image or (SITE + "/img/logo-komune.png")
     return (
         '<!doctype html>\n<html lang="fr">\n<head>\n'
         '  <meta charset="utf-8">\n'
@@ -155,7 +173,7 @@ def tete(titre, description, url, image, extra_meta="", profondeur=2, robots="in
         '  <link rel="preconnect" href="https://fonts.googleapis.com">\n'
         '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         '  <link rel="preconnect" href="https://substackcdn.com" crossorigin>\n'
-        '  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;700&display=swap" rel="stylesheet">\n'
+        '  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">\n'
         '  <link rel="stylesheet" href="%sarticles/article.css?v=%s">\n'
         % (e(description), e(titre), e(url), robots, e(url), e(titre), e(description),
            e(img), e(img), extra_meta, r, r, r, empreinte_css()))
@@ -171,6 +189,18 @@ def empreinte_css():
         brut = f.read_bytes() if f.exists() else b""
         _EMPREINTE.append(hashlib.sha256(brut).hexdigest()[:8])
     return _EMPREINTE[0]
+
+
+_EMPREINTE_JS = []
+
+
+def empreinte_js():
+    """Huit caracteres tires du contenu du script commun (menu du site)."""
+    if not _EMPREINTE_JS:
+        f = RACINE / "assets" / "komune.js"
+        brut = f.read_bytes() if f.exists() else b""
+        _EMPREINTE_JS.append(hashlib.sha256(brut).hexdigest()[:8])
+    return _EMPREINTE_JS[0]
 
 
 def ld(graphe):
@@ -300,7 +330,7 @@ def page_article(article, corps, auteurs, par_article, precedent, suivant, memes
         + "</head>\n<body>\n  <div class=\"page\">\n"
         + nav("articles") + "\n"
         + fil([("", "Accueil"), ("articles/", "Nos articles"), (None, titre)]) + "\n"
-        + '    <main class="canvas">\n'
+        + '    <main class="canvas" id="contenu">\n'
         + '      <article>\n'
         + '      <header class="art-tete panel">\n'
         + '        <p class="eyebrow">Article de Komune Média</p>\n'
@@ -315,9 +345,9 @@ def page_article(article, corps, auteurs, par_article, precedent, suivant, memes
         + '      <div class="art-pied">\n'
         + '        <div class="encart sombre"><h2>Cet article vous a appris quelque chose&nbsp;?</h2>'
         + '<p>Komune est un média indépendant, sans publicité et sans actionnaire. Nos enquêtes vivent de vos dons.</p>'
-        + '<a class="bouton" href="../../soutenir/">Nous soutenir 💛</a></div>\n'
+        + '<a class="bouton" href="../../soutenir/">Nous soutenir</a></div>\n'
         + '        <div class="encart jaune"><h2>La newsletter</h2>'
-        + '<p>Un décryptage chaque semaine sur l\'immigration, le racisme et les discriminations, directement dans votre boîte mail.</p>'
+        + '<p>Chaque semaine, on décortique l\'actualité, les récits dominants et les mécanismes qui façonnent notre société.</p>'
         + '<a class="bouton" href="https://komunemedia.substack.com/subscribe" target="_blank" rel="noopener noreferrer">S\'abonner gratuitement</a></div>\n'
         + '        <div class="encart blanc"><h2>Lire ailleurs</h2>'
         + '<p>Cet article a d\'abord paru dans notre newsletter. Vous pouvez le lire et le commenter là-bas.</p>'
@@ -382,7 +412,7 @@ def page_journaliste(f, articles, auteurs, par_article):
         + "</head>\n<body>\n  <div class=\"page\">\n"
         + nav("equipe") + "\n"
         + fil([("", "Accueil"), ("equipe/", "L'équipe"), (None, f["nom"])]) + "\n"
-        + '    <main class="canvas">\n'
+        + '    <main class="canvas" id="contenu">\n'
         + '      <header class="jour-tete panel">\n'
         + '        <div class="jour-photo">%s</div>\n' % rond
         + '        <div>\n          <p class="eyebrow">Journaliste à Komune Média</p>\n'
@@ -428,7 +458,7 @@ def page_liste_journalistes(fiches_comptees):
         '<style>body{margin:0;min-height:100vh;display:grid;place-items:center;'
         'background:#fcf7e8;color:#1a1a1a;font-family:ui-sans-serif,system-ui,'
         '"Helvetica Neue",Arial,sans-serif;text-align:center;padding:24px}'
-        'a{color:#5423df}</style>\n'
+        'a{color:#332e32}</style>\n'
         '</head>\n<body>\n'
         '<p>Rendez-vous sur <a href="%s/equipe/">la page de l\u2019\u00e9quipe</a>.</p>\n'
         '</body>\n</html>\n' % (SITE, SITE, SITE))
@@ -469,7 +499,7 @@ def page_signaler():
         + "</head>\n<body>\n  <div class=\"page\">\n"
         + nav("", profondeur=1) + "\n"
         + fil([("", "Accueil"), (None, u"Signaler un contenu")], profondeur=1) + "\n"
-        + '    <main class="canvas">\n'
+        + '    <main class="canvas" id="contenu">\n'
         + '      <header class="art-tete panel">\n'
         + '        <p class="eyebrow">Komune M\u00e9dia</p>\n'
         + '        <h1>Signaler un contenu</h1>\n'
@@ -587,7 +617,7 @@ def page_mentions():
         + "</head>\n<body>\n  <div class=\"page\">\n"
         + nav("", profondeur=1) + "\n"
         + fil([("", "Accueil"), (None, u"Mentions l\u00e9gales")], profondeur=1) + "\n"
-        + '    <main class="canvas">\n'
+        + '    <main class="canvas" id="contenu">\n'
         + '      <header class="art-tete panel">\n'
         + '        <p class="eyebrow">Komune M\u00e9dia</p>\n'
         + '        <h1>Mentions l\u00e9gales</h1>\n'
@@ -619,13 +649,12 @@ def page_mentions():
         + '        <p>Ce site ne d\u00e9pose aucun cookie et n\u2019utilise aucun outil de mesure '
           u'd\u2019audience, de publicit\u00e9 ou de profilage. Nous ne savons pas qui vous \u00eates '
           u'ni ce que vous lisez.</p>\n'
-        + '        <p>Deux exceptions, limit\u00e9es et v\u00e9rifiables. Le comparateur garde dans la '
-          u'm\u00e9moire locale de votre navigateur le niveau d\u2019affichage et le candidat que vous avez '
-          u'choisis, pour vous les retrouver \u00e0 votre retour : ces deux valeurs restent sur votre appareil '
-          u'et ne nous sont jamais transmises. Et les polices de caract\u00e8res sont charg\u00e9es depuis '
-          u'Google Fonts, qui re\u00e7oit donc votre adresse IP.</p>\n'
-        + '        <p>Les vid\u00e9os YouTube et Instagram ne se chargent qu\u2019\u00e0 votre clic : avant '
-          u'cela, aucune requ\u00eate n\u2019est envoy\u00e9e \u00e0 ces plateformes.</p>\n'
+        + '        <p>Une exception, limit\u00e9e et v\u00e9rifiable : certains \u00e9l\u00e9ments sont '
+          u'charg\u00e9s depuis d\u2019autres serveurs, qui re\u00e7oivent donc votre adresse IP. Les polices de '
+          u'caract\u00e8res viennent de Google Fonts, les images de couverture des articles de Substack, '
+          u'les vignettes des vid\u00e9os de YouTube, et le compteur de soutiens d\u2019une feuille de calcul '
+          u'Google.</p>\n'
+        + '        <p>Les lecteurs vid\u00e9o YouTube et Instagram ne se chargent qu\u2019\u00e0 votre clic.</p>\n'
         + '        <h2>Commentaires et signalement</h2>\n'
         + '        <p>Les commentaires publi\u00e9s sous nos contenus sont mod\u00e9r\u00e9s par la '
           u'r\u00e9daction. Si un commentaire ou un contenu vous para\u00eet illicite, vous pouvez nous le '

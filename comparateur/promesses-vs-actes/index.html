@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr" data-racine="../../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Promesses VS Actes : ils promettent, ils votent, on compare - Komune</title>
+<meta name="description" content="On compare les programmes et déclarations des candidat·es à la présidentielle 2027 avec leurs actes, principalement leurs votes.">
+<link rel="canonical" href="https://www.komunemedia.fr/comparateur/promesses-vs-actes/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Komune Média">
+<meta property="og:title" content="Promesses VS Actes : ils promettent, ils votent, on compare - Komune">
+<meta property="og:description" content="On compare les programmes et déclarations des candidat·es à la présidentielle 2027 avec leurs actes, principalement leurs votes.">
+<meta property="og:url" content="https://www.komunemedia.fr/comparateur/promesses-vs-actes/">
+<meta property="og:image" content="https://www.komunemedia.fr/img/og-comparateur.png">
+<link rel="icon" type="image/png" href="../../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/komune.css?v=ae87beef71">
+<link rel="stylesheet" href="../../assets/comparateur.css?v=71509ddc9b">
+
+</head>
+<body>
+<a class="saut" href="#contenu">Aller au contenu</a>
+<header class="tete outil"><div class="wrap">
+  <a class="logo" href="../../" aria-label="Komune Média, retour à l'accueil"><img src="../../img/logo-komune.webp" alt="Komune Média" width="600" height="229"></a>
+  <nav class="nav-outils" aria-label="Les outils du comparateur"><a href="../../comparateur/promesses-vs-actes/" class="ici" aria-current="page">Promesses VS Actes</a><a href="../../comparateur/programmes/">Les Programmes</a><a href="../../comparateur/votes/">Les Votes</a><a href="../../comparateur/bases/">Les Bases de l'élection</a><a href="../../comparateur/candidats/">Les Candidat·es</a><a href="../../comparateur/quiz/">Teste tes connaissances</a><a href="../../comparateur/debats/">Les Débats</a></nav>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="nav-site" aria-label="Menu du site"><span></span></button>
+  <nav class="nav-site" id="nav-site" aria-label="Navigation du site"><a href="../../">Accueil</a><a href="../../articles/">Articles</a><a href="../../comparateur/">Le comparateur 2027</a><a href="../../equipe/">L'équipe</a><a class="don" href="../../soutenir/">Nous soutenir</a></nav>
+</div></header>
+<main id="contenu">
+<section class="c-hero"><div class="wrap">
+  <h1>Ils promettent. Ils votent. On compare.</h1>
+  <p class="chapo">On compare les programmes et déclarations des candidat·es avec leurs actes : principalement leurs votes. Le verdict mesure une seule chose : si les actes suivent la parole, jamais si le vote est « bon ».</p>
+  <p class="sous">La plateforme est enrichie chaque semaine. <a href="../../comparateur/#chantier">Où on en est</a></p>
+  <input class="champ" type="search" id="q" placeholder="Cherche un·e candidat·e, une loi, un sujet…" aria-label="Chercher un·e candidat·e, une loi, un sujet" autocomplete="off">
+  <div id="resultats" hidden aria-live="polite"></div>
+  <div class="entrees">
+    <a class="b vert" href="#par-sujet">Par sujets</a>
+    <a class="b bleu" href="#par-candidat">Par candidat·es</a>
+  </div>
+</div></section>
+
+<section class="bloc serre" id="par-sujet"><div class="wrap">
+  <h2>Par sujet</h2>
+  <div class="puces" id="themes" style="margin-top:16px" role="group" aria-label="Choisir un sujet"></div>
+  <div id="z-sujet"></div>
+</div></section>
+
+<section class="bloc serre" id="par-candidat"><div class="wrap">
+  <h2>Par candidat·e</h2>
+  <div class="rang" style="margin:14px 0 16px">
+    <button type="button" class="b fin" id="b-paire" aria-pressed="false">Comparer 2 candidat·es</button>
+    <span class="pet" id="aide-paire" role="status"></span>
+  </div>
+  <div class="tetes-g" id="tetes"></div>
+  <div id="z-cand"></div>
+
+  <h3 class="z-titre" style="margin-top:40px">Est-ce que les actes suivent la parole ?</h3>
+  <p class="pet" style="margin:0">Sur les textes déjà comparés, candidat·e par candidat·e. Touche une ligne pour voir le détail.</p>
+  <p class="legende"><span><i style="background:var(--vert)"></i>✅ Aligné</span><span><i style="background:var(--jaune)"></i>⚠️ Partiellement aligné</span><span><i style="background:var(--rose)"></i>❌ Contradictoire</span><span><i style="background:var(--beige)"></i>➖ Non testable</span></p>
+  <div id="barres" style="margin-top:12px"></div>
+
+  <div class="encart">
+    <p>Une erreur, une source qui manque, un vote mal interprété ? On corrige et on le dit.</p>
+    <button type="button" class="b rose" data-retours>J'ai des retours</button>
+  </div>
+</div></section>
+</main>
+<script src="../../comparateur/data/base.js?v=408c9acdf3"></script>
+<script src="../../comparateur/data/pva.js?v=3d88b36eea"></script>
+<script src="../../comparateur/data/lexique.js?v=92e035e1a8"></script>
+<script>document.addEventListener('DOMContentLoaded', function(){ ['../../assets/lexique.js?v=2258b8d58e', '../../assets/format.js?v=79fc66fae2', '../../assets/pva.js?v=79658a67d0'].reduce(function(p, u){ return p.then(function(){ return new Promise(function(ok){ var s = document.createElement('script'); s.src = u; s.onload = ok; document.body.appendChild(s); }); }); }, Promise.resolve()); });</script>
+
+<footer class="pied"><div class="wrap">
+  <div>
+    <img src="../../img/logo-komune.webp" alt="Komune Média" width="600" height="229" loading="lazy">
+    <p>Média indépendant qui décrypte la société avec un regard antiraciste. Ni annonceur, ni parti, ni argent public derrière le comparateur.</p>
+    <p>Ce site ne dépose aucun cookie et ne mesure pas l'audience.</p>
+  </div>
+  <div>
+    <h3>Nous suivre</h3>
+    <a href="https://komunemedia.substack.com/" target="_blank" rel="noopener">La newsletter</a>
+    <a href="https://www.instagram.com/komune.media/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.youtube.com/@komune4882" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://www.tiktok.com/@komune.media" target="_blank" rel="noopener">TikTok</a>
+    <a href="https://open.spotify.com/show/6PRIhaKZNhTfmutTcKahdt" target="_blank" rel="noopener">Le podcast</a>
+  </div>
+  <div>
+    <h3>Nous écrire</h3>
+    <a href="mailto:komune.contact@gmail.com">komune.contact@gmail.com</a>
+    <a href="../../mentions-legales/">Mentions légales</a>
+    <a href="../../signaler/">Signaler un contenu</a>
+  </div>
+</div></footer>
+<script src="../../assets/komune.js?v=473816db71"></script>
+</body>
+</html>
