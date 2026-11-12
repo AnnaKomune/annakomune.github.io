@@ -57,7 +57,7 @@
   var charge = null;
   function textes(){
     if (!charge) charge = new Promise(function(ok){ if (window.KOMUNE_TEXTES) return ok();
-      var s = document.createElement('script'); s.src = K.racine + 'programmes/textes.js?v=' + (P.maj || ''); s.onload = ok; s.onerror = function(){ window.KOMUNE_TEXTES = {}; ok(); }; document.head.appendChild(s); });
+      var s = document.createElement('script'); s.src = K.racine + 'programmes/textes.js?v=' + (P.maj || '') + '-b'; s.onload = ok; s.onerror = function(){ window.KOMUNE_TEXTES = {}; ok(); }; document.head.appendChild(s); });
     return charge;
   }
   function partage(texte, bouton){
