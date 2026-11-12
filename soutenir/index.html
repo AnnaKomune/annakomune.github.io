@@ -18,6 +18,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/komune.css?v=ae87beef71">
 <style>
+.hero h1.t-seuil{font-size:min(calc(7.6vw - 3px),44px)}
+@media (min-width:821px){.hero h1.t-seuil{font-size:clamp(34px,4.25vw,52px)}}
+.t-seuil span{display:block;white-space:nowrap}
 .hero h1{font-size:clamp(38px,5.6vw,72px)}
 .hero p{max-width:60ch}
 .cap h2{font-size:clamp(24px,3vw,34px)}
@@ -35,8 +38,9 @@
 .liste li{padding:10px 0 10px 28px;border-top:1.5px solid var(--filet);position:relative}
 .liste li:first-child{border-top:0}
 .liste li::before{content:"";position:absolute;left:4px;top:19px;width:10px;height:10px;border-radius:50%;background:var(--rose);border:1.5px solid var(--marron)}
-.collage{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.collage img{border:2px solid var(--marron);border-radius:12px;aspect-ratio:9/16;object-fit:cover;width:100%;background:var(--bleu)}
+/* captures de messages, larges et basses : empilees, entieres, jamais recadrees */
+.collage{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-content:center}
+.collage img{display:block;width:100%;height:auto;border:2px solid var(--marron);border-radius:12px;background:var(--blanc)}
 .barre{display:flex;height:34px;border:2px solid var(--marron);border-radius:999px;overflow:hidden;margin:10px 0 12px}
 .barre i{display:block;height:100%;border-right:2px solid var(--marron)} .barre i:last-child{border-right:0}
 .barre .p{background:var(--bleu)}.barre .s{background:var(--jaune)}.barre .c{background:var(--rose)}
@@ -64,7 +68,7 @@
 <main id="contenu">
 <section class="hero"><div class="wrap duo" style="align-items:start">
   <div>
-    <h1>On y est, maintenant il faut maintenir ce seuil !</h1>
+    <h1 class="t-seuil"><span>On y est, maintenant</span> <span>il faut maintenir ce seuil !</span></h1>
     <p class="chapo">Le cap des 800 soutiens mensuels est atteint. C’est incroyable, et c’est vous qui l’avez fait. Merci, vraiment.</p>
     <p style="margin-top:14px">Ce chiffre, on ne l’avait pas choisi au hasard : c’est ce qu’il faut pour développer le comparateur, vérifier chaque mesure et le tenir à jour. Il est atteint, et la plateforme est en ligne, gratuite, sans publicité.</p>
     <p>Maintenant, l’objectif change : il ne s’agit plus de monter, mais de rester à 800 soutiens mensuels au minimum, chaque mois, jusqu’au bout de la présidentielle.</p>
@@ -98,9 +102,9 @@
     </ul>
   </div>
   <figure class="collage" style="margin:0" aria-label="Des contenus publiés par Komune">
-    <img src="https://drive.google.com/thumbnail?id=1vf2UxPog_MjjzWk_iKTPT_sUC6iymXbs&amp;sz=w600" alt="" loading="lazy" referrerpolicy="no-referrer">
-    <img src="https://drive.google.com/thumbnail?id=1FAUvqAqDNuDJyGI031rGp3pqvkQ1Dzu6&amp;sz=w600" alt="" loading="lazy" referrerpolicy="no-referrer">
-    <img src="https://drive.google.com/thumbnail?id=13SEkXFm4EK4wlPiaYvCo2Rh9E4AaJAgM&amp;sz=w600" alt="" loading="lazy" referrerpolicy="no-referrer">
+    <img src="https://drive.google.com/thumbnail?id=1vf2UxPog_MjjzWk_iKTPT_sUC6iymXbs&amp;sz=w1000" alt="" width="600" height="132" loading="lazy" referrerpolicy="no-referrer">
+    <img src="https://drive.google.com/thumbnail?id=1FAUvqAqDNuDJyGI031rGp3pqvkQ1Dzu6&amp;sz=w1000" alt="" width="600" height="132" loading="lazy" referrerpolicy="no-referrer">
+    <img src="https://drive.google.com/thumbnail?id=13SEkXFm4EK4wlPiaYvCo2Rh9E4AaJAgM&amp;sz=w1000" alt="" width="600" height="132" loading="lazy" referrerpolicy="no-referrer">
   </figure>
 </div></section>
 
