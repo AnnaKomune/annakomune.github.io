@@ -3,7 +3,9 @@
   'use strict';
   var K = window.K, B = window.K_BASE, P = window.K_PVA, CAND = K.CAND;
   var zRes = document.getElementById('resultats'), zSuj = document.getElementById('z-sujet'), zCand = document.getElementById('z-cand');
-  var ORDRE = B.sept.concat(B.cands.map(function(c){ return c.id; }).filter(function(id){ return B.sept.indexOf(id) < 0; })
+  /* on ne garde que les candidat·es dont les positions sont relevées sur au moins un texte */
+  var RELEVE = {}; P.lois.forEach(function(l){ Object.keys(l.pos).forEach(function(id){ RELEVE[id] = 1; }); });
+  var ORDRE = B.sept.concat(B.cands.map(function(c){ return c.id; }).filter(function(id){ return B.sept.indexOf(id) < 0 && RELEVE[id]; })
     .sort(function(a, b){ return K.famille(CAND[a].nom).localeCompare(K.famille(CAND[b].nom), 'fr'); }));
 
   function comptes(cid){

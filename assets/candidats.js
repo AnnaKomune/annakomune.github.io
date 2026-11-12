@@ -56,8 +56,9 @@
     if (f.site) lien('Site de campagne', f.site, '', true);
     if (f.prog_url && f.prog) lien('Le programme, ' + f.prog, f.prog_url, '', true);
     else liens.appendChild(K.el('span', 'puce', 'Programme : pas encore publié'));
-    lien('Ses mesures dans les programmes', K.racine + 'comparateur/programmes/#c=' + c.slug, 'vert');
-    lien('Promesses VS Actes', K.racine + 'comparateur/promesses-vs-actes/#c=' + c.id, 'rose');
+    /* ces deux accès n'apparaissent que si quelque chose est relevé pour cette personne */
+    if (f.mes) lien('Ses mesures dans les programmes', K.racine + 'comparateur/programmes/#c=' + c.slug, 'vert');
+    if (f.rel) lien('Promesses VS Actes', K.racine + 'comparateur/promesses-vs-actes/#c=' + c.id, 'rose');
     zone.appendChild(liens);
 
     var past = K.el('div', 'puces fiche-past');

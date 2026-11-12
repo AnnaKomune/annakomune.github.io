@@ -238,3 +238,11 @@
 .debat-groupe>h2{margin-bottom:18px;scroll-margin-top:130px}
 .debat-groupe{scroll-margin-top:130px}
 .debat-groupe .arrive{margin:14px 0 0}
+
+/* les bases : articles depliables */
+.base-art .pli-titre p{max-width:78ch}
+.art-base{font-size:16.5px;line-height:1.6}
+.art-base>p,.art-base>ul,.art-base>h4{max-width:76ch}
+.art-base h4{font-family:var(--titre);text-transform:uppercase;font-size:19px;line-height:1.15;margin:22px 0 8px}
+.art-base ul{padding-left:20px;margin:0;font-size:15px}
+.art-base li{margin-bottom:6px}
