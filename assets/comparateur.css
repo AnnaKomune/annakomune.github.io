@@ -232,3 +232,9 @@
 .cit-ctx{margin:0 0 5px;font-size:14px;color:var(--doux)}
 .cit-bloc .cit{margin-bottom:0}
 .debat-prises.seul .cit{font-size:16.5px;margin-bottom:16px}
+
+/* debats et meetings : deux rubriques */
+.debat-groupe+.debat-groupe{margin-top:44px;padding-top:34px;border-top:2px solid var(--marron)}
+.debat-groupe>h2{margin-bottom:18px;scroll-margin-top:130px}
+.debat-groupe{scroll-margin-top:130px}
+.debat-groupe .arrive{margin:14px 0 0}

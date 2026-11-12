@@ -51,8 +51,12 @@
     });
     return d;
   }
-  D.forEach(function(deb){ zone.appendChild(carte(deb)); });
-  zone.appendChild(K.el('p', 'arrive', 'De nouveaux débats et meetings arrivent très vite.'));
+  /* deux rubriques : les débats d'un côté, les meetings de l'autre, du plus récent au plus ancien */
+  [['debats', 'Débat', 'Les débats', 'De nouveaux débats arrivent très vite.'], ['meetings', 'Meeting', 'Les meetings', 'De nouveaux meetings arrivent très vite.']].forEach(function(g){
+    var sec = K.el('section', 'debat-groupe'); sec.id = g[0]; sec.appendChild(K.el('h2', null, g[2]));
+    D.filter(function(deb){ return deb.type === g[1]; }).forEach(function(deb){ sec.appendChild(carte(deb)); });
+    sec.appendChild(K.el('p', 'arrive', g[3])); zone.appendChild(sec);
+  });
 
   /* recherche générale : dans tous les débats */
   q.addEventListener('input', function(){
