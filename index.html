@@ -19,7 +19,10 @@
 <link rel="stylesheet" href="assets/komune.css?v=ae87beef71">
 <style>
 .hero h1{font-size:clamp(48px,8vw,104px)}
-.baseline{font-size:clamp(20px,2.8vw,28px);line-height:1.3;margin:20px 0 26px;max-width:22ch}
+.baseline{font-size:clamp(15px,4.55vw,28px);line-height:1.3;margin:20px 0 26px}
+.baseline .l1{display:block;text-wrap:balance}
+.baseline .l2{display:block;white-space:nowrap}
+@media (min-width:821px){.baseline{font-size:clamp(20px,2.3vw,28px)}}
 .stats{display:grid;gap:12px}
 .stats div{border:2px solid var(--marron);border-radius:var(--r);background:var(--blanc);padding:16px 22px;box-shadow:var(--ombre);display:flex;align-items:baseline;gap:16px}
 .stats div:nth-child(1){background:var(--vert)}.stats div:nth-child(2){background:var(--bleu)}.stats div:nth-child(3){background:var(--jaune)}
@@ -45,7 +48,7 @@
 <section class="hero"><div class="wrap duo">
   <div>
     <h1>Bienvenue<br>sur Komune</h1>
-    <p class="baseline">Komune est un média indépendant qui décrypte la société avec un <span style="white-space:nowrap"><span class="mark">regard antiraciste</span>.</span></p>
+    <p class="baseline"><span class="l1">Komune est un média indépendant qui décrypte</span> <span class="l2">la société avec un <span class="mark">regard antiraciste</span>.</span></p>
     <a class="b rose gros" href="soutenir/">Nous soutenir</a>
   </div>
   <div class="stats">
