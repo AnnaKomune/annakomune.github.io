@@ -173,7 +173,7 @@ def tete(titre, description, url, image, extra_meta="", profondeur=2, robots="in
         '  <link rel="preconnect" href="https://fonts.googleapis.com">\n'
         '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         '  <link rel="preconnect" href="https://substackcdn.com" crossorigin>\n'
-        '  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">\n'
+        '  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">\n'
         '  <link rel="stylesheet" href="%sarticles/article.css?v=%s">\n'
         % (e(description), e(titre), e(url), robots, e(url), e(titre), e(description),
            e(img), e(img), extra_meta, r, r, r, empreinte_css()))
