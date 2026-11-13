@@ -31,7 +31,7 @@
   var zListe = document.getElementById('p-liste'), zChoix = document.getElementById('p-choix'), zFiche = document.getElementById('p-fiche');
   var seul = null;   /* arrivée depuis une fiche candidat·e : on ne garde que les sujets où ses documents ont des mesures */
   function garde(s){ return !seul || s.cands[seul.id]; }
-  /* un émoji par grand sujet ; les deux couleurs (rose et vert) sont posées en damier par la feuille de style */
+  /* un émoji par grand sujet ; les couleurs (bleu, beige, vert) sont posées par la feuille de style */
   var EMOJI = {1: '🛒', 2: '💼', 3: '☂️', 4: '🩺', 5: '🌍', 6: '🎓', 7: '🏠', 8: '🏤', 9: '🛂', 10: '⚖️', 11: '✊', 12: '🗳️', 13: '💶', 14: '🌾', 15: '🎭', 16: '💻', 17: '🌐', 18: '🚆'};
   var ouverts = {};   /* grands sujets dépliés par la personne : on les retrouve ouverts en revenant d'une fiche */
   function dessineSujets(filtre){

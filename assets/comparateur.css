@@ -124,7 +124,8 @@
 @media (max-width:640px){.suj-grille{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .suj-tuile{display:flex;flex-direction:column;align-items:flex-start;gap:9px;min-height:138px;padding:13px 13px;border:2px solid var(--marron);border-radius:var(--r);box-shadow:var(--ombre);text-align:left;color:var(--marron);transition:transform .12s,box-shadow .12s}
 .suj-haut{display:flex;align-items:center;justify-content:space-between;width:100%}
-.suj-emo{flex:0 0 auto;font-size:28px;line-height:1}
+/* l'émoji est posé sur une pastille blanche : il reste lisible quelle que soit la couleur de la tuile */
+.suj-emo{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--blanc);border:1.5px solid var(--marron);font-size:22px;line-height:1}
 .suj-tuile .chev{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:11px solid var(--marron);transition:transform .15s}
 .suj-tuile.on .chev{transform:rotate(180deg)}
 .suj-nom{font-family:var(--titre);font-weight:700;text-transform:uppercase;font-size:clamp(15px,1.3vw,17px);line-height:1.13}
@@ -133,18 +134,19 @@
 .suj-tuile .suj-nb{margin-top:auto}
 .suj-tuile.on{box-shadow:none;transform:translate(4px,4px)}
 @media (hover:hover){.suj-tuile:not(.on):hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--marron)}}
-/* deux couleurs, rose et vert, en damier : la règle suit le nombre de tuiles par rangée (6, 3 ou 2).
-   Chaque panneau suit sa tuile dans la page, il porte donc le même rang et prend la même couleur. */
-.suj-tuile,.suj-pan-tete{background:var(--vert)}
-@media (min-width:1081px){.suj-tuile:nth-of-type(12n+1),.suj-tuile:nth-of-type(12n+3),.suj-tuile:nth-of-type(12n+5),.suj-tuile:nth-of-type(12n+8),.suj-tuile:nth-of-type(12n+10),.suj-tuile:nth-of-type(12n+12),.suj-grille>.suj-panneau:nth-of-type(12n+1)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(12n+3)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(12n+5)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(12n+8)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(12n+10)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(12n+12)>.suj-pan-tete{background:var(--rose)}}
-@media (min-width:641px) and (max-width:1080px){.suj-tuile:nth-of-type(2n+1),.suj-grille>.suj-panneau:nth-of-type(2n+1)>.suj-pan-tete{background:var(--rose)}}
-@media (max-width:640px){.suj-tuile:nth-of-type(4n+1),.suj-tuile:nth-of-type(4n+4),.suj-grille>.suj-panneau:nth-of-type(4n+1)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(4n+4)>.suj-pan-tete{background:var(--rose)}}
-#p-liste>.suj-panneau:nth-of-type(2n+1)>.suj-pan-tete{background:var(--rose)}
+/* trois couleurs, bleu, beige et vert, en diagonale : la règle suit le nombre de tuiles par rangée (6, 3 ou 2),
+   pour que deux tuiles voisines n'aient jamais la même. Chaque panneau suit sa tuile dans la page :
+   il porte le même rang, donc la même couleur. */
+.suj-tuile,.suj-pan-tete{background:var(--beige)}
+@media (min-width:1081px){.suj-tuile:nth-of-type(18n+1),.suj-tuile:nth-of-type(18n+4),.suj-tuile:nth-of-type(18n+9),.suj-tuile:nth-of-type(18n+12),.suj-tuile:nth-of-type(18n+14),.suj-tuile:nth-of-type(18n+17),.suj-grille>.suj-panneau:nth-of-type(18n+1)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(18n+4)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(18n+9)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(18n+12)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(18n+14)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(18n+17)>.suj-pan-tete{background:var(--bleu)}.suj-tuile:nth-of-type(18n+3),.suj-tuile:nth-of-type(18n+6),.suj-tuile:nth-of-type(18n+8),.suj-tuile:nth-of-type(18n+11),.suj-tuile:nth-of-type(18n+13),.suj-tuile:nth-of-type(18n+16),.suj-grille>.suj-panneau:nth-of-type(18n+3)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(18n+6)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(18n+8)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(18n+11)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(18n+13)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(18n+16)>.suj-pan-tete{background:var(--vert)}}
+@media (min-width:641px) and (max-width:1080px){.suj-tuile:nth-of-type(9n+1),.suj-tuile:nth-of-type(9n+6),.suj-tuile:nth-of-type(9n+8),.suj-grille>.suj-panneau:nth-of-type(9n+1)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(9n+6)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(9n+8)>.suj-pan-tete{background:var(--bleu)}.suj-tuile:nth-of-type(9n+3),.suj-tuile:nth-of-type(9n+5),.suj-tuile:nth-of-type(9n+7),.suj-grille>.suj-panneau:nth-of-type(9n+3)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(9n+5)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(9n+7)>.suj-pan-tete{background:var(--vert)}}
+@media (max-width:640px){.suj-tuile:nth-of-type(6n+1),.suj-tuile:nth-of-type(6n+6),.suj-grille>.suj-panneau:nth-of-type(6n+1)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(6n+6)>.suj-pan-tete{background:var(--bleu)}.suj-tuile:nth-of-type(6n+4),.suj-tuile:nth-of-type(6n+5),.suj-grille>.suj-panneau:nth-of-type(6n+4)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(6n+5)>.suj-pan-tete{background:var(--vert)}}
+#p-liste>.suj-panneau:nth-of-type(3n+1)>.suj-pan-tete{background:var(--bleu)}#p-liste>.suj-panneau:nth-of-type(3n+3)>.suj-pan-tete{background:var(--vert)}
 .suj-panneau{grid-column:1 / -1;border:2px solid var(--marron);border-radius:var(--r);overflow:hidden;background:var(--beige)}
 .suj-panneau[hidden]{display:none}
 .suj-pan-tete{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:2px solid var(--marron)}
 .suj-pan-tete h3{flex:1 1 auto;min-width:0;font-size:clamp(17px,2vw,20px)}
-.suj-pan-tete .suj-emo{font-size:22px}
+.suj-pan-tete .suj-emo{width:36px;height:36px;font-size:19px}
 .suj-pan-corps{padding:14px 16px}
 #p-liste>.suj-panneau+.suj-panneau{margin-top:10px}
 #p-liste{margin-top:14px}
@@ -285,5 +287,5 @@
 /* débats et meetings : la flèche reste dans le coin du titre au lieu de tomber seule sous les portraits */
 @media (max-width:700px){.debat>summary{position:relative;padding-right:46px}.debat>summary .chev{position:absolute;right:16px;top:22px}}
 @media (max-width:400px){.loi-droite .puce.mini{font-size:12px;padding:5px 10px}}
-@media (max-width:480px){.suj-tuile{padding:12px 13px;min-height:128px}.suj-emo{font-size:26px}}
+@media (max-width:480px){.suj-tuile{padding:12px 13px;min-height:128px}.suj-emo{width:38px;height:38px;font-size:20px}}
 @media (max-width:380px){.suj-tuile{padding:11px}.suj-nom{font-size:15px}}
