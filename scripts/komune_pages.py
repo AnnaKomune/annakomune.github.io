@@ -233,17 +233,27 @@ def signature_html(fiches, profondeur=2):
     return "".join(out)
 
 
+def a_sa_page(article):
+    """La page de l'article existe-t-elle sur le site ? Elle n'est ecrite que si son corps a pu etre recupere."""
+    return (CORPS / (identifiant(article) + ".html")).exists()
+
+
 def carte(article, auteurs, par_article, profondeur=2):
     r = "../" * profondeur
     ident = identifiant(article)
     img = pa.vignette(article.get("image"), 560)
     vis = ('<div class="carte-img"><img src="%s" alt="" loading="lazy" decoding="async"></div>' % e(img)) if img else ""
     noms = [fiche(auteurs, n)["nom"] for n in par_article.get(ident, [])]
-    return ('<a class="carte" href="%sarticles/%s/">%s<div class="carte-corps">'
+    # un article dont la page n'existe pas encore sur le site (corps pas encore recupere) ouvre la newsletter
+    if a_sa_page(article):
+        lien = '%sarticles/%s/"' % (r, e(ident))
+    else:
+        lien = '%s" target="_blank" rel="noopener"' % e(article.get("url") or "")
+    return ('<a class="carte" href="%s>%s<div class="carte-corps">'
             '<span class="carte-date">%s</span>'
             '<span class="carte-titre">%s</span>'
             '%s</div></a>' % (
-                r, e(ident), vis, e(pa.date_lisible((article.get("date") or "")[:10])),
+                lien, vis, e(pa.date_lisible((article.get("date") or "")[:10])),
                 e(article.get("title") or ""),
                 ('<span class="carte-sig">%s</span>' % e(" et ".join(noms))) if noms else ""))
 
@@ -771,24 +781,30 @@ def ecrire_tout(articles=None, chercheur=None):
     DOSSIER_ARTICLES.mkdir(parents=True, exist_ok=True)
     DOSSIER_JOURNALISTES.mkdir(parents=True, exist_ok=True)
 
+    # 1. le corps de chaque article ; 2. les pages. En deux temps, pour qu'une page ne renvoie (article precedent,
+    # article suivant, « a lire aussi ») que vers des articles qui ont eux-memes leur page.
     neufs, ecrites = 0, 0
-    for i, a in enumerate(articles):
-        ident = identifiant(a)
+    corps_par_id = {}
+    for a in articles:
         corps, telecharge = corps_de(a, chercheur, signatures)
         if telecharge:
             neufs += 1
             time.sleep(1.2)
-        if not corps:
-            continue
+        if corps:
+            corps_par_id[identifiant(a)] = corps
+    avec_page = [a for a in articles if identifiant(a) in corps_par_id]
+    for i, a in enumerate(avec_page):
+        ident = identifiant(a)
+        corps = corps_par_id[ident]
         noms = par_article.get(ident, [])
         memes = []
         for nom in noms:
             for autre in par_auteur.get(nom, []):
-                if identifiant(autre) != ident and autre not in memes:
+                if identifiant(autre) != ident and identifiant(autre) in corps_par_id and autre not in memes:
                     memes.append(autre)
         page = page_article(a, corps, auteurs, par_article,
-                            articles[i + 1] if i + 1 < len(articles) else None,
-                            articles[i - 1] if i > 0 else None,
+                            avec_page[i + 1] if i + 1 < len(avec_page) else None,
+                            avec_page[i - 1] if i > 0 else None,
                             memes[:3])
         dossier = DOSSIER_ARTICLES / ident
         dossier.mkdir(parents=True, exist_ok=True)

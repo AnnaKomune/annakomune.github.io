@@ -152,10 +152,16 @@
   function vignette(u, l){ if (!u) return ''; if (u.indexOf(CDN) === 0) return CDN + 'w_' + l + ',c_limit,' + u.slice(CDN.length);
     if (u.indexOf('https://substackcdn.com/') === 0) return u; return CDN + 'w_' + l + ',c_limit,f_auto,q_auto:good,fl_progressive:steep/' + encodeURIComponent(u); }
   function date(iso){ var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); return m ? (+m[3]) + ' ' + MOIS[+m[2] - 1] + ' ' + m[1] : ''; }
-  function carte(a, grande, sig){
+  /* Un article tout juste paru peut ne pas avoir encore sa page sur le site : on le vérifie avant d'y renvoyer.
+     Sans page, la carte ouvre l'article dans la newsletter. */
+  function aSaPage(a){
+    var id = ident(a); if (document.querySelector('a[href="articles/' + id + '/"]')) return Promise.resolve(true);
+    return fetch('articles/' + id + '/', {method: 'HEAD', cache: 'no-cache'}).then(function(r){ return r.ok; }).catch(function(){ return false; });
+  }
+  function carte(a, grande, sig, interne){
     var noms = sig[ident(a)] || [], img = vignette(a.image, grande ? 900 : 560), ex = String(a.excerpt || '').replace(/\s+/g, ' ').trim();
     if (ex.length > 260) ex = ex.slice(0, 257).replace(/\s+$/, '') + '…';
-    return '<a class="art' + (grande ? ' grande' : '') + '" href="articles/' + esc(ident(a)) + '/"><span class="cover">' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy" decoding="async">' : '') + '</span>' +
+    return '<a class="art' + (grande ? ' grande' : '') + '" href="' + (interne ? 'articles/' + esc(ident(a)) + '/"' : esc(a.url) + '" target="_blank" rel="noopener"') + '><span class="cover">' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy" decoding="async">' : '') + '</span>' +
       '<span class="corps"><time datetime="' + esc(String(a.date || '').slice(0, 10)) + '">' + esc(date(a.date)) + '</time><strong>' + esc(a.title) + '</strong>' +
       (grande && ex ? '<span>' + esc(ex) + '</span>' : '') + (noms.length ? '<em>Par ' + esc(noms.join(' et ')) + '</em>' : '') + '</span></a>';
   }
@@ -165,7 +171,9 @@
     var actuel = une.querySelector('a'); if (!arts.length || (actuel && actuel.getAttribute('href') === 'articles/' + ident(arts[0]) + '/')) return;
     var fus = (x[2] && x[2].fusions) || {}, sig = {};
     Object.keys(x[1] || {}).forEach(function(k){ var v = x[1][k]; sig[k] = (Array.isArray(v) ? v : [v]).filter(Boolean).map(function(n){ return fus[n] || n; }); });
-    une.innerHTML = carte(arts[0], true, sig); liste.innerHTML = arts.slice(1).map(function(a){ return carte(a, false, sig); }).join('');
+    return Promise.all(arts.map(aSaPage)).then(function(ok){
+      une.innerHTML = carte(arts[0], true, sig, ok[0]); liste.innerHTML = arts.slice(1).map(function(a, i){ return carte(a, false, sig, ok[i + 1]); }).join('');
+    });
   }).catch(function(){});
 })();
 </script>

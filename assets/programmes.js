@@ -38,11 +38,12 @@
   /* Chapitres dont les mesures ne se comprennent pas sans leur titre (demande de la rédaction, 13/11/2026) : on l'affiche au-dessus.
      La colonne du classeur porte le titre coupé ; le titre entier est celui du sommaire du programme. */
   var CHAPITRE_AFFICHE = {'CHAPITRE 1 : SE LIBÉRER DU LIBÉRALISME EN': 'Se libérer du libéralisme en Europe'};
-  var MES = {};
+  var MES = {}, STAT = {};   /* STAT : par candidat·e, le nombre de mesures affichées, par sujet et par document */
   P.mesures.forEach(function(m){
     var d = P.docs[m[8]]; if (!d || d.anc) return;   /* d.anc : édition remplacée par une plus récente, gardée pour Promesses VS Actes, pas affichée ici */
     var c = candDuDoc(d); if (!c) return; var s = SOUS[m[5]]; if (!s) return;
     (MES[s.i] = MES[s.i] || []).push({m: m, d: d, c: c}); s.n++; s.cands[c.id] = 1;
+    var st = STAT[c.id] = STAT[c.id] || {n: 0, suj: {}, docs: {}}; st.n++; st.suj[s.i] = (st.suj[s.i] || 0) + 1; st.docs[m[8]] = (st.docs[m[8]] || 0) + 1;
     (m[7] || []).forEach(function(t){ s.tags[t] = 1; });
   });
   SOUS.forEach(function(s){ s.cherche = K.pli(s.nom + ' ' + (P.themes[s.th] || '') + ' ' + Object.keys(s.tags).map(function(t){ return P.tags[t]; }).join(' ')); });
@@ -50,7 +51,73 @@
   var PAR_SLUG = {}; B.cands.forEach(function(c){ PAR_SLUG[c.slug] = c; });
   window.K_SUJETS = SOUS.filter(function(s){ return s.n > 0; }).map(function(s){ return {id: s.id, nom: s.nom === 'Autre' ? 'Autres mesures' : s.nom, theme: P.themes[s.th] || '', cands: Object.keys(s.cands).map(function(id){ return (CAND[id] || {}).nom; }).filter(Boolean), n: s.n}; });
   var zListe = document.getElementById('p-liste'), zChoix = document.getElementById('p-choix'), zFiche = document.getElementById('p-fiche');
-  var seul = null;   /* arrivée depuis une fiche candidat·e : on ne garde que les sujets où ses documents ont des mesures */
+  var seul = null;   /* un·e candidat·e choisi·e : on ne garde que les sujets où ses documents ont des mesures */
+  var vue = 'sujets';   /* 'sujets' : on cherche un sujet ; 'candidats' : on choisit d'abord un·e candidat·e */
+  var zQ = document.getElementById('p-q');
+  function nb(n, mot){ return n.toLocaleString('fr-FR') + ' ' + mot + (n > 1 ? 's' : ''); }
+  var TITRE = 'Programmes de la présidentielle 2027, sujet par sujet - Komune';
+  /* le haut de page suit la façon de chercher : titre, phrase d'aide, texte du champ */
+  function enTete(){
+    var c = vue === 'candidats';
+    document.getElementById('p-mode').textContent = c ? 'par candidat·e' : 'par sujet';
+    document.getElementById('p-chapo').textContent = c
+      ? 'Choisis un·e candidat·e, tu obtiens tous les sujets sur lesquels ses documents contiennent des mesures, et la source de chacune.'
+      : 'Cherche un sujet, tu obtiens ce que chaque candidat·e propose et la source. Chaque mesure peut être partagée et imprimée.';
+    zQ.placeholder = seul ? 'Chercher un sujet dans ses mesures…' : (c ? 'Un nom, un parti…' : 'Retraites, naturalisation, nucléaire, cannabis…');
+    zQ.setAttribute('aria-label', seul || !c ? 'Chercher un sujet' : 'Chercher un·e candidat·e');
+    [].forEach.call(document.querySelectorAll('.vue-b'), function(b){ b.setAttribute('aria-pressed', (b.getAttribute('data-vue') === 'candidats') === c ? 'true' : 'false'); });
+    TITRE = seul ? seul.nom + ' : son programme, sujet par sujet - Présidentielle 2027 | Komune'
+      : (c ? 'Programmes de la présidentielle 2027, candidat·e par candidat·e - Komune' : 'Programmes de la présidentielle 2027, sujet par sujet - Komune');
+    if (zFiche.hidden) document.title = TITRE;
+  }
+  function dessine(filtre){ enTete(); if (vue === 'candidats' && !seul) dessineCandidats(filtre); else dessineSujets(filtre); }
+  /* la grille des candidat·es : une carte par personne dont les documents ont des mesures, par ordre alphabétique du nom */
+  function dessineCandidats(filtre){
+    zListe.innerHTML = ''; document.getElementById('p-exemples').hidden = true;
+    var f = K.pli(filtre).trim();
+    function ordre(a, b){ return K.famille(a.nom).localeCompare(K.famille(b.nom), 'fr'); }
+    function garde(c){ return !f || K.pli(c.nom + ' ' + c.parti + ' ' + (c.sigle || '')).indexOf(f) >= 0; }
+    var avec = B.cands.filter(function(c){ return STAT[c.id] && garde(c); }).sort(ordre);
+    var sans = B.cands.filter(function(c){ return !STAT[c.id] && garde(c); }).sort(ordre);
+    if (avec.length){
+      var g = K.el('div', 'cand-grille prog-cands');
+      avec.forEach(function(c){
+        var st = STAT[c.id], a = K.el('a', 'cand-carte'); a.href = K.adresse('comparateur/programmes/') + '#c=' + c.slug;
+        a.addEventListener('click', function(){ zQ.value = ''; });
+        a.appendChild(K.avatar(c, 'tg')); a.appendChild(K.el('b', null, c.nom)); a.appendChild(K.el('span', null, c.parti));
+        var s = K.el('span', 'cc-stats'); s.appendChild(K.el('span', null, nb(st.n, 'mesure'))); s.appendChild(K.el('span', null, nb(Object.keys(st.suj).length, 'sujet'))); a.appendChild(s);
+        g.appendChild(a);
+      });
+      zListe.appendChild(g);
+    }
+    if (!avec.length && !sans.length) zListe.appendChild(K.el('p', null, 'Aucun·e candidat·e ne correspond. Essaie un autre nom.'));
+    if (sans.length) zListe.appendChild(K.el('p', 'pet prog-sans-mes', 'Aucune mesure relevée pour l\'instant dans les documents de : ' + sans.map(function(c){ return c.nom; }).join(', ') + '.'));
+  }
+  /* le bandeau d'un·e candidat·e : qui, combien de mesures, d'où elles viennent */
+  function bandeau(c){
+    var st = STAT[c.id] || {n: 0, suj: {}, docs: {}}, b = K.el('div', 'prog-seul');
+    var act = K.el('div', 'ps-actions sans-impression');
+    var ret = K.el('a', 'b fin', '← Tous les candidat·es'); ret.href = K.adresse('comparateur/programmes/') + '#vue=candidats'; ret.addEventListener('click', function(){ zQ.value = ''; }); act.appendChild(ret);
+    var fi = K.el('a', 'b fin', 'Sa fiche'); fi.href = K.adresse('comparateur/candidats/' + c.slug + '/'); act.appendChild(fi);
+    b.appendChild(act);
+    var haut = K.el('div', 'ps-haut'); haut.appendChild(K.avatar(c, 'g'));
+    var n = K.el('div', 'ps-nom'); n.appendChild(K.el('h2', null, c.nom)); n.appendChild(K.el('span', 'ps-parti', c.parti)); haut.appendChild(n); b.appendChild(haut);
+    var docs = Object.keys(st.docs).sort(function(x, y){ return st.docs[y] - st.docs[x]; });
+    var ch = K.el('div', 'ps-stats'); ch.appendChild(K.el('span', null, nb(st.n, 'mesure'))); ch.appendChild(K.el('span', null, nb(Object.keys(st.suj).length, 'sujet'))); ch.appendChild(K.el('span', null, nb(docs.length, 'document'))); b.appendChild(ch);
+    b.appendChild(K.el('p', null, 'Ouvre un sujet pour lire ses mesures, à côté de celles des autres candidat·es.'));
+    var e = ETAT[c.nom]; if (e && e.etat && !e.perime) b.appendChild(K.el('p', 'pet', 'État du programme : ' + e.etat));
+    if (docs.length){
+      var d = K.el('details', 'ps-docs'), ul = K.el('ul'); d.appendChild(K.el('summary', null, docs.length > 1 ? 'Ses ' + docs.length + ' documents' : 'Son document'));
+      docs.forEach(function(i){
+        var x = P.docs[i], li = K.el('li'); li.appendChild(document.createTextNode(x.doc + (x.cand ? '' : ' · document du parti') + ' '));
+        li.appendChild(K.el('span', 'ps-nb', nb(st.docs[i], 'mesure')));
+        if (x.url){ li.appendChild(document.createTextNode(' ')); var a = K.el('a', null, 'Voir le document ↗'); a.href = x.url; a.target = '_blank'; a.rel = 'noopener'; li.appendChild(a); }
+        ul.appendChild(li);
+      });
+      d.appendChild(ul); b.appendChild(d);
+    }
+    return b;
+  }
   function garde(s){ return !seul || s.cands[seul.id]; }
   /* un émoji par grand sujet ; les couleurs (bleu, beige, vert) sont posées par la feuille de style */
   var EMOJI = {1: '🛒', 2: '💼', 3: '☂️', 4: '🩺', 5: '🌍', 6: '🎓', 7: '🏠', 8: '🏤', 9: '🛂', 10: '⚖️', 11: '✊', 12: '🗳️', 13: '💶', 14: '🌾', 15: '🎭', 16: '💻', 17: '🌐', 18: '🚆'};
@@ -58,12 +125,7 @@
   function dessineSujets(filtre){
     zListe.innerHTML = ''; var f = K.pli(filtre).trim(), total = 0;
     document.getElementById('p-exemples').hidden = !!seul;
-    if (seul){
-      var b = K.el('div', 'prog-seul'); b.appendChild(K.avatar(seul));
-      var t = K.el('p'); t.appendChild(K.el('b', null, seul.nom)); t.appendChild(document.createTextNode(' : les sujets sur lesquels ses documents contiennent des mesures. Ouvre un sujet pour les lire, à côté de celles des autres candidat·es.')); b.appendChild(t);
-      var tous = K.el('a', 'b fin', 'Voir tous les sujets'); tous.href = '#'; tous.onclick = function(e){ e.preventDefault(); history.pushState(null, '', location.pathname); route(); }; b.appendChild(tous);
-      zListe.appendChild(b);
-    }
+    if (seul) zListe.appendChild(bandeau(seul));
     var grille = K.el('div', 'suj-grille');
     Object.keys(P.themes).map(Number).sort(function(a, b){ return a - b; }).forEach(function(ti){
       var th = P.themes[ti];
@@ -76,7 +138,9 @@
       var pan = K.el('section', 'suj-panneau'); pan.id = 'gs-' + ti;
       var pt = K.el('div', 'suj-pan-tete'); pt.appendChild(emoji()); pt.appendChild(K.el('h3', null, th)); pt.appendChild(K.el('span', 'suj-nb', nbTxt)); pan.appendChild(pt);
       var corps = K.el('div', 'suj-pan-corps'), w = K.el('div', 'puces');
-      ss.forEach(function(s){ var a = K.el('a', 'puce', s.nom === 'Autre' ? 'Autres mesures' : s.nom); a.href = seul ? K.adresse('comparateur/programmes/') + '#sujet=' + s.id + '&c=' + seul.slug : K.adresse('comparateur/programmes/' + s.id + '/'); w.appendChild(a); total++; });
+      ss.forEach(function(s){ var a = K.el('a', 'puce', s.nom === 'Autre' ? 'Autres mesures' : s.nom);
+        if (seul && STAT[seul.id]){ var k = K.el('span', 'puce-nb', String(STAT[seul.id].suj[s.i] || 0)); k.title = nb(STAT[seul.id].suj[s.i] || 0, 'mesure'); a.appendChild(k); }
+        a.href = seul ? K.adresse('comparateur/programmes/') + '#sujet=' + s.id + '&c=' + seul.slug : K.adresse('comparateur/programmes/' + s.id + '/'); w.appendChild(a); total++; });
       corps.appendChild(w); pan.appendChild(corps);
       /* pendant une recherche : seulement les panneaux qui contiennent un résultat, déjà ouverts */
       if (f){ zListe.appendChild(pan); return; }
@@ -93,7 +157,9 @@
     if (grille.children.length) zListe.appendChild(grille);
     if (!total) zListe.appendChild(K.el('p', null, seul && !f ? 'Aucune mesure relevée dans ses documents pour l\'instant.' : 'Aucun sujet ne correspond. Essaie un autre mot.'));
   }
-  document.getElementById('p-q').addEventListener('input', function(e){ if (zFiche.hidden === false) fermeSujet(); dessineSujets(e.target.value); });
+  zQ.addEventListener('input', function(e){ if (zFiche.hidden === false) fermeSujet(); dessine(e.target.value); });
+  [].forEach.call(document.querySelectorAll('.vue-b'), function(b){ b.addEventListener('click', function(){
+    zQ.value = ''; history.pushState(null, '', location.pathname + (b.getAttribute('data-vue') === 'candidats' ? '#vue=candidats' : '')); route(); }); });
   [].forEach.call(document.querySelectorAll('#p-exemples [data-s]'), function(b){ var s = SOUS.filter(function(x){ return x.nom === b.getAttribute('data-s'); })[0]; if (s) b.href = K.adresse('comparateur/programmes/' + s.id + '/'); else b.remove(); });
 
   var charge = null;
@@ -169,12 +235,13 @@
       window.scrollTo({top: (cible || zFiche).getBoundingClientRect().top + window.scrollY - 130});
     });
   }
-  function fermeSujet(){ zChoix.hidden = false; zFiche.hidden = true; document.title = 'Programmes de la présidentielle 2027, sujet par sujet - Komune'; }
+  function fermeSujet(){ zChoix.hidden = false; zFiche.hidden = true; document.title = TITRE; }
   function route(){
     var o = {}; K.route().split('&').forEach(function(x){ var i = x.indexOf('='); if (i > 0) o[x.slice(0, i)] = x.slice(i + 1); });
-    var avant = seul; seul = (!o.sujet && o.c && PAR_SLUG[o.c]) || (o.sujet ? seul : null);
+    var avant = seul, vueAvant = vue; seul = (!o.sujet && o.c && PAR_SLUG[o.c]) || (o.sujet ? seul : null);
+    if (!o.sujet) vue = (seul || o.vue === 'candidats') ? 'candidats' : 'sujets';
     if (o.sujet) ouvreSujet(o.sujet, o.c);
-    else { fermeSujet(); if (o.q) document.getElementById('p-q').value = o.q; if (o.q || seul !== avant) dessineSujets(o.q || document.getElementById('p-q').value); }
+    else { fermeSujet(); if (o.q) zQ.value = o.q; if (o.q || seul !== avant || vue !== vueAvant) dessine(o.q || zQ.value); }
   }
-  dessineSujets(''); route(); window.addEventListener('hashchange', route); window.addEventListener('popstate', route);
+  dessine(''); route(); window.addEventListener('hashchange', route); window.addEventListener('popstate', route);
 })();
