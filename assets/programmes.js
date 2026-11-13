@@ -31,6 +31,9 @@
   var zListe = document.getElementById('p-liste'), zChoix = document.getElementById('p-choix'), zFiche = document.getElementById('p-fiche');
   var seul = null;   /* arrivée depuis une fiche candidat·e : on ne garde que les sujets où ses documents ont des mesures */
   function garde(s){ return !seul || s.cands[seul.id]; }
+  /* un émoji et une couleur de la charte par grand sujet, toujours les mêmes d'une visite à l'autre */
+  var EMOJI = {1: '🛒', 2: '💼', 3: '☂️', 4: '🩺', 5: '🌍', 6: '🎓', 7: '🏠', 8: '🏤', 9: '🛂', 10: '⚖️', 11: '✊', 12: '🗳️', 13: '💶', 14: '🌾', 15: '🎭', 16: '💻', 17: '🌐', 18: '🚆'};
+  var TEINTES = ['rose', 'bleu', 'vert', 'jaune'];
   var ouverts = {};   /* grands sujets dépliés par la personne : on les retrouve ouverts en revenant d'une fiche */
   function dessineSujets(filtre){
     zListe.innerHTML = ''; var f = K.pli(filtre).trim(), total = 0;
@@ -48,9 +51,11 @@
       ss = ss.concat(autre); if (!ss.length) return;
       /* un grand sujet = une carte repliée : son nom, le nombre de sujets, et les sujets une fois dépliée.
          Pendant une recherche, les cartes qui contiennent un résultat sont ouvertes d'office. */
-      var g = K.el('details', 'pli groupe-suj'); if (f || ouverts[ti]) g.open = true;
-      var sm = K.el('summary'), tt = K.el('div', 'pli-titre'); tt.appendChild(K.el('h3', null, th)); sm.appendChild(tt);
-      sm.appendChild(K.el('span', 'suj-nb', ss.length + (ss.length > 1 ? ' sujets' : ' sujet'))); sm.appendChild(K.el('span', 'chev')); g.appendChild(sm);
+      var g = K.el('details', 'pli groupe-suj t-' + TEINTES[(ti - 1) % TEINTES.length]); if (f || ouverts[ti]) g.open = true;
+      var sm = K.el('summary'), tt = K.el('div', 'pli-titre'); tt.appendChild(K.el('h3', null, th));
+      if (EMOJI[ti]){ var em = K.el('span', 'suj-emo', EMOJI[ti]); em.setAttribute('aria-hidden', 'true'); sm.appendChild(em); }
+      sm.appendChild(tt);
+      var nb = K.el('span', 'suj-nb', String(ss.length)); nb.appendChild(K.el('span', 'suj-mot', ss.length > 1 ? ' sujets' : ' sujet')); nb.setAttribute('aria-label', ss.length + (ss.length > 1 ? ' sujets' : ' sujet')); sm.appendChild(nb); sm.appendChild(K.el('span', 'chev')); g.appendChild(sm);
       var corps = K.el('div', 'pli-corps'), w = K.el('div', 'puces');
       ss.forEach(function(s){ var a = K.el('a', 'puce', s.nom === 'Autre' ? 'Autres mesures' : s.nom); a.href = '#sujet=' + s.id + (seul ? '&c=' + seul.slug : ''); w.appendChild(a); total++; });
       corps.appendChild(w); g.appendChild(corps);
@@ -84,7 +89,7 @@
       var cp = K.el('button', 'b fin', 'Copier le lien'); cp.type = 'button'; cp.onclick = function(){ K.copie(location.origin + location.pathname + '#sujet=' + id, cp); }; haut.appendChild(cp);
       var im = K.el('button', 'b fin', 'Imprimer'); im.type = 'button'; im.onclick = function(){ window.print(); }; haut.appendChild(im);
       zFiche.appendChild(haut);
-      zFiche.appendChild(K.el('p', 'fiche-theme', P.themes[s.th] || '')); zFiche.appendChild(K.el('h2', null, nomSujet));
+      zFiche.appendChild(K.el('p', 'fiche-theme', (EMOJI[s.th] ? EMOJI[s.th] + ' ' : '') + (P.themes[s.th] || ''))); zFiche.appendChild(K.el('h2', null, nomSujet));
 
       var parCand = {}; (MES[s.i] || []).forEach(function(x){ (parCand[x.c.id] = parCand[x.c.id] || []).push(x); });
       var avec = Object.keys(parCand).sort(function(a, b){ return K.famille(CAND[a].nom).localeCompare(K.famille(CAND[b].nom), 'fr'); });

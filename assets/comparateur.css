@@ -123,7 +123,9 @@
 .groupe-suj>summary{padding:13px clamp(14px,2vw,20px)}
 .groupe-suj .pli-titre h3{font-size:clamp(17px,2vw,20px)}
 .groupe-suj .pli-corps{padding:14px clamp(14px,2vw,20px)}
-.suj-nb{flex:0 0 auto;font-size:13.5px;font-weight:600;color:var(--doux);white-space:nowrap}
+.suj-nb{flex:0 0 auto;font-size:13.5px;font-weight:700;white-space:nowrap;background:var(--blanc);border:1.5px solid var(--marron);border-radius:999px;padding:3px 10px}
+.suj-emo{flex:0 0 auto;font-size:24px;line-height:1}
+.groupe-suj.t-rose>summary{background:var(--rose)}.groupe-suj.t-bleu>summary{background:var(--bleu)}.groupe-suj.t-vert>summary{background:var(--vert)}.groupe-suj.t-jaune>summary{background:var(--jaune)}
 #p-liste{margin-top:14px}
 .fiche-theme{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:0 0 6px}
 .prog-cand{border-top:2px solid var(--marron);padding:22px 0 8px;margin-top:22px}
@@ -262,3 +264,5 @@
 /* débats et meetings : la flèche reste dans le coin du titre au lieu de tomber seule sous les portraits */
 @media (max-width:700px){.debat>summary{position:relative;padding-right:46px}.debat>summary .chev{position:absolute;right:16px;top:22px}}
 @media (max-width:400px){.loi-droite .puce.mini{font-size:12px;padding:5px 10px}}
+/* téléphone : la pastille ne garde que le nombre, pour laisser la place au nom du grand sujet */
+@media (max-width:480px){.suj-mot{display:none}.groupe-suj>summary{gap:10px}}
