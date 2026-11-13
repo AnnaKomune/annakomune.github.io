@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/komune.css?v=9827748dcf">
-<link rel="stylesheet" href="../../assets/comparateur.css?v=3b95ce3fe9">
+<link rel="stylesheet" href="../../assets/comparateur.css?v=4da523132f">
 
 </head>
 <body>
@@ -39,8 +39,12 @@
 </div></header>
 <main id="contenu">
 <section class="c-hero masque-fiche"><div class="wrap">
-  <h1>Les programmes, par sujet.</h1>
-  <p class="chapo">Cherche un sujet, tu obtiens ce que chaque candidat·e propose et la source. Chaque mesure peut être partagée et imprimée.</p>
+  <h1>Les programmes, <span id="p-mode">par sujet</span>.</h1>
+  <p class="chapo" id="p-chapo">Cherche un sujet, tu obtiens ce que chaque candidat·e propose et la source. Chaque mesure peut être partagée et imprimée.</p>
+  <div class="vue-choix sans-impression" role="group" aria-label="Chercher par sujet ou par candidat·e">
+    <button type="button" class="vue-b" data-vue="sujets" aria-pressed="true"><span aria-hidden="true">🗂️</span>Par sujet</button>
+    <button type="button" class="vue-b" data-vue="candidats" aria-pressed="false"><span aria-hidden="true">🙋</span>Par candidat·e</button>
+  </div>
   <input class="champ sans-impression" type="search" id="p-q" placeholder="Retraites, naturalisation, nucléaire, cannabis…" aria-label="Chercher un sujet" autocomplete="off">
 </div></section>
 <section class="bloc serre"><div class="wrap">
@@ -58,8 +62,12 @@
 </main>
 <template id="k-vivant">
 <section class="c-hero masque-fiche"><div class="wrap">
-  <h1>Les programmes, par sujet.</h1>
-  <p class="chapo">Cherche un sujet, tu obtiens ce que chaque candidat·e propose et la source. Chaque mesure peut être partagée et imprimée.</p>
+  <h1>Les programmes, <span id="p-mode">par sujet</span>.</h1>
+  <p class="chapo" id="p-chapo">Cherche un sujet, tu obtiens ce que chaque candidat·e propose et la source. Chaque mesure peut être partagée et imprimée.</p>
+  <div class="vue-choix sans-impression" role="group" aria-label="Chercher par sujet ou par candidat·e">
+    <button type="button" class="vue-b" data-vue="sujets" aria-pressed="true"><span aria-hidden="true">🗂️</span>Par sujet</button>
+    <button type="button" class="vue-b" data-vue="candidats" aria-pressed="false"><span aria-hidden="true">🙋</span>Par candidat·e</button>
+  </div>
   <input class="champ sans-impression" type="search" id="p-q" placeholder="Retraites, naturalisation, nucléaire, cannabis…" aria-label="Chercher un sujet" autocomplete="off">
 </div></section>
 <section class="bloc serre"><div class="wrap">
@@ -78,7 +86,7 @@
 <script>(function(){var m=document.getElementById("contenu"),t=document.getElementById("k-vivant");if(m&&t)m.innerHTML=t.innerHTML;})();</script>
 <script src="../../comparateur/data/base.js?v=adc6f9ee87"></script>
 <script src="../../programmes/data.js?v=2026-11-13"></script>
-<script>document.addEventListener('DOMContentLoaded', function(){ var s = document.createElement('script'); s.src = '../../assets/programmes.js?v=2b09fae7ee'; document.body.appendChild(s); });</script>
+<script>document.addEventListener('DOMContentLoaded', function(){ var s = document.createElement('script'); s.src = '../../assets/programmes.js?v=8ad8953d17'; document.body.appendChild(s); });</script>
 
 <footer class="pied"><div class="wrap">
   <div>
