@@ -154,6 +154,7 @@ def tete(titre, description, url, image, extra_meta="", profondeur=2, robots="in
         '<!doctype html>\n<html lang="fr">\n<head>\n'
         '  <meta charset="utf-8">\n'
         '  <meta name="viewport" content="width=device-width, initial-scale=1">\n'
+        '  <meta name="format-detection" content="telephone=no">\n'
         '  <meta name="description" content="%s">\n'
         '  <title>%s</title>\n'
         '  <link rel="canonical" href="%s">\n'

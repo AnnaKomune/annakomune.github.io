@@ -18,13 +18,13 @@
 .outils-p p{margin:5px 0 0;font-size:14.5px;line-height:1.35}
 
 /* loi : carte depliable */
-.loi summary{align-items:center}
+.loi>summary{align-items:center}
 .loi-droite{flex:0 0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;max-width:46%}
 .loi-egal{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;white-space:nowrap}
 .loi-invite{margin:16px 0 10px}
 .loi-bas{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1.5px solid var(--filet)}
 .loi-bas .champ{max-width:330px;padding:9px 40px 9px 16px;font-size:15px;box-shadow:none}
-@media (max-width:700px){.loi summary{flex-wrap:wrap;position:relative;padding-right:46px}.loi-droite{max-width:100%;justify-content:flex-start;order:3;flex:1 0 100%}.loi .chev{position:absolute;right:16px;top:22px}.loi-egal{white-space:normal;flex-wrap:wrap}}
+@media (max-width:700px){.loi>summary{flex-wrap:wrap;position:relative;padding-right:46px}.loi-droite{max-width:100%;justify-content:flex-start;order:3;flex:1 0 100%}.loi>summary .chev{position:absolute;right:16px;top:22px}.loi-egal{white-space:normal;flex-wrap:wrap}}
 
 /* format de base Promesse VS Acte */
 .fb-parcours{border:1.5px solid var(--marron);border-radius:12px;background:var(--blanc);margin-bottom:16px}
@@ -93,7 +93,7 @@
 /* tetes des candidat·es */
 .tetes-g{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
 .tete-c{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;border:2px solid var(--marron);border-radius:var(--r);background:var(--blanc);padding:14px 10px;box-shadow:3px 3px 0 var(--marron);transition:transform .08s,box-shadow .08s;min-height:150px;justify-content:center}
-.tete-c:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--marron)}
+@media (hover:hover){.tete-c:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--marron)}}
 .tete-c b{font-family:var(--titre);text-transform:uppercase;font-size:18px;line-height:1.1}
 .tete-c span:not(.av){font-size:13px;line-height:1.25}
 .tete-c.on{background:var(--bleu)}
@@ -103,7 +103,7 @@
 .c-compte{font-size:15.5px}
 .c-compte b{font-family:var(--titre);font-size:22px}
 .barre-c{display:grid;grid-template-columns:32px 150px minmax(0,1fr) 150px;gap:12px;align-items:center;width:100%;text-align:left;border:1.5px solid var(--marron);border-radius:12px;background:var(--blanc);padding:8px 12px;margin-top:8px}
-.barre-c:hover{background:var(--jaune)}
+@media (hover:hover){.barre-c:hover{background:var(--jaune)}}
 .barre-c b{font-family:var(--titre);text-transform:uppercase;font-size:16px;line-height:1.1}
 .barre-piste{display:flex;height:14px;border:1.5px solid var(--marron);border-radius:999px;overflow:hidden;background:var(--blanc)}
 .barre-piste i{display:block;height:100%}
@@ -151,7 +151,7 @@
 /* candidat·es */
 .cand-grille{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));margin-top:18px}
 .cand-carte{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;text-decoration:none;border:2px solid var(--marron);border-radius:var(--r);background:var(--blanc);padding:20px 12px 16px;box-shadow:var(--ombre);transition:transform .08s,box-shadow .08s}
-.cand-carte:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--marron)}
+@media (hover:hover){.cand-carte:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--marron)}}
 .cand-carte b{font-family:var(--titre);text-transform:uppercase;font-size:21px;line-height:1.1}
 .cand-carte span:not(.av){font-size:14.5px;line-height:1.3}
 #c-fiche{border:2px solid var(--marron);border-radius:var(--r);background:var(--bleu);padding:clamp(16px,2.4vw,28px);margin:22px 0 30px}
@@ -183,7 +183,7 @@
 .quiz-opts.deux{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media (max-width:560px){.quiz-opts.deux{grid-template-columns:minmax(0,1fr)}}
 .quiz-opt{border:2px solid var(--marron);border-radius:14px;background:var(--beige);padding:13px 14px;font-weight:700;font-size:16px;text-align:left;box-shadow:3px 3px 0 var(--marron)}
-.quiz-opt:hover:not(:disabled){background:var(--jaune)}
+@media (hover:hover){.quiz-opt:hover:not(:disabled){background:var(--jaune)}}
 .quiz-opt:disabled{box-shadow:none;cursor:default;opacity:.75}
 .quiz-opt.bon{background:var(--vert);opacity:1}
 .quiz-opt.faux{background:var(--rose);opacity:1}
@@ -197,11 +197,11 @@
 .quiz-score{font-family:var(--titre);font-weight:700;font-size:clamp(52px,8vw,84px);line-height:1;margin:0 0 10px}
 
 /* debats et meetings */
-.debat summary{flex-wrap:wrap}
+.debat>summary{flex-wrap:wrap}
 .debat .tetes{flex:0 0 auto}
 .onglets{margin:14px 0}
 .debat-question{border:1.5px solid var(--marron);border-left-width:6px;border-radius:12px;background:var(--blanc);padding:12px 16px;font-size:15.5px;margin-bottom:14px}
-.debat-prises{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.debat-prises{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))}
 .prise{background:var(--blanc);border:1.5px solid var(--marron);border-radius:14px;padding:14px 16px}
 .prise-tete{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .prise-tete b{font-family:var(--titre);text-transform:uppercase;font-size:18px;line-height:1.1;display:block}
@@ -246,3 +246,15 @@
 .art-base h4{font-family:var(--titre);text-transform:uppercase;font-size:19px;line-height:1.15;margin:22px 0 8px}
 .art-base ul{padding-left:20px;margin:0;font-size:15px}
 .art-base li{margin-bottom:6px}
+/* ---------- téléphones ---------- */
+/* cartes des bases : la jauge passe au-dessus des deux boutons, qui ne débordent plus */
+@media (max-width:480px){.diapo-nav{flex-wrap:wrap;justify-content:space-between}.diapo-nav .segs{order:-1;flex:1 0 100%}}
+/* débats et meetings : moins de marges emboîtées, plus de place pour le texte */
+@media (max-width:560px){.debat .pli-corps{padding:12px}.prise{padding:12px}.cit{padding-left:10px}}
+/* article des bases ouvert : le résumé n'est pas répété au-dessus du texte */
+.base-art[open] .pli-titre p{display:none}
+/* sous 16px, iOS zoome dans la page dès qu'on touche la liste */
+@media (max-width:820px){.loi-bas .champ{font-size:16px}}
+/* débats et meetings : la flèche reste dans le coin du titre au lieu de tomber seule sous les portraits */
+@media (max-width:700px){.debat>summary{position:relative;padding-right:46px}.debat>summary .chev{position:absolute;right:16px;top:22px}}
+@media (max-width:400px){.loi-droite .puce.mini{font-size:12px;padding:5px 10px}}

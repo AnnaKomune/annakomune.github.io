@@ -120,4 +120,32 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texte).then(function(){ dit('Lien copié'); }, function(){ dit('Copie impossible'); });
     else dit('Copie impossible');
   };
+
+  /* ---------- typographie : jamais de ponctuation, de guillemet ou de symbole seul en début ou en fin de ligne ---------- */
+  /* On remplace l'espace ordinaire par une espace insécable de même largeur : devant ? ! : ; » % €, après «,
+     entre les milliers d'un nombre et après « n° ». Le texte ne change pas, seulement l'endroit où il peut passer à la ligne. */
+  K.typo = function(t){
+    return t.replace(/ ([?!:;\u00bb%\u20ac])/g, '\u00a0$1').replace(/\u00ab /g, '\u00ab\u00a0')
+            .replace(/(\d) (?=\d{3}(?!\d))/g, '$1\u00a0').replace(/([nN]\u00b0) (?=\d)/g, '$1\u00a0');
+  };
+  (function(){
+    var HORS = /^(SCRIPT|STYLE|TEXTAREA|INPUT|CODE|PRE|NOSCRIPT)$/, UTILE = /[?!:;\u00bb%\u20ac\u00ab\d]/;
+    function traite(n){
+      var p = n.parentNode; if (!p || HORS.test(p.nodeName)) return;
+      var v = n.nodeValue; if (v.length < 2 || !UTILE.test(v)) return;
+      var r = K.typo(v); if (r !== v) n.nodeValue = r;
+    }
+    function passe(racine){
+      if (racine.nodeType === 3){ traite(racine); return; }
+      if (racine.nodeType !== 1 || HORS.test(racine.nodeName)) return;
+      var w = document.createTreeWalker(racine, NodeFilter.SHOW_TEXT, null), n, lot = [];
+      while ((n = w.nextNode())) lot.push(n);
+      for (var i = 0; i < lot.length; i++) traite(lot[i]);
+    }
+    if (!document.body) return;
+    passe(document.body);
+    if (window.MutationObserver) new MutationObserver(function(ms){
+      for (var a = 0; a < ms.length; a++) for (var i = 0; i < ms[a].addedNodes.length; i++) passe(ms[a].addedNodes[i]);
+    }).observe(document.body, {childList: true, subtree: true});
+  })();
 })();

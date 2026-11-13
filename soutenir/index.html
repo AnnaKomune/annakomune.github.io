@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
 <title>Nous soutenir - Komune</title>
 <meta name="description" content="Le cap des 800 soutiens mensuels est atteint. Maintenant, il faut le tenir, chaque mois, jusqu&#x27;à la présidentielle.">
 <link rel="canonical" href="https://www.komunemedia.fr/soutenir/">
@@ -16,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/komune.css?v=1ace297a15">
+<link rel="stylesheet" href="../assets/komune.css?v=5e33896a9f">
 <style>
 .hero h1.t-seuil{font-size:min(calc(7.6vw - 3px),44px)}
 @media (min-width:821px){.hero h1.t-seuil{font-size:clamp(34px,4.25vw,52px)}}
@@ -25,7 +26,7 @@
 .hero p{max-width:60ch}
 .cap h2{font-size:clamp(24px,3vw,34px)}
 .reveler{display:block;width:100%;text-align:left;border:2px solid var(--marron);border-radius:var(--r);background:var(--rose);padding:20px 22px;box-shadow:var(--ombre);margin-top:16px;transition:transform .08s,box-shadow .08s}
-.reveler:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--marron)}
+@media (hover:hover){.reveler:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--marron)}}
 .reveler b{display:block;font-family:var(--titre);text-transform:uppercase;font-size:clamp(26px,3.4vw,38px);line-height:1.05}
 .reveler span{display:block;margin-top:6px;font-size:15px}
 .compteur{margin-top:16px;background:var(--blanc);border:2px solid var(--marron);border-radius:var(--r);padding:18px 20px}
@@ -221,6 +222,6 @@ document.addEventListener('DOMContentLoaded', function(){
     <a href="../signaler/">Signaler un contenu</a>
   </div>
 </div></footer>
-<script src="../assets/komune.js?v=473816db71"></script>
+<script src="../assets/komune.js?v=3c6323c322"></script>
 </body>
 </html>
