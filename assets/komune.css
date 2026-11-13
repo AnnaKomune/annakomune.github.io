@@ -1,6 +1,3 @@
-/* La police du texte. La plage d'axes demandee jusqu'ici (opsz 10..48) n'existe pas : Google Fonts l'ecartait sans erreur
-   et le texte s'affichait dans la police de secours. On la charge ici aussi, pour les pages deja en ligne. */
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap");
 /* Komune - feuille de style commune du site (novembre 2026)
    Palette : beige, bleu, jaune, rose, vert fluo, blanc, et le marron pour le texte et les contours.
    Aucune autre couleur. Oswald pour les titres seulement, Bricolage Grotesque pour tout le reste. */

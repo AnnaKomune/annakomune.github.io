@@ -10,6 +10,11 @@
   K.melange = function(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
   K.famille = function(nom){ var p = String(nom).split(' '); return K.pli(p.slice(1).join(' ')) + ' ' + K.pli(p[0]); };
   K.racine = (document.documentElement.getAttribute('data-racine') || './');
+  /* Une page à adresse propre (une personne, un sujet, un débat) annonce ce qu'elle montre dans data-route.
+     Ce sont ces adresses, sans #, que les moteurs de recherche indexent. Un # dans l'adresse reste prioritaire. */
+  K.routePage = document.documentElement.getAttribute('data-route') || '';
+  K.route = function(){ return decodeURIComponent(location.hash.replace(/^#/, '')) || K.routePage; };
+  K.adresse = function(chemin){ return K.racine + chemin; };
 
   /* Un texte du tableur : paragraphes, retours à la ligne, liens cliquables. Rien n'est réécrit. */
   K.riche = function(texte){

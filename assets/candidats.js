@@ -11,7 +11,7 @@
     var f = K.pli(q.value).trim(), n = 0; grille.innerHTML = '';
     ORDRE.forEach(function(id){
       var c = CAND[id]; if (f && K.pli(c.nom + ' ' + c.parti).indexOf(f) < 0) return; n++;
-      var a = K.el('a', 'cand-carte'); a.href = '#' + c.slug;
+      var a = K.el('a', 'cand-carte'); a.href = K.adresse('comparateur/candidats/' + c.slug + '/');
       a.appendChild(K.avatar(c, 'tg')); a.appendChild(K.el('b', null, c.nom)); a.appendChild(K.el('span', null, c.parti)); grille.appendChild(a);
     });
     compte.innerHTML = ''; compte.appendChild(K.el('b', null, String(n))); compte.appendChild(document.createTextNode(' candidat·e' + (n > 1 ? 's' : '') + (f ? ' pour cette recherche.' : '.')));
@@ -44,17 +44,19 @@
   function ouvre(slug, defile){
     var c = PAR_SLUG[slug]; if (!c){ zone.hidden = true; zone.innerHTML = ''; return; }
     var f = FICHE[c.id]; zone.hidden = false; zone.innerHTML = '';
-    var fer = K.el('a', 'b fin sans-impression', '← Tous et toutes les candidat·es'); fer.href = '#'; fer.onclick = function(e){ e.preventDefault(); history.pushState(null, '', location.pathname); ouvre(null); document.getElementById('c-grille').scrollIntoView({block: 'start'}); };
+    var fer = K.el('a', 'b fin sans-impression', '← Tous et toutes les candidat·es'); fer.href = K.adresse('comparateur/candidats/');
+    if (!K.routePage) fer.onclick = function(e){ e.preventDefault(); history.pushState(null, '', location.pathname); ouvre(null); document.getElementById('c-grille').scrollIntoView({block: 'start'}); };
     zone.appendChild(fer);
     var tete = K.el('div', 'fiche-tete'); tete.appendChild(K.avatar(c, 'tg'));
-    var d = K.el('div'); d.appendChild(K.el('h2', null, c.nom));
+    var d = K.el('div'); d.appendChild(K.el(K.routePage ? 'h1' : 'h2', null, c.nom));
     var l1 = K.el('p', 'fiche-ligne'); l1.appendChild(K.el('span', 'puce parti', c.parti)); if (f.date) l1.appendChild(K.el('span', 'fiche-date', 'Déclaré·e : ' + f.date)); d.appendChild(l1);
     tete.appendChild(d); zone.appendChild(tete);
 
     var liens = K.el('div', 'rang fiche-liens');
     function lien(texte, href, cls, ext){ var a = K.el('a', 'b ' + (cls || ''), texte + (ext ? ' ↗' : '')); a.href = href; if (ext){ a.target = '_blank'; a.rel = 'noopener'; } liens.appendChild(a); }
-    if (f.site) lien('Site de campagne', f.site, '', true);
-    if (f.prog_url && f.prog) lien('Le programme, ' + f.prog, f.prog_url, '', true);
+    /* un lien seulement si la case contient une adresse ; sinon c'est une mention (« Pas de site de campagne à ce jour ») */
+    if (/^https?:\/\//.test(f.site || '')) lien('Site de campagne', f.site, '', true); else if (f.site) liens.appendChild(K.el('span', 'puce mini', f.site));
+    if (/^https?:\/\//.test(f.prog_url || '') && f.prog) lien('Le programme, ' + f.prog, f.prog_url, '', true);
     else liens.appendChild(K.el('span', 'puce', 'Programme : pas encore publié'));
     /* ces deux accès n'apparaissent que si quelque chose est relevé pour cette personne */
     if (f.mes) lien('Ses mesures dans les programmes', K.racine + 'comparateur/programmes/#c=' + c.slug, 'vert');
@@ -71,9 +73,9 @@
     var src = K.el('ul', 'fiche-src'); String(f.sources || '').split(/\s*[•\n]\s*/).forEach(function(x){ x = x.trim(); if (!x) return; var li = K.el('li'); li.innerHTML = K.riche(x).replace(/^<p>|<\/p>$/g, ''); src.appendChild(li); });
     zone.appendChild(pli('Sources', '', src));
     var enc = K.el('div', 'encart sans-impression'); enc.appendChild(K.el('p', null, 'Une erreur, une date, un mandat qui manque ? On corrige et on le dit.')); var br = K.el('button', 'b rose', 'J\'ai des retours'); br.type = 'button'; br.setAttribute('data-retours', ''); enc.appendChild(br); zone.appendChild(enc);
-    document.title = c.nom + ' - Les candidat·es à la présidentielle 2027 - Komune';
-    if (defile !== false) setTimeout(function(){ window.scrollTo({top: zone.getBoundingClientRect().top + window.scrollY - 120}); }, 30);
+    document.title = c.nom + ' : parcours, mandats et programme - Présidentielle 2027 | Komune';
+    if (defile !== false && !K.routePage) setTimeout(function(){ window.scrollTo({top: zone.getBoundingClientRect().top + window.scrollY - 120}); }, 30);
   }
-  function route(){ var s = decodeURIComponent(location.hash.replace(/^#/, '')); if (s && PAR_SLUG[s]) ouvre(s); else { ouvre(null); document.title = 'Les candidat·es à la présidentielle 2027 - Komune'; } }
+  function route(){ var s = K.route(); if (s && PAR_SLUG[s]) ouvre(s); else { ouvre(null); document.title = 'Candidat·es à la présidentielle 2027 : la liste et les fiches - Komune'; } }
   dessine(); route(); window.addEventListener('hashchange', route); window.addEventListener('popstate', route);
 })();

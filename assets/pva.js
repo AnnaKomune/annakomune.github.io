@@ -121,7 +121,7 @@
     if (ids.length === 2) zCand.appendChild(K.el('p', 'pet', 'Choisis une loi : les deux comparaisons s\'affichent côte à côte.'));
     P.lois.forEach(function(l){ zCand.appendChild(carteLoi(l, ids, loiOuverte === l.id)); });
     var f = K.el('p', 'pet'); f.style.marginTop = '14px';
-    ids.forEach(function(id){ var a = K.el('a', 'puce mini', 'La fiche de ' + CAND[id].nom); a.href = K.racine + 'comparateur/candidats/#' + CAND[id].slug; a.style.marginRight = '8px'; f.appendChild(a); });
+    ids.forEach(function(id){ var a = K.el('a', 'puce mini', 'La fiche de ' + CAND[id].nom); a.href = K.racine + 'comparateur/candidats/' + CAND[id].slug + '/'; a.style.marginRight = '8px'; f.appendChild(a); });
     zCand.appendChild(f);
     if (pousse){ history.replaceState(null, '', '#c=' + ids.join(',')); zCand.scrollIntoView({block: 'start'}); }
     if (loiOuverte){ var e = document.getElementById('loi-' + loiOuverte); if (e) setTimeout(function(){ e.scrollIntoView({block: 'start'}); }, 60); }

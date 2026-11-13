@@ -8,8 +8,21 @@
   function slug(s){ return K.pli(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
 
   var SOUS = P.sous.map(function(s, i){ return {i: i, th: s[0], nom: s[1], id: slug(s[1]), n: 0, cands: {}, tags: {}}; });
-  (function(){ var vus = {}; SOUS.forEach(function(s){ if (vus[s.id]) s.id += '-' + slug(P.themes[s.th] || '').slice(0, 12); vus[s.id] = 1; }); })();
-  var SOUS_ID = {}; SOUS.forEach(function(s){ SOUS_ID[s.id] = s; });
+  /* L'identifiant d'un sujet fait son adresse (/comparateur/programmes/<identifiant>/) : il doit être lisible et unique.
+     « Autre » devient « autres-mesures-<grand sujet> » ; un nom porté par deux grands sujets reçoit le sien en suffixe.
+     Les anciens identifiants (suffixe tronqué) restent reconnus, pour les liens déjà partagés. */
+  var SOUS_ID = {};
+  (function(){
+    var vusAnciens = {}, compte = {};
+    SOUS.forEach(function(s){ compte[s.id] = (compte[s.id] || 0) + 1; });
+    SOUS.forEach(function(s){
+      var base = s.id, th = slug(P.themes[s.th] || '');
+      var ancien = vusAnciens[base] ? base + '-' + th.slice(0, 12) : base; vusAnciens[base] = 1;
+      s.id = s.nom === 'Autre' ? 'autres-mesures-' + th : (compte[base] > 1 ? base + '-' + th : base);
+      SOUS_ID[ancien] = SOUS_ID[ancien] || s;
+    });
+    SOUS.forEach(function(s){ SOUS_ID[s.id] = s; });
+  })();
 
   /* un document de parti sans candidat·e se rattache au ou à la candidat·e de ce parti quand il n'y en a qu'un·e */
   var PARTI_CAND = {}; B.cands.forEach(function(c){ var p = K.pli(c.parti).replace(/\s*\(.*$/, ''); (PARTI_CAND[p] = PARTI_CAND[p] || []).push(c); });
@@ -28,6 +41,7 @@
   SOUS.forEach(function(s){ s.cherche = K.pli(s.nom + ' ' + (P.themes[s.th] || '') + ' ' + Object.keys(s.tags).map(function(t){ return P.tags[t]; }).join(' ')); });
 
   var PAR_SLUG = {}; B.cands.forEach(function(c){ PAR_SLUG[c.slug] = c; });
+  window.K_SUJETS = SOUS.filter(function(s){ return s.n > 0; }).map(function(s){ return {id: s.id, nom: s.nom === 'Autre' ? 'Autres mesures' : s.nom, theme: P.themes[s.th] || '', cands: Object.keys(s.cands).map(function(id){ return (CAND[id] || {}).nom; }).filter(Boolean), n: s.n}; });
   var zListe = document.getElementById('p-liste'), zChoix = document.getElementById('p-choix'), zFiche = document.getElementById('p-fiche');
   var seul = null;   /* arrivée depuis une fiche candidat·e : on ne garde que les sujets où ses documents ont des mesures */
   function garde(s){ return !seul || s.cands[seul.id]; }
@@ -55,7 +69,7 @@
       var pan = K.el('section', 'suj-panneau'); pan.id = 'gs-' + ti;
       var pt = K.el('div', 'suj-pan-tete'); pt.appendChild(emoji()); pt.appendChild(K.el('h3', null, th)); pt.appendChild(K.el('span', 'suj-nb', nbTxt)); pan.appendChild(pt);
       var corps = K.el('div', 'suj-pan-corps'), w = K.el('div', 'puces');
-      ss.forEach(function(s){ var a = K.el('a', 'puce', s.nom === 'Autre' ? 'Autres mesures' : s.nom); a.href = '#sujet=' + s.id + (seul ? '&c=' + seul.slug : ''); w.appendChild(a); total++; });
+      ss.forEach(function(s){ var a = K.el('a', 'puce', s.nom === 'Autre' ? 'Autres mesures' : s.nom); a.href = seul ? K.adresse('comparateur/programmes/') + '#sujet=' + s.id + '&c=' + seul.slug : K.adresse('comparateur/programmes/' + s.id + '/'); w.appendChild(a); total++; });
       corps.appendChild(w); pan.appendChild(corps);
       /* pendant une recherche : seulement les panneaux qui contiennent un résultat, déjà ouverts */
       if (f){ zListe.appendChild(pan); return; }
@@ -73,7 +87,7 @@
     if (!total) zListe.appendChild(K.el('p', null, seul && !f ? 'Aucune mesure relevée dans ses documents pour l\'instant.' : 'Aucun sujet ne correspond. Essaie un autre mot.'));
   }
   document.getElementById('p-q').addEventListener('input', function(e){ if (zFiche.hidden === false) fermeSujet(); dessineSujets(e.target.value); });
-  [].forEach.call(document.querySelectorAll('#p-exemples [data-s]'), function(b){ var s = SOUS.filter(function(x){ return x.nom === b.getAttribute('data-s'); })[0]; if (s) b.href = '#sujet=' + s.id; else b.remove(); });
+  [].forEach.call(document.querySelectorAll('#p-exemples [data-s]'), function(b){ var s = SOUS.filter(function(x){ return x.nom === b.getAttribute('data-s'); })[0]; if (s) b.href = K.adresse('comparateur/programmes/' + s.id + '/'); else b.remove(); });
 
   var charge = null;
   function textes(){
@@ -87,17 +101,20 @@
   }
   function ouvreSujet(id, cslug){
     var s = SOUS_ID[id]; if (!s){ fermeSujet(); return; }
+    id = s.id;
     zChoix.hidden = true; zFiche.hidden = false; zFiche.innerHTML = '<p>Chargement des mesures…</p>';
     textes().then(function(){
       var T = window.KOMUNE_TEXTES || {}, nomSujet = s.nom === 'Autre' ? 'Autres mesures' : s.nom;
-      document.title = nomSujet + ' : les programmes, par sujet - Komune';
+      document.title = (s.nom === 'Autre' ? (P.themes[s.th] || '') + ' : autres mesures' : nomSujet) + ' : ce que proposent les candidat·es - Programmes présidentielle 2027 | Komune';
       zFiche.innerHTML = '';
       var haut = K.el('div', 'rang sans-impression'); haut.style.marginBottom = '18px';
-      var r = K.el('a', 'b fin', '← Tous les sujets'); r.href = '#'; r.onclick = function(e){ e.preventDefault(); history.pushState(null, '', location.pathname + (seul ? '#c=' + seul.slug : '')); fermeSujet(); }; haut.appendChild(r);
-      var cp = K.el('button', 'b fin', 'Copier le lien'); cp.type = 'button'; cp.onclick = function(){ K.copie(location.origin + location.pathname + '#sujet=' + id, cp); }; haut.appendChild(cp);
+      var r = K.el('a', 'b fin', '← Tous les sujets'); r.href = K.adresse('comparateur/programmes/');
+      if (!K.routePage) r.onclick = function(e){ e.preventDefault(); history.pushState(null, '', location.pathname + (seul ? '#c=' + seul.slug : '')); fermeSujet(); };
+      haut.appendChild(r);
+      var cp = K.el('button', 'b fin', 'Copier le lien'); cp.type = 'button'; cp.onclick = function(){ K.copie(new URL(K.adresse('comparateur/programmes/' + id + '/'), document.baseURI).href, cp); }; haut.appendChild(cp);
       var im = K.el('button', 'b fin', 'Imprimer'); im.type = 'button'; im.onclick = function(){ window.print(); }; haut.appendChild(im);
       zFiche.appendChild(haut);
-      zFiche.appendChild(K.el('p', 'fiche-theme', (EMOJI[s.th] ? EMOJI[s.th] + ' ' : '') + (P.themes[s.th] || ''))); zFiche.appendChild(K.el('h2', null, nomSujet));
+      zFiche.appendChild(K.el('p', 'fiche-theme', (EMOJI[s.th] ? EMOJI[s.th] + ' ' : '') + (P.themes[s.th] || ''))); zFiche.appendChild(K.el(K.routePage ? 'h1' : 'h2', null, nomSujet));
 
       var parCand = {}; (MES[s.i] || []).forEach(function(x){ (parCand[x.c.id] = parCand[x.c.id] || []).push(x); });
       var avec = Object.keys(parCand).sort(function(a, b){ return K.famille(CAND[a].nom).localeCompare(K.famille(CAND[b].nom), 'fr'); });
@@ -136,9 +153,9 @@
       window.scrollTo({top: (cible || zFiche).getBoundingClientRect().top + window.scrollY - 130});
     });
   }
-  function fermeSujet(){ zChoix.hidden = false; zFiche.hidden = true; document.title = 'Les programmes, par sujet - Komune'; }
+  function fermeSujet(){ zChoix.hidden = false; zFiche.hidden = true; document.title = 'Programmes de la présidentielle 2027, sujet par sujet - Komune'; }
   function route(){
-    var o = {}; decodeURIComponent(location.hash.replace(/^#/, '')).split('&').forEach(function(x){ var i = x.indexOf('='); if (i > 0) o[x.slice(0, i)] = x.slice(i + 1); });
+    var o = {}; K.route().split('&').forEach(function(x){ var i = x.indexOf('='); if (i > 0) o[x.slice(0, i)] = x.slice(i + 1); });
     var avant = seul; seul = (!o.sujet && o.c && PAR_SLUG[o.c]) || (o.sujet ? seul : null);
     if (o.sujet) ouvreSujet(o.sujet, o.c);
     else { fermeSujet(); if (o.q) document.getElementById('p-q').value = o.q; if (o.q || seul !== avant) dessineSujets(o.q || document.getElementById('p-q').value); }

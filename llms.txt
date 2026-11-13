@@ -1,0 +1,24 @@
+# Komune Média
+
+> Komune est un média indépendant français qui décrypte la société avec un regard antiraciste. Le site publie des articles et un comparateur des candidat·es à l'élection présidentielle française de 2027. Chaque information du comparateur est accompagnée de sa source.
+
+## Le comparateur de la présidentielle 2027
+
+- [Comparateur 2027](https://www.komunemedia.fr/comparateur/) : l'entrée du comparateur et sa méthode.
+- [Promesses VS Actes](https://www.komunemedia.fr/comparateur/promesses-vs-actes/) : les programmes et déclarations des candidat·es comparés à leurs actes, principalement leurs votes.
+- [Programmes, sujet par sujet](https://www.komunemedia.fr/comparateur/programmes/) : les mesures des programmes classées par sujet. Chaque sujet a sa page, par exemple https://www.komunemedia.fr/comparateur/programmes/retraites/
+- [Candidat·es](https://www.komunemedia.fr/comparateur/candidats/) : la liste des candidat·es. Chaque personne a sa fiche (mandats, parcours, situation judiciaire, sources), par exemple https://www.komunemedia.fr/comparateur/candidats/gabriel-attal/
+- [Votes](https://www.komunemedia.fr/comparateur/votes/) : qui a voté quoi, loi par loi.
+- [Les bases de l'élection](https://www.komunemedia.fr/comparateur/bases/) : les règles de la présidentielle expliquées.
+- [Débats et meetings](https://www.komunemedia.fr/comparateur/debats/) : ce que les candidat·es ont dit en public, citation par citation, avec le moment de la vidéo.
+- [Quiz](https://www.komunemedia.fr/comparateur/quiz/)
+
+## Articles
+
+- [Tous les articles](https://www.komunemedia.fr/articles/) : décryptages, enquêtes et débunks.
+
+## À propos
+
+- [L'équipe](https://www.komunemedia.fr/equipe/)
+- [Mentions légales](https://www.komunemedia.fr/mentions-legales/)
+- [Plan du site](https://www.komunemedia.fr/sitemap.xml)

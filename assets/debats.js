@@ -68,5 +68,14 @@
       res.appendChild(b); });
     if (!n) res.appendChild(K.el('p', null, 'Rien ne correspond pour l\'instant.'));
   });
-  if (location.hash && document.getElementById(location.hash.slice(1)) && document.getElementById(location.hash.slice(1)).tagName === 'DETAILS') document.getElementById(location.hash.slice(1)).open = true;
+  var cible = K.route() && document.getElementById(K.route());
+  if (cible && cible.tagName === 'DETAILS') cible.open = true;
+  /* page d'un seul débat ou meeting : son titre devient le titre de la page, et on ne garde que lui */
+  if (K.routePage && cible){
+    var debat = D.filter(function(x){ return x.id === K.routePage; })[0], h1 = document.querySelector('.c-hero h1');
+    if (debat && h1) h1.textContent = debat.titre;
+    [].forEach.call(zone.querySelectorAll('details.debat'), function(d){ if (d !== cible) d.hidden = true; });
+    [].forEach.call(zone.querySelectorAll('.debat-groupe'), function(g){ if (!g.contains(cible)) g.hidden = true; else { var a = g.querySelector('.arrive'); if (a) a.hidden = true; } });
+    var tous = K.el('a', 'b fin', '← Tous les débats et meetings'); tous.href = K.adresse('comparateur/debats/'); var pr = K.el('p'); pr.style.margin = '0 0 16px'; pr.appendChild(tous); zone.insertBefore(pr, zone.firstChild);
+  }
 })();
