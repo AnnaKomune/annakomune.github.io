@@ -80,7 +80,8 @@ p{margin:0 0 .8em}
 .tete .nav-site.ouvert a{text-align:center;padding:10px 14px}
 @media (max-width:860px){
   .tete:not(.outil) .burger{display:flex}
-  .tete:not(.outil) .nav-site{display:none}
+  /* fermé seulement : sinon cette règle, placée après, l'emportait sur le menu ouvert et il ne s'affichait jamais */
+  .tete:not(.outil) .nav-site:not(.ouvert){display:none}
   .tete .logo img{width:104px}
 }
 @media (max-width:1180px){
