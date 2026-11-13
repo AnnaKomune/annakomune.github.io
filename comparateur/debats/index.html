@@ -40,6 +40,25 @@
 <section class="c-hero"><div class="wrap">
   <h1>Débats et meetings</h1>
   <p class="chapo">Ce que les candidat·es ont dit en public, thème par thème. On part de la rediffusion des débats et des meetings, on consigne les prises de parole et on les range par sujet. Chaque citation renvoie au moment exact de la vidéo.</p>
+  <p class="sous">On ne couvre pas tous les débats et meetings de la campagne. On en sélectionne&nbsp;: au moins un meeting pour chacun·e des sept candidat·es en tête des sondages, et les débats les plus importants.</p>
+  <p class="puces" style="margin:16px 0 0"><a class="puce" href="#debats">Les débats</a><a class="puce" href="#meetings">Les meetings</a><a class="puce" href="#methode">Méthode</a></p>
+  <input class="champ" type="search" id="d-q" placeholder="Rechercher un sujet, un·e candidat·e…" aria-label="Rechercher dans les débats et meetings" autocomplete="off">
+  <div id="d-res" hidden="" aria-live="polite"></div>
+</div></section>
+<section class="bloc serre"><div class="wrap">
+  <div id="d-liste"><section class="debat-groupe" id="debats"><h2>Les débats</h2><details class="pli debat" id="medef-2026"><summary><div class="pli-titre"><h3>Sept candidats face aux patrons - le grand débat du Medef</h3><p>Débat · Jeudi 27 août 2026</p></div><div class="tetes"><span class="av" title="Jean-Luc Mélenchon"><img alt="" loading="lazy" decoding="async" src="../../candidats/img/jean-luc-melenchon.webp"></span><span class="av" title="Édouard Philippe"><img alt="" loading="lazy" decoding="async" src="../../candidats/img/edouard-philippe.webp"></span><span class="av" title="Marine Le Pen"><img alt="" loading="lazy" decoding="async" src="../../candidats/img/marine-le-pen.webp"></span><span class="av" title="Raphaël Glucksmann"><img alt="" loading="lazy" decoding="async" src="../../candidats/img/raphael-glucksmann.webp"></span><span class="av" title="Gabriel Attal"><img alt="" loading="lazy" decoding="async" src="../../candidats/img/gabriel-attal.webp"></span><span class="av" title="Marine Tondelier"><img alt="" loading="lazy" decoding="async" src="../../candidats/img/marine-tondelier.webp"></span><span class="av" title="Bruno Retailleau"><img alt="" loading="lazy" decoding="async" src="../../candidats/img/bruno-retailleau.webp"></span></div><span class="chev"></span></summary><div class="pli-corps"></div></details><p class="arrive">De nouveaux débats arrivent très vite.</p></section><section class="debat-groupe" id="meetings"><h2>Les meetings</h2><details class="pli debat" id="bourget-2026"><summary><div class="pli-titre"><h3>Jean-Luc Mélenchon au Bourget - présentation du programme L'Avenir en commun</h3><p>Meeting · Samedi 7 novembre 2026</p></div><div class="tetes"><span class="av" title="Jean-Luc Mélenchon"><img alt="" loading="lazy" decoding="async" src="../../candidats/img/jean-luc-melenchon.webp"></span></div><span class="chev"></span></summary><div class="pli-corps"></div></details><details class="pli debat" id="philippe-paris-2026"><summary><div class="pli-titre"><h3>Édouard Philippe à Paris - lancement de sa campagne</h3><p>Meeting · Dimanche 5 juillet 2026</p></div><div class="tetes"><span class="av" title="Édouard Philippe"><img alt="" loading="lazy" decoding="async" src="../../candidats/img/edouard-philippe.webp"></span></div><span class="chev"></span></summary><div class="pli-corps"></div></details><p class="arrive">De nouveaux meetings arrivent très vite.</p></section></div>
+</div></section>
+<section class="bloc serre" id="methode"><div class="wrap etroit" style="margin-left:max(20px,calc((100% - 1180px)/2))">
+  <h2>Méthode</h2>
+  <p style="margin-top:14px">La transcription des sous-titres français de la vidéo intégrale de chaque débat ou meeting&nbsp;: ceux que YouTube génère automatiquement ou, quand elle en fournit, ceux de la chaîne qui diffuse. Chaque horodatage ouvre la vidéo au moment exact de la citation, pour vérifier par vous-même. Les sous-titres automatiques contiennent des coquilles&nbsp;: nous corrigeons uniquement l'orthographe des noms propres et les erreurs de reconnaissance évidentes. Les hésitations de l'oral (répétitions, «&nbsp;euh&nbsp;») sont resserrées sans jamais toucher au sens&nbsp;; les coupes sont marquées […].</p>
+  <p>Aucune phrase n'est citée sans son contexte. Dans un débat, chaque thème s'ouvre sur la question posée&nbsp;; quand une citation répond à un·e autre candidat·e ou s'appuie sur ce qui vient d'être dit, une ligne le précise au-dessus. Pour un meeting, on ne consigne que le discours du ou de la candidat·e, et chaque thème s'ouvre sur une phrase de contexte&nbsp;: ce qui est dit juste avant, et à quoi la citation répond. On garde les passages où une mesure ou une position est annoncée, pas les attaques contre les adversaires.</p>
+  <div class="encart"><p>Une citation mal transcrite, un horodatage décalé&nbsp;? Dis-le nous.</p><button type="button" class="b rose" data-retours="">J'ai des retours</button></div>
+</div></section>
+</main>
+<template id="k-vivant">
+<section class="c-hero"><div class="wrap">
+  <h1>Débats et meetings</h1>
+  <p class="chapo">Ce que les candidat·es ont dit en public, thème par thème. On part de la rediffusion des débats et des meetings, on consigne les prises de parole et on les range par sujet. Chaque citation renvoie au moment exact de la vidéo.</p>
   <p class="sous">On ne couvre pas tous les débats et meetings de la campagne. On en sélectionne : au moins un meeting pour chacun·e des sept candidat·es en tête des sondages, et les débats les plus importants.</p>
   <p class="puces" style="margin:16px 0 0"><a class="puce" href="#debats">Les débats</a><a class="puce" href="#meetings">Les meetings</a><a class="puce" href="#methode">Méthode</a></p>
   <input class="champ" type="search" id="d-q" placeholder="Rechercher un sujet, un·e candidat·e…" aria-label="Rechercher dans les débats et meetings" autocomplete="off">
@@ -54,7 +73,8 @@
   <p>Aucune phrase n'est citée sans son contexte. Dans un débat, chaque thème s'ouvre sur la question posée ; quand une citation répond à un·e autre candidat·e ou s'appuie sur ce qui vient d'être dit, une ligne le précise au-dessus. Pour un meeting, on ne consigne que le discours du ou de la candidat·e, et chaque thème s'ouvre sur une phrase de contexte : ce qui est dit juste avant, et à quoi la citation répond. On garde les passages où une mesure ou une position est annoncée, pas les attaques contre les adversaires.</p>
   <div class="encart"><p>Une citation mal transcrite, un horodatage décalé ? Dis-le nous.</p><button type="button" class="b rose" data-retours>J'ai des retours</button></div>
 </div></section>
-</main>
+</template>
+<script>(function(){var m=document.getElementById("contenu"),t=document.getElementById("k-vivant");if(m&&t)m.innerHTML=t.innerHTML;})();</script>
 <script src="../../comparateur/data/base.js?v=fd46e1bd54"></script>
 <script src="../../comparateur/data/debats.js?v=60ee23c989"></script>
 <script>document.addEventListener('DOMContentLoaded', function(){ var s = document.createElement('script'); s.src = '../../assets/debats.js?v=e20f6a89c8'; document.body.appendChild(s); });</script>
