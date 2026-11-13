@@ -119,19 +119,27 @@
 
 /* programmes, par sujet */
 /* les grands sujets des programmes : des cartes repliées, pour ne pas tout montrer d'un coup */
-.suj-grille{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;grid-auto-flow:row dense}
-@media (max-width:900px){.suj-grille{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.suj-tuile{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:138px;padding:14px 16px;border:2px solid var(--marron);border-radius:var(--r);box-shadow:var(--ombre);text-align:left;color:var(--marron);transition:transform .12s,box-shadow .12s}
+.suj-grille{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;grid-auto-flow:row dense}
+@media (max-width:1080px){.suj-grille{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.suj-grille{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.suj-tuile{display:flex;flex-direction:column;align-items:flex-start;gap:9px;min-height:138px;padding:13px 13px;border:2px solid var(--marron);border-radius:var(--r);box-shadow:var(--ombre);text-align:left;color:var(--marron);transition:transform .12s,box-shadow .12s}
 .suj-haut{display:flex;align-items:center;justify-content:space-between;width:100%}
-.suj-emo{flex:0 0 auto;font-size:30px;line-height:1}
+.suj-emo{flex:0 0 auto;font-size:28px;line-height:1}
 .suj-tuile .chev{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:11px solid var(--marron);transition:transform .15s}
 .suj-tuile.on .chev{transform:rotate(180deg)}
-.suj-nom{font-family:var(--titre);font-weight:700;text-transform:uppercase;font-size:clamp(16px,1.55vw,19px);line-height:1.12}
+.suj-nom{font-family:var(--titre);font-weight:700;text-transform:uppercase;font-size:clamp(15px,1.3vw,17px);line-height:1.13}
+@media (max-width:1080px){.suj-nom{font-size:17px}}
 .suj-nb{flex:0 0 auto;font-size:13.5px;font-weight:700;white-space:nowrap;background:var(--blanc);border:1.5px solid var(--marron);border-radius:999px;padding:3px 10px}
 .suj-tuile .suj-nb{margin-top:auto}
 .suj-tuile.on{box-shadow:none;transform:translate(4px,4px)}
 @media (hover:hover){.suj-tuile:not(.on):hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--marron)}}
-.suj-tuile.t-rose,.t-rose>.suj-pan-tete{background:var(--rose)}.suj-tuile.t-bleu,.t-bleu>.suj-pan-tete{background:var(--bleu)}.suj-tuile.t-vert,.t-vert>.suj-pan-tete{background:var(--vert)}.suj-tuile.t-jaune,.t-jaune>.suj-pan-tete{background:var(--jaune)}
+/* deux couleurs, rose et vert, en damier : la règle suit le nombre de tuiles par rangée (6, 3 ou 2).
+   Chaque panneau suit sa tuile dans la page, il porte donc le même rang et prend la même couleur. */
+.suj-tuile,.suj-pan-tete{background:var(--vert)}
+@media (min-width:1081px){.suj-tuile:nth-of-type(12n+1),.suj-tuile:nth-of-type(12n+3),.suj-tuile:nth-of-type(12n+5),.suj-tuile:nth-of-type(12n+8),.suj-tuile:nth-of-type(12n+10),.suj-tuile:nth-of-type(12n+12),.suj-grille>.suj-panneau:nth-of-type(12n+1)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(12n+3)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(12n+5)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(12n+8)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(12n+10)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(12n+12)>.suj-pan-tete{background:var(--rose)}}
+@media (min-width:641px) and (max-width:1080px){.suj-tuile:nth-of-type(2n+1),.suj-grille>.suj-panneau:nth-of-type(2n+1)>.suj-pan-tete{background:var(--rose)}}
+@media (max-width:640px){.suj-tuile:nth-of-type(4n+1),.suj-tuile:nth-of-type(4n+4),.suj-grille>.suj-panneau:nth-of-type(4n+1)>.suj-pan-tete,.suj-grille>.suj-panneau:nth-of-type(4n+4)>.suj-pan-tete{background:var(--rose)}}
+#p-liste>.suj-panneau:nth-of-type(2n+1)>.suj-pan-tete{background:var(--rose)}
 .suj-panneau{grid-column:1 / -1;border:2px solid var(--marron);border-radius:var(--r);overflow:hidden;background:var(--beige)}
 .suj-panneau[hidden]{display:none}
 .suj-pan-tete{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:2px solid var(--marron)}
@@ -278,3 +286,4 @@
 @media (max-width:700px){.debat>summary{position:relative;padding-right:46px}.debat>summary .chev{position:absolute;right:16px;top:22px}}
 @media (max-width:400px){.loi-droite .puce.mini{font-size:12px;padding:5px 10px}}
 @media (max-width:480px){.suj-tuile{padding:12px 13px;min-height:128px}.suj-emo{font-size:26px}}
+@media (max-width:380px){.suj-tuile{padding:11px}.suj-nom{font-size:15px}}

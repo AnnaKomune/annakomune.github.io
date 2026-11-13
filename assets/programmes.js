@@ -31,9 +31,8 @@
   var zListe = document.getElementById('p-liste'), zChoix = document.getElementById('p-choix'), zFiche = document.getElementById('p-fiche');
   var seul = null;   /* arrivée depuis une fiche candidat·e : on ne garde que les sujets où ses documents ont des mesures */
   function garde(s){ return !seul || s.cands[seul.id]; }
-  /* un émoji et une couleur de la charte par grand sujet, toujours les mêmes d'une visite à l'autre */
+  /* un émoji par grand sujet ; les deux couleurs (rose et vert) sont posées en damier par la feuille de style */
   var EMOJI = {1: '🛒', 2: '💼', 3: '☂️', 4: '🩺', 5: '🌍', 6: '🎓', 7: '🏠', 8: '🏤', 9: '🛂', 10: '⚖️', 11: '✊', 12: '🗳️', 13: '💶', 14: '🌾', 15: '🎭', 16: '💻', 17: '🌐', 18: '🚆'};
-  var TEINTES = ['rose', 'bleu', 'vert', 'jaune'];
   var ouverts = {};   /* grands sujets dépliés par la personne : on les retrouve ouverts en revenant d'une fiche */
   function dessineSujets(filtre){
     zListe.innerHTML = ''; var f = K.pli(filtre).trim(), total = 0;
@@ -50,18 +49,18 @@
       var ss = SOUS.filter(function(s){ return s.th === ti && s.n > 0 && garde(s) && s.nom !== 'Autre' && (!f || s.cherche.indexOf(f) >= 0); }).sort(function(a, b){ return a.nom.localeCompare(b.nom, 'fr'); });
       var autre = SOUS.filter(function(s){ return s.th === ti && s.n > 0 && garde(s) && s.nom === 'Autre' && (!f || s.cherche.indexOf(f) >= 0); });
       ss = ss.concat(autre); if (!ss.length) return;
-      var teinte = 't-' + TEINTES[(ti - 1 + Math.floor((ti - 1) / 4)) % TEINTES.length], nbTxt = ss.length + (ss.length > 1 ? ' sujets' : ' sujet');
+      var nbTxt = ss.length + (ss.length > 1 ? ' sujets' : ' sujet');
       function emoji(){ var em = K.el('span', 'suj-emo', EMOJI[ti] || ''); em.setAttribute('aria-hidden', 'true'); return em; }
       /* le panneau d'un grand sujet : son nom, puis ses sujets */
-      var pan = K.el('section', 'suj-panneau ' + teinte); pan.id = 'gs-' + ti;
+      var pan = K.el('section', 'suj-panneau'); pan.id = 'gs-' + ti;
       var pt = K.el('div', 'suj-pan-tete'); pt.appendChild(emoji()); pt.appendChild(K.el('h3', null, th)); pt.appendChild(K.el('span', 'suj-nb', nbTxt)); pan.appendChild(pt);
       var corps = K.el('div', 'suj-pan-corps'), w = K.el('div', 'puces');
       ss.forEach(function(s){ var a = K.el('a', 'puce', s.nom === 'Autre' ? 'Autres mesures' : s.nom); a.href = '#sujet=' + s.id + (seul ? '&c=' + seul.slug : ''); w.appendChild(a); total++; });
       corps.appendChild(w); pan.appendChild(corps);
       /* pendant une recherche : seulement les panneaux qui contiennent un résultat, déjà ouverts */
       if (f){ zListe.appendChild(pan); return; }
-      /* sinon : une tuile par grand sujet, quatre par rangée ; son panneau s'ouvre sous la rangée */
-      var b = K.el('button', 'suj-tuile ' + teinte); b.type = 'button'; b.setAttribute('aria-controls', pan.id);
+      /* sinon : une tuile par grand sujet, six par rangée ; son panneau s'ouvre sous la rangée */
+      var b = K.el('button', 'suj-tuile'); b.type = 'button'; b.setAttribute('aria-controls', pan.id);
       var haut = K.el('span', 'suj-haut'); haut.appendChild(emoji()); haut.appendChild(K.el('span', 'chev')); b.appendChild(haut);
       b.appendChild(K.el('span', 'suj-nom', th)); b.appendChild(K.el('span', 'suj-nb', nbTxt));
       function regle(o, defile){ b.setAttribute('aria-expanded', o ? 'true' : 'false'); b.classList.toggle('on', o); pan.hidden = !o; ouverts[ti] = o;
