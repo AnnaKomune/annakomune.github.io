@@ -7,7 +7,6 @@
   function lienTs(deb, cit){ var a = K.el('a', 'ts', cit.ts); a.href = deb.video + (deb.video.indexOf('?') >= 0 ? '&' : '?') + 't=' + cit.sec + 's'; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('aria-label', 'Ouvrir la vidéo à ' + cit.ts); return a; }
   function citation(deb, cit){
     var bq = K.el('blockquote', 'cit'); bq.appendChild(document.createTextNode('« ' + cit.texte + ' » ')); bq.appendChild(lienTs(deb, cit));
-    if (cit.corr) bq.appendChild(K.el('small', null, 'Correction : ' + cit.corr));
     if (!cit.ctx) return bq;
     /* une phrase de contexte : ce qui est dit juste avant, à quoi la citation répond */
     var w = K.el('div', 'cit-bloc'); w.appendChild(K.el('p', 'cit-ctx', cit.ctx)); w.appendChild(bq); return w;
