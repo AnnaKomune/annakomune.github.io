@@ -32,9 +32,16 @@
     Object.keys(PARTI_CAND).forEach(function(k){ if (k.indexOf(p) >= 0 || p.indexOf(k.replace(/^parti /, '')) >= 0) if (PARTI_CAND[k].length === 1) trouve = PARTI_CAND[k][0]; });
     return trouve;
   }
+  /* Chaque intitulé court se termine par la version du document entre parenthèses : « … (2027) », « … (2026, plan ruralités) ».
+     On l'affiche en étiquette sur chaque mesure, et le titre sans elle. */
+  function decoupe(court){ var m = /\s*\(([^()]*)\)(\*?)\s*$/.exec(court || ''); return m ? {titre: court.slice(0, m.index) + m[2], ver: m[1]} : {titre: court || '', ver: ''}; }
+  /* Chapitres dont les mesures ne se comprennent pas sans leur titre (demande de la rédaction, 13/11/2026) : on l'affiche au-dessus.
+     La colonne du classeur porte le titre coupé ; le titre entier est celui du sommaire du programme. */
+  var CHAPITRE_AFFICHE = {'CHAPITRE 1 : SE LIBÉRER DU LIBÉRALISME EN': 'Se libérer du libéralisme en Europe'};
   var MES = {};
   P.mesures.forEach(function(m){
-    var d = P.docs[m[8]]; if (!d) return; var c = candDuDoc(d); if (!c) return; var s = SOUS[m[5]]; if (!s) return;
+    var d = P.docs[m[8]]; if (!d || d.anc) return;   /* d.anc : édition remplacée par une plus récente, gardée pour Promesses VS Actes, pas affichée ici */
+    var c = candDuDoc(d); if (!c) return; var s = SOUS[m[5]]; if (!s) return;
     (MES[s.i] = MES[s.i] || []).push({m: m, d: d, c: c}); s.n++; s.cands[c.id] = 1;
     (m[7] || []).forEach(function(t){ s.tags[t] = 1; });
   });
@@ -124,14 +131,22 @@
       avec.forEach(function(cid){ var a = K.el('a', 'puce mini'); a.appendChild(K.avatar(CAND[cid], 'p')); a.appendChild(document.createTextNode(CAND[cid].court)); a.href = '#sujet=' + id + '&c=' + CAND[cid].slug; som.appendChild(a); });
       zFiche.appendChild(som);
 
+      var aCle = false, legende = K.el('p', 'pet mesure-leg', 'Sur chaque mesure, l\'étiquette donne la version du document d\'où elle vient.'); zFiche.appendChild(legende);
       avec.forEach(function(cid){
         var c = CAND[cid], bloc = K.el('section', 'prog-cand'); bloc.id = 'c-' + c.slug;
         var t = K.el('div', 'prog-tete'); t.appendChild(K.avatar(c)); var n = K.el('div'); n.appendChild(K.el('h3', null, c.nom)); n.appendChild(K.el('span', null, c.parti)); t.appendChild(n); bloc.appendChild(t);
         parCand[cid].forEach(function(x){
           var m = x.m, court = m[2] || '', tx = (T[m[0]] && T[m[0]].t) || court;
-          var d = K.el('article', 'mesure');
-          var nu = K.pli(court).replace(/\*$/, '').replace(/\s*\([^)]*\)\s*$/, '').trim();
-          if (court && K.pli(tx).replace(/\s+/g, ' ').indexOf(nu.slice(0, 60)) !== 0) d.appendChild(K.el('h4', null, court));
+          var d = K.el('article', 'mesure'), dc = decoupe(court), chap = CHAPITRE_AFFICHE[(P.chaps[m[9]] || [])[1]];
+          if (dc.ver || m[11]){
+            var et = K.el('p', 'mesure-etiq');
+            if (dc.ver){ var ev = K.el('span', null, dc.ver); ev.title = 'Version du document'; et.appendChild(ev); }
+            if (m[11]){ et.appendChild(K.el('span', 'cle', 'Mesure clé')); aCle = true; }
+            d.appendChild(et);
+          }
+          if (chap) d.appendChild(K.el('p', 'mesure-chap', 'Chapitre du programme : ' + chap));
+          var nu = K.pli(dc.titre).replace(/\*$/, '').trim();
+          if (dc.titre && K.pli(tx).replace(/\s+/g, ' ').indexOf(nu.slice(0, 60)) !== 0) d.appendChild(K.el('h4', null, dc.titre));
           var p = K.el('div', 'mesure-txt'); p.innerHTML = K.riche(tx); d.appendChild(p);
           var src = K.el('p', 'mesure-src'); src.appendChild(K.el('b', null, 'Source : '));
           src.appendChild(document.createTextNode(x.d.doc + (x.d.cand ? '' : ' · document du parti') + ' '));
@@ -141,9 +156,10 @@
           src.appendChild(document.createTextNode(' ')); src.appendChild(pa);
           d.appendChild(src); bloc.appendChild(d);
         });
-        var e = ETAT[c.nom]; if (e && e.etat) bloc.appendChild(K.el('p', 'prog-etat', 'État du programme : ' + e.etat));
+        var e = ETAT[c.nom]; if (e && e.etat && !e.perime) bloc.appendChild(K.el('p', 'prog-etat', 'État du programme : ' + e.etat));
         zFiche.appendChild(bloc);
       });
+      if (aCle) legende.appendChild(document.createTextNode(' « Mesure clé » : une mesure que le programme met lui-même en avant.'));
       if (sans.length){
         var z = K.el('section', 'prog-sans'); z.appendChild(K.el('h3', null, 'Rien de relevé sur ce sujet'));
         z.appendChild(K.el('p', 'pet', 'Ce qui ne veut pas dire « pas de position » : aucune mesure de leurs documents n\'est classée dans ce sujet pour l\'instant.'));
