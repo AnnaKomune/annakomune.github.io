@@ -119,13 +119,26 @@
 
 /* programmes, par sujet */
 /* les grands sujets des programmes : des cartes repliées, pour ne pas tout montrer d'un coup */
-.groupe-suj+.groupe-suj{margin-top:10px}
-.groupe-suj>summary{padding:13px clamp(14px,2vw,20px)}
-.groupe-suj .pli-titre h3{font-size:clamp(17px,2vw,20px)}
-.groupe-suj .pli-corps{padding:14px clamp(14px,2vw,20px)}
+.suj-grille{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;grid-auto-flow:row dense}
+@media (max-width:900px){.suj-grille{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.suj-tuile{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:138px;padding:14px 16px;border:2px solid var(--marron);border-radius:var(--r);box-shadow:var(--ombre);text-align:left;color:var(--marron);transition:transform .12s,box-shadow .12s}
+.suj-haut{display:flex;align-items:center;justify-content:space-between;width:100%}
+.suj-emo{flex:0 0 auto;font-size:30px;line-height:1}
+.suj-tuile .chev{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:11px solid var(--marron);transition:transform .15s}
+.suj-tuile.on .chev{transform:rotate(180deg)}
+.suj-nom{font-family:var(--titre);font-weight:700;text-transform:uppercase;font-size:clamp(16px,1.55vw,19px);line-height:1.12}
 .suj-nb{flex:0 0 auto;font-size:13.5px;font-weight:700;white-space:nowrap;background:var(--blanc);border:1.5px solid var(--marron);border-radius:999px;padding:3px 10px}
-.suj-emo{flex:0 0 auto;font-size:24px;line-height:1}
-.groupe-suj.t-rose>summary{background:var(--rose)}.groupe-suj.t-bleu>summary{background:var(--bleu)}.groupe-suj.t-vert>summary{background:var(--vert)}.groupe-suj.t-jaune>summary{background:var(--jaune)}
+.suj-tuile .suj-nb{margin-top:auto}
+.suj-tuile.on{box-shadow:none;transform:translate(4px,4px)}
+@media (hover:hover){.suj-tuile:not(.on):hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--marron)}}
+.suj-tuile.t-rose,.t-rose>.suj-pan-tete{background:var(--rose)}.suj-tuile.t-bleu,.t-bleu>.suj-pan-tete{background:var(--bleu)}.suj-tuile.t-vert,.t-vert>.suj-pan-tete{background:var(--vert)}.suj-tuile.t-jaune,.t-jaune>.suj-pan-tete{background:var(--jaune)}
+.suj-panneau{grid-column:1 / -1;border:2px solid var(--marron);border-radius:var(--r);overflow:hidden;background:var(--beige)}
+.suj-panneau[hidden]{display:none}
+.suj-pan-tete{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:2px solid var(--marron)}
+.suj-pan-tete h3{flex:1 1 auto;min-width:0;font-size:clamp(17px,2vw,20px)}
+.suj-pan-tete .suj-emo{font-size:22px}
+.suj-pan-corps{padding:14px 16px}
+#p-liste>.suj-panneau+.suj-panneau{margin-top:10px}
 #p-liste{margin-top:14px}
 .fiche-theme{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:0 0 6px}
 .prog-cand{border-top:2px solid var(--marron);padding:22px 0 8px;margin-top:22px}
@@ -264,5 +277,4 @@
 /* débats et meetings : la flèche reste dans le coin du titre au lieu de tomber seule sous les portraits */
 @media (max-width:700px){.debat>summary{position:relative;padding-right:46px}.debat>summary .chev{position:absolute;right:16px;top:22px}}
 @media (max-width:400px){.loi-droite .puce.mini{font-size:12px;padding:5px 10px}}
-/* téléphone : la pastille ne garde que le nombre, pour laisser la place au nom du grand sujet */
-@media (max-width:480px){.suj-mot{display:none}.groupe-suj>summary{gap:10px}}
+@media (max-width:480px){.suj-tuile{padding:12px 13px;min-height:128px}.suj-emo{font-size:26px}}

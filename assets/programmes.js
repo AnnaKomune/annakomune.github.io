@@ -44,24 +44,33 @@
       var tous = K.el('a', 'b fin', 'Voir tous les sujets'); tous.href = '#'; tous.onclick = function(e){ e.preventDefault(); history.pushState(null, '', location.pathname); route(); }; b.appendChild(tous);
       zListe.appendChild(b);
     }
+    var grille = K.el('div', 'suj-grille');
     Object.keys(P.themes).map(Number).sort(function(a, b){ return a - b; }).forEach(function(ti){
       var th = P.themes[ti];
       var ss = SOUS.filter(function(s){ return s.th === ti && s.n > 0 && garde(s) && s.nom !== 'Autre' && (!f || s.cherche.indexOf(f) >= 0); }).sort(function(a, b){ return a.nom.localeCompare(b.nom, 'fr'); });
       var autre = SOUS.filter(function(s){ return s.th === ti && s.n > 0 && garde(s) && s.nom === 'Autre' && (!f || s.cherche.indexOf(f) >= 0); });
       ss = ss.concat(autre); if (!ss.length) return;
-      /* un grand sujet = une carte repliée : son nom, le nombre de sujets, et les sujets une fois dépliée.
-         Pendant une recherche, les cartes qui contiennent un résultat sont ouvertes d'office. */
-      var g = K.el('details', 'pli groupe-suj t-' + TEINTES[(ti - 1) % TEINTES.length]); if (f || ouverts[ti]) g.open = true;
-      var sm = K.el('summary'), tt = K.el('div', 'pli-titre'); tt.appendChild(K.el('h3', null, th));
-      if (EMOJI[ti]){ var em = K.el('span', 'suj-emo', EMOJI[ti]); em.setAttribute('aria-hidden', 'true'); sm.appendChild(em); }
-      sm.appendChild(tt);
-      var nb = K.el('span', 'suj-nb', String(ss.length)); nb.appendChild(K.el('span', 'suj-mot', ss.length > 1 ? ' sujets' : ' sujet')); nb.setAttribute('aria-label', ss.length + (ss.length > 1 ? ' sujets' : ' sujet')); sm.appendChild(nb); sm.appendChild(K.el('span', 'chev')); g.appendChild(sm);
-      var corps = K.el('div', 'pli-corps'), w = K.el('div', 'puces');
+      var teinte = 't-' + TEINTES[(ti - 1 + Math.floor((ti - 1) / 4)) % TEINTES.length], nbTxt = ss.length + (ss.length > 1 ? ' sujets' : ' sujet');
+      function emoji(){ var em = K.el('span', 'suj-emo', EMOJI[ti] || ''); em.setAttribute('aria-hidden', 'true'); return em; }
+      /* le panneau d'un grand sujet : son nom, puis ses sujets */
+      var pan = K.el('section', 'suj-panneau ' + teinte); pan.id = 'gs-' + ti;
+      var pt = K.el('div', 'suj-pan-tete'); pt.appendChild(emoji()); pt.appendChild(K.el('h3', null, th)); pt.appendChild(K.el('span', 'suj-nb', nbTxt)); pan.appendChild(pt);
+      var corps = K.el('div', 'suj-pan-corps'), w = K.el('div', 'puces');
       ss.forEach(function(s){ var a = K.el('a', 'puce', s.nom === 'Autre' ? 'Autres mesures' : s.nom); a.href = '#sujet=' + s.id + (seul ? '&c=' + seul.slug : ''); w.appendChild(a); total++; });
-      corps.appendChild(w); g.appendChild(corps);
-      g.addEventListener('toggle', function(){ if (!f) ouverts[ti] = g.open; });
-      zListe.appendChild(g);
+      corps.appendChild(w); pan.appendChild(corps);
+      /* pendant une recherche : seulement les panneaux qui contiennent un résultat, déjà ouverts */
+      if (f){ zListe.appendChild(pan); return; }
+      /* sinon : une tuile par grand sujet, quatre par rangée ; son panneau s'ouvre sous la rangée */
+      var b = K.el('button', 'suj-tuile ' + teinte); b.type = 'button'; b.setAttribute('aria-controls', pan.id);
+      var haut = K.el('span', 'suj-haut'); haut.appendChild(emoji()); haut.appendChild(K.el('span', 'chev')); b.appendChild(haut);
+      b.appendChild(K.el('span', 'suj-nom', th)); b.appendChild(K.el('span', 'suj-nb', nbTxt));
+      function regle(o, defile){ b.setAttribute('aria-expanded', o ? 'true' : 'false'); b.classList.toggle('on', o); pan.hidden = !o; ouverts[ti] = o;
+        if (o && defile && pan.scrollIntoView) pan.scrollIntoView({block: 'nearest', behavior: 'smooth'}); }
+      b.addEventListener('click', function(){ regle(pan.hidden, true); });
+      regle(!!ouverts[ti], false);
+      grille.appendChild(b); grille.appendChild(pan);
     });
+    if (grille.children.length) zListe.appendChild(grille);
     if (!total) zListe.appendChild(K.el('p', null, seul && !f ? 'Aucune mesure relevée dans ses documents pour l\'instant.' : 'Aucun sujet ne correspond. Essaie un autre mot.'));
   }
   document.getElementById('p-q').addEventListener('input', function(e){ if (zFiche.hidden === false) fermeSujet(); dessineSujets(e.target.value); });
