@@ -407,7 +407,7 @@ def page_journaliste(f, articles, auteurs, par_article):
     bio = "".join('<p>%s</p>' % e(p) for p in f["bio"])
 
     return (
-        tete("%s - journaliste à Komune Média" % f["nom"], description, url,
+        tete("%s - %s, Komune Média" % (f["nom"], f["role"][:1].lower() + f["role"][1:]), description, url,
              f["photo"] or "", '  <meta property="og:type" content="profile">\n')
         + ld(graphe)
         + "</head>\n<body>\n  <div class=\"page\">\n"
@@ -416,9 +416,9 @@ def page_journaliste(f, articles, auteurs, par_article):
         + '    <main class="canvas" id="contenu">\n'
         + '      <header class="jour-tete panel">\n'
         + '        <div class="jour-photo">%s</div>\n' % rond
-        + '        <div>\n          <p class="eyebrow">Journaliste à Komune Média</p>\n'
+        # le surtitre reprend la fonction de la personne (« Présidente et journaliste »), pas « Journaliste » pour tout le monde
+        + '        <div>\n          <p class="eyebrow">%s · Komune Média</p>\n' % e(f["role"])
         + '          <h1>%s</h1>\n' % e(f["nom"])
-        + '          <p><span class="jour-role">%s</span></p>\n' % e(f["role"])
         + ('          <div class="jour-bio">%s</div>\n' % bio if bio else "")
         + '          <p class="jour-compte">%d article%s publié%s sur komunemedia.fr</p>\n' % (
             n, "s" if n > 1 else "", "s" if n > 1 else "")
