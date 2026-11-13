@@ -31,6 +31,7 @@
   var zListe = document.getElementById('p-liste'), zChoix = document.getElementById('p-choix'), zFiche = document.getElementById('p-fiche');
   var seul = null;   /* arrivée depuis une fiche candidat·e : on ne garde que les sujets où ses documents ont des mesures */
   function garde(s){ return !seul || s.cands[seul.id]; }
+  var ouverts = {};   /* grands sujets dépliés par la personne : on les retrouve ouverts en revenant d'une fiche */
   function dessineSujets(filtre){
     zListe.innerHTML = ''; var f = K.pli(filtre).trim(), total = 0;
     document.getElementById('p-exemples').hidden = !!seul;
@@ -45,9 +46,16 @@
       var ss = SOUS.filter(function(s){ return s.th === ti && s.n > 0 && garde(s) && s.nom !== 'Autre' && (!f || s.cherche.indexOf(f) >= 0); }).sort(function(a, b){ return a.nom.localeCompare(b.nom, 'fr'); });
       var autre = SOUS.filter(function(s){ return s.th === ti && s.n > 0 && garde(s) && s.nom === 'Autre' && (!f || s.cherche.indexOf(f) >= 0); });
       ss = ss.concat(autre); if (!ss.length) return;
-      var g = K.el('div', 'groupe-suj'); g.appendChild(K.el('h3', null, th)); var w = K.el('div', 'puces');
+      /* un grand sujet = une carte repliée : son nom, le nombre de sujets, et les sujets une fois dépliée.
+         Pendant une recherche, les cartes qui contiennent un résultat sont ouvertes d'office. */
+      var g = K.el('details', 'pli groupe-suj'); if (f || ouverts[ti]) g.open = true;
+      var sm = K.el('summary'), tt = K.el('div', 'pli-titre'); tt.appendChild(K.el('h3', null, th)); sm.appendChild(tt);
+      sm.appendChild(K.el('span', 'suj-nb', ss.length + (ss.length > 1 ? ' sujets' : ' sujet'))); sm.appendChild(K.el('span', 'chev')); g.appendChild(sm);
+      var corps = K.el('div', 'pli-corps'), w = K.el('div', 'puces');
       ss.forEach(function(s){ var a = K.el('a', 'puce', s.nom === 'Autre' ? 'Autres mesures' : s.nom); a.href = '#sujet=' + s.id + (seul ? '&c=' + seul.slug : ''); w.appendChild(a); total++; });
-      g.appendChild(w); zListe.appendChild(g);
+      corps.appendChild(w); g.appendChild(corps);
+      g.addEventListener('toggle', function(){ if (!f) ouverts[ti] = g.open; });
+      zListe.appendChild(g);
     });
     if (!total) zListe.appendChild(K.el('p', null, seul && !f ? 'Aucune mesure relevée dans ses documents pour l\'instant.' : 'Aucun sujet ne correspond. Essaie un autre mot.'));
   }

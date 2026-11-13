@@ -118,9 +118,13 @@
 .legende i{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--marron);display:inline-block}
 
 /* programmes, par sujet */
-.groupe-suj{padding:18px 0;border-top:1.5px solid var(--filet)}
-.groupe-suj:first-child{border-top:0}
-.groupe-suj h3{font-size:18px;margin-bottom:10px}
+/* les grands sujets des programmes : des cartes repliées, pour ne pas tout montrer d'un coup */
+.groupe-suj+.groupe-suj{margin-top:10px}
+.groupe-suj>summary{padding:13px clamp(14px,2vw,20px)}
+.groupe-suj .pli-titre h3{font-size:clamp(17px,2vw,20px)}
+.groupe-suj .pli-corps{padding:14px clamp(14px,2vw,20px)}
+.suj-nb{flex:0 0 auto;font-size:13.5px;font-weight:600;color:var(--doux);white-space:nowrap}
+#p-liste{margin-top:14px}
 .fiche-theme{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:0 0 6px}
 .prog-cand{border-top:2px solid var(--marron);padding:22px 0 8px;margin-top:22px}
 .prog-tete{display:flex;align-items:center;gap:12px;margin-bottom:14px}
