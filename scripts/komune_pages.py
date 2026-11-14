@@ -26,6 +26,28 @@ import page_articles as pa  # noqa: E402
 
 RACINE = ICI.parent
 SITE = "https://www.komunemedia.fr"
+
+# Comptage des visites, sans cookie (GoatCounter). Vide : aucun comptage, le site le dit tel quel. Renseigne avec le
+# nom du compte (« komune » pour komune.goatcounter.com) : toutes les pages chargent le compteur, et le pied de page
+# comme les mentions legales le disent. Le site ne doit jamais affirmer le contraire de ce qu'il fait : ces textes
+# suivent cette seule valeur, ici et dans build.py (qui la lit dans ce fichier).
+COMPTEUR = ""
+COMPTEUR_SCRIPT = "https://gc.zgo.at/count.js"
+
+
+def phrase_traceurs():
+    """La phrase du pied de page sur les cookies et le comptage des visites."""
+    if COMPTEUR:
+        return "Ce site ne dépose aucun cookie. Les visites sont comptées de façon anonyme."
+    return "Ce site ne dépose aucun cookie et ne mesure pas l'audience."
+
+
+def balise_compteur():
+    """La balise du compteur de visites, ou rien."""
+    if not COMPTEUR:
+        return ""
+    return ('\n    <script data-goatcounter="https://%s.goatcounter.com/count" async src="%s"></script>'
+            % (COMPTEUR, COMPTEUR_SCRIPT))
 DATA = RACINE / "data"
 CORPS = DATA / "corps"
 DOSSIER_ARTICLES = RACINE / "articles"
@@ -122,7 +144,7 @@ def pied(profondeur=2, note=False):
             '      <div>\n'
             '        <img src="%simg/logo-komune.webp" alt="Komune Média" width="600" height="229" loading="lazy">\n'
             '        <p>Média indépendant qui décrypte la société avec un regard antiraciste.</p>\n'
-            '        <p>Ce site ne dépose aucun cookie et ne mesure pas l\'audience.</p>\n'
+            '        <p>%s</p>\n'
             '%s'
             '      </div>\n'
             '      <div>\n'
@@ -140,11 +162,11 @@ def pied(profondeur=2, note=False):
             '        <a href="%ssignaler/">Signaler un contenu</a>\n'
             '      </div>\n'
             '    </div></footer>\n'
-            '    <script src="%sassets/komune.js?v=%s"></script>' % (
-                r,
+            '    <script src="%sassets/komune.js?v=%s"></script>%s' % (
+                r, phrase_traceurs(),
                 ('        <p>Signaler un contenu : <a href="%ssignaler/" style="display:inline;text-decoration:underline">'
                  'komunemedia.fr/signaler</a></p>\n' % r) if note else "",
-                r, r, r, empreinte_js()))
+                r, r, r, empreinte_js(), balise_compteur()))
 
 
 def tete(titre, description, url, image, extra_meta="", profondeur=2, robots="index, follow, max-image-preview:large, max-snippet:-1"):
@@ -657,14 +679,25 @@ def page_mentions():
         + '        <p><strong>La newsletter</strong> est diffus\u00e9e par Substack Inc., San Francisco, '
           u'\u00c9tats-Unis. <strong>Les dons</strong> passent par Donorbox.</p>\n'
         + '        <h2>Traceurs et donn\u00e9es</h2>\n'
-        + '        <p>Ce site ne d\u00e9pose aucun cookie et n\u2019utilise aucun outil de mesure '
-          u'd\u2019audience, de publicit\u00e9 ou de profilage. Nous ne savons pas qui vous \u00eates '
-          u'ni ce que vous lisez.</p>\n'
+        + (('        <p>Ce site ne d\u00e9pose aucun cookie et n\u2019utilise aucun outil de publicit\u00e9 '
+            u'ou de profilage. Nous ne savons pas qui vous \u00eates : nous savons seulement combien de fois '
+            u'une page a \u00e9t\u00e9 lue.</p>\n'
+            u'        <p>Les visites sont compt\u00e9es de fa\u00e7on anonyme avec GoatCounter, un outil libre. Il '
+            u'rel\u00e8ve la page consult\u00e9e, le site d\u2019o\u00f9 vous venez, le type de navigateur et '
+            u'd\u2019appareil, la largeur de l\u2019\u00e9cran, la langue et le pays. Il ne d\u00e9pose rien '
+            u'dans votre navigateur et ne conserve pas votre adresse IP. Pour ne pas compter deux fois la '
+            u'm\u00eame visite, il garde en m\u00e9moire, pendant huit heures au plus, une correspondance qui '
+            u'n\u2019est pas enregistr\u00e9e. Ces statistiques sont h\u00e9berg\u00e9es en Allemagne et en '
+            u'Finlande (Hetzner Online GmbH) et ne sont transmises \u00e0 personne.</p>\n')
+           if COMPTEUR else
+           ('        <p>Ce site ne d\u00e9pose aucun cookie et n\u2019utilise aucun outil de mesure '
+            u'd\u2019audience, de publicit\u00e9 ou de profilage. Nous ne savons pas qui vous \u00eates '
+            u'ni ce que vous lisez.</p>\n'))
         + '        <p>Une exception, limit\u00e9e et v\u00e9rifiable : certains \u00e9l\u00e9ments sont '
           u'charg\u00e9s depuis d\u2019autres serveurs, qui re\u00e7oivent donc votre adresse IP. Les polices de '
           u'caract\u00e8res viennent de Google Fonts, les images de couverture des articles de Substack, '
-          u'les vignettes des vid\u00e9os de YouTube, et le compteur de soutiens d\u2019une feuille de calcul '
-          u'Google.</p>\n'
+          u'les vignettes des vid\u00e9os de YouTube, %s le compteur de soutiens d\u2019une feuille de calcul '
+          u'Google.</p>\n' % (u'le comptage des visites de GoatCounter, et' if COMPTEUR else u'et')
         + '        <p>Les lecteurs vid\u00e9o YouTube et Instagram ne se chargent qu\u2019\u00e0 votre clic.</p>\n'
         + '        <h2>Commentaires et signalement</h2>\n'
         + '        <p>Les commentaires publi\u00e9s sous nos contenus sont mod\u00e9r\u00e9s par la '
