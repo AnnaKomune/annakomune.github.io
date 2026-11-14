@@ -312,6 +312,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/locations-touristiques/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/mal-logement-hebergement-d-urgence/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -396,19 +402,31 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/transition-ecologique-politiques-environnementales/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/organisation-du-systeme-de-sante/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/elevage-bien-etre-animal/</loc>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/peche-mer/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/peche-mer/</loc>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/filieres-appellations/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/elevage-bien-etre-animal/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -654,13 +672,19 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/souverainete-numerique/</loc>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/logiciels-dependances-applicatives/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/plateformes-reseaux-sociaux/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/souverainete-numerique/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -732,6 +756,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/fiscalite-des-entreprises/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/politiques-culturelles-mediatiques/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -786,12 +816,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/professionnels-de-sante/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/medicaments-industrie-pharmaceutique/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -828,13 +852,19 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/sante-mentale/</loc>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/professionnels-de-sante/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/autres-mesures-sante/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/sante-mentale/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -852,7 +882,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/droits-sociaux-prestations/</loc>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/aides-au-logement/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -865,6 +895,12 @@
   </url>
   <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/autres-mesures-protection-sociale-retraites/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/droits-sociaux-prestations/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -937,12 +973,6 @@
   </url>
   <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/egalite-femmes-hommes-sexisme/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/droits-fondamentaux-egalite/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1332,6 +1362,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/droits-fondamentaux-egalite/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/autres-mesures-travail-emploi/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -1398,18 +1434,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/logiciels-dependances-applicatives/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/transition-ecologique-politiques-environnementales/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/infrastructures-couverture-reseau/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -1464,6 +1488,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/concentration-propriete-des-medias/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/francais-de-l-etranger/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -1488,6 +1518,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/formation-des-professionnels/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/dette-tresorerie-agricoles/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -1501,12 +1537,6 @@
   </url>
   <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/souverainete-production-alimentaires/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/concentration-propriete-des-medias/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1530,12 +1560,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/aides-au-logement/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/libertes-democratiques/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -1548,13 +1572,13 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/energie-factures/</loc>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/eau-irrigation/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/fiscalite-des-entreprises/</loc>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/energie-factures/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1584,7 +1608,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/locations-touristiques/</loc>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/pandemies-crises-sanitaires/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1596,7 +1620,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/pandemies-crises-sanitaires/</loc>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/droit-europeen-conventions/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1638,7 +1662,19 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/simplification-normes/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/referendums-participation/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/recherche-agricole/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1650,7 +1686,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/formation-des-professionnels/</loc>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/normes-agricoles/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1674,31 +1710,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/recherche-agricole/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/normes-agricoles/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/intrants-fertilisation/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/eau-irrigation/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/filieres-appellations/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1710,19 +1722,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/simplification-normes/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/fonction-publique-agents/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/droit-europeen-conventions/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
