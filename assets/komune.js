@@ -61,7 +61,12 @@
     bt.replaceWith(f);
   });
 
-  /* ---------- jauge des soutiens mensuels : une seule cellule d'une feuille publique ---------- */
+  /* ---------- jauge des soutiens mensuels ----------
+     FIXE : chiffre saisi a la main (le compte de la redaction n'a pas l'ecriture sur la feuille). Tant qu'il est renseigne,
+     le site n'interroge pas la feuille Google : changer aussi la date « chiffre au … » dans pages/accueil.html et
+     pages/soutenir.html. Le remettre a null fait relire la cellule A1 de la feuille ; il faut alors remettre la mention de
+     la feuille Google dans les mentions legales (scripts/komune_pages.py), puisque le visiteur la contacte de nouveau. */
+  var FIXE = 785;
   K.jauge = function(retour){
     var FEUILLE = '1jGIf48AVtuHa3wEphqPUhDNARQ7Cch2HlNccEJSeo_w', ONGLET = 'donnée site', CELL = 'A1', CAP = 800;
     function nombre(v){ if (v == null) return NaN; return parseFloat(String(v).replace(/[^\d,.-]/g, '').replace(',', '.')); }
@@ -76,6 +81,7 @@
       tous('reste', function(e){ e.textContent = x >= CAP ? '' : 'Il manque ' + (CAP - x) + ' ' + (CAP - x > 1 ? 'soutiens' : 'soutien') + ' pour y revenir.'; });
       if (retour) retour(x, CAP);
     }
+    if (typeof FIXE === 'number') { setTimeout(function(){ affiche(FIXE); }, 0); return; }
     var nom = 'komuneJauge_' + Date.now(), s = document.createElement('script');
     var fin = setTimeout(function(){ s.remove(); }, 9000);
     window[nom] = function(rep){ clearTimeout(fin); var x = Math.round(lit(rep)); if (isFinite(x) && x >= 0) affiche(x); delete window[nom]; s.remove(); };

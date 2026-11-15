@@ -695,9 +695,9 @@ def page_mentions():
             u'ni ce que vous lisez.</p>\n'))
         + '        <p>Une exception, limit\u00e9e et v\u00e9rifiable : certains \u00e9l\u00e9ments sont '
           u'charg\u00e9s depuis d\u2019autres serveurs, qui re\u00e7oivent donc votre adresse IP. Les polices de '
-          u'caract\u00e8res viennent de Google Fonts, les images de couverture des articles de Substack, '
-          u'les vignettes des vid\u00e9os de YouTube, %s le compteur de soutiens d\u2019une feuille de calcul '
-          u'Google.</p>\n' % (u'le comptage des visites de GoatCounter, et' if COMPTEUR else u'et')
+          u'caract\u00e8res viennent de Google Fonts, les images de couverture des articles de Substack%s.</p>\n'
+          % (u', les vignettes des vid\u00e9os de YouTube et le comptage des visites de GoatCounter' if COMPTEUR
+             else u' et les vignettes des vid\u00e9os de YouTube')
         + '        <p>Les lecteurs vid\u00e9o YouTube et Instagram ne se chargent qu\u2019\u00e0 votre clic.</p>\n'
         + '        <h2>Commentaires et signalement</h2>\n'
         + '        <p>Les commentaires publi\u00e9s sous nos contenus sont mod\u00e9r\u00e9s par la '
