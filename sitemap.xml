@@ -648,12 +648,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.komunemedia.fr/comparateur/programmes/hopital-public/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/donnees-personnelles-vie-privee/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -859,6 +853,12 @@
   </url>
   <url>
     <loc>https://www.komunemedia.fr/comparateur/programmes/autres-mesures-sante/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.komunemedia.fr/comparateur/programmes/hopital-public/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
