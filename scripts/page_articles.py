@@ -13,6 +13,7 @@ Tout le reste de la page (design, textes, navigation) est laisse intact.
 Utilisable seul :  python3 scripts/page_articles.py
 """
 import html
+RETIRES = ("test-3-les-femmes-qui-portent-le",)
 import json
 import re
 import unicodedata
@@ -228,6 +229,8 @@ def ecrire_page(articles=None):
     if articles is None:
         articles = json.loads(DATA_FILE.read_text(encoding="utf-8"))
     articles = [a for a in articles if (a.get("title") or "").strip() and (a.get("url") or "").strip()]
+    # articles retires du site : brouillons publies par erreur (voir outils/redirections.py)
+    articles = [a for a in articles if not any(("/p/" + s) in (a.get("url") or "") for s in RETIRES)]
     articles.sort(key=lambda a: (a.get("date") or ""), reverse=True)
 
     page = PAGE_FILE.read_text(encoding="utf-8")

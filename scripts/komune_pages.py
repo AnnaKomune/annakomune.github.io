@@ -11,6 +11,7 @@ conserve dans data/corps/. Les passages suivants ne retelechargent que les
 articles nouveaux.
 """
 import html
+RETIRES = ("test-3-les-femmes-qui-portent-le",)
 import hashlib
 import json
 import re
@@ -800,6 +801,8 @@ def ecrire_tout(articles=None, chercheur=None):
     if articles is None:
         articles = json.loads((DATA / "articles.json").read_text(encoding="utf-8"))
     articles = [a for a in articles if (a.get("title") or "").strip() and (a.get("url") or "").strip()]
+    # articles retires du site : brouillons publies par erreur (voir outils/redirections.py)
+    articles = [a for a in articles if not any(("/p/" + s) in (a.get("url") or "") for s in RETIRES)]
     articles.sort(key=lambda a: (a.get("date") or ""), reverse=True)
 
     auteurs, par_article = registre()

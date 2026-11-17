@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /data/corps/
 
 Sitemap: https://www.komunemedia.fr/sitemap.xml
