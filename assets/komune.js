@@ -66,7 +66,7 @@
      le site n'interroge pas la feuille Google : changer aussi la date « chiffre au … » dans pages/accueil.html et
      pages/soutenir.html. Le remettre a null fait relire la cellule A1 de la feuille ; il faut alors remettre la mention de
      la feuille Google dans les mentions legales (scripts/komune_pages.py), puisque le visiteur la contacte de nouveau. */
-  var FIXE = 791;
+  var FIXE = 789;
   K.jauge = function(retour){
     var FEUILLE = '1jGIf48AVtuHa3wEphqPUhDNARQ7Cch2HlNccEJSeo_w', ONGLET = 'donnée site', CELL = 'A1', CAP = 800;
     function nombre(v){ if (v == null) return NaN; return parseFloat(String(v).replace(/[^\d,.-]/g, '').replace(',', '.')); }
