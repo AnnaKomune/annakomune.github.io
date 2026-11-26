@@ -296,10 +296,14 @@ def page_article(article, corps, auteurs, par_article, precedent, suivant, memes
     if fiches:
         titre_page = "%s - %s - Komune Média" % (titre, fiches[0]["nom"])
 
-    auteurs_ld = [{"@type": "Person", "name": f["nom"],
-                   "url": "%s/journalistes/%s/" % (SITE, f["slug"]),
-                   "jobTitle": f["role"],
-                   "worksFor": {"@id": SITE + "/#organisation"}} for f in fiches]
+    # meme @id que la fiche de la page journaliste : Google relie le nom de l'autrice a ses articles
+    auteurs_ld = [dict({"@type": "Person",
+                        "@id": "%s/journalistes/%s/#personne" % (SITE, f["slug"]),
+                        "name": f["nom"],
+                        "url": "%s/journalistes/%s/" % (SITE, f["slug"]),
+                        "jobTitle": f["role"],
+                        "worksFor": {"@id": SITE + "/#organisation"}},
+                       **({"sameAs": f["liens"]} if f.get("liens") else {})) for f in fiches]
     if not auteurs_ld:
         auteurs_ld = [{"@type": "Organization", "name": "Komune Média", "url": SITE + "/"}]
 
@@ -440,7 +444,7 @@ def page_journaliste(f, articles, auteurs, par_article):
     bio = "".join('<p>%s</p>' % e(p) for p in f["bio"])
 
     return (
-        tete("%s - %s, Komune Média" % (f["nom"], f["role"][:1].lower() + f["role"][1:]), description, url,
+        tete("%s : ses articles chez Komune Média" % f["nom"], description, url,
              f["photo"] or "", '  <meta property="og:type" content="profile">\n')
         + ld(graphe)
         + "</head>\n<body>\n  <div class=\"page\">\n"
